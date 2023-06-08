@@ -23,7 +23,7 @@ export default forwardRef(function TextAreaInput({ className = '', label = '', i
                 {...props}
                 placeholder={label ? " " : props.placeholder}
                 className={
-                    'block w-full py-3 text-gray-700 bg-white border border-gray-300 rounded-lg pr-11 pl-5 focus:border-blue-95 focus:ring-blue-900 focus:outline-none focus:ring focus:ring-opacity-40 ' +
+                    'block w-full py-3 text-gray-700 dark:text-gray-100 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-500 rounded-lg pr-11 pl-5 focus:border-blue-900 dark:focus:border-blue-300 focus:ring-0 focus:outline-none ' +
                     (error ? 'border-red-400 focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40 text-red-600 ' : '') +
                     (label && 'peer ') +
                     className
@@ -33,7 +33,7 @@ export default forwardRef(function TextAreaInput({ className = '', label = '', i
             </textarea>
             {label && (
                 <label htmlFor={props.id}
-                       className={`absolute text-sm cursor-text select-none text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-top-right bg-white rounded px-2 peer-focus:px-2 peer-focus:text-blue-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 right-[2.5rem] ` +
+                       className={`absolute text-sm cursor-text select-none text-gray-500 dark:text-slate-400 transition-all duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-top-right bg-white dark:bg-slate-800 rounded px-2 peer-focus:px-2 peer-focus:text-blue-900 dark:peer-focus:text-blue-300 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 right-[2.5rem] ` +
                            (error ? 'border-red-400 focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40 text-red-600' : '')
                        }>
                     {label}

@@ -23,7 +23,7 @@ export default function Address({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 align-middle py-2">آدرس ها</h2>}
+            header="آدرس ها"
         >
             <Head title="آدرس ها"/>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'auth.address'])->name('dashboard');
 
 Route::middleware(['auth', 'auth.address'])->group(function () {
+
+    Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
+        Route::get('/', 'index');
+    });
 
     Route::controller(ProfileController::class)->name('profile')->prefix('profile')->group(function () {
         Route::get('/', 'edit')->name('.edit');

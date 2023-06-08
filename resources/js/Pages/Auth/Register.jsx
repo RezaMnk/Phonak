@@ -148,7 +148,7 @@ export default function Register() {
                     <div className="mt-6 text-center">
                         <Link
                             href={route('login')}
-                            className="text-sm text-blue-950 hover:underline"
+                            className="text-sm text-blue-950 dark:text-blue-300 hover:underline"
                         >
                             حساب کاربری دارید؟
                         </Link>

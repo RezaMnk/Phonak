@@ -33,31 +33,12 @@ export default function Edit({ auth, patient }) {
         <AuthenticatedLayout
             user={auth.user}
             header={(
-                <div className="flex justify-between">
-                    <h2 className="font-semibold text-xl text-gray-800 align-middle py-2">
-                        ویرایش بیمار:
-                        <span className="font-medium mr-2 text-gray-500">
-                        {patient.name}
-                    </span>
-                    </h2>
-                    <div>
-                        <Link
-                            href={route('patients')}
-                            disabled={processing}
-                            className="w-fit ml-2 px-4 py-2 text-sm font-bold text-white transition-colors duration-300 bg-red-500 rounded-lg hover:bg-red-400 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-50 "
-                            form="edit-user"
-                        >
-                            لغو
-                        </Link>
-                        <PrimaryButton
-                            disabled={processing}
-                            className="w-fit !px-4 !py-2"
-                            form="edit-user"
-                        >
-                            ثبت تغییرات
-                        </PrimaryButton>
-                    </div>
-                </div>
+                <>
+                    ویرایش بیمار:
+                    <span className="font-medium mr-2 text-gray-500">
+                            {patient.name}
+                        </span>
+                </>
             )}
             breadcrumbs={
                 {
@@ -68,14 +49,14 @@ export default function Edit({ auth, patient }) {
         >
             <Head title="ویرایش کاربر" />
 
-            <div className="flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-                <div className="w-full mt-6 px-6 py-4 bg-white sm:rounded-lg">
+            <div className="flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+                <div className="w-full mt-6 px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
                     <form id="edit-user" className="w-full" onSubmit={submit}>
-                        <div className="mt-5">
+                        <div className="mt-5 text-gray-700 dark:text-slate-200">
                             <h5>
                                 اطلاعات بیمار
                             </h5>
-                            <hr/>
+                            <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex mt-6">
                             <div className="w-1/4 ml-5">
@@ -205,11 +186,11 @@ export default function Edit({ auth, patient }) {
                             </div>
                         </div>
 
-                        <div className="mt-8">
+                        <div className="mt-8 text-gray-700 dark:text-slate-200">
                             <h5>
                                 مشخصات محل کار
                             </h5>
-                            <hr/>
+                            <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex mt-3">
                             <div className="w-1/2 ml-5">
@@ -275,9 +256,9 @@ export default function Edit({ auth, patient }) {
                                 <InputError message={errors.work_address} className="mt-2"/>
                             </div>
                         </div>
-                        <div className="flex mt-8">
+                        <div className="flex justify-between mt-8">
                             <div className="w-1/2 ml-5">
-                                <p>
+                                <p className="text-gray-700 dark:text-slate-200">
                                     مرسولات شما به کدام آدرس ارسال شوند؟
                                 </p>
 
@@ -315,6 +296,23 @@ export default function Edit({ auth, patient }) {
                                         />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="flex flex-row items-center">
+                                <Link
+                                    href={route('patients')}
+                                    disabled={processing}
+                                    className="w-fit ml-2 px-4 py-2 text-sm font-bold text-white transition-colors duration-300 bg-red-500 rounded-lg hover:bg-red-400 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-50 "
+                                    form="edit-user"
+                                >
+                                    لغو
+                                </Link>
+                                <PrimaryButton
+                                    disabled={processing}
+                                    className="w-fit !px-4 !py-2"
+                                    form="edit-user"
+                                >
+                                    ثبت تغییرات
+                                </PrimaryButton>
                             </div>
                         </div>
                     </form>

@@ -6,17 +6,7 @@ export default function Index({ auth, patients }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={(
-                <div className="flex justify-between">
-                    <h1 className="font-semibold text-xl text-gray-800 align-middle py-2">بیماران</h1>
-                    <TextInput
-                        className="py-2 text-sm"
-                        label="جستوجو"
-                        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}
-                        size="1"
-                    />
-                </div>
-            )}
+            header="بیماران"
             breadcrumbs={
                 {
                     'بیماران': route('patients')
