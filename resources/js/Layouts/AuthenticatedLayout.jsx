@@ -1,23 +1,17 @@
-import {useEffect, useState} from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLink from '@/Components/NavLink';
 import TextInput from "@/Components/TextInput.jsx";
-import {toast, ToastContainer} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import "../../css/toastify/main.scss"
-import {useRemember} from "@inertiajs/react";
+import useMemorable from "@/Hooks/useMemorable.js";
 
-export default function Authenticated({ user, header, breadcrumbs, children }) {
-    const [minimize, setMinimize] = useRemember(false);
-    const [dark, setDark] = useState(false);
+export default function Authenticated({ header, breadcrumbs, children }) {
+    const [minimize, setMinimize] = useMemorable(false, 'minimize');
+    const [dark, setDark] = useMemorable(false, 'dark');
 
-    // useEffect(() => {
-    //     const l_s_minimize = window.localStorage.getItem('l_s_minimize');
-    //     if ( l_s_minimize !== null ) setMinimize(JSON.parse(l_s_minimize));
-    // }, []);
-    //
-    // useEffect(() => {
-    //     window.localStorage.setItem('l_s_minimize', JSON.stringify(minimize));
-    // }, [minimize]);
+    const toggleDarkMode = () => {
+        setDark(! dark);
+    };
 
     const changeMinimize = (e) => {
         e.preventDefault();
@@ -42,7 +36,7 @@ export default function Authenticated({ user, header, breadcrumbs, children }) {
                 <aside
                     className={`fixed hide-scrollbar flex flex-col transition-all ${minimize ? 'w-24' : 'w-52'} h-screen px-8 py-6 overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900`}>
                     <a href="#" className="-mx-2">
-                        <ApplicationLogo className={`transition-all ${minimize ? 'w-12' : 'w-16'}`} />
+                        <ApplicationLogo dark={dark} className={`transition-all ${minimize ? 'w-12' : 'w-16'}`} />
                     </a>
 
                     <div className="flex flex-col justify-between flex-1 mt-6">
@@ -195,7 +189,7 @@ export default function Authenticated({ user, header, breadcrumbs, children }) {
                         <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             <div className="flex justify-between">
                                 <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
-                                <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 items-center justify-center" onClick={() => setDark(! dark)}>
+                                <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 items-center justify-center" onClick={toggleDarkMode}>
 
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500 dark:text-slate-300" viewBox="0 0 24 24" fill="none">
                                         {dark ? (

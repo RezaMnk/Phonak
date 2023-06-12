@@ -1,5 +1,5 @@
-export default function ApplicationLogo(props) {
+export default function ApplicationLogo({dark, ...props}) {
     return (
-        <img src="/storage/logo-sm.jpg" alt="Neda Samak Ashena Logo" {...props}/>
+        <img {...props} src={dark ? '/storage/logo-white.png' : '/storage/logo.png'} alt="Neda Samak Ashena Logo"/>
     );
 }

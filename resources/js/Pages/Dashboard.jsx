@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link} from '@inertiajs/react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import ArrowLink from "@/Components/ArrowLink.jsx";
 
 
@@ -323,7 +323,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                             سفارشات هفته اخیر
                         </p>
                         <p className="text-sm text-gray-700 dark:text-slate-300">
-                            مجموعه سفارشات: 5,300,500 تومان
+                            مجموع سفارشات: 5,300,500 تومان
                             <span
                                 className="inline-flex mr-2 text-[.7rem] rounded-md bg-green-50 dark:bg-green-500/30 px-1 py-0.5 text-green-800 dark:text-green-300 ring-1 ring-green-600/20">
                                 تسویه شده

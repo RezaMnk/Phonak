@@ -1,11 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link} from '@inertiajs/react';
-import TextInput from "@/Components/TextInput.jsx";
 
-export default function Index({ auth, patients }) {
+export default function Index({ patients }) {
     return (
         <AuthenticatedLayout
-            user={auth.user}
             header="بیماران"
             breadcrumbs={
                 {

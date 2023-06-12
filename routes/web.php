@@ -58,3 +58,8 @@ require __DIR__.'/auth.php';
 Route::get('/test', function () {
     \Illuminate\Support\Facades\Auth::loginUsingId(1);
 });
+
+
+Route::get('storage-link', function () {
+    dd(\Illuminate\Support\Facades\Artisan::call('storage:link'));
+});

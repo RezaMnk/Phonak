@@ -7,7 +7,7 @@ import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 
-export default function Address({ auth }) {
+export default function Address() {
     const {data, setData, post, processing, errors} = useForm({
         mail_address: 'work'
     });
@@ -22,7 +22,6 @@ export default function Address({ auth }) {
 
     return (
         <AuthenticatedLayout
-            user={auth.user}
             header="آدرس ها"
         >
             <Head title="آدرس ها"/>
