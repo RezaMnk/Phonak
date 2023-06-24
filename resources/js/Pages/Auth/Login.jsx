@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import CheckboxInput from "@/Components/CheckboxInput.jsx";
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         national_code: '',
         remember: false,
@@ -85,7 +84,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-6">
-                    <PrimaryButton disabled={processing}>
+                    <PrimaryButton className="w-full" disabled={processing}>
                         ورود به حساب کاربری
                     </PrimaryButton>
                 </div>

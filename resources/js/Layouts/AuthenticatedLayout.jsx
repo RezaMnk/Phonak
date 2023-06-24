@@ -4,10 +4,35 @@ import TextInput from "@/Components/TextInput.jsx";
 import {ToastContainer} from "react-toastify";
 import "../../css/toastify/main.scss"
 import useMemorable from "@/Hooks/useMemorable.js";
+import {useEffect} from "react";
+import {usePage} from "@inertiajs/react";
+import {toast as toastify} from "react-toastify";
+import Icon from "@/Components/Icon.jsx";
 
-export default function Authenticated({ header, breadcrumbs, children }) {
+export default function Authenticated({ header, breadcrumbs, headerButton = <></>, children }) {
     const [minimize, setMinimize] = useMemorable(false, 'minimize');
-    const [dark, setDark] = useMemorable(false, 'dark');
+    const [dark, setDark] = useMemorable(true, 'dark');
+
+    const { toast } = usePage().props;
+
+    useEffect(() => {
+        if (dark) {
+            document.body.classList.add('dark')
+        } else {
+            document.body.classList.remove('dark')
+        }
+    }, [dark])
+
+    useEffect(() => {
+        if (toast) {
+            const type = Object.keys(toast)[0];
+            const message = toast[type];
+            toastify(message, {
+                type: type
+            });
+        }
+    }, [toast]);
+
 
     const toggleDarkMode = () => {
         setDark(! dark);
@@ -46,8 +71,12 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                     className=""
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
-                                    svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
-                                                   d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/>}
+                                    icon={
+                                        <Icon viewBox="0 0 24 24" type="stroke">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/>
+                                        </Icon>
+                                    }
                                     name="داشبورد"
                                     minimize={minimize}
                                 />
@@ -58,27 +87,27 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                     </div>
 
                                     <NavLink
-                                        href={route('patients')}
-                                        active={route().current('patients')}
-                                        svgIcon={<path id="Vector"
-                                                       d="M17 20C17 18.3431 14.7614 17 12 17C9.23858 17 7 18.3431 7 20M21 17.0004C21 15.7702 19.7659 14.7129 18 14.25M3 17.0004C3 15.7702 4.2341 14.7129 6 14.25M18 10.2361C18.6137 9.68679 19 8.8885 19 8C19 6.34315 17.6569 5 16 5C15.2316 5 14.5308 5.28885 14 5.76389M6 10.2361C5.38625 9.68679 5 8.8885 5 8C5 6.34315 6.34315 5 8 5C8.76835 5 9.46924 5.28885 10 5.76389M12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 12.6569 13.6569 14 12 14Z"
-                                                       strokeWidth="2" strokeLinecap="round"
-                                                       strokeLinejoin="round"/>}
+                                        href={route('patients.index')}
+                                        active={route().current('patients.index')}
+                                        icon={
+                                            <Icon viewBox="0 0 24 24" type="stroke" width={"2"}>
+                                                <path d="M17 20C17 18.3431 14.7614 17 12 17C9.23858 17 7 18.3431 7 20M21 17.0004C21 15.7702 19.7659 14.7129 18 14.25M3 17.0004C3 15.7702 4.2341 14.7129 6 14.25M18 10.2361C18.6137 9.68679 19 8.8885 19 8C19 6.34315 17.6569 5 16 5C15.2316 5 14.5308 5.28885 14 5.76389M6 10.2361C5.38625 9.68679 5 8.8885 5 8C5 6.34315 6.34315 5 8 5C8.76835 5 9.46924 5.28885 10 5.76389M12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 12.6569 13.6569 14 12 14Z"/>
+                                            </Icon>
+                                        }
                                         name="همه بیماران"
                                         minimize={minimize}
                                     />
 
                                     <NavLink
-                                        href="#"
-                                        // active={route().current('dashboard')}
-                                        svgIcon={(
-                                            <>
+                                        href={route('patients.create')}
+                                        active={route().current('patients.create')}
+                                        icon={
+                                            <Icon viewBox="0 0 24 24" type="stroke" width={"2"}>
                                                 <path d="M7,5H3M5,7V3" />
                                                 <path d="M11,3.41A5.11,5.11,0,0,1,13,3a5,5,0,1,1-4.59,7" />
                                                 <path d="M12,13h2a7,7,0,0,1,7,7v0a1,1,0,0,1-1,1H6a1,1,0,0,1-1-1v0A7,7,0,0,1,12,13Z" />
-                                            </>
-                                        )}
-                                        iconWidth="2"
+                                            </Icon>
+                                        }
                                         name="افزودن بیمار"
                                         minimize={minimize}
                                     />
@@ -90,19 +119,25 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                         <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
                                     </div>
                                     <NavLink
-                                        href="#"
-                                        // active={route().current('dashboard')}
-                                        svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
-                                                       d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>}
+                                        href={route('records.index')}
+                                        active={route().current('records.index')}
+                                        icon={
+                                            <Icon viewBox="0 0 24 24" type="stroke">
+                                                <path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>
+                                            </Icon>
+                                        }
                                         name="همه پرونده ها"
                                         minimize={minimize}
                                     />
 
                                     <NavLink
-                                        href="#"
-                                        // active={route().current('dashboard')}
-                                        svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
-                                                       d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>}
+                                        href={route('records.create')}
+                                        active={route().current('records.create')}
+                                        icon={
+                                            <Icon viewBox="0 0 24 24" type="stroke">
+                                                <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                                            </Icon>
+                                        }
                                         name="ایجاد پرونده"
                                         minimize={minimize}
                                     />
@@ -116,15 +151,14 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                     <NavLink
                                         href="#"
                                         // active={route().current('dashboard')}
-                                        svgIcon={(
-                                            <g>
-                                                <path d="M20.3873 7.1575L11.9999 12L3.60913 7.14978"></path>
-                                                <path d="M12 12V21"></path>
-                                                <path
-                                                    d="M11 2.57735C11.6188 2.22008 12.3812 2.22008 13 2.57735L19.6603 6.42265C20.2791 6.77992 20.6603 7.44017 20.6603 8.1547V15.8453C20.6603 16.5598 20.2791 17.2201 19.6603 17.5774L13 21.4226C12.3812 21.7799 11.6188 21.7799 11 21.4226L4.33975 17.5774C3.72094 17.2201 3.33975 16.5598 3.33975 15.8453V8.1547C3.33975 7.44017 3.72094 6.77992 4.33975 6.42265L11 2.57735Z"></path>
-                                                <path d="M8.5 4.5L16 9"></path>
-                                            </g>
-                                        )}
+                                        icon={
+                                            <Icon viewBox="0 0 24 24" type="stroke">
+                                                <path d="M20.3873 7.1575L11.9999 12L3.60913 7.14978" />
+                                                <path d="M12 12V21" />
+                                                <path d="M11 2.57735C11.6188 2.22008 12.3812 2.22008 13 2.57735L19.6603 6.42265C20.2791 6.77992 20.6603 7.44017 20.6603 8.1547V15.8453C20.6603 16.5598 20.2791 17.2201 19.6603 17.5774L13 21.4226C12.3812 21.7799 11.6188 21.7799 11 21.4226L4.33975 17.5774C3.72094 17.2201 3.33975 16.5598 3.33975 15.8453V8.1547C3.33975 7.44017 3.72094 6.77992 4.33975 6.42265L11 2.57735Z" />
+                                                <path d="M8.5 4.5L16 9" />
+                                            </Icon>
+                                        }
                                         name="همه محصولات"
                                         minimize={minimize}
                                     />
@@ -141,24 +175,24 @@ export default function Authenticated({ header, breadcrumbs, children }) {
 
                                 <NavLink
                                     href="#"
-                                    svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
-                                                   d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
-                                    iconWidth="2"
+                                    icon={
+                                        <Icon viewBox="0 0 24 24" width="2" type="stroke">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>
+                                        </Icon>
+                                    }
                                     name="پروفایل"
                                     minimize={minimize}
                                 />
 
                                 <NavLink
                                     href="#"
-                                    svgIcon={(
-                                        <>
-                                            <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"/>
-                                            <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </>
-                                    )}
-                                    iconWidth="2"
+                                    icon={
+                                        <Icon viewBox="0 0 24 24" type="stroke" width="2">
+                                            <path d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"/>
+                                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </Icon>
+                                    }
                                     name="تنظیمات"
                                     minimize={minimize}
                                 />
@@ -166,15 +200,14 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                 <NavLink
                                     className="!mt-5"
                                     role="button"
-                                    svgIcon={(
-                                        <>
-                                            <polyline xmlns="http://www.w3.org/2000/svg" points="9 3 9 9 3 9"/>
-                                            <polyline xmlns="http://www.w3.org/2000/svg" points="15 21 15 15 21 15"/>
-                                            <polyline xmlns="http://www.w3.org/2000/svg" points="3 15 9 15 9 21"/>
-                                            <polyline xmlns="http://www.w3.org/2000/svg" points="21 9 15 9 15 3"/>
-                                        </>
-                                    )}
-                                    iconWidth="2"
+                                    icon={
+                                        <Icon viewBox="0 0 24 24" type="stroke" width="2">
+                                            <polyline points="9 3 9 9 3 9"/>
+                                            <polyline points="15 21 15 15 21 15"/>
+                                            <polyline points="3 15 9 15 9 21"/>
+                                            <polyline points="21 9 15 9 15 3"/>
+                                        </Icon>
+                                    }
                                     name="بستن منو"
                                     minimize={minimize}
                                     onClick={changeMinimize}
@@ -209,7 +242,7 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                     <TextInput
                                         id="search"
                                         className="py-2 text-sm"
-                                        label="جستوجو"
+                                        label="جستجو"
                                         svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}
                                         size="1"
                                     />
@@ -254,20 +287,21 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                             </div>
                         </div>
 
-                        {breadcrumbs && (
-                            <div className="container mx-auto border-t border-gray-300 dark:border-slate-600 py-6 px-4 sm:px-6 lg:px-8 flex items-center py-4 overflow-x-auto whitespace-nowrap">
+                        {(breadcrumbs || headerButton) && (
+                            <div className="container mx-auto border-t border-gray-300 dark:border-slate-600 py-6 px-4 sm:px-6 lg:px-8 flex justify-between py-4 overflow-x-auto whitespace-nowrap">
+                                {breadcrumbs && (
+                                    <div className="flex items-center">
+                                        <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path
+                                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                                            </svg>
+                                        </a>
 
-                                <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path
-                                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                                    </svg>
-                                </a>
-
-                                {Object.keys(breadcrumbs).map((sectionName, i) => {
-                                    const keys = Object.keys(breadcrumbs);
-                                    return (
-                                        <div className="flex items-center" key={i}>
+                                        {Object.keys(breadcrumbs).map((sectionName, i) => {
+                                            const keys = Object.keys(breadcrumbs);
+                                            return (
+                                                <div className="flex items-center" key={i}>
                                         <span className="mx-5 text-gray-500  dark:text-slate-100">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" stroke="currentColor" fill="currentColor">
                                                 <path
@@ -276,13 +310,17 @@ export default function Authenticated({ header, breadcrumbs, children }) {
                                             </svg>
                                         </span>
 
-                                            <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-green-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
-                                                {sectionName}
-                                            </a>
-                                        </div>
-                                    )
-                                })}
-
+                                                    <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-green-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
+                                                        {sectionName}
+                                                    </a>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                )}
+                                {headerButton && (
+                                    headerButton
+                                )}
                             </div>
                         )}
 

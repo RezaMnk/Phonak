@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RecordController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,12 +44,22 @@ Route::middleware(['auth', 'auth.address'])->group(function () {
         Route::delete('/', 'destroy')->name('.destroy');
     });
 
-    Route::controller(PatientController::class)->name('patients')->prefix('patients')->group(function () {
-        Route::get('/', 'index');
-        Route::get('/{patient}/edit', 'edit')->name('.edit');
-        Route::patch('/{patient}', 'update')->name('.update');
-        Route::delete('/{patient}', 'destroy')->name('.destroy');
+    Route::resource('patients', PatientController::class);
+
+    Route::resource('records', RecordController::class);
+    Route::controller(RecordController::class)->name('records')->prefix('records')->group(function () {
+        Route::post('/check_national_code', 'check_national_code')->name('.check_national_code');
+        Route::post('/products', 'get_products')->name('.products');
+
+        Route::post('/store_aid/{record}', 'store_aid')->name('.store_aid');
     });
+
+//    Route::controller(PatientController::class)->name('patients')->prefix('patients')->group(function () {
+//        Route::get('/', 'index');
+//        Route::get('/{patient}/edit', 'edit')->name('.edit');
+//        Route::patch('/{patient}', 'update')->name('.update');
+//        Route::delete('/{patient}', 'destroy')->name('.destroy');
+//    });
 
 });
 

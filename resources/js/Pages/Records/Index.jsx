@@ -7,11 +7,11 @@ import {useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Pagination from "@/Components/Pagination.jsx";
 
-export default function Index({ patients }) {
+export default function Index({ records }) {
     const [deleteModalShow, setDeleteModalShow] = useState(false);
-    const [modalPatient, setModalPatient] = useState({});
+    const [modalRecord, setModalRecord] = useState({});
 
-    const data_patients = patients.data
+    const data_records = records.data
 
     const {
         delete: destroy,
@@ -21,7 +21,7 @@ export default function Index({ patients }) {
     const deletePatient = (e) => {
         e.preventDefault();
 
-        destroy(route('patients.destroy', modalPatient), {
+        destroy(route('records.destroy', modalRecord), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
         });
@@ -33,23 +33,23 @@ export default function Index({ patients }) {
 
     return (
         <AuthenticatedLayout
-            header="بیماران"
+            header="پرونده ها"
             breadcrumbs={
                 {
-                    'بیماران': route('patients.index')
+                    'پرونده ها': route('records.index')
                 }
             }
             headerButton={
                 <PrimaryButton
                     link={true}
-                    href={route('patients.create')}
+                    href={route('records.create')}
                     className="!px-4 !py-2 text-xs"
                 >
-                    افزون بیمار
+                    پرونده جدید
                 </PrimaryButton>
             }
         >
-            <Head title="بیماران" />
+            <Head title="پرونده ها" />
 
 
             <div className="relative overflow-x-auto rounded-lg">
@@ -57,19 +57,19 @@ export default function Index({ patients }) {
                     <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                نام و نام خانوادگی
+                                شماره پرونده
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                کد ملی
+                                بیمار
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                سن
+                                برند
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                شماره تماس
+                                نوع سفارش
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                محل سکونت
+                                وضعیت
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 عملیات
@@ -77,37 +77,47 @@ export default function Index({ patients }) {
                         </tr>
                     </thead>
                     <tbody>
-                    {Object.values(data_patients).map((patient) => {
-                        const is_last = data_patients[Object.keys(data_patients).length-1] === patient;
+                    {Object.values(data_records).map((record) => {
+                        const is_last = data_records[Object.keys(data_records).length-1] === record;
                         return (
-                            <tr key={patient.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
+                            <tr key={record.id} className={`bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
                                 <th scope="row"
-                                    className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
-                                    {patient.name}
+                                    className="px-6 py-4">
+                                    {record.id}
                                 </th>
-                                <td className="px-6 py-4">
-                                    {patient.national_code}
+                                <td className="px-6 py-4 font-medium">
+                                    <Link href={route('patients.edit', record.patient.id)}
+                                        className="hover:text-gray-600 dark:hover:text-slate-400"
+                                    >
+                                        {record.patient.name}
+                                    </Link>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
-                                        {patient.age}
-                                    </span>
+                                    {record.brand === 'phonak' ? 'فوناک' : 'هنزاتون'}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {patient.phone}
+                                    {record.type}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {patient.state} - {patient.city}
+                                    {record.completed ? (
+                                        <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            تکمیل شده
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
+                                            در انتظار تکمیل
+                                        </span>
+                                    )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <Link href={route('patients.edit', [patient.id])}
+                                    <Link href={route('records.edit', [record.id])}
                                         className="inline-flex px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
                                     >
                                         ویرایش
                                     </Link>
                                     <button type="button" onClick={() => {
                                         setDeleteModalShow(true);
-                                        setModalPatient(patient)
+                                        setModalRecord(record)
                                     }}
                                         className="inline-flex mr-2 px-2 py-1 text-xs text-center text-red-900 dark:text-red-200 transition-colors duration-300 bg-red-100 dark:bg-red-600/50 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-200 dark:hover:bg-red-600 focus:outline-none focus:ring-0 focus:border-red-500"
                                     >
@@ -121,7 +131,7 @@ export default function Index({ patients }) {
                 </table>
             </div>
 
-            <Pagination data={patients}/>
+            <Pagination data={records}/>
 
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
                 <form onSubmit={deletePatient} className="p-6">

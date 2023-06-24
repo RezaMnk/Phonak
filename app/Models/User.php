@@ -60,9 +60,18 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function user(): HasMany
+    public function patients(): HasMany
     {
         return $this->hasMany(Patient::class);
+    }
+
+
+    /**
+     * @return HasMany
+     */
+    public function records(): HasMany
+    {
+        return $this->hasMany(Record::class);
     }
 
 

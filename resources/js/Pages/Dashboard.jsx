@@ -114,7 +114,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                         </div>
                         <div className="inline-flex">
                             <ArrowLink
-                                href={route('patients')}
+                                href={route('patients.index')}
                                 name="مشاهده همه"
                             />
                         </div>
@@ -268,7 +268,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                         </div>
                         <div className="inline-flex">
                             <ArrowLink
-                                href={route('patients')}
+                                href={route('patients.index')}
                                 name="مشاهده همه"
                             />
                         </div>

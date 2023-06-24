@@ -15,7 +15,7 @@ $rt-mobile: 'only screen and (max-width : 480px)' !default;
   --toastify-icon-color-warning: var(--toastify-color-warning);
   --toastify-icon-color-error: var(--toastify-color-error);
 
-  --toastify-toast-width: 320px;
+  --toastify-toast-width: calc(fit-content);
   --toastify-toast-background: #fff;
   --toastify-toast-min-height: 64px;
   --toastify-toast-max-height: 800px;

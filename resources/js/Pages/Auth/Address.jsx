@@ -26,10 +26,10 @@ export default function Address() {
         >
             <Head title="آدرس ها"/>
 
-            <div className="min-h-[75vh] flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-                <div className="w-full sm:max-w-3xl mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div className="min-h-[75vh] flex flex-col sm:justify-center items-center">
+                <div className="w-full sm:max-w-3xl p-6 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
                     <form className="w-full max-w-3xl h-1/2" onSubmit={submit}>
-                        <div className="mt-5">
+                        <div className="text-gray-700 dark:text-slate-200">
                             <h5>
                                 مشخصات محل اقامت
                             </h5>
@@ -100,7 +100,7 @@ export default function Address() {
                             </div>
                         </div>
 
-                        <div className="mt-8">
+                        <div className="mt-8 text-gray-700 dark:text-slate-200">
                             <h5>
                                 مشخصات محل کار
                             </h5>
@@ -133,7 +133,6 @@ export default function Address() {
 
                                 <div>
                                     <TextInput
-                                        className={errors.work_phone && 'border-red-400 focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40'}
                                         id="work_phone"
                                         type="number"
                                         name="work_phone"
@@ -171,7 +170,7 @@ export default function Address() {
                             </div>
                         </div>
                         <div className="flex mt-8">
-                            <div className="w-1/2 ml-5">
+                            <div className="w-1/2 ml-5 text-gray-700 dark:text-slate-200">
                                 <p>
                                     مرسولات شما به کدام آدرس ارسال شوند؟
                                 </p>

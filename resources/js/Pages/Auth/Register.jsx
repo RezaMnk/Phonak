@@ -141,7 +141,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-6">
-                    <PrimaryButton disabled={processing}>
+                    <PrimaryButton className="w-full" disabled={processing}>
                         ثبت نام
                     </PrimaryButton>
 

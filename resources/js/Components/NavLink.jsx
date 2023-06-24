@@ -1,6 +1,6 @@
 import {Link} from "@inertiajs/react";
 
-export default function NavLink({className = '', name = '', minimize, active = false, svgIcon = <></>, iconWidth = '1.5', ...props}) {
+export default function NavLink({className = '', name = '', minimize, icon = <></>, active = false, ...props}) {
     return (
         <Link
             {...props}
@@ -9,10 +9,7 @@ export default function NavLink({className = '', name = '', minimize, active = f
                 + className
         }
             >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 strokeWidth={iconWidth} stroke="currentColor" className="w-5 h-5">
-                {svgIcon}
-            </svg>
+            {icon}
 
             <span className={`mx-2 text-sm ${minimize ? 'hidden' : ''}`}>
                 {name}

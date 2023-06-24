@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('post_code');
             $table->string('phone');
             $table->unsignedTinyInteger('age');
-            $table->unsignedTinyInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

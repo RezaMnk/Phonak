@@ -19,6 +19,9 @@ export default {
                     fontFeatureSettings: '"ss02"'
                 }],
             },
+            transitionProperty: {
+                'height': 'height'
+            }
         },
     },
 

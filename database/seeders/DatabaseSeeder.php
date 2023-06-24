@@ -12,11 +12,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+//         \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+         $user = \App\Models\User::create([
+             'name' => 'رضا نداف',
+             'national_code' => '0012345678',
+             'grad_year' => '1380',
+             'med_number' => '123456',
+             'grade' => 'کارشناسی',
+             'university' => 'تهران',
+         ]);
+
+         $user->address()->create([
+             'home_address' => 'تهران',
+             'home_post_code' => '1111111111',
+             'home_phone' => '02133131331',
+             'work_address' => 'کرج',
+             'work_post_code' => '2222222222',
+             'work_phone' => '02122121221',
+             'mail_address' => 'home',
+         ]);
     }
 }

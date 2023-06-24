@@ -8,47 +8,36 @@ import SelectInput from "@/Components/SelectInput.jsx";
 import IranStatesOptions, {Cities} from "@/Partials/IranStatesOptions.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 
-export default function Edit({ patient }) {
-    const {data, setData, put, processing, errors} = useForm({
-        name: patient.name,
-        eng_name: patient.eng_name,
-        national_code: patient.national_code,
-        state: patient.state,
-        city: patient.city,
-        address: patient.address,
-        post_code: patient.post_code,
-        phone: patient.phone,
-        age: patient.age,
+export default function Create() {
+    const {data, setData, post, processing, errors} = useForm({
+        state: 'تهران',
+        city: 'تهران',
     });
-
 
     const submit = (e) => {
         e.preventDefault();
-        put(route('patients.update', patient));
+        post(route('patients.store'));
     };
 
     return (
         <AuthenticatedLayout
             header={(
                 <>
-                    ویرایش بیمار:
-                    <span className="font-medium mr-2 text-gray-500 dark:text-slate-300">
-                        {patient.name}
-                    </span>
+                    ایجاد بیمار
                 </>
             )}
             breadcrumbs={
                 {
                     'بیماران': route('patients.index'),
-                    'ویرایش بیمار': "#"
+                    'ایجاد بیمار': "#"
                 }
             }
         >
-            <Head title="ویرایش بیمار" />
+            <Head title="ایجاد بیمار" />
 
-            <div className="flex flex-col sm:justify-center items-center">
+            <div className="flex flex-col sm:justify-center items-center sm:pt-0">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
-                    <form id="edit-user" className="w-full" onSubmit={submit}>
+                    <form id="create-user" className="w-full" onSubmit={submit}>
                         <div className="mt-5 text-gray-700 dark:text-slate-200">
                             <h5>
                                 اطلاعات بیمار
@@ -219,9 +208,9 @@ export default function Edit({ patient }) {
                             <PrimaryButton
                                 className="!px-4 !py-2"
                                 disabled={processing}
-                                form="edit-user"
+                                form="create-user"
                             >
-                                ثبت تغییرات
+                                ایجاد بیمار
                             </PrimaryButton>
                             <DangerButton
                                 className="!px-4 !py-2"
