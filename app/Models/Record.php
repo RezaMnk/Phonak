@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Record extends Model
 {
@@ -19,24 +20,10 @@ class Record extends Model
     protected $fillable = [
         'user_id',
         'patient_id',
+        'product_id',
         'brand',
         'type',
-        'ear',
-        'hearing_aid_size',
-        'vent_size',
-        'wax_guard',
-        'receiver',
-        'have_mold',
-        'mold_material',
-        'mold_size',
-        'vent',
-        'tube_size',
-        'dome_type',
-        'dome_size',
-        'external_receiver_size',
-        'shell_type',
-        'accessories',
-        'description'
+        'ear'
     ];
 
 
@@ -51,7 +38,7 @@ class Record extends Model
     }
 
     /**
-     * Belongs to user
+     * Belongs to patient
      *
      * @return BelongsTo
      */
@@ -61,12 +48,55 @@ class Record extends Model
     }
 
     /**
-     * Belongs to user
+     * has one product
+     *
+     * @return HasOne
+     */
+    public function product(): HasOne
+    {
+        return $this->hasOne(Product::class);
+    }
+
+    /**
+     * has one shipping
+     *
+     * @return HasOne
+     */
+    public function shipping(): HasOne
+    {
+        return $this->hasOne(Shipping::class);
+    }
+
+    /**
+     * has "two" hearing user
      *
      * @return HasMany
      */
-    public function products(): HasMany
+    public function record_aids(): HasMany
     {
-        return $this->hasMany(Patient::class);
+        return $this->hasMany(RecordAid::class);
+    }
+
+    /**
+     * has "two" auidograms
+     *
+     * @return HasMany
+     */
+    public function audiograms(): HasMany
+    {
+        return $this->hasMany(Audiogram::class);
+    }
+
+
+    public function set_step($step)
+    {
+        $this->status = max($step, $this->status == 'completed' ? 5 : $this->status);
+        $this->touch();
+    }
+
+
+    public function get_step()
+    {
+        return $this->status == 'completed' ? 5 : $this->status;
     }
 }

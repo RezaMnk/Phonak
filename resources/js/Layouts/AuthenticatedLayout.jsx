@@ -288,40 +288,42 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                         </div>
 
                         {(breadcrumbs || headerButton) && (
-                            <div className="container mx-auto border-t border-gray-300 dark:border-slate-600 py-6 px-4 sm:px-6 lg:px-8 flex justify-between py-4 overflow-x-auto whitespace-nowrap">
-                                {breadcrumbs && (
-                                    <div className="flex items-center">
-                                        <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                                            </svg>
-                                        </a>
+                            <>
+                                <hr className="w-fulll border-gray-300 dark:border-slate-600"/>
+                                <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between py-4 overflow-x-auto whitespace-nowrap">
+                                    {breadcrumbs && (
+                                        <div className="flex items-center">
+                                            <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                                                </svg>
+                                            </a>
 
-                                        {Object.keys(breadcrumbs).map((sectionName, i) => {
-                                            const keys = Object.keys(breadcrumbs);
-                                            return (
-                                                <div className="flex items-center" key={i}>
-                                        <span className="mx-5 text-gray-500  dark:text-slate-100">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" stroke="currentColor" fill="currentColor">
-                                                <path
-                                                    d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z"
-                                                />
-                                            </svg>
-                                        </span>
-
-                                                    <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-green-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
-                                                        {sectionName}
-                                                    </a>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                {headerButton && (
-                                    headerButton
-                                )}
-                            </div>
+                                            {Object.keys(breadcrumbs).map((sectionName, i) => {
+                                                const keys = Object.keys(breadcrumbs);
+                                                return (
+                                                    <div className="flex items-center" key={i}>
+                                                        <span className="mx-5 text-gray-500  dark:text-slate-100">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" stroke="currentColor" fill="currentColor">
+                                                                <path
+                                                                    d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z"
+                                                                />
+                                                            </svg>
+                                                        </span>
+                                                        <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-green-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
+                                                            {sectionName}
+                                                        </a>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    )}
+                                    {headerButton && (
+                                        headerButton
+                                    )}
+                                </div>
+                            </>
                         )}
 
                     </header>

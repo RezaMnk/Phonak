@@ -6,35 +6,44 @@ import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import IranStatesOptions, {Cities} from "@/Partials/IranStatesOptions.jsx";
-import DangerButton from "@/Components/DangerButton.jsx";
 import {useContext, useState} from "react";
 import {StepContext} from "@/Pages/Records/Create.jsx";
 
 export default function PatientStep() {
-    const {data, setData, post, processing, errors} = useForm({
-        state: 'تهران',
-        city: 'تهران',
-        national_code: '',
-        name: '',
-        eng_name: '',
-        address: '',
-        post_code: '',
-        phone: '',
-        age: ''
-    });
 
-    const {nextStep, prevStep} = useContext(StepContext)
+    const {record, nextStep} = useContext(StepContext)
+
+    const {data, setData, post, patch, processing, errors} = useForm({
+        state: record?.patient?.state || 'تهران',
+        city: record?.patient?.city || 'تهران',
+        national_code: record?.patient?.national_code || '',
+        name: record?.patient?.name || '',
+        eng_name: record?.patient?.eng_name || '',
+        address: record?.patient?.address || '',
+        post_code: record?.patient?.post_code || '',
+        phone: record?.patient?.phone || '',
+        age: record?.patient?.age || ''
+    });
 
     const [ disabled, setDisabled ] = useState(true)
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('records.store'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                nextStep()
-            }
-        });
+
+        if (record)
+            patch(route('records.update', record.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    nextStep()
+                }
+            });
+        else
+            post(route('records.store'), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    nextStep()
+                }
+            });
     };
 
     const update_patient = (new_patient) => {
@@ -269,7 +278,7 @@ export default function PatientStep() {
                         svgIcon={<path
                             d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
                             strokeLinecap="round" strokeLinejoin="round"/>}
-                        autoComplete="username"
+                        autoComplete="address"
                         onChange={(e) => setData('address', e.target.value)}
                         error={errors.address}
                         required
@@ -277,14 +286,7 @@ export default function PatientStep() {
 
                     <InputError message={errors.address} className="mt-2"/>
                 </div>
-                <div className="flex justify-between mt-8">
-                     <DangerButton
-                         className="!px-4 !py-2"
-                         type="button"
-                         onClick={prevStep}
-                     >
-                         مرحله قبل
-                     </DangerButton>
+                <div className="flex justify-end mt-8">
                      <PrimaryButton
                         className="!px-4 !py-2"
                         disabled={processing}

@@ -51,7 +51,9 @@ Route::middleware(['auth', 'auth.address'])->group(function () {
         Route::post('/check_national_code', 'check_national_code')->name('.check_national_code');
         Route::post('/products', 'get_products')->name('.products');
 
+        Route::post('/store_aid_type/{record}', 'store_aid_type')->name('.store_aid_type');
         Route::post('/store_aid/{record}', 'store_aid')->name('.store_aid');
+        Route::post('/store_audiogram/{record}', 'store_audiogram')->name('.store_audiogram');
     });
 
 //    Route::controller(PatientController::class)->name('patients')->prefix('patients')->group(function () {

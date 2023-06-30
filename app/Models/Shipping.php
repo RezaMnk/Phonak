@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Product extends Model
+class Shipping extends Model
 {
     use HasFactory;
 
@@ -16,8 +16,16 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
+        'record_id',
+        'type',
+        'etc_delivery',
+        'has_health_insurance',
+        'phone',
+        'audiologist_med_number',
+        'otolaryngologist_med_number',
+        'supplementary_insurance',
     ];
+
 
 
     /**

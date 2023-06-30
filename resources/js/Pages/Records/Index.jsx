@@ -99,7 +99,7 @@ export default function Index({ records }) {
                                     {record.type}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {record.completed ? (
+                                    {record.status === 'completed' ? (
                                         <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
                                             تکمیل شده
                                         </span>
