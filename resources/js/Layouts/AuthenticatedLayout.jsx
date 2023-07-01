@@ -24,6 +24,7 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
     }, [dark])
 
     useEffect(() => {
+        console.log(toast)
         if (toast) {
             const type = Object.keys(toast)[0];
             const message = toast[type];

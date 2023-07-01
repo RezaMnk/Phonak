@@ -101,7 +101,7 @@ export default function PatientStep() {
 
     return (
         <>
-            <Head title="پرونده جدید - بیمار" />
+            <Head title="پرونده - بیمار" />
 
              <form className="w-full" onSubmit={submit}>
                 <div className="mt-5 text-gray-700 dark:text-slate-200">

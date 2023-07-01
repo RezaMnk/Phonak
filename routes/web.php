@@ -54,6 +54,7 @@ Route::middleware(['auth', 'auth.address'])->group(function () {
         Route::post('/store_aid_type/{record}', 'store_aid_type')->name('.store_aid_type');
         Route::post('/store_aid/{record}', 'store_aid')->name('.store_aid');
         Route::post('/store_audiogram/{record}', 'store_audiogram')->name('.store_audiogram');
+        Route::post('/store_shipping/{record}', 'store_shipping')->name('.store_shipping');
     });
 
 //    Route::controller(PatientController::class)->name('patients')->prefix('patients')->group(function () {
@@ -69,7 +70,7 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/test', function () {
-    \Illuminate\Support\Facades\Auth::loginUsingId(1);
+    dd(mt_rand(100000, 999999));
 });
 
 

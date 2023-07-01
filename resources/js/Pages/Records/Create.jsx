@@ -5,13 +5,16 @@ import PatientStep from "@/Pages/Records/Steps/PatientStep.jsx";
 import AidTypeStep from "@/Pages/Records/Steps/AidTypeStep.jsx";
 import AidStep from "@/Pages/Records/Steps/AidStep.jsx";
 import AudiogramStep from "@/Pages/Records/Steps/AudiogramStep.jsx";
+import ShippingStep from "@/Pages/Records/Steps/ShippingStep.jsx";
+import {toast as toastify} from "react-toastify";
+import {usePage} from "@inertiajs/react";
 
 
 export const StepContext = createContext();
 
 export default function Create({ record }) {
     const [step, setStep] = useState(parseInt(new URLSearchParams(window.location.search).get('step')) || 1);
-    const passedSteps = record?.status ? (record.status === 'completed' ? 5 : record?.status) : 1;
+    const passedSteps = record?.status ? (record.status === 'completed' ? 6 : record?.status) : 1;
 
     const prevStep = () => {
         setStep((prev) => prev - 1);
@@ -28,6 +31,8 @@ export default function Create({ record }) {
     const nextStep = () => {
         setStep((prev) => prev + 1)
     };
+
+
     const showStep = () => {
         switch (step) {
             case 1:
@@ -38,6 +43,8 @@ export default function Create({ record }) {
                 return <AidStep />;
             case 4:
                 return <AudiogramStep />;
+            case 5:
+                return <ShippingStep />;
         }
     }
 
@@ -56,7 +63,7 @@ export default function Create({ record }) {
                 }
             }
         >
-            <Steps step={step} passedSteps={passedSteps} />
+            <Steps step={step} has={record?.type} passedSteps={passedSteps} />
 
             <div className="flex flex-col sm:justify-center items-center mt-12">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">

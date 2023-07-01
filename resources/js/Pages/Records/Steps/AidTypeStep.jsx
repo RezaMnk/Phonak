@@ -82,7 +82,7 @@ export default function AidTypeStep() {
 
     return (
         <>
-            <Head title="پرونده جدید - نوع سفارش" />
+            <Head title="پرونده - نوع سفارش" />
 
              <form className="w-full" onSubmit={submit} noValidate>
                  <div className="flex mt-3">

@@ -77,7 +77,7 @@ export default function Index({ records }) {
                         </tr>
                     </thead>
                     <tbody>
-                    {Object.values(data_records).map((record) => {
+                    {Object.keys(data_records).length ? Object.values(data_records).map((record) => {
                         const is_last = data_records[Object.keys(data_records).length-1] === record;
                         return (
                             <tr key={record.id} className={`bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
@@ -126,7 +126,20 @@ export default function Index({ records }) {
                                 </td>
                             </tr>
                         )
-                    })}
+                    }) : (
+                        <tr className="bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900">
+                            <th scope="row"
+                                colSpan="6"
+                                className="text-lg px-6 py-6">
+                                هیچ پرونده ای یافت نشد!
+                                <Link href={route('records.create')}
+                                    className="mr-2 text-green-500 text-base"
+                                >
+                                    ایجاد اولین پرونده
+                                </Link>
+                            </th>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
             </div>

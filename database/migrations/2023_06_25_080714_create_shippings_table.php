@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['terminal', 'air', 'tipax', 'post', 'co-worker delivery', 'company delivery', 'etc']);
-            $table->string('etc_delivery');
+            $table->string('etc_delivery')->nullable();
             $table->boolean('has_health_insurance');
             $table->string('phone')->nullable();
             $table->string('audiologist_med_number')->nullable();

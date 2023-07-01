@@ -40,7 +40,7 @@ class PatientController extends Controller
             'city' => ['required', 'string'],
             'address' => ['required', 'string', 'max:255'],
             'post_code' => ['required', 'numeric', 'digits:10'],
-            'phone' => ['required', 'numeric', 'digits:11'],
+            'phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'age' => ['required', 'numeric', 'between:0,200'],
         ]);
 
@@ -80,7 +80,7 @@ class PatientController extends Controller
             'city' => ['required', 'string'],
             'address' => ['required', 'string', 'max:255'],
             'post_code' => ['required', 'numeric', 'digits:10'],
-            'phone' => ['required', 'numeric', 'digits:11'],
+            'phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'age' => ['required', 'numeric', 'between:0,200'],
         ]);
 

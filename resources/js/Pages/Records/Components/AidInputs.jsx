@@ -360,7 +360,7 @@ export const DomeSize = ({ ear }) => {
                     ...prevData,
                     [ear]: {
                         ...prevData[ear],
-                        tube_size: e.target.value
+                        dome_size: e.target.value
                     },
                 }))}
                 error={errors.dome_size}

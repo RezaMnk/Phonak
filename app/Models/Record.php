@@ -90,13 +90,13 @@ class Record extends Model
 
     public function set_step($step)
     {
-        $this->status = max($step, $this->status == 'completed' ? 5 : $this->status);
+        $this->status = max($step, $this->status == 'completed' ? 6 : $this->status);
         $this->touch();
     }
 
 
     public function get_step()
     {
-        return $this->status == 'completed' ? 5 : $this->status;
+        return $this->status == 'completed' ? 6 : $this->status;
     }
 }

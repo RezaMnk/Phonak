@@ -46,7 +46,7 @@ class RecordController extends Controller
                 'city' => ['required', 'string'],
                 'address' => ['required', 'string', 'max:255'],
                 'post_code' => ['required', 'numeric', 'digits:10'],
-                'phone' => ['required', 'numeric', 'digits:11'],
+                'phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
                 'age' => ['required', 'numeric', 'between:0,200'],
             ]);
 
@@ -151,14 +151,53 @@ class RecordController extends Controller
             }
 
             else
-                if ($record_aid = $record->record_aids->firstWhere('ear', $ear))
-                    $record_aid->delete();
+                if ($audiogram = $record->audiograms->firstWhere('ear', $ear))
+                    $audiogram->delete();
         }
 
         $record->update($request->only(['brand', 'type', 'ear', 'product']));
-        $record->set_step(4);
+        $record->set_step(5);
 
-        return redirect()->route('records.edit', ['record' => $record, 'step' => 4])->with(['toast', ['success' => 'مرحله سوم ذخیره شد']]);
+        return redirect()->route('records.edit', ['record' => $record, 'step' => 5])->with(['toast', ['success' => 'مرحله چهارم ذخیره شد']]);
+    }
+
+    /**
+     * Store shipping to record.
+     */
+    public function store_shipping(Request $request, Record $record)
+    {
+        $request->validate([
+            'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
+            'has_health_insurance' => ['boolean'],
+        ]);
+
+        $data = $request->only(['type','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
+
+        if ($request->type == 'etc')
+            $request->validate([
+                'etc_delivery' => ['required', 'string', 'max:255'],
+            ]);
+        else
+            $data['etc_delivery'] = null;
+
+        if ($request->has_health_insurance)
+            $request->validate([
+                'phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
+                'audiologist_med_number' => ['required', 'numeric', 'max_digits:15'],
+                'otolaryngologist_med_number' => ['required', 'numeric', 'max_digits:15'],
+                'supplementary_insurance' => ['required', 'string', 'max:255'],
+            ]);
+        else {
+            $data['phone'] = null;
+            $data['audiologist_med_number'] = null;
+            $data['otolaryngologist_med_number'] = null;
+            $data['supplementary_insurance'] = null;
+        }
+
+        $record->shipping()->updateOrCreate([], $data);
+        $record->set_step('completed');
+
+        return redirect()->route('records.index')->with(['toast', ['success' => "پرونده شماره ". $record->id ." تکمیل شد"]]);
     }
 
     /**
@@ -208,6 +247,7 @@ class RecordController extends Controller
             'record.aid.left' => $record->record_aids->firstWhere('ear', 'left'),
             'record.audiogram.right' => $record->audiograms->firstWhere('ear', 'right'),
             'record.audiogram.left' => $record->audiograms->firstWhere('ear', 'left'),
+            'record.shipping' => $record->shipping,
         ]);
     }
 

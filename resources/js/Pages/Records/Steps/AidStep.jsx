@@ -21,36 +21,36 @@ export default function AidStep() {
 
     const {data, setData, post, processing, errors} = useForm({
         left: {
-            hearing_aid_size: record.aid.left.hearing_aid_size || '',
-            vent_size: record.aid.left.vent_size || '',
-            wax_guard: record.aid.left.wax_guard || '',
-            receiver: record.aid.left.receiver || '',
-            has_mold: record.aid.left.has_mold || false,
-            mold_material: record.aid.left.mold_material || 'hard',
-            mold_size: record.aid.left.mold_size || '',
-            has_vent: record.aid.left.has_vent || false,
-            tube_size: record.aid.left.tube_size || '',
-            dome_type: record.aid.left.dome_type || '',
-            dome_size: record.aid.left.dome_size || '',
-            external_receiver_size: record.aid.left.external_receiver_size || '',
-            shell_type: record.aid.left.shell_type || '',
-            description: record.aid.left.description || '',
+            hearing_aid_size: record.aid?.left?.hearing_aid_size || '',
+            vent_size: record.aid?.left?.vent_size || '',
+            wax_guard: record.aid?.left?.wax_guard || '',
+            receiver: record.aid?.left?.receiver || '',
+            has_mold: record.aid?.left?.has_mold || false,
+            mold_material: record.aid?.left?.mold_material || 'hard',
+            mold_size: record.aid?.left?.mold_size || '',
+            has_vent: record.aid?.left?.has_vent || false,
+            tube_size: record.aid?.left?.tube_size || '',
+            dome_type: record.aid?.left?.dome_type || '',
+            dome_size: record.aid?.left?.dome_size || '',
+            external_receiver_size: record.aid?.left?.external_receiver_size || '',
+            shell_type: record.aid?.left?.shell_type || '',
+            description: record.aid?.left?.description || '',
         },
         right: {
-            hearing_aid_size: record.aid.left.hearing_aid_size || '',
-            vent_size: record.aid.right.vent_size || '',
-            wax_guard: record.aid.right.wax_guard || '',
-            receiver: record.aid.right.receiver || '',
-            has_mold: record.aid.right.has_mold || false,
-            mold_material: record.aid.right.mold_material || 'hard',
-            mold_size: record.aid.right.mold_size || '',
-            has_vent: record.aid.right.has_vent || false,
-            tube_size: record.aid.right.tube_size || '',
-            dome_type: record.aid.right.dome_type || '',
-            dome_size: record.aid.right.dome_size || '',
-            external_receiver_size: record.aid.right.external_receiver_size || '',
-            shell_type: record.aid.right.shell_type || '',
-            description: record.aid.right.description || '',
+            hearing_aid_size: record.aid?.right?.hearing_aid_size || '',
+            vent_size: record.aid?.right?.vent_size || '',
+            wax_guard: record.aid?.right?.wax_guard || '',
+            receiver: record.aid?.right?.receiver || '',
+            has_mold: record.aid?.right?.has_mold || false,
+            mold_material: record.aid?.right?.mold_material || 'hard',
+            mold_size: record.aid?.right?.mold_size || '',
+            has_vent: record.aid?.right?.has_vent || false,
+            tube_size: record.aid?.right?.tube_size || '',
+            dome_type: record.aid?.right?.dome_type || '',
+            dome_size: record.aid?.right?.dome_size || '',
+            external_receiver_size: record.aid?.right?.external_receiver_size || '',
+            shell_type: record.aid?.right?.shell_type || '',
+            description: record.aid?.right?.description || '',
         },
     });
 
@@ -60,6 +60,9 @@ export default function AidStep() {
             preserveScroll: true,
             onSuccess: () => {
                 nextStep()
+            },
+            onError: () => {
+                console.log(errors)
             }
         });
     };
@@ -120,7 +123,7 @@ export default function AidStep() {
                             <div className="w-1/3 flex items-center">
                                 <HasVent ear={ear} />
                             </div>
-                            <div className={`${data[ear].has_vent ? 'w-1/3 ml-5' : 'w-2/3 ml-5'}`}>
+                            <div className={`${data[ear].has_vent ? 'w-1/3 ml-5' : 'w-2/3'}`}>
                                 <TubeSize ear={ear} />
                             </div>
                             {data[ear].has_vent && (
@@ -155,7 +158,7 @@ export default function AidStep() {
                         {data[ear].has_mold ? (
                             <>
                                 <div className="w-1/4 ml-5">
-                                    <ReceiverType ear={ear} />
+                                    <ReceiverType ear={ear} type="RIC - mold" />
                                 </div>
                                 <div className="w-1/4 ml-5">
                                     <ShellType ear={ear} />
@@ -170,7 +173,7 @@ export default function AidStep() {
                         ) : (
                             <>
                                 <div className="w-1/4 ml-5">
-                                    <ReceiverType ear={ear} />
+                                    <ReceiverType ear={ear} type="RIC - no mold" />
                                 </div>
                                 <div className="w-1/4 ml-5">
                                     <ExternalReceiverSize ear={ear} />
@@ -194,14 +197,14 @@ export default function AidStep() {
 
     return (
         <>
-            <Head title="پرونده جدید - اطلاعات سمعک" />
+            <Head title="پرونده - اطلاعات سمعک" />
 
              <form className="w-full" onSubmit={submit}>
                 <AidContext.Provider value={{data, setData, errors}}>
                     {(record.ear === 'left' || record.ear === 'both') && (
                         <div>
                             <div className="mb-8">
-                                <div className={`inline-block ml-2 w-3 h-3 bg-blue-400 rounded-full`}></div>
+                                <div className="inline-block ml-2 w-3 h-3 bg-blue-400 rounded-full"></div>
                                 <span className="text-lg text-gray-700 dark:text-slate-200">
                                     گوش چپ
                                 </span>
@@ -212,9 +215,9 @@ export default function AidStep() {
                     )}
 
                     {(record.ear === 'right' || record.ear === 'both') && (
-                        <div className={record.ear === 'both' && 'mt-8'}>
+                        <div className={record.ear === 'both' ? 'mt-8' : undefined}>
                             <div className="mb-8">
-                                <div className={`inline-block ml-2 w-3 h-3 bg-red-600 dark:bg-red-400 rounded-full`}></div>
+                                <div className="inline-block ml-2 w-3 h-3 bg-red-600 dark:bg-red-400 rounded-full"></div>
                                 <span className="text-lg text-gray-700 dark:text-slate-200">
                                     گوش راست
                                 </span>

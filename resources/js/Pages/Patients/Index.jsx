@@ -77,7 +77,7 @@ export default function Index({ patients }) {
                         </tr>
                     </thead>
                     <tbody>
-                    {Object.values(data_patients).map((patient) => {
+                    {Object.keys(data_patients).length ? Object.values(data_patients).map((patient) => {
                         const is_last = data_patients[Object.keys(data_patients).length-1] === patient;
                         return (
                             <tr key={patient.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
@@ -116,7 +116,20 @@ export default function Index({ patients }) {
                                 </td>
                             </tr>
                         )
-                    })}
+                    }) : (
+                        <tr className="bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900">
+                            <th scope="row"
+                                colSpan="6"
+                                className="text-lg px-6 py-6">
+                                هیچ بیماری یافت نشد!
+                                <Link href={route('patients.create')}
+                                      className="mr-2 text-green-500 text-base"
+                                >
+                                    ایجاد اولین بیمار
+                                </Link>
+                            </th>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
             </div>

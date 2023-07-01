@@ -14,28 +14,28 @@ export default function AudiogramStep() {
 
     const {data, setData, post, processing, errors} = useForm({
         left: {
-            'ac_250': record.audiogram.left.ac_250 || '',
-            'ac_500': record.audiogram.left.ac_500 || '',
-            'ac_1000': record.audiogram.left.ac_1000 || '',
-            'ac_2000': record.audiogram.left.ac_2000 || '',
-            'ac_4000': record.audiogram.left.ac_4000 || '',
-            'bc_250': record.audiogram.left.bc_250 || '',
-            'bc_500': record.audiogram.left.bc_500 || '',
-            'bc_1000': record.audiogram.left.bc_1000 || '',
-            'bc_2000': record.audiogram.left.bc_2000 || '',
-            'bc_4000': record.audiogram.left.bc_4000 || '',
+            'ac_250': record.audiogram?.left?.ac_250 || '',
+            'ac_500': record.audiogram?.left?.ac_500 || '',
+            'ac_1000': record.audiogram?.left?.ac_1000 || '',
+            'ac_2000': record.audiogram?.left?.ac_2000 || '',
+            'ac_4000': record.audiogram?.left?.ac_4000 || '',
+            'bc_250': record.audiogram?.left?.bc_250 || '',
+            'bc_500': record.audiogram?.left?.bc_500 || '',
+            'bc_1000': record.audiogram?.left?.bc_1000 || '',
+            'bc_2000': record.audiogram?.left?.bc_2000 || '',
+            'bc_4000': record.audiogram?.left?.bc_4000 || '',
         },
         right: {
-            'ac_250': record.audiogram.right.ac_250 || '',
-            'ac_500': record.audiogram.right.ac_500 || '',
-            'ac_1000': record.audiogram.right.ac_1000 || '',
-            'ac_2000': record.audiogram.right.ac_2000 || '',
-            'ac_4000': record.audiogram.right.ac_4000 || '',
-            'bc_250': record.audiogram.right.bc_250 || '',
-            'bc_500': record.audiogram.right.bc_500 || '',
-            'bc_1000': record.audiogram.right.bc_1000 || '',
-            'bc_2000': record.audiogram.right.bc_2000 || '',
-            'bc_4000': record.audiogram.right.bc_4000 || '',
+            'ac_250': record.audiogram?.right?.ac_250 || '',
+            'ac_500': record.audiogram?.right?.ac_500 || '',
+            'ac_1000': record.audiogram?.right?.ac_1000 || '',
+            'ac_2000': record.audiogram?.right?.ac_2000 || '',
+            'ac_4000': record.audiogram?.right?.ac_4000 || '',
+            'bc_250': record.audiogram?.right?.bc_250 || '',
+            'bc_500': record.audiogram?.right?.bc_500 || '',
+            'bc_1000': record.audiogram?.right?.bc_1000 || '',
+            'bc_2000': record.audiogram?.right?.bc_2000 || '',
+            'bc_4000': record.audiogram?.right?.bc_4000 || '',
         },
     });
 
@@ -62,7 +62,7 @@ export default function AudiogramStep() {
             <div className="flex space-x-reverse space-x-10">
                 {tests_list.map((item, index) => (
                     <div key={index} className="text-gray-800 dark:text-slate-200">
-                        <label htmlFor={`ac_${item}_` + ear} className="block text-sm cursor-pointer font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 text-center">
+                        <label htmlFor={`ac_${item}_` + ear} className="block text-sm cursor-pointer font-semibold bg-gray-200 dark:bg-slate-500 rounded-lg py-1 text-center">
                             {item}Hz
                         </label>
                         <div className="mt-2">
@@ -104,10 +104,10 @@ export default function AudiogramStep() {
                         </div>
                     </div>
                 ))}
-                <div className="w-1/12">
-                    <div className="text-center text-sm font-semibold bg-gray-200 rounded-lg py-1 text-center">Frequency</div>
-                    <div className="text-center font-semibold bg-gray-200 rounded-lg py-[.57rem] text-center mt-2">AC</div>
-                    <div className="text-center font-semibold bg-gray-200 rounded-lg py-[.57rem] text-center mt-2">BC</div>
+                <div className="w-1/12 text-gray-800 dark:text-slate-200">
+                    <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
+                    <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
+                    <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
                 </div>
             </div>
         </>
@@ -115,7 +115,7 @@ export default function AudiogramStep() {
 
     return (
         <>
-            <Head title="پرونده جدید - اطلاعات سمعک" />
+            <Head title="پرونده - آدیوگرام" />
 
              <form className="w-full" onSubmit={submit}>
                 <AidContext.Provider value={{data, setData, errors}}>
@@ -133,7 +133,7 @@ export default function AudiogramStep() {
                     )}
 
                     {(record.ear === 'right' || record.ear === 'both') && (
-                        <div className={record.ear === 'both' && 'mt-8'}>
+                        <div className={record.ear === 'both' ? 'mt-8' : undefined}>
                             <div className="mb-8">
                                 <div className={`inline-block ml-2 w-3 h-3 bg-red-600 dark:bg-red-400 rounded-full`}></div>
                                 <span className="text-lg text-gray-700 dark:text-slate-200">
