@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'national_code' => ['required', 'numeric', 'digits:10', 'unique:users'],
             'grad_year' => ['required', 'integer', 'digits:4', 'between:1300,'. jdate()->getYear()],
-            'med_number' => ['required', 'numeric', 'max_digits:15'],
+            'med_number' => ['required', 'numeric', 'max_digits:6'],
             'grade' => ['required', 'string'],
             'university' => ['required', 'string', 'max:255'],
         ]);
@@ -72,11 +72,31 @@ class RegisteredUserController extends Controller
             'work_address' => ['required', 'string', 'max:255'],
             'work_post_code' => ['required', 'numeric', 'digits:10'],
             'work_phone' => ['required', 'numeric', 'digits:11'],
-            'mail_address' => ['required', 'in:home,work'],
+            'has_second' => ['boolean'],
+            'mail_address' => ['required', 'in:home,work,second_work'],
         ]);
 
-        $address = Auth::user()->address()->create($request->all());
+        $only = $request->only([
+            'home_address',
+            'home_post_code',
+            'home_phone',
+            'work_address',
+            'work_post_code',
+            'work_phone',
+            'mail_address',
+        ]);
 
+        if ($request->has_second) {
+            $request->validate([
+                'second_work_address' => ['required', 'string', 'max:255'],
+                'second_work_post_code' => ['required', 'numeric', 'digits:10'],
+                'second_work_phone' => ['required', 'numeric', 'digits:11'],
+            ]);
+
+            $only = [...$only, ...$request->only(['second_work_address', 'second_work_post_code', 'second_work_phone'])];
+        }
+
+        Auth::user()->address()->create($only);
 
         return redirect(RouteServiceProvider::HOME);
     }

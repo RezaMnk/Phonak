@@ -33,10 +33,10 @@ export default function Index({ records }) {
 
     return (
         <AuthenticatedLayout
-            header="پرونده ها"
+            header="سفارشات"
             breadcrumbs={
                 {
-                    'پرونده ها': route('records.index')
+                    'سفارشات': route('records.index')
                 }
             }
             headerButton={
@@ -45,11 +45,11 @@ export default function Index({ records }) {
                     href={route('records.create')}
                     className="!px-4 !py-2 text-xs"
                 >
-                    پرونده جدید
+                    سفارش جدید
                 </PrimaryButton>
             }
         >
-            <Head title="پرونده ها" />
+            <Head title="سفارشات" />
 
 
             <div className="relative overflow-x-auto rounded-lg">
@@ -57,10 +57,10 @@ export default function Index({ records }) {
                     <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                شماره پرونده
+                                شماره سفارش
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                بیمار
+                                کاربر
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 برند
@@ -131,11 +131,11 @@ export default function Index({ records }) {
                             <th scope="row"
                                 colSpan="6"
                                 className="text-lg px-6 py-6">
-                                هیچ پرونده ای یافت نشد!
+                                هیچ سفارشی یافت نشد!
                                 <Link href={route('records.create')}
                                     className="mr-2 text-green-500 text-base"
                                 >
-                                    ایجاد اولین پرونده
+                                    ایجاد اولین سفارش
                                 </Link>
                             </th>
                         </tr>
@@ -149,10 +149,10 @@ export default function Index({ records }) {
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
                 <form onSubmit={deletePatient} className="p-6">
                     <h2 className="text-lg font-semibold text-gray-700 dark:text-slate-200">
-                        آیا از حذف بیمار مطمئن هستید؟
+                        آیا از حذف کاربر مطمئن هستید؟
                     </h2>
                     <p className="mt-5 text-gray-600 dark:text-slate-300">
-                        با حذف بیمار، اطلاعات و پرونده های ثبت شده بیمار نیز حذف خواهند شد!
+                        با حذف بیمار، اطلاعات و سفارشات ثبت شده کاربر نیز حذف خواهند شد!
                     </p>
                     <div className="mt-6 flex justify-between">
                         <SecondaryButton className="!px-4 !py-2 text-xs" onClick={(closeModal)}>
@@ -160,7 +160,7 @@ export default function Index({ records }) {
                         </SecondaryButton>
 
                         <DangerButton className="mr-3 !px-4 !py-2 text-xs" disabled={processing}>
-                            تایید حذف بیمار
+                            تایید حذف کاربر
                         </DangerButton>
                     </div>
                 </form>

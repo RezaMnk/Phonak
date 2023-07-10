@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->enum('brand', ['phonak', 'hansaton'])->nullable(); // Nullable but important
-            $table->enum('type', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories'])->nullable(); // Nullable but important
+            $table->enum('type', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC'])->nullable(); // Nullable but important
             $table->enum('ear', ['left', 'right', 'both'])->nullable();
 
             $table->enum('status', [1,2,3,4,5, 'completed'])->default(1);

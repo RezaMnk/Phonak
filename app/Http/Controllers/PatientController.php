@@ -12,7 +12,7 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Inertia\Response
     {
         return Inertia::render('Patients/Index', [
             'patients' => Patient::latest()->paginate()
@@ -24,7 +24,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Patients/Create');
+        //
     }
 
     /**
@@ -32,6 +32,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
@@ -46,7 +47,8 @@ class PatientController extends Controller
 
         $patient = auth()->user()->patients()->create($request->only($this->only()));
 
-        return redirect()->route('patients.index', $patient)->with('toast', ['success' => 'بیمار با موفقیت ثبت گردید']);
+        return redirect()->route('patients.index', $patient)->with('toast', ['success' => 'کاربر با موفقیت ثبت گردید']);
+        */
     }
 
     /**
@@ -60,7 +62,7 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Patient $patient)
+    public function edit(Patient $patient): \Inertia\Response
     {
         return Inertia::render('Patients/Edit', [
             'patient' => $patient,
@@ -70,7 +72,7 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, Patient $patient): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -81,22 +83,22 @@ class PatientController extends Controller
             'address' => ['required', 'string', 'max:255'],
             'post_code' => ['required', 'numeric', 'digits:10'],
             'phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
-            'age' => ['required', 'numeric', 'between:0,200'],
+            'birth_year' => ['required', 'numeric', 'between:1200,1500'],
         ]);
 
         $patient->update($request->only($this->only()));
 
-        return back()->with('toast', ['success' => 'اطلاعات بیمار با موفقیت ویرایش شدند']);
+        return back()->with('toast', ['success' => 'اطلاعات کاربر با موفقیت ویرایش شدند']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Patient $patient)
+    public function destroy(Patient $patient): \Illuminate\Http\RedirectResponse
     {
         $patient->delete();
 
-        return back()->with('toast', ['success' => 'بیمار با موفقیت حذف گردید']);
+        return back()->with('toast', ['success' => 'کاربر با موفقیت حذف گردید']);
     }
 
     /**
@@ -105,7 +107,7 @@ class PatientController extends Controller
     private function only(): array
     {
         return [
-            'name', 'eng_name', 'national_code', 'state', 'city', 'address', 'post_code', 'phone', 'age'
+            'name', 'eng_name', 'national_code', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year'
         ];
     }
 }

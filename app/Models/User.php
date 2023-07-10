@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -49,6 +50,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'is_admin',
+        'is_owner',
+    ];
+
+    /**
      * @return HasOne
      */
     public function address(): HasOne
@@ -78,5 +89,45 @@ class User extends Authenticatable
     public function hasAddress()
     {
         return isset($this->address);
+    }
+
+    /**
+     * Check if user is admin
+     *
+     * @return bool
+     */
+    public function is_admin()
+    {
+        return $this->role == 'admin';
+    }
+
+    /**
+     * Check if user is owner
+     *
+     * @return bool
+     */
+    public function is_owner()
+    {
+        return $this->id == 1;
+    }
+
+    /**
+     * Determine if the user is an administrator.
+     */
+    protected function isAdmin(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->is_admin(),
+        );
+    }
+
+    /**
+     * Determine if the user is an administrator.
+     */
+    protected function isOwner(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->is_owner(),
+        );
     }
 }

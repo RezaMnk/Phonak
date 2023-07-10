@@ -20,22 +20,15 @@ export default function AidTypeStep() {
         type: record.type || '',
         ear: record.ear || '',
         product: record.product_id || '',
-        count: record.count || '',
     });
 
-    const [ accessoryType, setAccessoryType ] = useState('')
     const [ products, setProducts ] = useState({})
     const [ product, setProduct ] = useState(record.product_id || '')
-    const [ hasCount, setHasCount ] = useState(true)
 
     useEffect(() => {
         setData('product', product)
         clearErrors('product')
     }, [product])
-
-    useEffect(() => {
-        setHasCount((['battery', 'molding'].includes(accessoryType) && data.type === 'accessories'));
-    }, [accessoryType, data.type])
 
     useEffect(() => {
         if (record.type)
@@ -54,20 +47,12 @@ export default function AidTypeStep() {
 
     const type_change = (e) => {
         setData('type', e.target.value);
-        if (e.target.value !== 'accessories')
-            get_products(e.target.value);
-    };
-
-    const accessory_type_change = (e) => {
-        setAccessoryType(e.target.value)
-
-        get_products(data.type);
-
+        get_products(e.target.value);
     };
 
     const get_products = async (type) => {
         try {
-            const response = await axios.post(route('records.products'), { type, accessoryType });
+            const response = await axios.post(route('records.products'), { type });
             let new_products = response.data.products;
             if (new_products) {
                 setProducts(new_products)
@@ -82,7 +67,7 @@ export default function AidTypeStep() {
 
     return (
         <>
-            <Head title="پرونده - نوع سفارش" />
+             <Head title="سفارش - نوع سفارش" />
 
              <form className="w-full" onSubmit={submit} noValidate>
                  <div className="flex mt-3">
@@ -144,7 +129,7 @@ export default function AidTypeStep() {
                      </div>
                      <div className="w-3/4 flex flex-col">
                          <div className="w-full flex">
-                             <div className={`${hasCount ? 'w-1/3' : 'w-1/2'} ml-5 h-fit`}>
+                             <div className="w-1/2 ml-5 h-fit">
                                  <SelectInput
                                      id="type"
                                      name="name"
@@ -160,67 +145,25 @@ export default function AidTypeStep() {
                                      <option value="BTE mold">BTE با/بدون قالب</option>
                                      <option value="BTE tube">BTE با اسلیم تیوب</option>
                                      <option value="RIC">RIC</option>
-                                     <option value="accessories">سایر لوازم جانبی</option>
                                  </SelectInput>
 
                                  <InputError message={errors.type} className="mt-2"/>
                              </div>
-                             <div className={`${hasCount ? 'w-1/3 ml-5' : 'w-1/2'} h-fit`}>
-                                 {data.type === 'accessories' ? (
-                                     <>
-                                         <SelectInput
-                                             id="accessory-type"
-                                             name="accessory-type"
-                                             value={accessoryType}
-                                             label="نوع لواز حانبی"
-                                             onChange={accessory_type_change}
-                                             error={errors.ear}
-                                             required
-                                         >
-                                             <option value="" disabled="disabled">انتخاب کنید</option>
-                                             <option value="battery">باتری</option>
-                                             <option value="adjustment">ابزار های تنظیمی</option>
-                                             <option value="molding">خمیر قالبگیری</option>
-                                         </SelectInput>
-
-                                         <InputError message={errors.ear} className="mt-2"/>
-                                     </>
-                                 ) : (
-                                     <>
-                                         <SelectInput
-                                             id="ear"
-                                             name="ear"
-                                             value={data.ear}
-                                             label="نوع تجویز"
-                                             onChange={(e) => setData('ear', e.target.value)}
-                                             required
-                                         >
-                                             <option value="" disabled="disabled">انتخاب کنید</option>
-                                             <option value="right">تجویز تک گوشی گوش راست</option>
-                                             <option value="left">تجویز تک گوشی گوش چپ</option>
-                                             <option value="both">تجویز دو گوشی</option>
-                                         </SelectInput>
-                                     </>
-                                 )}
+                             <div className="w-1/2 h-fit">
+                                 <SelectInput
+                                     id="ear"
+                                     name="ear"
+                                     value={data.ear}
+                                     label="نوع تجویز"
+                                     onChange={(e) => setData('ear', e.target.value)}
+                                     required
+                                 >
+                                     <option value="" disabled="disabled">انتخاب کنید</option>
+                                     <option value="right">تجویز تک گوشی گوش راست</option>
+                                     <option value="left">تجویز تک گوشی گوش چپ</option>
+                                     <option value="both">تجویز دو گوشی</option>
+                                 </SelectInput>
                              </div>
-                             {hasCount && (
-                                 <div className="w-1/3 h-fit">
-                                     <>
-                                         <TextInput
-                                             id="count"
-                                             name="count"
-                                             type="number"
-                                             value={data.count}
-                                             label="تعداد مورد سفارش محصول"
-                                             onChange={(e) => setData('count', e.target.value)}
-                                             error={errors.count}
-                                             required
-                                         />
-
-                                         <InputError message={errors.count} className="mt-2"/>
-                                     </>
-                                 </div>
-                             )}
                          </div>
                          <div className={`mt-5 transition-all ${! record.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>
                              <ProductsSlider products={products}  setProduct={setProduct} product={product} error={errors.product} />

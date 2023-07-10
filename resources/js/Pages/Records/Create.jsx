@@ -6,8 +6,6 @@ import AidTypeStep from "@/Pages/Records/Steps/AidTypeStep.jsx";
 import AidStep from "@/Pages/Records/Steps/AidStep.jsx";
 import AudiogramStep from "@/Pages/Records/Steps/AudiogramStep.jsx";
 import ShippingStep from "@/Pages/Records/Steps/ShippingStep.jsx";
-import {toast as toastify} from "react-toastify";
-import {usePage} from "@inertiajs/react";
 
 
 export const StepContext = createContext();
@@ -17,10 +15,11 @@ export default function Create({ record }) {
     const passedSteps = record?.status ? (record.status === 'completed' ? 6 : record?.status) : 1;
 
     const prevStep = () => {
-        setStep((prev) => prev - 1);
+        setStep((prev) => prev - 1)
     };
 
     useEffect(() => {
+
         const searchParams = new URLSearchParams(window.location.search);
         searchParams.set('step', step);
 
@@ -53,17 +52,17 @@ export default function Create({ record }) {
         <AuthenticatedLayout
             header={(
                 <>
-                    ایجاد بیمار
+                    ایجاد کاربر
                 </>
             )}
             breadcrumbs={
                 {
-                    'پرونده ها': route('records.index'),
-                    'پرونده جدید': "#"
+                    'سفارشات': route('records.index'),
+                    'سفارش جدید': "#"
                 }
             }
         >
-            <Steps step={step} has={record?.type} passedSteps={passedSteps} />
+            <Steps step={step} passedSteps={passedSteps} />
 
             <div className="flex flex-col sm:justify-center items-center mt-12">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">

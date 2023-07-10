@@ -16,7 +16,6 @@ export default function ShippingStep() {
 
     const {record, nextStep, prevStep} = useContext(StepContext)
 
-    console.log(record)
     const {data, setData, post, processing, errors} = useForm({
         type: record.shipping?.type || '',
         etc_delivery: record.shipping?.etc_delivery || '',
@@ -26,7 +25,6 @@ export default function ShippingStep() {
         otolaryngologist_med_number: record.shipping?.otolaryngologist_med_number || '',
         supplementary_insurance: record.shipping?.supplementary_insurance || '',
     });
-    console.log(errors)
 
     const submit = (e) => {
         e.preventDefault();
@@ -42,7 +40,7 @@ export default function ShippingStep() {
 
     return (
         <>
-            <Head title="پرونده - ارسال محصول" />
+            <Head title="سفارش - ارسال محصول" />
 
              <form className="w-full" onSubmit={submit}>
                 <div className="mt-5 text-gray-700 dark:text-slate-200">
@@ -123,7 +121,7 @@ export default function ShippingStep() {
                                      name="phone"
                                      type="number"
                                      value={data.phone}
-                                     label="تلفن همراه بیمار"
+                                     label="تلفن همراه کاربر"
                                      onChange={(e) => setData('phone', e.target.value)}
                                      error={errors.phone}
                                      required
@@ -189,7 +187,7 @@ export default function ShippingStep() {
                          disabled={processing}
                          type="submit"
                      >
-                         ذخیره و بستن پرونده
+                         ذخیره و بستن سفارش
                      </PrimaryButton>
                  </div>
             </form>

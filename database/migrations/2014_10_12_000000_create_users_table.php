@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('med_number')->unique();
             $table->string('grade');
             $table->string('university');
+            $table->enum('role', ['admin', 'user'])->default('user');
+            $table->string('id_card_image')->nullable();
+            $table->string('med_card_image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

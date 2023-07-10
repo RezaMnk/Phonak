@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('work_address');
             $table->unsignedBigInteger('work_post_code');
             $table->string('work_phone');
-            $table->string('mail_address');
+            $table->string('second_work_address')->nullable();
+            $table->unsignedBigInteger('second_work_post_code')->nullable();
+            $table->string('second_work_phone')->nullable();
+            $table->enum('mail_address', ['work', 'second_work', 'home']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

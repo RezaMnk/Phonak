@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use Illuminate\Foundation\Application;
@@ -46,6 +47,11 @@ Route::middleware(['auth', 'auth.address'])->group(function () {
 
     Route::resource('patients', PatientController::class);
 
+    Route::resource('products', ProductController::class);
+    Route::controller(ProductController::class)->name('products')->prefix('products')->group(function () {
+        Route::post('/update_inventory/{product}', 'update_inventory')->name('.update_inventory');
+    });
+
     Route::resource('records', RecordController::class);
     Route::controller(RecordController::class)->name('records')->prefix('records')->group(function () {
         Route::post('/check_national_code', 'check_national_code')->name('.check_national_code');
@@ -70,7 +76,9 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/test', function () {
-    dd(mt_rand(100000, 999999));
+    dd(
+        \App\Models\Product::find(1)->image_url
+    );
 });
 
 

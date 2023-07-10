@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
              'med_number' => '123456',
              'grade' => 'کارشناسی',
              'university' => 'تهران',
+             'role' => 'admin',
          ]);
 
          $user->address()->create([

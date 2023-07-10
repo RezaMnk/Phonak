@@ -60,9 +60,6 @@ export default function AidStep() {
             preserveScroll: true,
             onSuccess: () => {
                 nextStep()
-            },
-            onError: () => {
-                console.log(errors)
             }
         });
     };
@@ -197,7 +194,7 @@ export default function AidStep() {
 
     return (
         <>
-            <Head title="پرونده - اطلاعات سمعک" />
+            <Head title="سفارش - اطلاعات سمعک" />
 
              <form className="w-full" onSubmit={submit}>
                 <AidContext.Provider value={{data, setData, errors}}>

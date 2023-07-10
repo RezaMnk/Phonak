@@ -35,7 +35,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                             56 مشتری
                         </p>
                         <span className="font-semibold text-sm text-red-900/50 dark:text-red-400/60">
-                            44 دارای پرونده
+                            44 دارای سفارش
                         </span>
                     </div>
                     <div className="flex items-center w-14 h-14 bg-red-50 dark:bg-red-700/10 rounded-full transition ease-in group-hover:scale-110">
@@ -49,7 +49,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                 <a href="#" className="flex justify-between items-center bg-white dark:bg-slate-900 rounded-lg p-6 group">
                     <div className="flex flex-col space-y-2 mr-5">
                         <p className="font-semibold text-orange-900 dark:text-orange-400">
-                            44 پرونده
+                            44 سفارش
                         </p>
                         <span className="font-semibold text-sm text-orange-900/50 dark:text-orange-400/60">
                                 13 در جریان
@@ -106,10 +106,10 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                     <div className="flex justify-between items-start">
                         <div>
                             <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200">
-                                پرونده ها
+                                سفارشات
                             </h2>
                             <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                                لیست آخرین پرونده های ثبت شده
+                                لیست آخرین سفارشات ثبت شده
                             </p>
                         </div>
                         <div className="inline-flex">
@@ -123,8 +123,8 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                         <table className="w-full text-right text-gray-500 dark:text-slate-400">
                             <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">شماره پرونده</th>
-                                    <th scope="col" className="px-6 py-3">بیمار</th>
+                                    <th scope="col" className="px-6 py-3">شماره سفارش</th>
+                                    <th scope="col" className="px-6 py-3">کاربر</th>
                                     <th scope="col" className="px-6 py-3">برند سمعک</th>
                                     <th scope="col" className="px-6 py-3">نوع سفارش</th>
                                     <th scope="col" className="px-6 py-3">وضعیت</th>
@@ -260,10 +260,10 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                     <div className="flex justify-between items-start">
                         <div>
                             <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200">
-                                بیماران
+                                کاربران
                             </h2>
                             <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                                لیست آخرین بیماران در جریان
+                                لیست آخرین کاربران در جریان
                             </p>
                         </div>
                         <div className="inline-flex">

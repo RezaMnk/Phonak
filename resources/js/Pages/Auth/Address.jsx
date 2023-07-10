@@ -6,12 +6,42 @@ import {Head, useForm} from '@inertiajs/react';
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
+import Icon from "@/Components/Icon.jsx";
+import {useEffect, useState} from "react";
 
 export default function Address() {
-    const {data, setData, post, processing, errors} = useForm({
-        mail_address: 'work'
+    const {data, setData, post, reset, processing, errors} = useForm({
+        mail_address: 'work',
+        home_post_code: '',
+        home_phone: '',
+        home_address: '',
+        work_post_code: '',
+        work_phone: '',
+        work_address: '',
+        second_work_post_code: '',
+        second_work_phone: '',
+        second_work_address: '',
+        has_second: false
     });
 
+    const [ hasSecondAddress, setHasSecondAddress ] = useState(false)
+    const [ showAddAddressBtn, setShowAddAddressBtn ] = useState(true)
+
+
+    useEffect(() => {
+        setData('has_second', hasSecondAddress)
+
+        if (hasSecondAddress)
+            setShowAddAddressBtn(false)
+        else
+        {
+            setTimeout(() => {
+                setShowAddAddressBtn(true)
+            }, 550)
+
+            reset('second_work_post_code', 'second_work_phone', 'second_work_address', 'mail_address')
+        }
+    }, [hasSecondAddress])
 
     const submit = (e) => {
         e.preventDefault();
@@ -32,7 +62,7 @@ export default function Address() {
                             <h5>
                                 مشخصات محل اقامت
                             </h5>
-                            <hr/>
+                            <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
                         <div className="flex mt-3">
                             <div className="w-1/2 ml-5">
@@ -102,7 +132,7 @@ export default function Address() {
                             <h5>
                                 مشخصات محل کار
                             </h5>
-                            <hr/>
+                            <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
                         <div className="flex mt-3">
                             <div className="w-1/2 ml-5">
@@ -166,6 +196,98 @@ export default function Address() {
                                 <InputError message={errors.work_address} className="mt-2"/>
                             </div>
                         </div>
+                        <div className="flex flex-col mt-8">
+                            {showAddAddressBtn && (
+                                <button type="button" className="w-full text-center text-sm font-semibold bg-green-500/40 dark:bg-green-700/60 text-gray-800 dark:text-white rounded-lg py-2"
+                                        onClick={() => setHasSecondAddress(true)}
+                                >
+                                    <Icon viewBox="0 0 24 24" width="3" type="stroke" className="inline-block ml-2 text-gray-800 dark:text-white">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+                                    </Icon>
+                                    <span>
+                                        افزون آدرس محل کار
+                                    </span>
+                                </button>
+                            )}
+                            <div className={`transition-all ease-in-out duration-500 ${hasSecondAddress ? 'max-h-96' : 'max-h-0'} overflow-hidden`}>
+                                <div>
+                                    <div className="flex items-center justify-between text-gray-700 dark:text-slate-200">
+                                        <h5 className="inline-block">
+                                            مشخصات محل کار دوم
+                                        </h5>
+                                        <button className="mr-2 font-semibold text-xs text-white rounded-lg px-2 py-1 bg-red-500 dark:bg-red-700"
+                                                onClick={() => setHasSecondAddress(false)}
+                                                type="button"
+                                        >
+                                            حذف
+                                        </button>
+                                    </div>
+                                    <hr className="w-full mt-1 border-gray-300 dark:border-slate-600"/>
+                                    <div className="flex mt-3">
+                                        <div className="w-1/2 ml-5">
+                                            <div className="mb-5">
+                                                <TextInput
+                                                    id="second_work_post_code"
+                                                    name="second_work_post_code"
+                                                    value={data.second_work_post_code}
+                                                    label="کد پستی محل کار دوم"
+                                                    svgIcon={(
+                                                        <g>
+                                                            <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
+                                                            <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
+                                                            <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
+                                                            <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
+                                                        </g>
+                                                    )}
+                                                    autoComplete="second_work_post_code"
+                                                    onChange={(e) => setData('second_work_post_code', e.target.value)}
+                                                    error={errors.second_work_post_code}
+                                                    required
+                                                />
+
+                                                <InputError message={errors.second_work_post_code} className="mt-2"/>
+                                            </div>
+
+                                            <div>
+                                                <TextInput
+                                                    id="second_work_phone"
+                                                    type="number"
+                                                    name="second_work_phone"
+                                                    label="تلفن محل کار دوم"
+                                                    value={data.second_work_phone}
+                                                    svgIcon={<path
+                                                        d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
+                                                        strokeLinecap="round" strokeLinejoin="round"/>}
+                                                    onChange={(e) => setData('second_work_phone', e.target.value)}
+                                                    error={errors.second_work_phone}
+                                                    required
+                                                />
+
+                                                <InputError message={errors.second_work_phone} className="mt-2"/>
+                                            </div>
+                                        </div>
+
+                                        <div className="w-1/2">
+                                            <TextAreaInput
+                                                id="second_work_address"
+                                                name="second_work_address"
+                                                value={data.second_work_address}
+                                                rows="4"
+                                                label="آدرس محل کار دوم"
+                                                svgIcon={<path
+                                                    d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
+                                                    strokeLinecap="round" strokeLinejoin="round"/>}
+                                                onChange={(e) => setData('second_work_address', e.target.value)}
+                                                error={errors.second_work_address}
+                                                required
+                                            />
+
+                                            <InputError message={errors.second_work_address} className="mt-2"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="flex mt-8">
                             <div className="w-1/2 ml-5 text-gray-700 dark:text-slate-200">
                                 <p>
@@ -174,8 +296,8 @@ export default function Address() {
 
                                 <InputError message={errors.mail_address} className="mt-2"/>
 
-                                <div className="mb-5">
-                                    <div className="inline-block ml-8 mt-2">
+                                <div className="mb-5 mt-2">
+                                    <div className="inline-block ml-8">
                                         <RadioInput
                                             id="mail_address_work"
                                             name="mail_address"
@@ -190,7 +312,24 @@ export default function Address() {
                                             className="mr-2"
                                         />
                                     </div>
-                                    <div className="inline-block ml-8 mt-2">
+                                    {hasSecondAddress && (
+                                        <div className="inline-block ml-8">
+                                        <RadioInput
+                                            id="second_mail_address_work"
+                                            name="mail_address"
+                                            checked={data.mail_address === 'second_work'}
+                                            onChange={() => setData('mail_address', 'second_work')}
+                                            required
+                                        />
+
+                                        <InputLabel
+                                            htmlFor="second_mail_address_work"
+                                            value="محل کار دوم"
+                                            className="mr-2"
+                                        />
+                                        </div>
+                                    )}
+                                    <div className="inline-block">
                                         <RadioInput
                                             id="mail_address_home"
                                             name="mail_address"
@@ -210,7 +349,7 @@ export default function Address() {
                         </div>
 
                         <div className="mt-6">
-                            <PrimaryButton disabled={processing}>
+                            <PrimaryButton className="w-full" disabled={processing}>
                                 ثبت آدرس
                             </PrimaryButton>
                         </div>

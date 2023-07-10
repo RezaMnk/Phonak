@@ -24,7 +24,7 @@ class Patient extends Model
         'address',
         'post_code',
         'phone',
-        'age'
+        'birth_year'
     ];
 
     /**

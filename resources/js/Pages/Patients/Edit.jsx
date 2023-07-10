@@ -31,7 +31,7 @@ export default function Edit({ patient }) {
         <AuthenticatedLayout
             header={(
                 <>
-                    ویرایش بیمار:
+                    ویرایش کاربر:
                     <span className="font-medium mr-2 text-gray-500 dark:text-slate-300">
                         {patient.name}
                     </span>
@@ -39,19 +39,19 @@ export default function Edit({ patient }) {
             )}
             breadcrumbs={
                 {
-                    'بیماران': route('patients.index'),
-                    'ویرایش بیمار': "#"
+                    'کاربران': route('patients.index'),
+                    'ویرایش کاربر': "#"
                 }
             }
         >
-            <Head title="ویرایش بیمار" />
+            <Head title="ویرایش کاربر" />
 
             <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
-                    <form id="edit-user" className="w-full" onSubmit={submit}>
+                    <form className="w-full" onSubmit={submit}>
                         <div className="mt-5 text-gray-700 dark:text-slate-200">
                             <h5>
-                                اطلاعات بیمار
+                                اطلاعات کاربر
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
@@ -61,7 +61,7 @@ export default function Edit({ patient }) {
                                     id="name"
                                     name="name"
                                     value={data.name}
-                                    label="نام بیمار"
+                                    label="نام کاربر"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('name', e.target.value)}
@@ -77,7 +77,7 @@ export default function Edit({ patient }) {
                                     name="national_code"
                                     type="number"
                                     value={data.national_code}
-                                    label="کد ملی بیمار"
+                                    label="کد ملی کاربر"
                                     svgIcon={<path
                                         d="M6 18C6.06366 18 6.12926 18 6.19691 18H12M6 18C5.01173 17.9992 4.49334 17.9868 4.0918 17.7822C3.71547 17.5905 3.40973 17.2837 3.21799 16.9074C3 16.4796 3 15.9203 3 14.8002V9.2002C3 8.08009 3 7.51962 3.21799 7.0918C3.40973 6.71547 3.71547 6.40973 4.0918 6.21799C4.51962 6 5.08009 6 6.2002 6H17.8002C18.9203 6 19.4796 6 19.9074 6.21799C20.2837 6.40973 20.5905 6.71547 20.7822 7.0918C21 7.5192 21 8.07899 21 9.19691V14.8031C21 15.921 21 16.48 20.7822 16.9074C20.5905 17.2837 20.2837 17.5905 19.9074 17.7822C19.48 18 18.921 18 17.8031 18H12M6 18C6.00004 16.8954 7.34317 16 9 16C10.6569 16 12 16.8954 12 18M6 18C6 18 6 17.9999 6 18ZM18 14H14M18 11H15M9 13C7.89543 13 7 12.1046 7 11C7 9.89543 7.89543 9 9 9C10.1046 9 11 9.89543 11 11C11 12.1046 10.1046 13 9 13Z"
                                         strokeLinecap="round" strokeLinejoin="round"/>}
@@ -90,19 +90,19 @@ export default function Edit({ patient }) {
                             </div>
                             <div className="w-[12%] ml-5">
                                 <TextInput
-                                    id="age"
-                                    name="age"
+                                    id="birth_year"
+                                    name="birth_year"
                                     type="number"
-                                    value={data.age}
-                                    label="سن بیمار"
+                                    value={data.birth_year}
+                                    label="سال تولد"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
-                                    onChange={(e) => setData('age', e.target.value)}
-                                    error={errors.age}
+                                    onChange={(e) => setData('birth_year', e.target.value)}
+                                    error={errors.birth_year}
                                     required
                                 />
 
-                                <InputError message={errors.age} className="mt-2"/>
+                                <InputError message={errors.birth_year} className="mt-2"/>
                             </div>
                             <div className="w-1/4 ml-5">
                                 <TextInput
@@ -110,7 +110,7 @@ export default function Edit({ patient }) {
                                     name="phone"
                                     type="number"
                                     value={data.phone}
-                                    label="شماره تلفن بیمار"
+                                    label="شماره تلفن کاربر"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('phone', e.target.value)}
@@ -125,7 +125,7 @@ export default function Edit({ patient }) {
                                     id="eng_name"
                                     name="eng_name"
                                     value={data.eng_name}
-                                    label="نام بیمار به انگلیسی"
+                                    label="نام کاربر به انگلیسی"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('eng_name', e.target.value)}
@@ -172,7 +172,7 @@ export default function Edit({ patient }) {
                                     id="post_code"
                                     name="post_code"
                                     value={data.post_code}
-                                    label="کد پستی محل کار"
+                                    label="کد پستی"
                                     svgIcon={(
                                         <g>
                                             <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
@@ -193,7 +193,7 @@ export default function Edit({ patient }) {
 
                         <div className="mt-12 text-gray-700 dark:text-slate-200">
                             <h5>
-                                مشخصات محل اقامت بیمار
+                                مشخصات محل اقامت کاربر
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
@@ -219,7 +219,6 @@ export default function Edit({ patient }) {
                             <PrimaryButton
                                 className="!px-4 !py-2"
                                 disabled={processing}
-                                form="edit-user"
                             >
                                 ثبت تغییرات
                             </PrimaryButton>

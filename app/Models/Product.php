@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -16,17 +19,40 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
+        'name',
+        'category',
+        'inventory',
+        'image',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'image_url',
     ];
 
 
     /**
      * Belongs to record
      *
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function record(): BelongsTo
+    public function record(): HasMany
     {
-        return $this->belongsTo(Record::class);
+        return $this->hasMany(Record::class);
+    }
+
+
+    /**
+     * Get product image full URL
+     */
+    protected function imageUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Storage::disk('products')->url($this->image),
+        );
     }
 }

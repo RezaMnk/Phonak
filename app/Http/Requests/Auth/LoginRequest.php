@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'med_number' => ['required', 'numeric', 'max_digits:15', 'exists:users'],
+            'med_number' => ['required', 'numeric', 'max_digits:6', 'exists:users'],
             'national_code' => ['required', 'numeric'],
         ];
     }

@@ -13,7 +13,7 @@ class RecordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Inertia\Response
     {
         return Inertia::render('Records/Index', [
             'records' => Record::with('patient')->latest()->paginate(10)
@@ -23,7 +23,7 @@ class RecordController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Records/Create');
     }
@@ -31,29 +31,24 @@ class RecordController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'national_code' => ['required', 'numeric', 'digits:10'],
+            'name' => ['required', 'string', 'max:255'],
+            'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
+            'state' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'address' => ['required', 'string', 'max:255'],
+            'post_code' => ['required', 'numeric', 'digits:10'],
+            'phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
+            'birth_year' => ['required', 'numeric', 'between:1200,1500'],
         ]);
 
-        $patient =  Patient::query()->firstWhere('national_code', $request->national_code);
-        if (! $patient) {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
-                'state' => ['required', 'string'],
-                'city' => ['required', 'string'],
-                'address' => ['required', 'string', 'max:255'],
-                'post_code' => ['required', 'numeric', 'digits:10'],
-                'phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
-                'age' => ['required', 'numeric', 'between:0,200'],
-            ]);
+        $patient = auth()->user()->patients()->updateOrCreate(['national_code' => $request->national_code], $request->only([
+            'name', 'national_code', 'eng_name', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year',
+        ]));
 
-            $patient = auth()->user()->patients()->create($request->only([
-                'name', 'national_code', 'eng_name', 'state', 'city', 'address', 'post_code', 'phone', 'age',
-            ]));
-        }
         $record = auth()->user()->records()->create(['patient_id' => $patient->id]);
         $record->set_step(2);
 
@@ -63,11 +58,11 @@ class RecordController extends Controller
     /**
      * Store aid type to record.
      */
-    public function store_aid_type(Request $request, Record $record)
+    public function store_aid_type(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'brand' => ['required', 'in:phonak,hansaton'],
-            'type' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
+            'type' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC'],
             'ear' => ['required', 'in:left,right,both'],
             'product' => ['required', 'numeric', 'exists:products,id'],
         ]);
@@ -86,7 +81,7 @@ class RecordController extends Controller
     /**
      * Store aid to record.
      */
-    public function store_aid(Request $request, Record $record)
+    public function store_aid(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         $this->validateAidData($record, $request);
 
@@ -117,7 +112,7 @@ class RecordController extends Controller
     /**
      * Store audiogram to record.
      */
-    public function store_audiogram(Request $request, Record $record)
+    public function store_audiogram(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
@@ -164,7 +159,7 @@ class RecordController extends Controller
     /**
      * Store shipping to record.
      */
-    public function store_shipping(Request $request, Record $record)
+    public function store_shipping(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
@@ -197,13 +192,13 @@ class RecordController extends Controller
         $record->shipping()->updateOrCreate([], $data);
         $record->set_step('completed');
 
-        return redirect()->route('records.index')->with(['toast', ['success' => "پرونده شماره ". $record->id ." تکمیل شد"]]);
+        return redirect()->route('records.index')->with(['toast', ['success' => "سفارش شماره ". $record->id ." تکمیل شد"]]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function check_national_code(Request $request)
+    public function check_national_code(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'national_code' => ['required', 'numeric', 'digits:10']
@@ -216,14 +211,13 @@ class RecordController extends Controller
     /**
      * Get products for the type
      */
-    public function get_products(Request $request)
+    public function get_products(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'type' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
-            'accessoryType' => ['nullable', 'in:battery,adjustment,molding'],
         ]);
 
-        $products = Product::all();
+        $products = Product::query()->where('category', $request->type)->get();
         return response()->json(['products' => $products]);
     }
 
@@ -238,7 +232,7 @@ class RecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Record $record)
+    public function edit(Record $record): \Inertia\Response
     {
         return Inertia::render('Records/Create', [
             'record' => $record,
@@ -254,29 +248,24 @@ class RecordController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Record $record)
+    public function update(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'national_code' => ['required', 'numeric', 'digits:10'],
+            'name' => ['required', 'string', 'max:255'],
+            'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
+            'state' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'address' => ['required', 'string', 'max:255'],
+            'post_code' => ['required', 'numeric', 'digits:10'],
+            'phone' => ['required', 'numeric', 'digits:11'],
+            'birth_year' => ['required', 'numeric', 'between:1200,1500'],
         ]);
 
-        $patient =  Patient::query()->firstWhere('national_code', $request->national_code);
-        if (! $patient) {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
-                'state' => ['required', 'string'],
-                'city' => ['required', 'string'],
-                'address' => ['required', 'string', 'max:255'],
-                'post_code' => ['required', 'numeric', 'digits:10'],
-                'phone' => ['required', 'numeric', 'digits:11'],
-                'age' => ['required', 'numeric', 'between:0,200'],
-            ]);
+        $patient = auth()->user()->patients()->updateOrCreate(['national_code' => $request->national_code], $request->only([
+            'name', 'national_code', 'eng_name', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year',
+        ]));
 
-            $patient = auth()->user()->patients()->create($request->only([
-                'name', 'national_code', 'eng_name', 'state', 'city', 'address', 'post_code', 'phone', 'age',
-            ]));
-        }
         $record->update(['patient_id' => $patient->id]);
         $record->set_step(2);
 
@@ -292,7 +281,13 @@ class RecordController extends Controller
     }
 
 
-    private function only_aids(Record $record, $data)
+    public function audiogram_uploads(Request $request)
+    {
+        $request->validate([]);
+    }
+
+
+    private function only_aids(Record $record, $data): array
     {
         $only = ['description'];
         switch ($record->type)

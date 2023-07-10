@@ -23,6 +23,9 @@ class Address extends Model
         'work_address',
         'work_post_code',
         'work_phone',
+        'second_work_address',
+        'second_work_post_code',
+        'second_work_phone',
         'mail_address',
     ];
 

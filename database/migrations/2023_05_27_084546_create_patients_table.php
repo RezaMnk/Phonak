@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->unsignedBigInteger('post_code');
             $table->string('phone');
-            $table->unsignedTinyInteger('age');
+            $table->unsignedSmallInteger('birth_year');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

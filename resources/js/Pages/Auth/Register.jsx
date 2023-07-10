@@ -107,6 +107,7 @@ export default function Register() {
                             <option value="کارشناسی">کارشناسی</option>
                             <option value="کارشناسی ارشد">کارشناسی ارشد</option>
                             <option value="دکتری">دکتری</option>
+                            <option value="سایر">سایر</option>
                         </SelectInput>
 
                         <InputError message={errors.grade} className="mt-2"/>

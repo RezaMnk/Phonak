@@ -60,7 +60,7 @@ export default function AudiogramStep() {
     const render_ear = (ear) => (
         <>
             <div className="flex space-x-reverse space-x-10">
-                {tests_list.map((item, index) => (
+                {[...tests_list].reverse().map((item, index) => (
                     <div key={index} className="text-gray-800 dark:text-slate-200">
                         <label htmlFor={`ac_${item}_` + ear} className="block text-sm cursor-pointer font-semibold bg-gray-200 dark:bg-slate-500 rounded-lg py-1 text-center">
                             {item}Hz
@@ -115,7 +115,7 @@ export default function AudiogramStep() {
 
     return (
         <>
-            <Head title="پرونده - آدیوگرام" />
+            <Head title="سفارش - آدیوگرام" />
 
              <form className="w-full" onSubmit={submit}>
                 <AidContext.Provider value={{data, setData, errors}}>
