@@ -1,7 +1,9 @@
+import {Link} from "@inertiajs/react";
+
 export default function DangerButton({ link = false, className = '', disabled = false, children, ...props }) {
     return (
         (link ? (
-            <a
+            <Link
                 {...props}
                 className={
                     `inline-flex justify-center px-6 py-3 text-sm font-bold text-white transition-colors duration-300 bg-red-500 dark:bg-red-700 rounded-lg hover:bg-red-400 dark:hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-50 ${
@@ -10,7 +12,7 @@ export default function DangerButton({ link = false, className = '', disabled = 
                 }
             >
                 {children}
-            </a>
+            </Link>
         ) : (
             <button
                 {...props}

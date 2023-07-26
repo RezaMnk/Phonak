@@ -12,16 +12,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//         \App\Models\User::factory(10)->create();
+         \App\Models\Product::factory(50)->create();
 
          $user = \App\Models\User::create([
              'name' => 'رضا نداف',
              'national_code' => '0012345678',
+             'password' => '0012345678',
              'grad_year' => '1380',
              'med_number' => '123456',
              'grade' => 'کارشناسی',
              'university' => 'تهران',
+             'state' => 'تهران',
+             'city' => 'تهران',
              'role' => 'admin',
+             'verified' => true,
          ]);
 
          $user->address()->create([
@@ -32,6 +36,21 @@ class DatabaseSeeder extends Seeder
              'work_post_code' => '2222222222',
              'work_phone' => '02122121221',
              'mail_address' => 'home',
+         ]);
+
+         $user->user_info()->create([
+             'phone' => '09212969916',
+             'landline' => '02133131331',
+             'whatsapp_phone' => '09212969916',
+             'referral_name' => 'دعوت کننده یک',
+             'referral_phone' => '09212969916',
+             'second_referral_name' => 'دعوت کننده دو',
+             'second_referral_phone' => '09212969916',
+             'history_description' => 'تست تاریخچه',
+             'conditions_description' => 'تست شرایط',
+             'id_card_image' => 'id_card.jpg',
+             'med_card_image' => 'med_card.png',
+             'license_image' => 'license.png',
          ]);
     }
 }

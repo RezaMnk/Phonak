@@ -29,7 +29,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'med_number' => ['required', 'numeric', 'max_digits:6', 'exists:users'],
-            'national_code' => ['required', 'numeric'],
+            'password' => ['required', 'string'],
         ];
     }
 
@@ -42,9 +42,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $user = User::where('med_number', $this->get('med_number'))->first();
-
-        if ((! $user->national_code == $this->get('national_code')) || Auth::loginUsingId($user->id, $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('med_number', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

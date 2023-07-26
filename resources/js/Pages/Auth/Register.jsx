@@ -4,9 +4,13 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import {Head, Link, useForm} from '@inertiajs/react';
 import SelectInput from "@/Components/SelectInput.jsx";
+import IranStatesOptions, {Cities} from "@/Partials/IranStatesOptions.jsx";
 
 export default function Register() {
-    const {data, setData, post, processing, errors} = useForm();
+    const {data, setData, post, processing, errors} = useForm({
+        state: 'تهران',
+        city: 'تهران',
+    });
 
     const submit = (e) => {
         e.preventDefault();
@@ -62,6 +66,7 @@ export default function Register() {
                     <div className="w-2/5 ml-5">
                         <TextInput
                             id="grad_year"
+                            type="number"
                             name="grad_year"
                             value={data.grad_year}
                             label="سال فارغ التحصیلی"
@@ -82,13 +87,46 @@ export default function Register() {
                             name="med_number"
                             label="شماره نظام پزشکی"
                             value={data.med_number}
-                            svgIcon={<path xmlns="http://www.w3.org/2000/svg" d="M12 8V16M8 12H16M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"/>}
+                            svgIcon={<path d="M12 8V16M8 12H16M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"/>}
                             onChange={(e) => setData('med_number', e.target.value)}
                             error={errors.med_number}
                             required
                         />
 
                         <InputError message={errors.med_number} className="mt-2"/>
+                    </div>
+                </div>
+
+                <div className="flex mt-5">
+                    <div className="w-3/5 ml-5">
+                        <SelectInput
+                            id="state"
+                            name="state"
+                            value={data.state}
+                            label="استان محل اقامت"
+                            onChange={(e) => setData('state', e.target.value)}
+                            error={errors.state}
+                            required
+                        >
+                            <IranStatesOptions />
+                        </SelectInput>
+
+                        <InputError message={errors.state} className="mt-2"/>
+                    </div>
+                    <div className="w-2/5">
+                        <SelectInput
+                            id="city"
+                            name="name"
+                            value={data.city}
+                            label="شهر محل اقامت"
+                            onChange={(e) => setData('city', e.target.value)}
+                            error={errors.city}
+                            required
+                        >
+                            <Cities state={data.state} />
+                        </SelectInput>
+
+                        <InputError message={errors.city} className="mt-2"/>
                     </div>
                 </div>
 
@@ -104,6 +142,7 @@ export default function Register() {
                             error={errors.grade}
                             required
                         >
+                            <option value="" selected disabled>انتخاب کنید</option>
                             <option value="کارشناسی">کارشناسی</option>
                             <option value="کارشناسی ارشد">کارشناسی ارشد</option>
                             <option value="دکتری">دکتری</option>

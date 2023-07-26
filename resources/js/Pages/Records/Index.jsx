@@ -18,7 +18,7 @@ export default function Index({ records }) {
         processing,
     } = useForm();
 
-    const deletePatient = (e) => {
+    const deleteRecord = (e) => {
         e.preventDefault();
 
         destroy(route('records.destroy', modalRecord), {
@@ -33,10 +33,10 @@ export default function Index({ records }) {
 
     return (
         <AuthenticatedLayout
-            header="سفارشات"
+            header="سفارشات سمعک"
             breadcrumbs={
                 {
-                    'سفارشات': route('records.index')
+                    'سفارشات سمعک': route('records.index')
                 }
             }
             headerButton={
@@ -49,7 +49,7 @@ export default function Index({ records }) {
                 </PrimaryButton>
             }
         >
-            <Head title="سفارشات" />
+            <Head title="سفارشات سمعک" />
 
 
             <div className="relative overflow-x-auto rounded-lg">
@@ -100,7 +100,7 @@ export default function Index({ records }) {
                                 </td>
                                 <td className="px-6 py-4">
                                     {record.status === 'completed' ? (
-                                        <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                        <span className="inline-flex items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                             تکمیل شده
                                         </span>
                                     ) : (
@@ -133,7 +133,7 @@ export default function Index({ records }) {
                                 className="text-lg px-6 py-6">
                                 هیچ سفارشی یافت نشد!
                                 <Link href={route('records.create')}
-                                    className="mr-2 text-green-500 text-base"
+                                    className="mr-2 text-sky-500 text-base"
                                 >
                                     ایجاد اولین سفارش
                                 </Link>
@@ -147,12 +147,12 @@ export default function Index({ records }) {
             <Pagination data={records}/>
 
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
-                <form onSubmit={deletePatient} className="p-6">
+                <form onSubmit={deleteRecord} className="p-6">
                     <h2 className="text-lg font-semibold text-gray-700 dark:text-slate-200">
-                        آیا از حذف کاربر مطمئن هستید؟
+                        آیا از حذف سفارش مطمئن هستید؟
                     </h2>
                     <p className="mt-5 text-gray-600 dark:text-slate-300">
-                        با حذف بیمار، اطلاعات و سفارشات ثبت شده کاربر نیز حذف خواهند شد!
+                        با حذف سفارش، اطلاعات ثبت شده حذف خواهند شد و غیرقابل برگشت خواهند بود!
                     </p>
                     <div className="mt-6 flex justify-between">
                         <SecondaryButton className="!px-4 !py-2 text-xs" onClick={(closeModal)}>
@@ -160,7 +160,7 @@ export default function Index({ records }) {
                         </SecondaryButton>
 
                         <DangerButton className="mr-3 !px-4 !py-2 text-xs" disabled={processing}>
-                            تایید حذف کاربر
+                            تایید حذف سفارش
                         </DangerButton>
                     </div>
                 </form>

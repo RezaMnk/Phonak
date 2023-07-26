@@ -21,8 +21,11 @@ class Product extends Model
     protected $fillable = [
         'name',
         'category',
+        'brand',
+        'price',
+        'expire_date',
         'inventory',
-        'image',
+        'has_count',
     ];
 
     /**
@@ -40,9 +43,20 @@ class Product extends Model
      *
      * @return HasMany
      */
-    public function record(): HasMany
+    public function records(): HasMany
     {
         return $this->hasMany(Record::class);
+    }
+
+
+    /**
+     * Belongs to record
+     *
+     * @return HasMany
+     */
+    public function accessories(): HasMany
+    {
+        return $this->hasMany(Accessory::class);
     }
 
 
@@ -52,7 +66,7 @@ class Product extends Model
     protected function imageUrl(): Attribute
     {
         return new Attribute(
-            get: fn () => Storage::disk('products')->url($this->image),
+            get: fn () => Storage::disk('products')->url($this->brand .'/'. $this->category .'.jpg'),
         );
     }
 }

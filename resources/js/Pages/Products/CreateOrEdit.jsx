@@ -7,36 +7,27 @@ import SelectInput from "@/Components/SelectInput.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import Icon from "@/Components/Icon.jsx";
 import {useState} from "react";
+import CheckboxInput from "@/Components/CheckboxInput.jsx";
+import InputLabel from "@/Components/InputLabel.jsx";
 
 export default function CreateOrEdit({ product }) {
     const {data, setData, patch, post, processing, errors} = useForm({
         name: product?.name || '',
         category: product?.category || '',
+        brand: product?.brand || '',
+        expire_date: product?.expire_date || '',
+        price: product?.price || '',
         inventory: product?.inventory || '',
-        image: product?.image || '',
+        has_count: product?.has_count || '',
     });
-
-    const [imageUrl, setImageUrl] = useState(product?.image_url || '/storage/default.png');
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data)
 
         if (product)
-            patch(route('products.update', product.id), {
-                forceFormData: true,
-            });
+            patch(route('products.update', product.id));
         else
             post(route('products.store'));
-    };
-
-    const handleImageInput = (e) => {
-        const [file] = e.target.files
-        if (file) {
-            setImageUrl(URL.createObjectURL(file))
-        }
-
-        setData('image', file)
     };
 
     return (
@@ -71,43 +62,9 @@ export default function CreateOrEdit({ product }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex mt-6 mb-5">
-                            <div className="w-1/3 ml-10 flex flex-col relative cursor-pointer group">
-                                <div className="h-full p-2 bg-gray-100 dark:bg-slate-700 rounded-lg">
-                                    <div className="h-full bg-contain bg-no-repeat bg-center rounded-lg"
-                                        style={{
-                                            backgroundImage: `url("${imageUrl}")`
-                                        }}
-                                    >
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="">
-                                        <div className="absolute top-0 left-0 w-full h-full rounded-lg cursor-pointer transition opacity-0 group-hover:opacity-100 bg-green-500/20 backdrop-blur-[2px]">
-                                        </div>
-                                        <span className={"absolute top-2 right-2 px-2 py-1 cursor-pointer text-sm font-semibold text-white rounded-lg bg-green-500/70" +
-                                        " transition-all group-hover:px-12 group-hover:py-6 group-hover:top-1/2 group-hover:right-1/2 group-hover:translate-x-1/2 group-hover:-translate-y-1/2 group-hover:px-18 group-hover:bg-green-500/70"}>
-                                            <span className="block group-hover:hidden">
-                                                تصویر محصول
-                                            </span>
-                                            <span className="hidden group-hover:flex flex-col items-center">
-                                                <Icon type="stroke"
-                                                    className="!w-8 !h-8 mb-5 text-white"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                </Icon>
-                                                ویرایش تصویر محصول
-                                            </span>
-                                        </span>
-                                        <input id="image" type="file" accept="image/*" className="hidden"
-                                            onChange={handleImageInput}
-                                        />
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="w-2/3 flex flex-col space-y-10">
-                                <div className="w-full">
+                        <div className="flex flex-col space-y-5 mt-6 mb-5">
+                            <div className="w-full flex space-x-5 space-x-reverse">
+                                <div className="w-6/12">
                                     <TextInput
                                         id="name"
                                         name="name"
@@ -123,7 +80,25 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.name} className="mt-2"/>
                                 </div>
-                                <div className="w-full">
+                                <div className="w-3/12">
+                                    <SelectInput
+                                        id="brand"
+                                        name="brand"
+                                        value={data.brand}
+                                        label="برند"
+                                        onChange={(e) => setData('brand', e.target.value)}
+                                        error={errors.brand}
+                                        required
+                                    >
+                                        <option value="" disabled="disabled">انتخاب کنید</option>
+                                        <option value="phonak">فوناک</option>
+                                        <option value="hansaton">هنزاتون</option>
+                                        <option value="unitron">یونیترون</option>
+                                    </SelectInput>
+
+                                    <InputError message={errors.brand} className="mt-2"/>
+                                </div>
+                                <div className="w-3/12">
                                     <SelectInput
                                         id="category"
                                         name="category"
@@ -139,12 +114,15 @@ export default function CreateOrEdit({ product }) {
                                         <option value="BTE mold">BTE با/بدون قالب</option>
                                         <option value="BTE tube">BTE با اسلیم تیوب</option>
                                         <option value="RIC">RIC</option>
-                                        <option value="accessories">سایر لوازم جانبی</option>
+                                        <option value="accessories">لوازم جانبی</option>
                                     </SelectInput>
 
                                     <InputError message={errors.category} className="mt-2"/>
                                 </div>
-                                <div className="w-full">
+                            </div>
+
+                            <div className="w-full flex space-x-5 space-x-reverse">
+                                <div className="w-2/12">
                                     <TextInput
                                         id="inventory"
                                         name="inventory"
@@ -161,6 +139,59 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.inventory} className="mt-2"/>
                                 </div>
+                                <div className="w-4/12">
+                                    <TextInput
+                                        id="price"
+                                        name="price"
+                                        type="number"
+                                        value={data.price}
+                                        label="قیمت"
+                                        svgIcon={
+                                            <>
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="M12 17V17.5V18"/>
+                                                <path d="M12 6V6.5V7"/>
+                                                <path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"/>
+                                            </>
+                                        }
+                                        onChange={(e) => setData('price', e.target.value)}
+                                        error={errors.price}
+                                        required
+                                    />
+
+                                    <InputError message={errors.price} className="mt-2"/>
+                                </div>
+                                {data.category === 'accessories' && (
+                                    <>
+                                        <div className="w-3/12">
+                                            <TextInput
+                                                id="expire_date"
+                                                name="expire_date"
+                                                type="date"
+                                                value={data.expire_date}
+                                                label="تاریخ انقضا (در صورت وجود)"
+                                                onChange={(e) => setData('expire_date', e.target.value)}
+                                                error={errors.expire_date}
+                                            />
+
+                                            <InputError message={errors.expire_date} className="mt-2"/>
+                                        </div>
+                                        <div className="w-2/12 !mr-10 flex items-center">
+                                            <CheckboxInput
+                                                id="has_count"
+                                                name="has_count"
+                                                checked={data.has_count}
+                                                onChange={(e) => setData('has_count', e.target.checked)}
+                                            />
+
+                                            <InputLabel
+                                                htmlFor="has_count"
+                                                value="امکان انتخاب تعداد سفارش"
+                                                className="mr-2"
+                                            />
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className="flex justify-between mt-8">

@@ -18,7 +18,7 @@ export default function Edit({ patient }) {
         address: patient.address,
         post_code: patient.post_code,
         phone: patient.phone,
-        age: patient.age,
+        birth_year: patient.birth_year,
     });
 
 

@@ -35,20 +35,14 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron'],
             'inventory' => ['required', 'numeric', 'max:1000'],
-            'image' => ['required'],
+            'expire_date' => ['nullable', 'date'],
+            'price' => ['required', 'numeric', 'max:10000000'],
+            'has_count' => ['boolean'],
         ]);
-        $image = $request->file('image');
-        $file_name = $request->name . '-' . time() . '.' . $image->getClientOriginalExtension();
 
-        Storage::disk('products')->putFileAs('', $image, $file_name);
-
-        Product::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'inventory' => $request->inventory,
-            'image' => $file_name,
-        ]);
+        Product::create($request->only(['name', 'category', 'brand', 'inventory', 'expire_date', 'price', 'has_count']));
 
         return redirect()->route('products.index')->with('toast', ['success' => 'محصول با موفقیت ثبت گردید']);
     }
@@ -76,27 +70,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        dd($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron'],
             'inventory' => ['required', 'numeric', 'max:1000'],
-            'image' => ['required'],
+            'expire_date' => ['nullable', 'date'],
+            'price' => ['required', 'numeric', 'max:10000000'],
+            'has_count' => ['boolean'],
         ]);
 
-        $image = $request->file('image');
-        $file_name = $request->name . '-' . time() . '.' . $image->getClientOriginalExtension();
+        $product->update($request->only(['name', 'category', 'brand', 'inventory', 'expire_date', 'price', 'has_count']));
 
-        Storage::disk('products')->putFileAs('', $image, $file_name);
-
-        Product::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'inventory' => $request->inventory,
-            'image' => $file_name,
-        ]);
-
-        return redirect()->route('products.index')->with('toast', ['success' => 'محصول با موفقیت ثبت گردید']);
+        return redirect()->route('products.index')->with('toast', ['success' => 'محصول با موفقیت ویرایش شد']);
     }
 
     /**

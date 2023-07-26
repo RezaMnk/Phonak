@@ -20,8 +20,12 @@ return new class extends Migration
             $table->string('audiologist_med_number')->nullable();
             $table->string('otolaryngologist_med_number')->nullable();
             $table->string('supplementary_insurance')->nullable();
-            $table->unsignedBigInteger('record_id');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('record_id')->nullable();
             $table->foreign('record_id')->references('id')->on('records')->onDelete('cascade');
+            $table->unsignedBigInteger('accessory_id')->nullable();
+            $table->foreign('accessory_id')->references('id')->on('accessories')->onDelete('cascade');
+            $table->enum('mail_address', ['work', 'second_work', 'home']);
             $table->timestamps();
         });
     }

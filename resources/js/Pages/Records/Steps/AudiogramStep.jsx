@@ -2,9 +2,10 @@ import {Head, useForm} from '@inertiajs/react';
 
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
-import {createContext, useContext} from "react";
+import {createContext, useContext, useEffect} from "react";
 import {StepContext} from "@/Pages/Records/Create.jsx";
 import TextInput from "@/Components/TextInput.jsx";
+import FileInput from "@/Components/FileInput.jsx";
 
 export const AidContext = createContext();
 
@@ -24,6 +25,8 @@ export default function AudiogramStep() {
             'bc_1000': record.audiogram?.left?.bc_1000 || '',
             'bc_2000': record.audiogram?.left?.bc_2000 || '',
             'bc_4000': record.audiogram?.left?.bc_4000 || '',
+            'audiogram_image': record.audiogram?.left?.audiogram_image || '',
+            'id_card_image': record.audiogram?.left?.id_card_image || '',
         },
         right: {
             'ac_250': record.audiogram?.right?.ac_250 || '',
@@ -36,8 +39,14 @@ export default function AudiogramStep() {
             'bc_1000': record.audiogram?.right?.bc_1000 || '',
             'bc_2000': record.audiogram?.right?.bc_2000 || '',
             'bc_4000': record.audiogram?.right?.bc_4000 || '',
+            'audiogram_image': record.audiogram?.right?.audiogram_image || '',
+            'id_card_image': record.audiogram?.right?.id_card_image || '',
         },
     });
+
+    useEffect(() => {
+        console.log(data)
+    }, [data])
 
     const submit = (e) => {
         e.preventDefault();
@@ -129,6 +138,44 @@ export default function AudiogramStep() {
                                 <hr className="mt-1 dark:border-slate-600"/>
                             </div>
                             {render_ear('left')}
+                            <div className="flex mt-5">
+                                <div className="w-1/2 ml-2">
+                                    <FileInput
+                                        name="left.audiogram_image"
+                                        fileName={data.left.audiogram_image}
+                                        viewLink={record.audiogram?.left?.audiogram_image_url}
+                                        label="تصویر آدیوگرام"
+                                        accept="image/*"
+                                        setData={(e) => {
+                                            setData((prevData) => ({
+                                                ...prevData,
+                                                ['left']: {
+                                                    ...prevData['left'],
+                                                    'audiogram_image': e.target.files[0]
+                                                },
+                                            }))}
+                                        }
+                                    />
+                                </div>
+                                <div className="w-1/2">
+                                    <FileInput
+                                        name="left.id_card_image"
+                                        fileName={data.left.id_card_image}
+                                        viewLink={record.audiogram?.left?.id_card_image_url}
+                                        label="تصویر مدرک شناسایی (کارت ملی یا صفحه اول شناسنامه)"
+                                        accept="image/*"
+                                        setData={(e) => {
+                                            setData((prevData) => ({
+                                                ...prevData,
+                                                ['left']: {
+                                                    ...prevData['left'],
+                                                    'id_card_image': e.target.files[0]
+                                                },
+                                            }))}
+                                        }
+                                    />
+                                </div>
+                            </div>
                         </div>
                     )}
 
@@ -142,6 +189,44 @@ export default function AudiogramStep() {
                                 <hr className="mt-1 dark:border-slate-600"/>
                             </div>
                             {render_ear('right')}
+                            <div className="flex mt-5">
+                                <div className="w-1/2 ml-2">
+                                    <FileInput
+                                        name="right.audiogram_image"
+                                        fileName={data.right.audiogram_image}
+                                        viewLink={record.audiogram?.right?.audiogram_image_url}
+                                        label="تصویر آدیوگرام"
+                                        accept="image/*"
+                                        setData={(e) => {
+                                            setData((prevData) => ({
+                                                ...prevData,
+                                                ['right']: {
+                                                    ...prevData['right'],
+                                                    'audiogram_image': e.target.files[0]
+                                                },
+                                            }))}
+                                        }
+                                    />
+                                </div>
+                                <div className="w-1/2">
+                                    <FileInput
+                                        name="right.id_card_image"
+                                        fileName={data.right.id_card_image}
+                                        viewLink={record.audiogram?.right?.id_card_image_url}
+                                        label="تصویر مدرک شناسایی (کارت ملی یا صفحه اول شناسنامه)"
+                                        accept="image/*"
+                                        setData={(e) => {
+                                            setData((prevData) => ({
+                                                ...prevData,
+                                                ['right']: {
+                                                    ...prevData['right'],
+                                                    'id_card_image': e.target.files[0]
+                                                },
+                                            }))}
+                                        }
+                                    />
+                                </div>
+                            </div>
                         </div>
                     )}
                 </AidContext.Provider>

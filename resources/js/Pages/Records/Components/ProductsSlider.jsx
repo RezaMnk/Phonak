@@ -36,13 +36,17 @@ export default ({ products, product: selected_product, setProduct, error }) => {
 
                     <InputLabel
                         htmlFor={`product-`+ product.id}
-                        className={`w-full cursor-pointer border ${error ? 'border-red-200 dark:border-red-800' : 'border-gray-200 dark:border-slate-500'} border-2 rounded-lg peer-checked:border-green-400`}
+                        className={`w-full bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 cursor-pointer border ${error ? 'border-red-200 dark:border-red-800' : 'border-gray-200 dark:border-slate-500'} border-2 rounded-lg peer-checked:border-sky-400`}
                     >
                         <div className="p-2">
-                            <img src="/storage/logo.png" loading="lazy" alt={product.id} className="h-24 object-cover"/>
+                            <img src={product.image_url} loading="lazy" alt={product.id} className="rounded-lg h-full w-full object-cover"/>
+                            <hr className="my-2 border-gray-200 dark:border-slate-500"/>
+                            <p className="text-center text-xs font-bold">
+                                {product.price.toLocaleString()} تومان
+                            </p>
                             <hr className="my-2 border-gray-200 dark:border-slate-500"/>
                             <p className="text-center">
-                                محصول شماره {product.id}
+                                {product.name}
                             </p>
                         </div>
                     </InputLabel>

@@ -35,13 +35,13 @@ export default function Pagination({ data }) {
                                             </div>
                                         ) : link.active ? (
                                             <div
-                                                className="w-8 h-8 flex items-center justify-center text-sm cursor-pointer leading-4 bg-green-500 dark:bg-green-700 rounded text-white"
+                                                className="w-8 h-8 flex items-center justify-center text-sm cursor-pointer leading-4 bg-sky-500 dark:bg-sky-700 rounded text-white"
                                             >
                                                 {link.label}
                                             </div>
                                         ) : (
                                             <Link
-                                                className={`${is_prev_next() ? 'px-4' : 'w-8'} h-8 flex items-center justify-center text-sm leading-4 bg-white dark:bg-slate-700 dark:text-slate-100 rounded hover:bg-gray-200/70 dark:hover:bg-slate-600 focus:outline-none focus:ring-green-500 focus:ring-2`}
+                                                className={`${is_prev_next() ? 'px-4' : 'w-8'} h-8 flex items-center justify-center text-sm leading-4 bg-white dark:bg-slate-700 dark:text-slate-100 rounded hover:bg-gray-200/70 dark:hover:bg-slate-600 focus:outline-none focus:ring-sky-500 focus:ring-2`}
                                                 href={link.url}
                                             >
                                                 {link.label}

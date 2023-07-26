@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audiogram;
 use App\Models\Patient;
 use App\Models\Product;
 use App\Models\Record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class RecordController extends Controller
@@ -129,19 +131,41 @@ class RecordController extends Controller
                     $ear .'.bc_1000' => ['nullable', 'numeric'],
                     $ear .'.bc_2000' => ['nullable', 'numeric'],
                     $ear .'.bc_4000' => ['nullable', 'numeric'],
+                    $ear .'.audiogram_image' => ['required'],
+                    $ear .'.id_card_image' => ['required'],
                 ]);
             }
         }
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
             {
-                $only = ['ac_250', 'ac_500', 'ac_1000', 'ac_2000', 'ac_4000', 'bc_250', 'bc_500', 'bc_1000', 'bc_2000', 'bc_4000'];
+                $only = ['ac_250', 'ac_500', 'ac_1000', 'ac_2000', 'ac_4000', 'bc_250', 'bc_500', 'bc_1000', 'bc_2000', 'bc_4000', 'audiogram_image', 'id_card_image'];
                 $data = $request[$ear];
                 foreach ($data as $key => $value) {
                     if (!in_array($key, $only)) {
                         $data[$key] = null;
                     }
                 }
+
+                $save_image = function($type) use ($ear, $request, $record)
+                {
+                    if ($exists = $record->audiograms->where('ear', $ear)->first())
+                        Storage::disk('audiograms')->delete($record->id .'/'. $exists->toArray()[$type]);
+
+                    $image = $request->file($ear.'.'.$type);
+                    $file_name = $type . '-' . $ear . '.' . $image->getClientOriginalExtension();
+                    Storage::disk('audiograms')->putFileAs($record->id, $image, $file_name);
+
+                    return $file_name;
+                };
+
+                if ($request->hasFile($ear.'.audiogram_image')) {
+                    $data['audiogram_image'] = $save_image('audiogram_image');
+                }
+                if ($request->hasFile($ear.'.id_card_image')) {
+                    $data['id_card_image'] = $save_image('id_card_image');
+                }
+
                 $record->audiograms()->updateOrCreate(['ear' => $ear], $data);
             }
 
@@ -150,7 +174,6 @@ class RecordController extends Controller
                     $audiogram->delete();
         }
 
-        $record->update($request->only(['brand', 'type', 'ear', 'product']));
         $record->set_step(5);
 
         return redirect()->route('records.edit', ['record' => $record, 'step' => 5])->with(['toast', ['success' => 'مرحله چهارم ذخیره شد']]);
@@ -164,9 +187,11 @@ class RecordController extends Controller
         $request->validate([
             'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
             'has_health_insurance' => ['boolean'],
+            'description' => ['nullable', 'string'],
+            'mail_address' => ['required', 'in:home,work,second_work'],
         ]);
 
-        $data = $request->only(['type','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
+        $data = $request->only(['type','description','mail_address','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
 
         if ($request->type == 'etc')
             $request->validate([
@@ -214,10 +239,11 @@ class RecordController extends Controller
     public function get_products(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'type' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
+            'type' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron'],
         ]);
 
-        $products = Product::query()->where('category', $request->type)->get();
+        $products = Product::query()->where('category', $request->type)->where('brand', $request->brand)->get();
         return response()->json(['products' => $products]);
     }
 
@@ -242,6 +268,7 @@ class RecordController extends Controller
             'record.audiogram.right' => $record->audiograms->firstWhere('ear', 'right'),
             'record.audiogram.left' => $record->audiograms->firstWhere('ear', 'left'),
             'record.shipping' => $record->shipping,
+            'record.shipping.address' => $record->user->address,
         ]);
     }
 
@@ -275,9 +302,10 @@ class RecordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Record $record)
+    public function destroy(Record $record): \Illuminate\Http\RedirectResponse
     {
-        //
+        $record->delete();
+        return redirect()->route('records.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
     }
 
 
@@ -370,7 +398,7 @@ class RecordController extends Controller
                     {
                         $request->validate([
                             $ear. '.mold_material' => ['required', 'in:soft,hard'],
-                            $ear. '.mold_size' => ['required', 'string'],
+                            $ear. '.mold_size' => ['required', 'in:Canal,Half shell,Full shell,Skeleton shell'],
                             $ear. '.has_vent' => ['boolean'],
                         ]);
                         if ($request[$ear]['has_vent'])

@@ -19,9 +19,14 @@ return new class extends Migration
             $table->string('med_number')->unique();
             $table->string('grade');
             $table->string('university');
+            $table->string('state');
+            $table->string('city');
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->string('id_card_image')->nullable();
             $table->string('med_card_image')->nullable();
+            $table->string('password');
+            $table->unsignedInteger('group')->default(0);
+            $table->boolean('verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -31,9 +31,9 @@ export default function AidTypeStep() {
     }, [product])
 
     useEffect(() => {
-        if (record.type)
+        if (data.type && data.brand)
             get_products(data.type)
-    }, [])
+    }, [data.type, data.brand])
 
     const submit = (e) => {
         e.preventDefault();
@@ -45,14 +45,9 @@ export default function AidTypeStep() {
         });
     };
 
-    const type_change = (e) => {
-        setData('type', e.target.value);
-        get_products(e.target.value);
-    };
-
-    const get_products = async (type) => {
+    const get_products = async () => {
         try {
-            const response = await axios.post(route('records.products'), { type });
+            const response = await axios.post(route('records.products'), { type: data.type, brand: data.brand });
             let new_products = response.data.products;
             if (new_products) {
                 setProducts(new_products)
@@ -91,7 +86,7 @@ export default function AidTypeStep() {
 
                                  <InputLabel
                                      htmlFor="brand_phonak"
-                                     className="border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-green-400"
+                                     className="border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
                                  >
                                      <div className="p-2">
                                          <img src="/storage/logo.png" alt="" className="w-24 h-24"/>
@@ -114,7 +109,7 @@ export default function AidTypeStep() {
 
                                  <InputLabel
                                      htmlFor="brand_hansaton"
-                                     className="border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-green-400"
+                                     className="border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
                                  >
                                      <div className="p-2">
                                          <img src="/storage/logo.png" alt="" className="w-24 h-24"/>
@@ -135,7 +130,7 @@ export default function AidTypeStep() {
                                      name="name"
                                      value={data.type}
                                      label="نوع سفارش"
-                                     onChange={type_change}
+                                     onChange={(e) => setData('type', e.target.value)}
                                      error={errors.type}
                                      required
                                  >

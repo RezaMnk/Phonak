@@ -54,7 +54,7 @@ export default function Index({ patients }) {
                                 کد ملی
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                سن
+                                سال تولد
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 شماره تماس
@@ -80,8 +80,8 @@ export default function Index({ patients }) {
                                     {patient.national_code}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
-                                        {patient.age}
+                                    <span className="inline-flex items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
+                                        {patient.birth_year}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4">
@@ -114,7 +114,7 @@ export default function Index({ patients }) {
                                 className="text-lg px-6 py-6">
                                 هیچ کاربری یافت نشد!
                                 <Link href={route('patients.create')}
-                                      className="mr-2 text-green-500 text-base"
+                                      className="mr-2 text-sky-500 text-base"
                                 >
                                     ایجاد اولین کاربر
                                 </Link>

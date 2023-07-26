@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
-            $table->enum('brand', ['phonak', 'hansaton'])->nullable(); // Nullable but important
+            $table->enum('brand', ['phonak', 'hansaton', 'unitron'])->nullable(); // Nullable but important
             $table->enum('type', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC'])->nullable(); // Nullable but important
             $table->enum('ear', ['left', 'right', 'both'])->nullable();
 

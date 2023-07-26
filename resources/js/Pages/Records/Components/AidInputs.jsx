@@ -237,11 +237,10 @@ export const MoldSize = ({ ear }) => {
     const {data, setData, errors} = useContext(AidContext)
     return (
         <>
-            <TextInput
+            <SelectInput
                 id={`mold_size_` + ear}
                 name={`${ear}.mold_size`}
                 value={data[ear].mold_size}
-                type="number"
                 label="اندازه قالب"
                 onChange={(e) => setData((prevData) => ({
                     ...prevData,
@@ -252,7 +251,13 @@ export const MoldSize = ({ ear }) => {
                 }))}
                 error={errors.mold_size}
                 required
-            />
+            >
+                <option value="" disabled="disabled">انتخاب کنید</option>
+                <option value="Canal">Canal</option>
+                <option value="Half shell">Half shell</option>
+                <option value="Full shell">Full shell</option>
+                <option value="Skeleton shell">Skeleton shell</option>
+            </SelectInput>
 
             <InputError message={errors.mold_size} className="mt-2"/>
         </>

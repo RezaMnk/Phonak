@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('brand', ['phonak', 'hansaton', 'unitron']);
             $table->enum('category', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories']);
+            $table->string('expire_date')->nullable();
+            $table->unsignedBigInteger('price');
             $table->unsignedInteger('inventory');
-            $table->string('image');
+            $table->boolean('has_count')->default(false);
             $table->timestamps();
         });
     }

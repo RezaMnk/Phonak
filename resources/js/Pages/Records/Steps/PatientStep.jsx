@@ -237,7 +237,7 @@ export default function PatientStep() {
                             id="post_code"
                             name="post_code"
                             value={data.post_code}
-                            label="کد پستی محل کار"
+                            label="کد پستی"
                             svgIcon={(
                                 <g>
                                     <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>

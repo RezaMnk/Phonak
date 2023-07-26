@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -27,6 +28,10 @@ class User extends Authenticatable
         'med_number',
         'grade',
         'university',
+        'state',
+        'city',
+        'password',
+        'verified',
     ];
 
     /**
@@ -67,6 +72,14 @@ class User extends Authenticatable
         return $this->hasOne(Address::class);
     }
 
+    /**
+     * @return HasOne
+     */
+    public function user_info(): HasOne
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
 
     /**
      * @return HasMany
@@ -86,9 +99,24 @@ class User extends Authenticatable
     }
 
 
-    public function hasAddress()
+    /**
+     * @return HasMany
+     */
+    public function accessories(): HasMany
+    {
+        return $this->hasMany(Accessory::class);
+    }
+
+
+    public function has_address(): bool
     {
         return isset($this->address);
+    }
+
+
+    public function has_info(): bool
+    {
+        return isset($this->user_info);
     }
 
     /**
@@ -112,6 +140,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is verified
+     *
+     * @return bool
+     */
+    public function verified()
+    {
+        return $this->verified;
+    }
+
+    /**
      * Determine if the user is an administrator.
      */
     protected function isAdmin(): Attribute
@@ -129,5 +167,14 @@ class User extends Authenticatable
         return new Attribute(
             get: fn () => $this->is_owner(),
         );
+    }
+
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

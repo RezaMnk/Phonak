@@ -1,5 +1,3 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import NavLink from '@/Components/NavLink';
 import TextInput from "@/Components/TextInput.jsx";
 import {ToastContainer} from "react-toastify";
 import "../../css/toastify/main.scss"
@@ -7,13 +5,12 @@ import useMemorable from "@/Hooks/useMemorable.js";
 import {useEffect} from "react";
 import {usePage} from "@inertiajs/react";
 import {toast as toastify} from "react-toastify";
-import Icon from "@/Components/Icon.jsx";
 import UserSidebar from "@/Layouts/UserSidebar.jsx";
 import AdminSidebar from "@/Layouts/AdminSidebar.jsx";
 
 export default function Authenticated({ header, breadcrumbs, headerButton = <></>, children }) {
     const [minimize, setMinimize] = useMemorable(false, 'minimize');
-    const [dark, setDark] = useMemorable(true, 'dark');
+    const [dark, setDark] = useMemorable(false, 'dark');
 
     const { toast, auth } = usePage().props;
 
@@ -68,7 +65,7 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
 
 
                 {header && (
-                    <header className={`bg-white dark:bg-slate-900 transition-all ${minimize ? 'mr-24' : 'mr-60'}`}>
+                    <header className={`bg-white dark:bg-slate-900 transition-all ${minimize ? 'mr-24' : 'mr-60'} print:hidden`}>
                         <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             <div className="flex justify-between">
                                 <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
@@ -103,19 +100,19 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                                         <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
                                             <p>#11</p>
                                             <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs text-green-800 ring-1 ring-inset ring-green-600/20">تکمیل</span>
+                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
                                         </div>
                                         <hr className="border-gray-300 dark:border-slate-600"/>
                                         <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
                                             <p>#11</p>
                                             <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs text-green-800 ring-1 ring-inset ring-green-600/20">تکمیل</span>
+                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
                                         </div>
                                         <hr className="border-gray-300 dark:border-slate-600"/>
                                         <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
                                             <p>#11</p>
                                             <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs text-green-800 ring-1 ring-inset ring-green-600/20">تکمیل</span>
+                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
                                         </div>
 
                                         <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">
@@ -124,13 +121,13 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                                         <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
                                             <p>#11</p>
                                             <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs text-green-800 ring-1 ring-inset ring-green-600/20">تکمیل</span>
+                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
                                         </div>
                                         <hr className="border-gray-300 dark:border-slate-600"/>
                                         <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
                                             <p>#11</p>
                                             <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs text-green-800 ring-1 ring-inset ring-green-600/20">تکمیل</span>
+                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +158,7 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                                                                 />
                                                             </svg>
                                                         </span>
-                                                        <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-green-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
+                                                        <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-sky-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
                                                             {sectionName}
                                                         </a>
                                                     </div>
@@ -179,7 +176,7 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                     </header>
                 )}
 
-                <div className={`transition-all ${minimize ? 'mr-24' : 'mr-60'}`}>
+                <div className={`transition-all ${minimize ? 'mr-24' : 'mr-60'} print:m-auto`}>
                     <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 xl:py-12">{children}</main>
                 </div>
             </div>

@@ -91,6 +91,9 @@ export default function Index({ products }) {
                                 نام محصول
                             </th>
                             <th scope="col" className="px-6 py-3">
+                                برند
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 دسته بندی
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -114,9 +117,24 @@ export default function Index({ products }) {
                                     {product.name}
                                 </th>
                                 <td className="px-6 py-4">
-                                    <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
-                                        {product.category}
-                                    </span>
+                                    {product.category}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {product.brand == 'phonak' && (
+                                        <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                    {product.brand == 'hansaton' && (
+                                        <span className="inline-flex items-center rounded-md bg-gray-50 dark:bg-gray-500/30 px-2 py-1 text-sm font-medium text-gray-800 dark:text-gray-300/70 ring-1 ring-inset ring-gray-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                    {product.brand == 'unitron' && (
+                                        <span className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-500/30 px-2 py-1 text-sm font-medium text-blue-800 dark:text-blue-300/70 ring-1 ring-inset ring-blue-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
                                 </td>
                                 <td className="px-6 py-4">
                                     <TextInput
@@ -152,7 +170,7 @@ export default function Index({ products }) {
                                 className="text-lg px-6 py-6">
                                 هیچ محصولی یافت نشد!
                                 <Link href={route('products.create')}
-                                      className="mr-2 text-green-500 text-base"
+                                      className="mr-2 text-sky-500 text-base"
                                 >
                                     ایجاد اولین محصول
                                 </Link>

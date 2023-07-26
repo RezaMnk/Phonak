@@ -148,7 +148,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                                     </td>
                                     <td className="px-6 py-4 text-sm">
                                         <span
-                                            className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            className="inline-flex items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                             تکمیل
                                         </span>
                                     </td>
@@ -157,7 +157,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                                         href="#">
                                             ویرایش
                                         </a>
-                                        <a className="inline-flex mr-3 px-2 py-1 text-xs text-center text-green-900 dark:text-green-200 transition-colors duration-300 bg-green-100 dark:bg-green-600/50 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-200 dark:hover:bg-green-600 focus:outline-none focus:ring-0 focus:border-green-500"
+                                        <a className="inline-flex mr-3 px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
                                         href="#">
                                             مشاهده
                                         </a>
@@ -227,7 +227,7 @@ export default function Dashboard({ auth, patients, notifies = {} }) {
                         {/*                    {patient.national_code}*/}
                         {/*                </td>*/}
                         {/*                <td className="px-6 py-4 text-sm">*/}
-                        {/*            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-800 ring-1 ring-inset ring-green-600/20">*/}
+                        {/*            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-sm font-medium text-sky-800 ring-1 ring-inset ring-sky-600/20">*/}
                         {/*                {patient.age}*/}
                         {/*            </span>*/}
                         {/*                </td>*/}

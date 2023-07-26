@@ -48,13 +48,13 @@ class Record extends Model
     }
 
     /**
-     * has one product
+     * Belongs to product
      *
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function product(): HasOne
+    public function product(): BelongsTo
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     /**

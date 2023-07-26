@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,37 +34,33 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'auth.address'])->name('dashboard');
+})->middleware(['auth', 'auth.verified'])->name('dashboard');
 
-Route::middleware(['auth', 'auth.address'])->group(function () {
+Route::middleware(['auth', 'auth.verified'])->group(function () {
 
     Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
         Route::get('/', 'index');
     });
 
-    Route::controller(ProfileController::class)->name('profile')->prefix('profile')->group(function () {
-        Route::get('/', 'edit')->name('.edit');
-        Route::patch('/', 'update')->name('.update');
-        Route::delete('/', 'destroy')->name('.destroy');
-    });
-
     Route::resource('patients', PatientController::class);
 
-    Route::resource('products', ProductController::class);
-    Route::controller(ProductController::class)->name('products')->prefix('products')->group(function () {
-        Route::post('/update_inventory/{product}', 'update_inventory')->name('.update_inventory');
-    });
-
-    Route::resource('records', RecordController::class);
     Route::controller(RecordController::class)->name('records')->prefix('records')->group(function () {
-        Route::post('/check_national_code', 'check_national_code')->name('.check_national_code');
+        Route::post('/check-national-code', 'check_national_code')->name('.check_national_code');
         Route::post('/products', 'get_products')->name('.products');
 
-        Route::post('/store_aid_type/{record}', 'store_aid_type')->name('.store_aid_type');
-        Route::post('/store_aid/{record}', 'store_aid')->name('.store_aid');
-        Route::post('/store_audiogram/{record}', 'store_audiogram')->name('.store_audiogram');
-        Route::post('/store_shipping/{record}', 'store_shipping')->name('.store_shipping');
+        Route::post('/store-aid-type/{record}', 'store_aid_type')->name('.store_aid_type');
+        Route::post('/store-aid/{record}', 'store_aid')->name('.store_aid');
+        Route::post('/store-audiogram/{record}', 'store_audiogram')->name('.store_audiogram');
+        Route::post('/store-shipping/{record}', 'store_shipping')->name('.store_shipping');
     });
+    Route::resource('records', RecordController::class);
+
+    Route::controller(AccessoryController::class)->name('accessories')->prefix('accessories')->group(function () {
+        Route::post('/products', 'get_products')->name('.products');
+
+        Route::post('/store-shipping/{accessory}', 'store_shipping')->name('.store_shipping');
+    });
+    Route::resource('accessories', AccessoryController::class);
 
 //    Route::controller(PatientController::class)->name('patients')->prefix('patients')->group(function () {
 //        Route::get('/', 'index');
@@ -72,12 +71,38 @@ Route::middleware(['auth', 'auth.address'])->group(function () {
 
 });
 
+Route::middleware(['auth', 'auth.is_admin'])->group(function () {
+    Route::controller(ProductController::class)->name('products')->prefix('products')->group(function () {
+        Route::post('/update-inventory/{product}', 'update_inventory')->name('.update_inventory');
+    });
+    Route::resource('products', ProductController::class);
+
+    Route::controller(UserController::class)->name('users')->prefix('users')->group(function () {
+        Route::get('/not-verified', 'not_verified')->name('.not_verified');
+    });
+    Route::resource('users', UserController::class);
+
+    Route::controller(SettingController::class)->name('settings')->prefix('.settings')-> group(function () {
+
+    });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::controller(ProfileController::class)->name('profile')->prefix('profile')->group(function () {
+        Route::get('/', 'index')->name('.index');
+        Route::get('/edit', 'edit')->name('.edit');
+        Route::patch('/', 'update')->name('.update');
+    });
+});
+
+
+
 require __DIR__.'/auth.php';
 
 
 Route::get('/test', function () {
     dd(
-        \App\Models\Product::find(1)->image_url
+        \App\Models\Record::all()->first()->product
     );
 });
 

@@ -14,7 +14,7 @@ export default forwardRef(function RadioInput({ className = '', isFocused = fals
                 {...props}
                 type="radio"
                 className={
-                    'w-4 h-4 text-green-600 bg-gray-10 border-gray-300 focus:ring-green-500 focus:ring-2 ' +
+                    'w-4 h-4 text-sky-600 bg-gray-10 border-gray-300 focus:ring-sky-500 focus:ring-2 ' +
                     className
                 }
                 ref={input}

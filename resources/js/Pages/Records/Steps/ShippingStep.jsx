@@ -11,6 +11,7 @@ import {StepContext} from "@/Pages/Records/Create.jsx";
 import CheckboxInput from "@/Components/CheckboxInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
+import RadioInput from "@/Components/RadioInput.jsx";
 
 export default function ShippingStep() {
 
@@ -23,7 +24,8 @@ export default function ShippingStep() {
         phone: record.shipping?.phone || '',
         audiologist_med_number: record.shipping?.audiologist_med_number || '',
         otolaryngologist_med_number: record.shipping?.otolaryngologist_med_number || '',
-        supplementary_insurance: record.shipping?.supplementary_insurance || '',
+        description: record.shipping?.description || '',
+        mail_address: record.shipping?.mail_address || record.shipping?.address.mail_address,
     });
 
     const submit = (e) => {
@@ -173,6 +175,86 @@ export default function ShippingStep() {
                          </div>
                      </>
                  )}
+                 <div className="mt-8 text-gray-700 dark:text-slate-200">
+                     <div className="flex justify-between items-end">
+                         <h5>
+                             آدرس جهت ارسال
+                         </h5>
+                     </div>
+                     <hr className="dark:border-slate-600"/>
+                 </div>
+                 <div className="flex mt-8">
+                     <div className="w-1/2 ml-5 text-gray-700 dark:text-slate-200">
+                         <p>
+                             مرسولات شما به کدام آدرس ارسال شوند؟
+                         </p>
+
+                         <InputError message={errors.mail_address} className="mt-2"/>
+
+                         <div className="mb-5 mt-2">
+                             <div className="inline-block ml-8">
+                                 <RadioInput
+                                     id="mail_address_work"
+                                     name="mail_address"
+                                     checked={data.mail_address === 'work'}
+                                     onChange={() => setData('mail_address', 'work')}
+                                     required
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="mail_address_work"
+                                     value="محل کار"
+                                     className="mr-2"
+                                 />
+                             </div>
+                             {record.shipping.address.second_work_address && (
+                                 <div className="inline-block ml-8">
+                                     <RadioInput
+                                         id="second_mail_address_work"
+                                         name="mail_address"
+                                         checked={data.mail_address === 'second_work'}
+                                         onChange={() => setData('mail_address', 'second_work')}
+                                         required
+                                     />
+
+                                     <InputLabel
+                                         htmlFor="second_mail_address_work"
+                                         value="محل کار دوم"
+                                         className="mr-2"
+                                     />
+                                 </div>
+                             )}
+                             <div className="inline-block">
+                                 <RadioInput
+                                     id="mail_address_home"
+                                     name="mail_address"
+                                     checked={data.mail_address === 'home'}
+                                     onChange={() => setData('mail_address', 'home')}
+                                     required
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="mail_address_home"
+                                     value="محل اقامت"
+                                     className="mr-2"
+                                 />
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div className="flex mt-8">
+                     <TextAreaInput
+                         id="description"
+                         name="description"
+                         value={data.description}
+                         rows="3"
+                         label="توضیحات"
+                         onChange={(e) => setData('description', e.target.value)}
+                         error={errors.description}
+                     />
+
+                     <InputError message={errors.description} className="mt-2"/>
+                 </div>
 
                  <div className="flex justify-between mt-8">
                      <DangerButton

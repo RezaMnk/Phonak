@@ -41,6 +41,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('addresses', [RegisteredUserController::class, 'storeAddress']);
 
+    Route::get('info', [RegisteredUserController::class, 'info'])
+        ->name('info');
+
+    Route::post('info', [RegisteredUserController::class, 'storeInfo']);
+
+    Route::get('wait_for_verify', [RegisteredUserController::class, 'wait_for_verify'])
+        ->name('wait_for_verify');
+
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 

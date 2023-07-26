@@ -134,7 +134,7 @@
     }
 
     *::-webkit-scrollbar-thumb:hover {
-        background: rgba(71, 148, 71, 0.63);
+        background: rgba(20, 130, 200, 0.63);
     }
 
     .hide-scrollbar::-webkit-scrollbar {

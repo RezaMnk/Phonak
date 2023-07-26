@@ -32,7 +32,7 @@ return new class extends Migration
             // MOLD
             $table->boolean('has_mold')->nullable();                                                               // Also for RIC
             $table->enum('mold_material', ['hard', 'soft'])->nullable();
-            $table->unsignedInteger('mold_size')->nullable();
+            $table->enum('mold_size', ['Canal', 'Half shell', 'Full shell', 'Skeleton shell'])->nullable();
             $table->boolean('has_vent')->nullable();
             // TUBE
             $table->enum('tube_size', ['0', '1', '2', '3'])->nullable();

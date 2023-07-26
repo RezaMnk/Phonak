@@ -52,13 +52,13 @@ export default function Create({ record }) {
         <AuthenticatedLayout
             header={(
                 <>
-                    ایجاد کاربر
+                    {record ? ('ویرایش سفارش') : ('ایجاد سفارش')}
                 </>
             )}
             breadcrumbs={
                 {
-                    'سفارشات': route('records.index'),
-                    'سفارش جدید': "#"
+                    'سفارشات سمعک': route('records.index'),
+                    [record ? ('ویرایش سفارش') : ('ایجاد سفارش')]: "#"
                 }
             }
         >

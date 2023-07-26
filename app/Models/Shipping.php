@@ -24,6 +24,7 @@ class Shipping extends Model
         'audiologist_med_number',
         'otolaryngologist_med_number',
         'supplementary_insurance',
+        'description',
     ];
 
 
@@ -36,5 +37,16 @@ class Shipping extends Model
     public function record(): BelongsTo
     {
         return $this->belongsTo(Record::class);
+    }
+
+
+    /**
+     * Belongs to accessory
+     *
+     * @return BelongsTo
+     */
+    public function accessory(): BelongsTo
+    {
+        return $this->belongsTo(Accessory::class);
     }
 }

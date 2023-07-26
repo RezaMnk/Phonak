@@ -24,7 +24,7 @@ export default function ForgotPassword({ status }) {
                 reset link that will allow you to choose a new one.
             </div>
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && <div className="mb-4 font-medium text-sm text-sky-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <TextInput
