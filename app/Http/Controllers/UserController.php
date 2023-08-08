@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -26,6 +28,28 @@ class UserController extends Controller
         return Inertia::render('Users/Index', [
             'users' => User::query()->where('role', 'user')->where('verified', '0')->latest()->paginate()
         ]);
+    }
+
+    public function download(User $user, String $name)
+    {
+        $files = [
+            'id' => ['name' => $user->name .'-id.jpg', 'file' => 'id_card.jpg'],
+            'med_card' => ['name' => $user->name .'-med_card.jpg', 'file' => 'license.jpg'],
+            'license' => ['name' => $user->name .'-license.jpg', 'file' => 'med_card.jpg'],
+        ];
+        if (! in_array($name, array_keys($files)))
+            return back()->with('toast', ['error' => 'مدرک یافت نشد']);
+
+        $headers = array(
+            'Content-Type: image/jpg',
+        );
+
+        $file = $user->id. '/' .$files[$name]['file'];
+
+        if (Storage::disk('users')->exists($file))
+            return Response::download('storage/users/'.$file, $files[$name]['name'], $headers);
+        else
+            return false;
     }
 
     /**
@@ -72,19 +96,35 @@ class UserController extends Controller
         $request->validate([
             'role' => ['required', 'string', 'max:255'],
             'group' => ['required', 'numeric', 'min:0'],
-            'verified' => ['required', 'in:true,false'],
+            'status' => ['required', 'in:approved,unapproved,waiting'],
             'password' => ['nullable', 'string', 'max:255'],
             'confirm_password' => ['required_with:password', 'same:password'],
         ]);
 
         $user->update([
             'role' => $request->role,
-            'verified' => $request->verified == 'true',
+            'status' => $request->status,
             'password' => $request->password,
             'group' => $request->group,
         ]);
 
         return back()->with('toast', ['success' => 'اطلاعات همکار با موفقیت ویرایش شدند']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function disapprove(Request $request, User $user): \Illuminate\Http\RedirectResponse
+    {
+        $request->validate([
+            'disapprove' => ['required', 'string']
+        ]);
+
+        $user->status = 'unapproved';
+        $user->disapprove = $request->disapprove;
+        $user->save();
+
+        return back()->with('toast', ['success' => 'عدم تایید همکار با موفقیت ثبت گردید']);
     }
 
     /**

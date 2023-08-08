@@ -26,6 +26,8 @@ class Product extends Model
         'expire_date',
         'inventory',
         'has_count',
+        'min_count',
+        'max_count',
     ];
 
     /**
@@ -57,6 +59,17 @@ class Product extends Model
     public function accessories(): HasMany
     {
         return $this->hasMany(Accessory::class);
+    }
+
+
+    /**
+     * has many group products
+     *
+     * @return HasMany
+     */
+    public function group_products(): HasMany
+    {
+        return $this->hasMany(GroupProduct::class);
     }
 
 

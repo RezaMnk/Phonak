@@ -114,7 +114,6 @@ export default function Edit({ user }) {
                                                d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                 onChange={(e) => setData('name', e.target.value)}
                                 error={errors.name}
-                                required
                             />
 
                             <InputError message={errors.name} className="mt-2"/>
@@ -131,7 +130,6 @@ export default function Edit({ user }) {
                                     strokeLinecap="round" strokeLinejoin="round"/>}
                                 onChange={(e) => setData('national_code', e.target.value)}
                                 error={errors.national_code}
-                                required
                             />
 
                             <InputError message={errors.national_code} className="mt-2"/>
@@ -147,7 +145,6 @@ export default function Edit({ user }) {
                                                 d="M8 4H7.2002C6.08009 4 5.51962 4 5.0918 4.21799C4.71547 4.40973 4.40973 4.71547 4.21799 5.0918C4 5.51962 4 6.08009 4 7.2002V8M8 4H16M8 4V2M16 4H16.8002C17.9203 4 18.4796 4 18.9074 4.21799C19.2837 4.40973 19.5905 4.71547 19.7822 5.0918C20 5.5192 20 6.07899 20 7.19691V8M16 4V2M4 8V16.8002C4 17.9203 4 18.4801 4.21799 18.9079C4.40973 19.2842 4.71547 19.5905 5.0918 19.7822C5.5192 20 6.07899 20 7.19691 20H16.8031C17.921 20 18.48 20 18.9074 19.7822C19.2837 19.5905 19.5905 19.2842 19.7822 18.9079C20 18.4805 20 17.9215 20 16.8036V8M4 8H20M16 16H16.002L16.002 16.002L16 16.002V16ZM12 16H12.002L12.002 16.002L12 16.002V16ZM8 16H8.002L8.00195 16.002L8 16.002V16ZM16.002 12V12.002L16 12.002V12H16.002ZM12 12H12.002L12.002 12.002L12 12.002V12ZM8 12H8.002L8.00195 12.002L8 12.002V12Z"/>)}
                                 onChange={(e) => setData('grad_year', e.target.value)}
                                 error={errors.grad_year}
-                                required
                             />
 
                             <InputError message={errors.grad_year} className="mt-2"/>
@@ -162,7 +159,6 @@ export default function Edit({ user }) {
                                 svgIcon={<path d="M12 8V16M8 12H16M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"/>}
                                 onChange={(e) => setData('med_number', e.target.value)}
                                 error={errors.med_number}
-                                required
                             />
 
                             <InputError message={errors.med_number} className="mt-2"/>
@@ -177,7 +173,6 @@ export default function Edit({ user }) {
                                 label="مقطع تحصیلی"
                                 onChange={(e) => setData('grade', e.target.value)}
                                 error={errors.grade}
-                                required
                             >
                                 <option value="کارشناسی">کارشناسی</option>
                                 <option value="کارشناسی ارشد">کارشناسی ارشد</option>
@@ -208,7 +203,6 @@ export default function Edit({ user }) {
                                 autoComplete="university"
                                 onChange={(e) => setData('university', e.target.value)}
                                 error={errors.university}
-                                required
                             />
 
                             <InputError message={errors.university} className="mt-2"/>
@@ -221,7 +215,6 @@ export default function Edit({ user }) {
                                 label="استان اقامت"
                                 onChange={(e) => setData('state', e.target.value)}
                                 error={errors.state}
-                                required
                             >
                                 <IranStatesOptions />
                             </SelectInput>
@@ -236,7 +229,6 @@ export default function Edit({ user }) {
                                 label="شهر محل اقامت"
                                 onChange={(e) => setData('city', e.target.value)}
                                 error={errors.city}
-                                required
                             >
                                 <Cities state={data.state} />
                             </SelectInput>
@@ -286,7 +278,6 @@ export default function Edit({ user }) {
                                 autoComplete="address.home_post_code"
                                 onChange={(e) => setData('address.home_post_code', e.target.value)}
                                 error={errors.address?.home_post_code}
-                                required
                             />
 
                             <InputError message={errors.address?.home_post_code} className="mt-2"/>
@@ -303,7 +294,6 @@ export default function Edit({ user }) {
                                     strokeLinecap="round" strokeLinejoin="round"/>}
                                 onChange={(e) => setData('address.home_phone', e.target.value)}
                                 error={errors.address?.home_phone}
-                                required
                             />
 
                             <InputError message={errors.address?.home_phone} className="mt-2"/>
@@ -319,7 +309,6 @@ export default function Edit({ user }) {
                                     strokeLinecap="round" strokeLinejoin="round"/>}
                                 onChange={(e) => setData('address.home_address', e.target.value)}
                                 error={errors.address?.home_address}
-                                required
                             />
 
                             <InputError message={errors.address?.home_address} className="mt-2"/>
@@ -787,7 +776,7 @@ export default function Edit({ user }) {
                                 viewLink={user.info.id_card_image_url}
                                 fileName={data.id_card_image}
                                 label="تصویر واضح کارت ملی جدید (یا قدیم به همراه رسید تعویض)"
-                                accept="image/*"
+                                accept=".jpg, .jpeg"
                                 setData={(e) => setData('id_card_image', e.target.files[0])}
                                 error={errors.id_card_image}
                             />
@@ -799,7 +788,7 @@ export default function Edit({ user }) {
                                 viewLink={user.info.med_card_image_url}
                                 fileName={data.med_card_image}
                                 label="تصویر واضح کارت نظام پزشکی"
-                                accept="image/*"
+                                accept=".jpg, .jpeg"
                                 setData={(e) => setData('med_card_image', e.target.files[0])}
                                 error={errors.med_card_image}
                             />
@@ -811,7 +800,7 @@ export default function Edit({ user }) {
                                 viewLink={user.info.license_image_url}
                                 fileName={data.license_image}
                                 label="تصویر واضح مجوز فعالیت با تاریخ معتبر که هم نام دو مدرك اول باشد."
-                                accept="image/*"
+                                accept=".jpg, .jpeg"
                                 setData={(e) => setData('license_image', e.target.files[0])}
                                 error={errors.license_image}
                             />
@@ -857,7 +846,7 @@ export default function Edit({ user }) {
 
         </AuthenticatedLayout>
     ) : (
-        <GuestLayout className="!max-w-7xl">
+        <GuestLayout className="!max-w-7xl" name="ویرایش پروفایل">
             <Head title="ویرایش پروفایل"/>
 
             {render()}

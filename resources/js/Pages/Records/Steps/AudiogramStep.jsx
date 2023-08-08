@@ -2,7 +2,7 @@ import {Head, useForm} from '@inertiajs/react';
 
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
-import {createContext, useContext, useEffect} from "react";
+import {createContext, useContext} from "react";
 import {StepContext} from "@/Pages/Records/Create.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import FileInput from "@/Components/FileInput.jsx";
@@ -44,10 +44,6 @@ export default function AudiogramStep() {
         },
     });
 
-    useEffect(() => {
-        console.log(data)
-    }, [data])
-
     const submit = (e) => {
         e.preventDefault();
         post(route('records.store_audiogram', record.id), {
@@ -68,52 +64,60 @@ export default function AudiogramStep() {
 
     const render_ear = (ear) => (
         <>
-            <div className="flex space-x-reverse space-x-10">
+            <div className="flex flex-col-reverse md:flex-row space-y-5 md:space-y-0 md:space-x-reverse md:space-x-10">
                 {[...tests_list].reverse().map((item, index) => (
-                    <div key={index} className="text-gray-800 dark:text-slate-200">
-                        <label htmlFor={`ac_${item}_` + ear} className="block text-sm cursor-pointer font-semibold bg-gray-200 dark:bg-slate-500 rounded-lg py-1 text-center">
-                            {item}Hz
-                        </label>
-                        <div className="mt-2">
-                            <TextInput
-                                className="text-center"
-                                size={2}
-                                id={`ac_${item}_` + ear}
-                                name={`${ear}.ac_${item}`}
-                                value={data[ear]['ac_' + item]}
-                                type="number"
-                                onChange={(e) => setData((prevData) => ({
-                                    ...prevData,
-                                    [ear]: {
-                                        ...prevData[ear],
-                                        ["ac_" + item]: e.target.value
-                                    },
-                                }))}
-                                error={errors["ac_" + item]}
-                                required
-                            />
+                    <div key={index} className="flex text-gray-800 dark:text-slate-200">
+                        <div className="w-full flex flex-col">
+                            <label htmlFor={`ac_${item}_` + ear} className="block text-sm cursor-pointer font-semibold bg-gray-200 dark:bg-slate-500 rounded-lg py-1 text-center">
+                                {item}Hz
+                            </label>
+                            <div className="mt-2">
+                                <TextInput
+                                    className="text-center"
+                                    size={2}
+                                    id={`ac_${item}_` + ear}
+                                    name={`${ear}.ac_${item}`}
+                                    value={data[ear]['ac_' + item]}
+                                    type="number"
+                                    onChange={(e) => setData((prevData) => ({
+                                        ...prevData,
+                                        [ear]: {
+                                            ...prevData[ear],
+                                            ["ac_" + item]: e.target.value
+                                        },
+                                    }))}
+                                    error={errors["ac_" + item]}
+                                />
+                            </div>
+                            <div className="mt-2">
+                                <TextInput
+                                    className="text-center"
+                                    size={2}
+                                    id={`bc_${item}_` + ear}
+                                    name={`${ear}.bc_${item}`}
+                                    value={data[ear]['bc_' + item]}
+                                    type="number"
+                                    onChange={(e) => setData((prevData) => ({
+                                        ...prevData,
+                                        [ear]: {
+                                            ...prevData[ear],
+                                            ["bc_" + item]: e.target.value
+                                        },
+                                    }))}
+                                    error={errors["bc_" + item]}
+                                />
+                            </div>
                         </div>
-                        <div className="mt-2">
-                            <TextInput
-                                className="text-center"
-                                size={2}
-                                id={`bc_${item}_` + ear}
-                                name={`${ear}.bc_${item}`}
-                                value={data[ear]['bc_' + item]}
-                                type="number"
-                                onChange={(e) => setData((prevData) => ({
-                                    ...prevData,
-                                    [ear]: {
-                                        ...prevData[ear],
-                                        ["bc_" + item]: e.target.value
-                                    },
-                                }))}
-                                error={errors["bc_" + item]}
-                            />
+                        <div className="flex md:hidden">
+                            <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
+                                <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
+                                <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
+                                <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
+                            </div>
                         </div>
                     </div>
                 ))}
-                <div className="w-1/12 text-gray-800 dark:text-slate-200">
+                <div className="hidden md:block w-1/12 text-gray-800 dark:text-slate-200">
                     <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
@@ -138,14 +142,14 @@ export default function AudiogramStep() {
                                 <hr className="mt-1 dark:border-slate-600"/>
                             </div>
                             {render_ear('left')}
-                            <div className="flex mt-5">
-                                <div className="w-1/2 ml-2">
+                            <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                                <div className="w-full md:w-1/2 ml-2">
                                     <FileInput
                                         name="left.audiogram_image"
                                         fileName={data.left.audiogram_image}
                                         viewLink={record.audiogram?.left?.audiogram_image_url}
                                         label="تصویر آدیوگرام"
-                                        accept="image/*"
+                                        accept=".jpg, .jpeg"
                                         setData={(e) => {
                                             setData((prevData) => ({
                                                 ...prevData,
@@ -157,13 +161,13 @@ export default function AudiogramStep() {
                                         }
                                     />
                                 </div>
-                                <div className="w-1/2">
+                                <div className="w-full md:w-1/2">
                                     <FileInput
                                         name="left.id_card_image"
                                         fileName={data.left.id_card_image}
                                         viewLink={record.audiogram?.left?.id_card_image_url}
-                                        label="تصویر مدرک شناسایی (کارت ملی یا صفحه اول شناسنامه)"
-                                        accept="image/*"
+                                        label="تصویر مدرک شناسایی (کارت ملی یا صفحه اول شناسنامه حاوی کد ملی)"
+                                        accept=".jpg, .jpeg"
                                         setData={(e) => {
                                             setData((prevData) => ({
                                                 ...prevData,
@@ -180,7 +184,7 @@ export default function AudiogramStep() {
                     )}
 
                     {(record.ear === 'right' || record.ear === 'both') && (
-                        <div className={record.ear === 'both' ? 'mt-8' : undefined}>
+                        <div className={record.ear === 'both' ? 'mt-8' : ''}>
                             <div className="mb-8">
                                 <div className={`inline-block ml-2 w-3 h-3 bg-red-600 dark:bg-red-400 rounded-full`}></div>
                                 <span className="text-lg text-gray-700 dark:text-slate-200">
@@ -189,14 +193,14 @@ export default function AudiogramStep() {
                                 <hr className="mt-1 dark:border-slate-600"/>
                             </div>
                             {render_ear('right')}
-                            <div className="flex mt-5">
-                                <div className="w-1/2 ml-2">
+                            <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                                <div className="w-full md:w-1/2 ml-2">
                                     <FileInput
                                         name="right.audiogram_image"
                                         fileName={data.right.audiogram_image}
                                         viewLink={record.audiogram?.right?.audiogram_image_url}
                                         label="تصویر آدیوگرام"
-                                        accept="image/*"
+                                        accept=".jpg, .jpeg"
                                         setData={(e) => {
                                             setData((prevData) => ({
                                                 ...prevData,
@@ -208,13 +212,13 @@ export default function AudiogramStep() {
                                         }
                                     />
                                 </div>
-                                <div className="w-1/2">
+                                <div className="w-full md:w-1/2">
                                     <FileInput
                                         name="right.id_card_image"
                                         fileName={data.right.id_card_image}
                                         viewLink={record.audiogram?.right?.id_card_image_url}
                                         label="تصویر مدرک شناسایی (کارت ملی یا صفحه اول شناسنامه)"
-                                        accept="image/*"
+                                        accept=".jpg, .jpeg"
                                         setData={(e) => {
                                             setData((prevData) => ({
                                                 ...prevData,

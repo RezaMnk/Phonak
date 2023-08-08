@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GroupProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ class ProductController extends Controller
     public function index(): \Inertia\Response
     {
         return Inertia::render('Products/Index', [
-            'products' => Product::latest()->paginate()
+            'products' => Product::with('group_products')->latest()->paginate()
         ]);
     }
 
@@ -32,7 +33,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
             'brand' => ['required', 'in:phonak,hansaton,unitron'],
@@ -40,9 +41,39 @@ class ProductController extends Controller
             'expire_date' => ['nullable', 'date'],
             'price' => ['required', 'numeric', 'max:10000000'],
             'has_count' => ['boolean'],
+            'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
+            'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
         ]);
 
-        Product::create($request->only(['name', 'category', 'brand', 'inventory', 'expire_date', 'price', 'has_count']));
+        $request->validate([
+            'groups' => ['nullable', 'array'],
+            'groups.*.number' => ['required', 'numeric'],
+            'groups.*.count' => ['required', 'numeric'],
+        ]);
+
+        $sum_of_groups = 0;
+        $groups = [];
+        foreach ($request->groups as $index => $group)
+        {
+            $sum_of_groups += $group['count'];
+
+            if (in_array($group['number'], $groups))
+                return back()->withErrors(['groups.'. $index .'.number' => 'گروه تکراری است']);
+
+            $groups[] = $group['number'];
+        }
+        if ($sum_of_groups > $data['inventory'])
+            return back()->withErrors(['inventory' => 'مجموع مقادیر برای هر گروه بیشتر از موجودی انبار است']);
+
+        $product = Product::create($data);
+
+        foreach ($request->groups as $group)
+        {
+            $product->group_products()->create([
+                'group' => $group['number'],
+                'count' => $group['count'],
+            ]);
+        }
 
         return redirect()->route('products.index')->with('toast', ['success' => 'محصول با موفقیت ثبت گردید']);
     }
@@ -62,6 +93,7 @@ class ProductController extends Controller
     {
         return Inertia::render('Products/CreateOrEdit', [
             'product' => $product,
+            'product.groups' => $product->group_products()->get(['group AS number', 'count']),
         ]);
     }
 
@@ -70,7 +102,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
             'brand' => ['required', 'in:phonak,hansaton,unitron'],
@@ -78,9 +110,45 @@ class ProductController extends Controller
             'expire_date' => ['nullable', 'date'],
             'price' => ['required', 'numeric', 'max:10000000'],
             'has_count' => ['boolean'],
+            'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
+            'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
         ]);
 
-        $product->update($request->only(['name', 'category', 'brand', 'inventory', 'expire_date', 'price', 'has_count']));
+        $request->validate([
+            'groups' => ['nullable', 'array'],
+            'groups.*.number' => ['required', 'numeric'],
+            'groups.*.count' => ['required', 'numeric'],
+        ]);
+
+        $sum_of_groups = 0;
+        $groups = [];
+        foreach ($request->groups as $index => $group)
+        {
+            $sum_of_groups += $group['count'];
+
+            if (in_array($group['number'], $groups))
+                return back()->withErrors(['groups.'. $index .'.number' => 'گروه تکراری است']);
+
+            $groups[] = $group['number'];
+        }
+        if ($sum_of_groups > $data['inventory'])
+            return back()->withErrors(['inventory' => 'مجموع مقادیر برای هر گروه بیشتر از موجودی انبار است']);
+
+        $product->update($data);
+
+        foreach ($product->group_products as $group)
+        {
+            if (! in_array($group->number, $groups))
+                $group->delete();
+        }
+
+        foreach ($request->groups as $group)
+        {
+            $product->group_products()->updateOrCreate(['group' => $group['number']], [
+                'group' => $group['number'],
+                'count' => $group['count'],
+            ]);
+        }
 
         return redirect()->route('products.index')->with('toast', ['success' => 'محصول با موفقیت ویرایش شد']);
     }

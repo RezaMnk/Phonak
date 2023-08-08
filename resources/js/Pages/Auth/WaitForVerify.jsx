@@ -6,24 +6,26 @@ import DangerButton from "@/Components/DangerButton.jsx";
 
 export default function Address({ user }) {
 
-    console.log(user)
     return (
         <GuestLayout className="!max-w-3xl">
-            <Head title="آدرس ها"/>
+            <Head title="در انتظار تایید"/>
 
             <div className="w-full text-center">
                 <Player
                     autoplay
                     loop
-                    src="https://lottie.host/55b18cbe-9958-408a-a481-96ba04bd8b8a/naBtU2nNYR.json"
-                    style={{ height: '300px', width: '300px' }}
+                    src={user.status === 'waiting' ? "/storage/animations/verifying.json" : "/storage/animations/error.json"}
+                    style={{ height: '300px' }}
                 >
                 </Player>
                 <h4 className="font-bold text-lg">
-                    در حال بررسی اطلاعات
+                    {user.status === 'waiting' ?  'در حال بررسی اطلاعات' : 'اطلاعات شما تایید نشدند!'}
                 </h4>
                 <p className="px-40 mt-5 mb-12">
-                    اطلاعات شما از سمت مدیریت در حال بررسی می باشد، ‌لطفا تا تایید شدن اطلاعات منتظر بمانید.
+                    {user.status === 'waiting'
+                        ? 'اطلاعات شما در حال بررسی می باشد، ظرف یکروز کاری اینده اطلاعات شما بررسی میگردد.'
+                        : user.disapprove ? 'پیام مدیرییت: ' + user.disapprove : 'اطلاعات شما مورد تایید واقع نشدند. لطفا مجددا اطلاعات خود را بررسی بفرمایید.'
+                    }
                 </p>
                 <hr className="my-2 border-gray-300" />
                 <div className="flex">

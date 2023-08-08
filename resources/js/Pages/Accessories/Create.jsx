@@ -51,7 +51,7 @@ export default function Create({ accessory }) {
                 }
             }
         >
-            <div className="flex flex-col sm:justify-center items-center mt-12">
+            <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
                     <StepContext.Provider value={{accessory, prevStep, nextStep}}>
                         {showStep()}

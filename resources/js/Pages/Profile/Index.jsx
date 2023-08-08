@@ -1,17 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.jsx';
-import GuestLayout from '@/Layouts/GuestLayout.jsx';
-import {Head, useForm} from '@inertiajs/react';
-import TextInput from "@/Components/TextInput.jsx";
-import InputError from "@/Components/InputError.jsx";
-import TextAreaInput from "@/Components/TextAreaInput.jsx";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import DangerButton from "@/Components/DangerButton.jsx";
-import SelectInput from "@/Components/SelectInput.jsx";
-import IranStatesOptions, {Cities} from "@/Partials/IranStatesOptions.jsx";
-import FileInput from "@/Components/FileInput.jsx";
-import {useState} from "react";
-import RadioInput from "@/Components/RadioInput.jsx";
-import InputLabel from "@/Components/InputLabel.jsx";
+import {Head} from '@inertiajs/react';
 import WarningButton from "@/Components/WarningButton.jsx";
 
 export default function Edit({ user }) {
@@ -29,7 +17,7 @@ export default function Edit({ user }) {
                     'ویرایش': "#"
                 }
             }
-            headerButton={
+            headerExtra={
                 <WarningButton
                     link={true}
                     href={route('profile.edit')}

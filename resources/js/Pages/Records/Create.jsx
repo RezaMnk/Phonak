@@ -10,7 +10,7 @@ import ShippingStep from "@/Pages/Records/Steps/ShippingStep.jsx";
 
 export const StepContext = createContext();
 
-export default function Create({ record }) {
+export default function Create({ record, setting }) {
     const [step, setStep] = useState(parseInt(new URLSearchParams(window.location.search).get('step')) || 1);
     const passedSteps = record?.status ? (record.status === 'completed' ? 6 : record?.status) : 1;
 
@@ -47,6 +47,7 @@ export default function Create({ record }) {
         }
     }
 
+    console.log(setting)
 
     return (
         <AuthenticatedLayout
@@ -60,6 +61,31 @@ export default function Create({ record }) {
                     'سفارشات سمعک': route('records.index'),
                     [record ? ('ویرایش سفارش') : ('ایجاد سفارش')]: "#"
                 }
+            }
+            headerExtra={setting && (
+                <div className="flex flex-col text-sm text-gray-700 dark:text-slate-300">
+                    <span>
+                        ساعت سفارش گذاری:
+                        <span className="mx-1 font-semibold underline">
+                            {setting.start_time_readable}
+                        </span>
+                        الی
+                        <span className="mr-1 font-semibold underline">
+                            {setting.end_time_readable}
+                        </span>
+                    </span>
+                    <span>
+                        تعداد سفارشات باقی مانده شما:
+                        <span className="mx-1 font-semibold underline">
+                            {setting.orders}
+                        </span>
+                        از
+                        <span className="mr-1 font-semibold underline">
+                            {setting.max_order}
+                        </span>
+                    </span>
+                </div>
+            )
             }
         >
             <Steps step={step} passedSteps={passedSteps} />

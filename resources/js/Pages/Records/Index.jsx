@@ -39,7 +39,7 @@ export default function Index({ records }) {
                     'سفارشات سمعک': route('records.index')
                 }
             }
-            headerButton={
+            headerExtra={
                 <PrimaryButton
                     link={true}
                     href={route('records.create')}
@@ -56,16 +56,16 @@ export default function Index({ records }) {
                 <table className="w-full text-right text-gray-500 dark:text-slate-400">
                     <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 شماره سفارش
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 کاربر
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 برند
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 نوع سفارش
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -80,9 +80,9 @@ export default function Index({ records }) {
                     {Object.keys(data_records).length ? Object.values(data_records).map((record) => {
                         const is_last = data_records[Object.keys(data_records).length-1] === record;
                         return (
-                            <tr key={record.id} className={`bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
+                            <tr key={record.id} className={`bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
                                 <th scope="row"
-                                    className="px-6 py-4">
+                                    className="px-6 py-4 hidden md:table-cell">
                                     {record.id}
                                 </th>
                                 <td className="px-6 py-4 font-medium">
@@ -92,26 +92,31 @@ export default function Index({ records }) {
                                         {record.patient.name}
                                     </Link>
                                 </td>
-                                <td className="px-6 py-4">
-                                    {record.brand === 'phonak' ? 'فوناک' : 'هنزاتون'}
+                                <td className="px-6 py-4 hidden md:table-cell">
+                                    {record.brand}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     {record.type}
                                 </td>
                                 <td className="px-6 py-4">
                                     {record.status === 'completed' ? (
-                                        <span className="inline-flex items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                             تکمیل شده
                                         </span>
                                     ) : (
-                                        <span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
                                             در انتظار تکمیل
                                         </span>
                                     )}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    {/*<Link href={route('records.show', [record.id])}*/}
+                                    {/*    className="inline-flex px-2 py-1 text-xs text-center text-green-900 dark:text-green-200 transition-colors duration-300 bg-green-100 dark:bg-green-600/50 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-200 dark:hover:bg-green-600 focus:outline-none focus:ring-0 focus:border-green-500"*/}
+                                    {/*>*/}
+                                    {/*    نمایش*/}
+                                    {/*</Link>*/}
                                     <Link href={route('records.edit', [record.id])}
-                                        className="inline-flex px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
+                                        className="inline-flex mr-2 px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
                                     >
                                         ویرایش
                                     </Link>
@@ -155,7 +160,7 @@ export default function Index({ records }) {
                         با حذف سفارش، اطلاعات ثبت شده حذف خواهند شد و غیرقابل برگشت خواهند بود!
                     </p>
                     <div className="mt-6 flex justify-between">
-                        <SecondaryButton className="!px-4 !py-2 text-xs" onClick={(closeModal)}>
+                        <SecondaryButton className="!px-4 !py-2 text-xs" type="button" onClick={(closeModal)}>
                             لغو
                         </SecondaryButton>
 

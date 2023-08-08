@@ -49,7 +49,7 @@ export default function Address() {
     };
 
     return (
-        <GuestLayout className="!max-w-3xl">
+        <GuestLayout className="!max-w-3xl" name="آدرس ها">
             <Head title="آدرس ها"/>
 
             <form className="w-full max-w-3xl h-1/2" onSubmit={submit}>
@@ -79,7 +79,6 @@ export default function Address() {
                                 isFocused={true}
                                 onChange={(e) => setData('home_post_code', e.target.value)}
                                 error={errors.home_post_code}
-                                required
                             />
 
                             <InputError message={errors.home_post_code} className="mt-2"/>
@@ -97,7 +96,6 @@ export default function Address() {
                                     strokeLinecap="round" strokeLinejoin="round"/>}
                                 onChange={(e) => setData('home_phone', e.target.value)}
                                 error={errors.home_phone}
-                                required
                             />
 
                             <InputError message={errors.home_phone} className="mt-2"/>
@@ -116,7 +114,6 @@ export default function Address() {
                                 strokeLinecap="round" strokeLinejoin="round"/>}
                             onChange={(e) => setData('home_address', e.target.value)}
                             error={errors.home_address}
-                            required
                         />
 
                         <InputError message={errors.home_address} className="mt-2"/>
@@ -148,7 +145,6 @@ export default function Address() {
                                 autoComplete="work_post_code"
                                 onChange={(e) => setData('work_post_code', e.target.value)}
                                 error={errors.work_post_code}
-                                required
                             />
 
                             <InputError message={errors.work_post_code} className="mt-2"/>
@@ -166,7 +162,6 @@ export default function Address() {
                                     strokeLinecap="round" strokeLinejoin="round"/>}
                                 onChange={(e) => setData('work_phone', e.target.value)}
                                 error={errors.work_phone}
-                                required
                             />
 
                             <InputError message={errors.work_phone} className="mt-2"/>
@@ -185,7 +180,6 @@ export default function Address() {
                                 strokeLinecap="round" strokeLinejoin="round"/>}
                             onChange={(e) => setData('work_address', e.target.value)}
                             error={errors.work_address}
-                            required
                         />
 
                         <InputError message={errors.work_address} className="mt-2"/>
@@ -304,7 +298,6 @@ export default function Address() {
                                     name="mail_address"
                                     checked={data.mail_address === 'work'}
                                     onChange={() => setData('mail_address', 'work')}
-                                    required
                                 />
 
                                 <InputLabel
@@ -320,7 +313,6 @@ export default function Address() {
                                     name="mail_address"
                                     checked={data.mail_address === 'second_work'}
                                     onChange={() => setData('mail_address', 'second_work')}
-                                    required
                                 />
 
                                 <InputLabel
@@ -336,7 +328,6 @@ export default function Address() {
                                     name="mail_address"
                                     checked={data.mail_address === 'home'}
                                     onChange={() => setData('mail_address', 'home')}
-                                    required
                                 />
 
                                 <InputLabel

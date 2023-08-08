@@ -24,13 +24,13 @@ export default function Index({ users }) {
                             <th scope="col" className="px-6 py-3">
                                 نام و نام خانوادگی
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 شماره نظام پزشکی
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 موقعیت
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 شماره گروه
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -45,23 +45,23 @@ export default function Index({ users }) {
                     {Object.keys(data_users).length ? Object.values(data_users).map((user) => {
                         const is_last = data_users[Object.keys(data_users).length-1] === user;
                         return (
-                            <tr key={user.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
+                            <tr key={user.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
                                 <th scope="row"
                                     className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
                                     {user.name}
                                 </th>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     {user.med_number}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     {user.state} - {user.city}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     {user.group === 0 ? 'گروه بندی نشده' : user.group}
                                 </td>
                                 <td className="px-6 py-4">
                                     {user.verified ? (
-                                        <span className="inline-flex items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                             تایید شده
                                         </span>
                                     ) : (

@@ -4,7 +4,6 @@ import SecondaryButton from "@/Components/SecondaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import Modal from "@/Components/Modal.jsx";
 import {useState} from "react";
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Pagination from "@/Components/Pagination.jsx";
 
 export default function Index({ patients }) {
@@ -53,13 +52,13 @@ export default function Index({ patients }) {
                             <th scope="col" className="px-6 py-3">
                                 کد ملی
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 سال تولد
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 شماره تماس
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 محل سکونت
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -71,7 +70,7 @@ export default function Index({ patients }) {
                     {Object.keys(data_patients).length ? Object.values(data_patients).map((patient) => {
                         const is_last = data_patients[Object.keys(data_patients).length-1] === patient;
                         return (
-                            <tr key={patient.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
+                            <tr key={patient.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
                                 <th scope="row"
                                     className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
                                     {patient.name}
@@ -79,18 +78,18 @@ export default function Index({ patients }) {
                                 <td className="px-6 py-4">
                                     {patient.national_code}
                                 </td>
-                                <td className="px-6 py-4">
-                                    <span className="inline-flex items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
+                                <td className="px-6 py-4 hidden md:table-cell">
+                                    <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                         {patient.birth_year}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     {patient.phone}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     {patient.state} - {patient.city}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     <Link href={route('patients.edit', [patient.id])}
                                         className="inline-flex px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
                                     >
@@ -136,7 +135,7 @@ export default function Index({ patients }) {
                         با حذف بیمار، اطلاعات و سفارشات ثبت شده کاربر نیز حذف خواهند شد!
                     </p>
                     <div className="mt-6 flex justify-between">
-                        <SecondaryButton className="!px-4 !py-2 text-xs" onClick={(closeModal)}>
+                        <SecondaryButton className="!px-4 !py-2 text-xs" type="button" onClick={(closeModal)}>
                             لغو
                         </SecondaryButton>
 

@@ -1,23 +1,22 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
 import NavLink from "@/Components/NavLink.jsx";
 import Icon from "@/Components/Icon.jsx";
 
-export default function AdminSidebar({ minimize, changeMinimize, dark }) {
+export default function AdminSidebar({ minimize, changeMinimize, hamburgerMenu, dark }) {
     return (
         <aside
-            className={`fixed hide-scrollbar flex flex-col transition-all ${minimize ? 'w-24' : 'w-60'} h-screen px-8 py-6 overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900 print:hidden`}>
-            <a href="#" className="-mx-2">
-                <ApplicationLogo dark={dark} className={`transition-all ${minimize ? 'w-12' : 'w-16'}`} />
+            className={`fixed hidden md:flex hide-scrollbar flex-col transition-all ${hamburgerMenu ? 'w-60 absolute !flex z-50' : 'w-0'} ${minimize ? 'md:w-24' : 'md:w-60'} h-screen px-8 py-6 overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900 print:hidden`}>
+            <a href={route('dashboard.admin')}>
+                <ApplicationLogo dark={dark} small={minimize} />
             </a>
 
             <div className="flex flex-col justify-between flex-1 mt-6">
-                <nav className={`-mx-3 flex flex-col justify-between ${minimize ? 'items-center' : undefined} flex-1`}>
-                    <div className={! minimize ? 'space-y-8' : undefined}>
+                <nav className={`-mx-3 flex flex-col justify-between ${minimize ? 'items-center' : ''} flex-1`}>
+                    <div className={! minimize ? 'space-y-8' : ''}>
                         <NavLink
                             className=""
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route('dashboard.admin')}
+                            active={route().current('dashboard.admin')}
                             icon={
                                 <Icon viewBox="0 0 24 24" type="stroke">
                                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -28,8 +27,8 @@ export default function AdminSidebar({ minimize, changeMinimize, dark }) {
                             minimize={minimize}
                         />
                         <div className="space-y-3">
-                            <div className={`flex items-center ${minimize ? 'my-5' : undefined}`}>
-                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : undefined}`}>محصولات</span>
+                            <div className={`flex items-center ${minimize ? 'my-5' : ''}`}>
+                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : ''}`}>محصولات</span>
                                 <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
                             </div>
 
@@ -47,8 +46,8 @@ export default function AdminSidebar({ minimize, changeMinimize, dark }) {
                         </div>
 
                         <div className="space-y-3">
-                            <div className={`flex items-center ${minimize ? 'my-5' : undefined}`}>
-                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : undefined}`}>همکاران</span>
+                            <div className={`flex items-center ${minimize ? 'my-5' : ''}`}>
+                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : ''}`}>همکاران</span>
                                 <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
                             </div>
                             <NavLink
@@ -76,37 +75,51 @@ export default function AdminSidebar({ minimize, changeMinimize, dark }) {
                         </div>
 
                         <div className="space-y-3">
-                            <div className={`flex items-center ${minimize ? 'my-5' : undefined}`}>
-                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : undefined}`}>سفارشات</span>
+                            <div className={`flex items-center ${minimize ? 'my-5' : ''}`}>
+                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : ''}`}>سفارشات</span>
                                 <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
                             </div>
                             <NavLink
-                                href="#"
-                                // active={route().current('dashboard')}
+                                href={route('admin.records')}
+                                active={route().current('admin.records')}
                                 icon={
                                     <Icon viewBox="0 0 24 24" type="fill">
-                                        <path d="M6 4C4.89543 4 4 4.89543 4 6V9C4 10.1046 4.89543 11 6 11H9C10.1046 11 11 10.1046 11 9V6C11 4.89543 10.1046 4 9 4H6ZM6 6H9V9H6V6ZM14 6C13.4477 6 13 6.44772 13 7C13 7.55228 13.4477 8 14 8H19C19.5523 8 20 7.55228 20 7C20 6.44772 19.5523 6 19 6H14ZM14 15C13.4477 15 13 15.4477 13 16C13 16.5523 13.4477 17 14 17H19C19.5523 17 20 16.5523 20 16C20 15.4477 19.5523 15 19 15H14ZM4 15C4 13.8954 4.89543 13 6 13H9C10.1046 13 11 13.8954 11 15V18C11 19.1046 10.1046 20 9 20H6C4.89543 20 4 19.1046 4 18V15ZM9 15H6V18H9V15Z"/>
+                                        <path d="M8.3931 9.85868C8.38638 10.2728 8.71667 10.614 9.13083 10.6208C9.54499 10.6275 9.88618 10.2972 9.8929 9.88303L8.3931 9.85868ZM12 7.10386L11.9882 7.85376C11.9961 7.85389 12.0039 7.85389 12.0118 7.85376L12 7.10386ZM14.857 9.87086L15.607 9.87398C15.607 9.86888 15.607 9.86378 15.6069 9.85868L14.857 9.87086ZM13.633 12.1419L14.043 12.7699L14.048 12.7666L13.633 12.1419ZM11.1306 14.0509C10.7297 14.1549 10.489 14.5643 10.593 14.9652C10.6971 15.3662 11.1064 15.6069 11.5074 15.5028L11.1306 14.0509ZM7 10.0039H7.75L7.75 10.0034L7 10.0039ZM10.9911 5.10335L11.1424 5.83793L10.9911 5.10335ZM16.5941 8.0272L15.905 8.32319V8.32319L16.5941 8.0272ZM14.857 14.1039L15.2755 14.7264L15.2856 14.7194L14.857 14.1039ZM10.808 18.8589L11.0019 19.5834L10.808 18.8589ZM7 16.6609H6.25C6.25 16.7169 6.25628 16.7728 6.26873 16.8274L7 16.6609ZM9.8929 9.88303C9.91139 8.74418 10.8493 7.8358 11.9882 7.85376L12.0118 6.35395C10.0449 6.32292 8.42502 7.89179 8.3931 9.85868L9.8929 9.88303ZM12.0118 7.85376C13.1507 7.8358 14.0886 8.74418 14.1071 9.88303L15.6069 9.85868C15.575 7.89179 13.9551 6.32292 11.9882 6.35395L12.0118 7.85376ZM14.107 9.86773C14.1042 10.5314 13.7708 11.1499 13.218 11.5171L14.048 12.7666C15.0174 12.1227 15.6021 11.0378 15.607 9.87398L14.107 9.86773ZM13.223 11.5139C12.1865 12.1906 11.7688 12.9152 11.4957 13.4681C11.1952 14.0765 11.2 14.0329 11.1306 14.0509L11.5074 15.5028C12.386 15.2748 12.6633 14.4913 12.8406 14.1324C13.0452 13.718 13.3105 13.2481 14.043 12.7699L13.223 11.5139ZM7.75 10.0034C7.74865 7.98563 9.16618 6.24508 11.1424 5.83793L10.8397 4.36878C8.16601 4.91964 6.24817 7.2745 6.25 10.0044L7.75 10.0034ZM11.1424 5.83793C13.1186 5.43077 15.1087 6.46926 15.905 8.32319L17.2833 7.7312C16.2059 5.22293 13.5134 3.81793 10.8397 4.36878L11.1424 5.83793ZM15.905 8.32319C16.7013 10.1771 16.0843 12.3354 14.4285 13.4884L15.2856 14.7194C17.5259 13.1595 18.3606 10.2395 17.2833 7.7312L15.905 8.32319ZM14.4386 13.4814C12.7369 14.6254 12.0653 15.8324 11.6155 16.7728C11.3827 17.2595 11.2593 17.5528 11.0926 17.7881C10.9604 17.9747 10.8318 18.0761 10.6141 18.1344L11.0019 19.5834C11.6137 19.4196 12.0184 19.0761 12.3166 18.6551C12.5803 18.2829 12.7841 17.8059 12.9687 17.4199C13.3537 16.6149 13.8771 15.6663 15.2754 14.7263L14.4386 13.4814ZM10.6141 18.1344C9.89164 18.3277 9.26349 18.3009 8.7965 18.0746C8.35861 17.8623 7.94128 17.4162 7.73127 16.4943L6.26873 16.8274C6.55872 18.1005 7.21589 18.9754 8.14225 19.4244C9.03951 19.8593 10.0654 19.834 11.0019 19.5834L10.6141 18.1344ZM7.75 16.6609V10.0039H6.25V16.6609H7.75Z"/>
                                     </Icon>
                                 }
-                                name="همه سفارشات"
+                                name="سفارشات سمعک"
+                                minimize={minimize}
+                            />
+                            <NavLink
+                                href={route('admin.accessories')}
+                                active={route().current('admin.accessories')}
+                                icon={
+                                    <Icon viewBox="0 0 24 24" type="fill">
+                                        <path d="M12.0762 9.48014C12.3413 9.16193 12.2983 8.68901 11.9801 8.42384C11.6619 8.15867 11.189 8.20166 10.9238 8.51987L8.42383 11.5199C8.23753 11.7434 8.19737 12.0546 8.3208 12.3181C8.44424 12.5817 8.70898 12.75 8.99999 12.75H10.8987L9.42383 14.5199C9.15865 14.8381 9.20165 15.311 9.51986 15.5762C9.83806 15.8413 10.311 15.7983 10.5762 15.4801L13.0762 12.4801C13.2625 12.2566 13.3026 11.9454 13.1792 11.6819C13.0558 11.4183 12.791 11.25 12.5 11.25H10.6013L12.0762 9.48014Z"/>
+                                        <path d="M9.94358 3.25H11.5564C13.3942 3.24998 14.8498 3.24997 15.989 3.40314C17.1614 3.56076 18.1104 3.89288 18.8588 4.64124C19.6071 5.38961 19.9392 6.33856 20.0969 7.51098C20.25 8.65018 20.25 10.1058 20.25 11.9435V12.0564C20.25 13.8942 20.25 15.3498 20.0969 16.489C19.9392 17.6614 19.6071 18.6104 18.8588 19.3588C18.1104 20.1071 17.1614 20.4392 15.989 20.5969C14.8498 20.75 13.3942 20.75 11.5565 20.75H9.94359C8.10585 20.75 6.65018 20.75 5.51098 20.5969C4.33856 20.4392 3.38961 20.1071 2.64124 19.3588C1.89288 18.6104 1.56076 17.6614 1.40314 16.489C1.24997 15.3498 1.24998 13.8942 1.25 12.0564V11.9436C1.24998 10.1058 1.24997 8.65019 1.40314 7.51098C1.56076 6.33856 1.89288 5.38961 2.64124 4.64124C3.38961 3.89288 4.33856 3.56076 5.51098 3.40314C6.65019 3.24997 8.10583 3.24998 9.94358 3.25ZM5.71085 4.88976C4.70476 5.02502 4.12511 5.27869 3.7019 5.7019C3.27869 6.12511 3.02502 6.70476 2.88976 7.71085C2.75159 8.73851 2.75 10.0932 2.75 12C2.75 13.9068 2.75159 15.2615 2.88976 16.2892C3.02502 17.2952 3.27869 17.8749 3.7019 18.2981C4.12511 18.7213 4.70476 18.975 5.71085 19.1102C6.73851 19.2484 8.09318 19.25 10 19.25H11.5C13.4068 19.25 14.7615 19.2484 15.7892 19.1102C16.7952 18.975 17.3749 18.7213 17.7981 18.2981C18.2213 17.8749 18.475 17.2952 18.6102 16.2892C18.7484 15.2615 18.75 13.9068 18.75 12C18.75 10.0932 18.7484 8.73851 18.6102 7.71085C18.475 6.70476 18.2213 6.12511 17.7981 5.7019C17.3749 5.27869 16.7952 5.02502 15.7892 4.88976C14.7615 4.75159 13.4068 4.75 11.5 4.75H10C8.09318 4.75 6.73851 4.75159 5.71085 4.88976Z"/>
+                                        <path d="M22 14.75C21.5858 14.75 21.25 14.4142 21.25 14L21.25 10C21.25 9.58579 21.5858 9.25 22 9.25C22.4142 9.25 22.75 9.58579 22.75 10L22.75 14C22.75 14.4142 22.4142 14.75 22 14.75Z"/>
+                                    </Icon>
+                                }
+                                name="سفارشات لوازم جانبی"
                                 minimize={minimize}
                             />
                         </div>
 
                         <div className="space-y-3">
-                            <div className={`flex items-center ${minimize ? 'my-5' : undefined}`}>
-                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : undefined}`}>تنظیمات</span>
+                            <div className={`flex items-center ${minimize ? 'my-5' : ''}`}>
+                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : ''}`}>تنظیمات</span>
                                 <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
                             </div>
                             <NavLink
-                                href="#"
+                                href={route('settings.index')}
+                                active={route().current('settings.index')}
                                 icon={
                                     <Icon viewBox="0 0 24 24" type="stroke" width="2">
                                         <path d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"/>
                                         <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </Icon>
                                 }
-                                name="تنظیمات سفارش گذاری"
+                                name="تنظیمات گروه بندی"
                                 minimize={minimize}
                             />
                         </div>
@@ -117,7 +130,7 @@ export default function AdminSidebar({ minimize, changeMinimize, dark }) {
                             method="POST"
                             as="button"
                             icon={
-                                <Icon viewBox="0 0 24 24" type="fill" className="text-red-500 dark:text-red-300">
+                                <Icon viewBox="0 0 24 24" type="fill" className="text-red-500 dark:!text-red-700">
                                     <path d="M2 6.5C2 4.01472 4.01472 2 6.5 2H12C14.2091 2 16 3.79086 16 6V7C16 7.55228 15.5523 8 15 8C14.4477 8 14 7.55228 14 7V6C14 4.89543 13.1046 4 12 4H6.5C5.11929 4 4 5.11929 4 6.5V17.5C4 18.8807 5.11929 20 6.5 20H12C13.1046 20 14 19.1046 14 18V17C14 16.4477 14.4477 16 15 16C15.5523 16 16 16.4477 16 17V18C16 20.2091 14.2091 22 12 22H6.5C4.01472 22 2 19.9853 2 17.5V6.5ZM18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289L22.7071 11.2929C23.0976 11.6834 23.0976 12.3166 22.7071 12.7071L19.7071 15.7071C19.3166 16.0976 18.6834 16.0976 18.2929 15.7071C17.9024 15.3166 17.9024 14.6834 18.2929 14.2929L19.5858 13L11 13C10.4477 13 10 12.5523 10 12C10 11.4477 10.4477 11 11 11L19.5858 11L18.2929 9.70711C17.9024 9.31658 17.9024 8.68342 18.2929 8.29289Z"/>
                                 </Icon>
                             }
@@ -125,6 +138,7 @@ export default function AdminSidebar({ minimize, changeMinimize, dark }) {
                             minimize={minimize}
                         />
                         <NavLink
+                            className="!mt-5 hidden md:flex"
                             role="button"
                             icon={
                                 <Icon viewBox="0 0 24 24" type="stroke" width="2">

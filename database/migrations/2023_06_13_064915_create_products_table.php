@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('brand', ['phonak', 'hansaton', 'unitron']);
+            $table->enum('brand', ['phonak', 'hansaton', 'unitron', 'rayovac', 'detax', 'etc']);
             $table->enum('category', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories']);
             $table->string('expire_date')->nullable();
             $table->unsignedBigInteger('price');
             $table->unsignedInteger('inventory');
             $table->boolean('has_count')->default(false);
+            $table->unsignedInteger('min_count')->nullable();
+            $table->unsignedInteger('max_count')->nullable();
             $table->timestamps();
         });
     }

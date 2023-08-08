@@ -20,9 +20,12 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
+            $table->unsignedBigInteger('payment_id')->nullable();
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+
             $table->unsignedInteger('count')->nullable();
             $table->enum('brand', ['phonak', 'hansaton', 'unitron']);
-            $table->enum('status', [1, 'completed'])->default(1);
+            $table->enum('status', [1, 'completed', 'paid'])->default(1);
 
             $table->timestamps();
         });

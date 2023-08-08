@@ -23,7 +23,7 @@ export default forwardRef(function FileInput({name = 'file', fileName = null, vi
     }, []);
 
     return (
-        <div className="relative">
+        <div className="relative h-full">
             {viewLink && (
                 <PrimaryButton
                     link
@@ -41,7 +41,7 @@ export default forwardRef(function FileInput({name = 'file', fileName = null, vi
                 // </a>
             )}
             <label
-                className={`flex flex-col justify-center items-center w-full p-12 text-center bg-white border-2 ${error ? 'border-red-300 dark:border-red-700' : 'border-gray-300 dark:border-slate-700'} border-dashed cursor-pointer dark:bg-slate-900 rounded-xl ` + className}>
+                className={`flex flex-col h-full justify-center items-center w-full p-8 text-center bg-white border-2 ${error ? 'border-red-300 dark:border-red-700' : 'border-gray-300 dark:border-slate-700'} border-dashed cursor-pointer dark:bg-slate-900 rounded-xl ` + className}>
                 <Icon viewBox="0 0 24 24" type="stroke" className="w-8 h-8">
                     <path d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                 </Icon>
@@ -55,6 +55,10 @@ export default forwardRef(function FileInput({name = 'file', fileName = null, vi
                         {selectedFileName}
                     </p>
                 )}
+
+                <p className="mt-5 text-xs border-b border-gray-300 dark:border-slate-500 text-gray-700 dark:text-slate-200">
+                    حداکثر سایز جهت آپلود: 512 کیلوبایت
+                </p>
 
                 {/*            <div className="flex justify-end w-full mt-2 text-xs bg-gray-100 dark:bg-slate-800 rounded-full">
                 <span className="w-[50%] bg-green-300 dark:bg-green-700 animate-pulse rounded-full">

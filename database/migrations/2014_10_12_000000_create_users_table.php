@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('national_code')->unique();
+            $table->string('email')->unique();
             $table->integer('grad_year');
             $table->string('med_number')->unique();
             $table->string('grade');
@@ -26,7 +27,8 @@ return new class extends Migration
             $table->string('med_card_image')->nullable();
             $table->string('password');
             $table->unsignedInteger('group')->default(0);
-            $table->boolean('verified')->default(false);
+            $table->enum('status', ['approved', 'unapproved', 'waiting'])->default('waiting');
+            $table->text('disapprove')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

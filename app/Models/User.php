@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -24,6 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'national_code',
+        'email',
         'grad_year',
         'med_number',
         'grade',
@@ -31,7 +34,9 @@ class User extends Authenticatable
         'state',
         'city',
         'password',
-        'verified',
+        'group',
+        'status',
+        'disapprove',
     ];
 
     /**
@@ -62,6 +67,7 @@ class User extends Authenticatable
     protected $appends = [
         'is_admin',
         'is_owner',
+        'setting_time_orders',
     ];
 
     /**
@@ -108,6 +114,37 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * @return HasOne
+     */
+    public function setting(): HasOne
+    {
+        return $this->hasOne(GroupSetting::class, 'group', 'group');
+    }
+
+
+    /**
+     * @return HasMany
+     */
+    public function group_products(): HasMany
+    {
+        return $this->hasMany(GroupProduct::class, 'group', 'group');
+    }
+
+
+    /**
+     * @return Collection
+     */
+    public function products(): Collection
+    {
+        $products = [];
+        foreach ($this->group_products as $group_product)
+            $products[] = $group_product->product;
+
+        return collect($products);
+    }
+
+
     public function has_address(): bool
     {
         return isset($this->address);
@@ -117,6 +154,56 @@ class User extends Authenticatable
     public function has_info(): bool
     {
         return isset($this->user_info);
+    }
+
+
+    public function reached_limit(): bool
+    {
+        if ($setting = $this->setting)
+            $max_order = $setting->max_order;
+        else
+            return false;
+
+        $today_order = $this->records()->whereDate('created_at', Carbon::today())->count();
+
+        return $today_order >= $max_order;
+    }
+
+
+    public function out_of_schedule(): bool
+    {
+        if ($setting = $this->setting)
+        {
+            $start_time = $setting->start_time;
+            $end_time = $setting->end_time;
+        }
+        else
+            return false;
+
+        return ! ($start_time->isPast() && $end_time->isFuture());
+    }
+
+
+//    public function has_info(): bool
+//    {
+//        return isset($this->user_info);
+//    }
+
+
+    public function settingTimeOrders(): Attribute
+    {
+        if ($this->setting)
+            return new Attribute(
+                get: fn () =>  $this->records()
+                    ->whereDate('created_at', '>=', $this->setting->start_time)
+                    ->whereDate('created_at', '<=', $this->setting->end_time)
+                    ->count()
+            );
+        else
+            return new Attribute(
+                get: fn () => false,
+            );
+
     }
 
     /**
@@ -146,7 +233,7 @@ class User extends Authenticatable
      */
     public function verified()
     {
-        return $this->verified;
+        return $this->status == 'approved';
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accessory;
 use App\Models\Product;
+use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -26,7 +27,7 @@ class AccessoryController extends Controller
     public function get_products(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'brand' => ['required', 'in:phonak,hansaton,unitron'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
 
         $products = Product::query()->where('category', 'accessories')->where('brand', $request->brand)->get();
@@ -48,9 +49,17 @@ class AccessoryController extends Controller
     {
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
-            'count' => ['nullable', 'numeric'],
+            'count' => ['nullable'],
             'brand' => ['required', 'in:phonak,hansaton,unitron'],
         ]);
+
+        $product = Product::find($request->product);
+        if ($product->has_count)
+        {
+            $request->validate([
+                'count' => ['required', 'numeric', 'min:'. $product->min_count, 'max:'. $product->max_count],
+            ]);
+        }
 
         $data = [
             'product_id' => $request->product,
@@ -126,7 +135,7 @@ class AccessoryController extends Controller
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
             'count' => ['nullable', 'numeric'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
 
         $data = [
@@ -146,5 +155,30 @@ class AccessoryController extends Controller
     {
         $accessory->delete();
         return redirect()->route('accessories.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
+    }
+
+    private function request_to_pay(Accessory $accessory)
+    {
+        $price = $accessory->product->price;
+
+        if ($accessory->count)
+            $price *= $accessory->count;
+
+        $request = Toman::amount($price)
+            ->callback(route('payments.verify_record', $accessory->id))
+            ->mobile($accessory->user->info->phone)
+            ->request();
+
+        if ($request->successful()) {
+            $transactionId = $request->transactionId();
+
+            $accessory->payment()->create([
+                'transaction_id' => $transactionId
+            ]);
+
+            return $request->pay();
+        }
+
+        return false;
     }
 }

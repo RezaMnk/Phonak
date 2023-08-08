@@ -1,7 +1,6 @@
 import {Head, useForm} from '@inertiajs/react';
 import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import DangerButton from "@/Components/DangerButton.jsx";
 import {useContext, useEffect, useState} from "react";
 import {StepContext} from "@/Pages/Accessories/Create.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
@@ -11,7 +10,7 @@ import TextInput from "@/Components/TextInput.jsx";
 
 export default function ProductStep() {
 
-    const {accessory, nextStep, prevStep} = useContext(StepContext)
+    const {accessory, nextStep} = useContext(StepContext)
 
     const {data, setData, post, patch, processing, errors, clearErrors, reset} = useForm({
         brand: accessory?.brand || '',
@@ -80,31 +79,30 @@ export default function ProductStep() {
              <Head title="سفارش - محصول" />
 
              <form className="w-full" onSubmit={submit} noValidate>
-                 <div className="flex mt-3">
-                     <div className="w-1/4 ml-5 text-gray-700 dark:text-slate-200">
+                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                     <div className="w-full md:w-2/5 ml-5 text-gray-700 dark:text-slate-200">
                          <p>
                              برند مورد سفارش:
                          </p>
 
                          <InputError message={errors.brand} className="mt-2"/>
 
-                         <div className="mt-5">
-                             <div className="inline-block ml-8">
+                         <div className="mt-5 flex justify-between md:justify-start">
+                             <div className="inline-block ml-5">
                                  <RadioInput
                                      id="brand_phonak"
                                      className="hidden peer"
                                      name="brand"
                                      checked={data.brand === 'phonak'}
                                      onChange={() => setData('brand', 'phonak')}
-                                     required
                                  />
 
                                  <InputLabel
                                      htmlFor="brand_phonak"
-                                     className="bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
+                                     className="bg-lime-500/30 dark:bg-lime-400/40 peer-checked:bg-lime-500/50 peer-checked:dark:bg-lime-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-green-400"
                                  >
                                      <div className="p-2">
-                                         <img src="/storage/logo.png" alt="" className="w-24 h-24"/>
+                                         <img src="/storage/brands/phonak.png" alt="" className="w-20 h-20 object-contain"/>
                                          <hr className="my-4 border-gray-200 dark:border-slate-500"/>
                                          <p className="text-center">
                                              فوناک
@@ -112,22 +110,21 @@ export default function ProductStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block">
+                             <div className="inline-block ml-5">
                                  <RadioInput
                                      id="brand_hansaton"
                                      className="hidden peer"
                                      name="brand"
                                      checked={data.brand === 'hansaton'}
                                      onChange={() => setData('brand', 'hansaton')}
-                                     required
                                  />
 
                                  <InputLabel
                                      htmlFor="brand_hansaton"
-                                     className="bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
+                                     className="bg-red-500/30 dark:bg-red-400/40 peer-checked:bg-red-500/50 peer-checked:dark:bg-red-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-red-400"
                                  >
                                      <div className="p-2">
-                                         <img src="/storage/logo.png" alt="" className="w-24 h-24"/>
+                                         <img src="/storage/brands/hansaton.png" alt="" className="w-20 h-20 object-contain"/>
                                          <hr className="my-4 border-gray-200 dark:border-slate-500"/>
                                          <p className="text-center">
                                              هنزاتون
@@ -135,15 +132,104 @@ export default function ProductStep() {
                                      </div>
                                  </InputLabel>
                              </div>
+                             <div className="inline-block ml-5">
+                                 <RadioInput
+                                     id="brand_unitron"
+                                     className="hidden peer"
+                                     name="brand"
+                                     checked={data.brand === 'unitron'}
+                                     onChange={() => setData('brand', 'unitron')}
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="brand_unitron"
+                                     className="bg-sky-500/30 dark:bg-sky-400/40 peer-checked:bg-sky-500/50 peer-checked:dark:bg-sky-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
+                                 >
+                                     <div className="p-2">
+                                         <img src="/storage/brands/unitron.png" alt="" className="w-20 h-20 object-contain"/>
+                                         <hr className="my-4 border-gray-200 dark:border-slate-500"/>
+                                         <p className="text-center">
+                                             یونیترون
+                                         </p>
+                                     </div>
+                                 </InputLabel>
+                             </div>
+                             <div className="inline-block ml-5">
+                                 <RadioInput
+                                     id="brand_rayovac"
+                                     className="hidden peer"
+                                     name="brand"
+                                     checked={data.brand === 'rayovac'}
+                                     onChange={() => setData('brand', 'rayovac')}
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="brand_rayovac"
+                                     className="bg-stone-500/30 dark:bg-stone-400/40 peer-checked:bg-stone-500/50 peer-checked:dark:bg-stone-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-stone-400"
+                                 >
+                                     <div className="p-2">
+                                         <img src="/storage/brands/rayovac.png" alt="" className="w-20 h-20 object-contain"/>
+                                         <hr className="my-4 border-gray-200 dark:border-slate-500"/>
+                                         <p className="text-center">
+                                             ریواک
+                                         </p>
+                                     </div>
+                                 </InputLabel>
+                             </div>
+                             <div className="inline-block ml-5">
+                                 <RadioInput
+                                     id="brand_detax"
+                                     className="hidden peer"
+                                     name="brand"
+                                     checked={data.brand === 'detax'}
+                                     onChange={() => setData('brand', 'detax')}
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="brand_detax"
+                                     className="bg-slate-500/30 dark:bg-slate-400/40 peer-checked:bg-slate-500/50 peer-checked:dark:bg-slate-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-slate-400"
+                                 >
+                                     <div className="p-2">
+                                         <img src="/storage/brands/detax.png" alt="" className="w-20 h-20 object-contain"/>
+                                         <hr className="my-4 border-gray-200 dark:border-slate-500"/>
+                                         <p className="text-center">
+                                             دیتاکس
+                                         </p>
+                                     </div>
+                                 </InputLabel>
+                             </div>
+                             <div className="inline-block">
+                                 <RadioInput
+                                     id="brand_etc"
+                                     className="hidden peer"
+                                     name="brand"
+                                     checked={data.brand === 'etc'}
+                                     onChange={() => setData('brand', 'etc')}
+                                     required
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="brand_etc"
+                                     className="bg-purple-500/30 dark:bg-purple-400/40 peer-checked:bg-purple-500/50 peer-checked:dark:bg-purple-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-purple-400"
+                                 >
+                                     <div className="p-2">
+                                         <img src="/storage/brands/etc.png" alt="" className="w-20 h-20 object-contain"/>
+                                         <hr className="my-4 border-gray-200 dark:border-slate-500"/>
+                                         <p className="text-center">
+                                             سایر
+                                         </p>
+                                     </div>
+                                 </InputLabel>
+                             </div>
                          </div>
                      </div>
-                     <div className="w-3/4 flex flex-col">
+                     <div className="w-full md:w-3/5 flex flex-col space-y-5 md:space-y-0">
                          <p className="mb-5 text-gray-700 dark:text-slate-200">
                              محصولات:
                          </p>
                          {Object.keys(products).length === 0 && (
-                             <p className="text-gray-700/70 dark:text-slate-200/70">
-                                 برای مشاهده محصولات ابتدا برند مورد سفارش را انتخاب نمایید!
+                             <p className="text-lg text-gray-700 dark:text-slate-300">
+                                 با اطلاعات وارد شده، محصول قابل سفارشی برای گروه شما وجود ندارد!
                              </p>
                          )}
                          <div className={`transition-all ${! accessory?.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>

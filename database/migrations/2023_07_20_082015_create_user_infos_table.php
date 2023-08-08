@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('phone');
             $table->string('landline');
             $table->string('whatsapp_phone');
-            $table->string('referral_name')->nullable();
-            $table->string('referral_phone')->nullable();
-            $table->string('second_referral_name')->nullable();
-            $table->string('second_referral_phone')->nullable();
+            $table->string('referral_name');
+            $table->string('referral_phone');
+            $table->string('second_referral_name');
+            $table->string('second_referral_phone');
             $table->text('history_description')->nullable();
             $table->text('conditions_description')->nullable();
             $table->string('id_card_image');

@@ -94,7 +94,7 @@ class ProfileController extends Controller
             'password' => $request->new_password
         ]);
 
-        $request->user()->verified = false;
+        $request->user()->status = 'waiting';
 
         $request->user()->save();
 

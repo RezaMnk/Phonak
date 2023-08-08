@@ -54,4 +54,14 @@ class Accessory extends Model
     {
         return $this->hasOne(Shipping::class);
     }
+
+    /**
+     * Belongs to payment
+     *
+     * @return BelongsTo
+     */
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
+    }
 }

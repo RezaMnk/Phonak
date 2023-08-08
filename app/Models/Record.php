@@ -87,6 +87,16 @@ class Record extends Model
         return $this->hasMany(Audiogram::class);
     }
 
+    /**
+     * Belongs to payment
+     *
+     * @return BelongsTo
+     */
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
 
     public function set_step($step)
     {

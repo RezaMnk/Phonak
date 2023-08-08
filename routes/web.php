@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AccessoryController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
@@ -24,6 +26,8 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    return redirect()->route('dashboard');
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -32,14 +36,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'auth.verified'])->name('dashboard');
-
 Route::middleware(['auth', 'auth.verified'])->group(function () {
 
     Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
-        Route::get('/', 'index');
+        Route::get('/', 'user_index');
+        Route::post('/download', 'download')->name('.download');
     });
 
     Route::resource('patients', PatientController::class);
@@ -69,9 +70,21 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
 //        Route::delete('/{patient}', 'destroy')->name('.destroy');
 //    });
 
+    Route::controller(SettingController::class)->name('settings')->prefix('settings')->group(function () {
+        Route::get('/off-limits', 'off_limits')->name('.off_limits');
+        Route::get('/out-of-schedule', 'out_of_schedule')->name('.out_of_schedule');
+    });
+
+    Route::controller(PaymentController::class)->name('payments')->prefix('payments')->group(function () {
+        Route::get('verify-record', 'verify_record')->name('verify_record');
+    });
 });
 
 Route::middleware(['auth', 'auth.is_admin'])->group(function () {
+    Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
+        Route::get('/admin', 'admin_index')->name('.admin');
+    });
+
     Route::controller(ProductController::class)->name('products')->prefix('products')->group(function () {
         Route::post('/update-inventory/{product}', 'update_inventory')->name('.update_inventory');
     });
@@ -79,11 +92,20 @@ Route::middleware(['auth', 'auth.is_admin'])->group(function () {
 
     Route::controller(UserController::class)->name('users')->prefix('users')->group(function () {
         Route::get('/not-verified', 'not_verified')->name('.not_verified');
+        Route::get('/download/{user}/{name}', 'download')->name('.download');
+        Route::post('/disapprove/{user}', 'disapprove')->name('.disapprove');
     });
     Route::resource('users', UserController::class);
 
-    Route::controller(SettingController::class)->name('settings')->prefix('.settings')-> group(function () {
+//    Route::controller(SettingController::class)->name('settings')->prefix('settings')-> group(function () {
+//        Route::get('/', 'index')->name('.index');
+//    });
+    Route::resource('settings', SettingController::class);
 
+
+    Route::controller(AdminController::class)->name('admin')->prefix('admin')->group(function () {
+        Route::get('/records', 'records')->name('.records');
+        Route::get('/accessories', 'accessories')->name('.accessories');
     });
 });
 
@@ -101,9 +123,7 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/test', function () {
-    dd(
-        \App\Models\Record::all()->first()->product
-    );
+    dd(\Illuminate\Support\Facades\Auth::user()->setting_time_orders);
 });
 
 

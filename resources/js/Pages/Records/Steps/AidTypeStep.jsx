@@ -9,7 +9,6 @@ import {StepContext} from "@/Pages/Records/Create.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 import ProductsSlider from "@/Pages/Records/Components/ProductsSlider.jsx";
-import TextInput from "@/Components/TextInput.jsx";
 
 export default function AidTypeStep() {
 
@@ -65,31 +64,30 @@ export default function AidTypeStep() {
              <Head title="سفارش - نوع سفارش" />
 
              <form className="w-full" onSubmit={submit} noValidate>
-                 <div className="flex mt-3">
-                     <div className="w-1/4 ml-5 text-gray-700 dark:text-slate-200">
+                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                     <div className="w-full md:w-1/3 ml-5 text-gray-700 dark:text-slate-200">
                          <p>
                              برند مورد سفارش:
                          </p>
 
                          <InputError message={errors.brand} className="mt-2"/>
 
-                         <div className="mt-5">
-                             <div className="inline-block ml-8">
+                         <div className="mt-5 flex justify-between md:justify-start">
+                             <div className="inline-block ml-5">
                                  <RadioInput
                                      id="brand_phonak"
                                      className="hidden peer"
                                      name="brand"
                                      checked={data.brand === 'phonak'}
                                      onChange={() => setData('brand', 'phonak')}
-                                     required
                                  />
 
                                  <InputLabel
                                      htmlFor="brand_phonak"
-                                     className="border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
+                                     className="bg-lime-500/30 dark:bg-lime-400/40 peer-checked:bg-lime-500/50 peer-checked:dark:bg-lime-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-green-400"
                                  >
                                      <div className="p-2">
-                                         <img src="/storage/logo.png" alt="" className="w-24 h-24"/>
+                                         <img src="/storage/brands/phonak.png" alt="" className="w-24 h-24 object-contain"/>
                                          <hr className="my-4 border-gray-200 dark:border-slate-500"/>
                                          <p className="text-center">
                                              فوناک
@@ -97,22 +95,21 @@ export default function AidTypeStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block">
+                             <div className="inline-block ml-5">
                                  <RadioInput
                                      id="brand_hansaton"
                                      className="hidden peer"
                                      name="brand"
                                      checked={data.brand === 'hansaton'}
                                      onChange={() => setData('brand', 'hansaton')}
-                                     required
                                  />
 
                                  <InputLabel
                                      htmlFor="brand_hansaton"
-                                     className="border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
+                                     className="bg-red-500/30 dark:bg-red-400/40 peer-checked:bg-red-500/50 peer-checked:dark:bg-red-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-red-400"
                                  >
                                      <div className="p-2">
-                                         <img src="/storage/logo.png" alt="" className="w-24 h-24"/>
+                                         <img src="/storage/brands/hansaton.png" alt="" className="w-24 h-24 object-contain"/>
                                          <hr className="my-4 border-gray-200 dark:border-slate-500"/>
                                          <p className="text-center">
                                              هنزاتون
@@ -120,11 +117,33 @@ export default function AidTypeStep() {
                                      </div>
                                  </InputLabel>
                              </div>
+                             <div className="inline-block">
+                                 <RadioInput
+                                     id="brand_unitron"
+                                     className="hidden peer"
+                                     name="brand"
+                                     checked={data.brand === 'unitron'}
+                                     onChange={() => setData('brand', 'unitron')}
+                                 />
+
+                                 <InputLabel
+                                     htmlFor="brand_unitron"
+                                     className="bg-sky-500/30 dark:bg-sky-400/40 peer-checked:bg-sky-500/50 peer-checked:dark:bg-sky-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
+                                 >
+                                     <div className="p-2">
+                                         <img src="/storage/brands/unitron.png" alt="" className="w-24 h-24 object-contain"/>
+                                         <hr className="my-4 border-gray-200 dark:border-slate-500"/>
+                                         <p className="text-center">
+                                             یونیترون
+                                         </p>
+                                     </div>
+                                 </InputLabel>
+                             </div>
                          </div>
                      </div>
-                     <div className="w-3/4 flex flex-col">
-                         <div className="w-full flex">
-                             <div className="w-1/2 ml-5 h-fit">
+                     <div className="w-full md:w-2/3 flex flex-col space-y-5 md:space-y-0">
+                         <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0">
+                             <div className="w-full md:w-1/2 ml-5 h-fit">
                                  <SelectInput
                                      id="type"
                                      name="name"
@@ -132,7 +151,6 @@ export default function AidTypeStep() {
                                      label="نوع سفارش"
                                      onChange={(e) => setData('type', e.target.value)}
                                      error={errors.type}
-                                     required
                                  >
                                      <option value="" disabled="disabled">انتخاب کنید</option>
                                      <option value="CIC">CIC (داخل گوشی با باتری 10)</option>
@@ -144,14 +162,13 @@ export default function AidTypeStep() {
 
                                  <InputError message={errors.type} className="mt-2"/>
                              </div>
-                             <div className="w-1/2 h-fit">
+                             <div className="w-full md:w-1/2 h-fit">
                                  <SelectInput
                                      id="ear"
                                      name="ear"
                                      value={data.ear}
                                      label="نوع تجویز"
                                      onChange={(e) => setData('ear', e.target.value)}
-                                     required
                                  >
                                      <option value="" disabled="disabled">انتخاب کنید</option>
                                      <option value="right">تجویز تک گوشی گوش راست</option>
@@ -160,7 +177,12 @@ export default function AidTypeStep() {
                                  </SelectInput>
                              </div>
                          </div>
-                         <div className={`mt-5 transition-all ${! record.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>
+                         {Object.keys(products).length === 0 && (
+                             <p className="block text-lg !mt-5 text-gray-700 dark:text-slate-300">
+                                 با اطلاعات وارد شده، محصول قابل سفارشی برای گروه شما وجود ندارد!
+                             </p>
+                         )}
+                         <div className={`!mt-5 transition-all ${! record.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>
                              <ProductsSlider products={products}  setProduct={setProduct} product={product} error={errors.product} />
                          </div>
                      </div>

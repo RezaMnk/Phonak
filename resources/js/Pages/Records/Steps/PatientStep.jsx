@@ -104,7 +104,7 @@ export default function PatientStep() {
             <Head title="سفارش - کاربر" />
 
              <form className="w-full" onSubmit={submit}>
-                <div className="mt-5 text-gray-700 dark:text-slate-200">
+                <div className="text-gray-700 dark:text-slate-200">
                     <div className="flex justify-between items-end">
                         <h5>
                             اطلاعات کاربر
@@ -120,8 +120,8 @@ export default function PatientStep() {
                     </div>
                     <hr className="dark:border-slate-600"/>
                 </div>
-                <div className="flex mt-6 mb-5">
-                    <div className="w-1/6 ml-5">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
+                    <div className="w-full md:w-1/6 ml-5">
                         <TextInput
                             id="national_code"
                             name="national_code"
@@ -133,27 +133,25 @@ export default function PatientStep() {
                                 strokeLinecap="round" strokeLinejoin="round"/>}
                             onChange={national_code_change}
                             error={errors.national_code}
-                            required
                         />
 
                         <InputError message={errors.national_code} className="mt-2"/>
                     </div>
-                    <div className="w-1/4 ml-5">
+                    <div className="w-full md:w-1/4 ml-5">
                         <TextInput
                             id="name"
                             name="name"
                             value={data.name}
-                            label="نام کاربر"
+                            label="نام و نام خانوادگی کاربر"
                             svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                            d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                             onChange={(e) => setData('name', e.target.value)}
                             error={errors.name}
-                            required
                         />
 
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
-                    <div className="w-[12%] ml-5">
+                    <div className="w-full md:w-[12%] ml-5">
                         <TextInput
                             id="birth_year"
                             name="birth_year"
@@ -164,75 +162,72 @@ export default function PatientStep() {
                                            d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                             onChange={(e) => setData('birth_year', e.target.value)}
                             error={errors.birth_year}
-                            required
                         />
 
                         <InputError message={errors.birth_year} className="mt-2"/>
                     </div>
-                    <div className="w-1/4 ml-5">
+                    <div className="w-full md:w-1/4 ml-5">
                         <TextInput
                             id="phone"
                             name="phone"
                             type="number"
                             value={data.phone}
-                            label="شماره تلفن کاربر"
+                            label="تلفن همراه کاربر"
                             svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                            d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                             onChange={(e) => setData('phone', e.target.value)}
                             error={errors.phone}
-                            required
                         />
 
                         <InputError message={errors.phone} className="mt-2"/>
                     </div>
-                    <div className="w-1/4">
+                    <div className="w-full md:w-1/4">
                         <TextInput
                             id="eng_name"
                             name="eng_name"
                             value={data.eng_name}
-                            label="نام کاربر به انگلیسی"
+                            label="نام کاربر به لاتین"
                             svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                            d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                             onChange={(e) => setData('eng_name', e.target.value)}
                             error={errors.eng_name}
-                            required
                         />
 
                         <InputError message={errors.eng_name} className="mt-2"/>
                     </div>
                 </div>
-                <div className="flex mt-3">
-                    <div className="w-1/3 ml-5">
-                        <SelectInput
-                            id="state"
-                            name="state"
-                            value={data.state}
-                            label="استان اقامت"
-                            onChange={(e) => setData('state', e.target.value)}
-                            error={errors.state}
-                            required
-                        >
-                            <IranStatesOptions />
-                        </SelectInput>
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                    <div className="flex w-full">
+                        <div className="w-1/2 ml-5">
+                            <SelectInput
+                                id="state"
+                                name="state"
+                                value={data.state}
+                                label="استان محل اقامت"
+                                onChange={(e) => setData('state', e.target.value)}
+                                error={errors.state}
+                            >
+                                <IranStatesOptions />
+                            </SelectInput>
 
-                        <InputError message={errors.state} className="mt-2"/>
-                    </div>
-                    <div className="w-1/3 ml-5">
-                        <SelectInput
-                            id="city"
-                            name="name"
-                            value={data.city}
-                            label="شهر محل اقامت"
-                            onChange={(e) => setData('city', e.target.value)}
-                            error={errors.city}
-                            required
-                        >
-                            <Cities state={data.state} />
-                        </SelectInput>
+                            <InputError message={errors.state} className="mt-2"/>
+                        </div>
+                        <div className="w-1/2 md:ml-5">
+                            <SelectInput
+                                id="city"
+                                name="name"
+                                value={data.city}
+                                label="شهر محل اقامت"
+                                onChange={(e) => setData('city', e.target.value)}
+                                error={errors.city}
+                            >
+                                <Cities state={data.state} />
+                            </SelectInput>
 
-                        <InputError message={errors.city} className="mt-2"/>
+                            <InputError message={errors.city} className="mt-2"/>
+                        </div>
                     </div>
-                    <div className="w-1/3">
+                    <div className="w-full md:w-1/3">
                         <TextInput
                             id="post_code"
                             name="post_code"
@@ -249,10 +244,21 @@ export default function PatientStep() {
                             autoComplete="post_code"
                             onChange={(e) => setData('post_code', e.target.value)}
                             error={errors.post_code}
-                            required
                         />
 
                         <InputError message={errors.post_code} className="mt-2"/>
+
+                        <span className="inline-block mt-2 text-sm text-gray-500 dark:text-slate-400">
+                            لطفا صحت کد پستی را بررسی فرمایید:
+                            <PrimaryButton
+                                className="text-xs rounded !px-2 !py-1 mr-1"
+                                link
+                                target="_blank"
+                                href="https://searchline.ir/PostalCode"
+                            >
+                                استعلام کد پستی
+                            </PrimaryButton>
+                        </span>
                     </div>
                 </div>
 
@@ -268,14 +274,13 @@ export default function PatientStep() {
                         name="address"
                         value={data.address}
                         rows="4"
-                        label="آدرس محل اقامت"
+                        label="آدرس کامل محل اقامت"
                         svgIcon={<path
                             d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
                             strokeLinecap="round" strokeLinejoin="round"/>}
                         autoComplete="address"
                         onChange={(e) => setData('address', e.target.value)}
                         error={errors.address}
-                        required
                     />
 
                     <InputError message={errors.address} className="mt-2"/>

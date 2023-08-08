@@ -36,12 +36,15 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'national_code' => ['required', 'numeric', 'digits:10', 'unique:users'],
+            'email' => ['required', 'email', 'unique:users'],
             'grad_year' => ['required', 'integer', 'digits:4', 'between:1300,'. jdate()->getYear()],
             'med_number' => ['required', 'numeric', 'max_digits:6', 'unique:users'],
             'grade' => ['required', 'string'],
             'state' => ['required', 'string'],
             'city' => ['required', 'string'],
             'university' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:6', 'max:255'],
+            'confirm_password' => ['required', 'same:password'],
         ]);
 
         $data = [...$request->all(), 'password' => $request->national_code];
@@ -150,15 +153,15 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'landline' => ['required', 'numeric', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'whatsapp_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
-            'referral_name' => ['nullable', 'string', 'max:255'],
-            'referral_phone' => ['nullable', 'required_with:referral_name', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],
-            'second_referral_name' => ['nullable', 'string', 'max:255'],
-            'second_referral_phone' => ['nullable', 'required_with:second_referral_name', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],
+            'referral_name' => ['required', 'string', 'max:255'],
+            'referral_phone' => ['required', 'required_with:referral_name', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],
+            'second_referral_name' => ['required', 'string', 'max:255'],
+            'second_referral_phone' => ['required', 'required_with:second_referral_name', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'history_description' => ['nullable', 'string'],
             'conditions_description' => ['nullable', 'string'],
-            'id_card_image' => ['required'],
-            'med_card_image' => ['required'],
-            'license_image' => ['required'],
+            'id_card_image' => ['required', 'mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
+            'med_card_image' => ['required', 'mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
+            'license_image' => ['required', 'mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
         ]);
 
         if ($request->second_referral_name && ! $request->referral_name)

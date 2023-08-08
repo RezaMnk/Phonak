@@ -19,12 +19,12 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
-            <Head title="ثبت نام"/>
+        <GuestLayout className="!max-w-2xl" name="ثبت نام">
+            <Head title="ثبت نام" />
 
             <form onSubmit={submit}>
-                <div className="flex mt-5">
-                    <div className="w-1/2 ml-5">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                    <div className="w-full md:w-1/2 ml-5">
                         <TextInput
                             id="name"
                             name="name"
@@ -36,13 +36,12 @@ export default function Register() {
                             isFocused={true}
                             onChange={(e) => setData('name', e.target.value)}
                             error={errors.name}
-                            required
                         />
 
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="w-full md:w-1/2">
                         <TextInput
                             id="national_code"
                             type="number"
@@ -55,7 +54,6 @@ export default function Register() {
                             autoComplete="username"
                             onChange={(e) => setData('national_code', e.target.value)}
                             error={errors.national_code}
-                            required
                         />
 
                         <InputError message={errors.national_code} className="mt-2"/>
@@ -63,7 +61,25 @@ export default function Register() {
                 </div>
 
                 <div className="flex mt-5">
-                    <div className="w-2/5 ml-5">
+                    <div className="w-full ">
+                        <TextInput
+                            id="email"
+                            type="email"
+                            name="email"
+                            label="ایمیل"
+                            value={data.email}
+                            svgIcon={<path d="M21 8L17.4392 9.97822C15.454 11.0811 14.4614 11.6326 13.4102 11.8488C12.4798 12.0401 11.5202 12.0401 10.5898 11.8488C9.53864 11.6326 8.54603 11.0811 6.5608 9.97822L3 8M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z"/>}
+                            autoComplete="username"
+                            onChange={(e) => setData('email', e.target.value)}
+                            error={errors.email}
+                        />
+
+                        <InputError message={errors.email} className="mt-2"/>
+                    </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                    <div className="w-full md:w-2/5 ml-5">
                         <TextInput
                             id="grad_year"
                             type="number"
@@ -74,13 +90,12 @@ export default function Register() {
                                             d="M8 4H7.2002C6.08009 4 5.51962 4 5.0918 4.21799C4.71547 4.40973 4.40973 4.71547 4.21799 5.0918C4 5.51962 4 6.08009 4 7.2002V8M8 4H16M8 4V2M16 4H16.8002C17.9203 4 18.4796 4 18.9074 4.21799C19.2837 4.40973 19.5905 4.71547 19.7822 5.0918C20 5.5192 20 6.07899 20 7.19691V8M16 4V2M4 8V16.8002C4 17.9203 4 18.4801 4.21799 18.9079C4.40973 19.2842 4.71547 19.5905 5.0918 19.7822C5.5192 20 6.07899 20 7.19691 20H16.8031C17.921 20 18.48 20 18.9074 19.7822C19.2837 19.5905 19.5905 19.2842 19.7822 18.9079C20 18.4805 20 17.9215 20 16.8036V8M4 8H20M16 16H16.002L16.002 16.002L16 16.002V16ZM12 16H12.002L12.002 16.002L12 16.002V16ZM8 16H8.002L8.00195 16.002L8 16.002V16ZM16.002 12V12.002L16 12.002V12H16.002ZM12 12H12.002L12.002 12.002L12 12.002V12ZM8 12H8.002L8.00195 12.002L8 12.002V12Z"/>)}
                             onChange={(e) => setData('grad_year', e.target.value)}
                             error={errors.grad_year}
-                            required
                         />
 
                         <InputError message={errors.grad_year} className="mt-2"/>
                     </div>
 
-                    <div className="w-3/5">
+                    <div className="w-full md:w-3/5">
                         <TextInput
                             id="med_number"
                             type="number"
@@ -90,7 +105,6 @@ export default function Register() {
                             svgIcon={<path d="M12 8V16M8 12H16M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"/>}
                             onChange={(e) => setData('med_number', e.target.value)}
                             error={errors.med_number}
-                            required
                         />
 
                         <InputError message={errors.med_number} className="mt-2"/>
@@ -98,7 +112,7 @@ export default function Register() {
                 </div>
 
                 <div className="flex mt-5">
-                    <div className="w-3/5 ml-5">
+                    <div className="w-1/2 md:w-3/5 ml-5">
                         <SelectInput
                             id="state"
                             name="state"
@@ -106,14 +120,13 @@ export default function Register() {
                             label="استان محل اقامت"
                             onChange={(e) => setData('state', e.target.value)}
                             error={errors.state}
-                            required
                         >
                             <IranStatesOptions />
                         </SelectInput>
 
                         <InputError message={errors.state} className="mt-2"/>
                     </div>
-                    <div className="w-2/5">
+                    <div className="w-1/2 md:w-2/5">
                         <SelectInput
                             id="city"
                             name="name"
@@ -121,7 +134,6 @@ export default function Register() {
                             label="شهر محل اقامت"
                             onChange={(e) => setData('city', e.target.value)}
                             error={errors.city}
-                            required
                         >
                             <Cities state={data.state} />
                         </SelectInput>
@@ -130,8 +142,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex mt-5">
-                    <div className="w-1/2 ml-5">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                    <div className="w-full md:w-1/2 ml-5">
                         <SelectInput
                             id="grade"
                             name="grade"
@@ -140,7 +152,6 @@ export default function Register() {
                             label="مقطع تحصیلی"
                             onChange={(e) => setData('grade', e.target.value)}
                             error={errors.grade}
-                            required
                         >
                             <option value="" selected disabled>انتخاب کنید</option>
                             <option value="کارشناسی">کارشناسی</option>
@@ -152,7 +163,7 @@ export default function Register() {
                         <InputError message={errors.grade} className="mt-2"/>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="w-full md:w-1/2">
                         <TextInput
                             id="university"
                             name="university"
@@ -173,10 +184,55 @@ export default function Register() {
                             autoComplete="university"
                             onChange={(e) => setData('university', e.target.value)}
                             error={errors.university}
-                            required
                         />
 
                         <InputError message={errors.university} className="mt-2"/>
+                    </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                    <div className="w-full md:w-1/2 ml-5">
+                        <TextInput
+                            id="password"
+                            type="password"
+                            name="password"
+                            value={data.password}
+                            label="کلمه عبور"
+                            svgIcon={(
+                                <>
+                                    <path d="M12 10V14M10.2676 11L13.7317 13M13.7314 11L10.2673 13"/>
+                                    <path d="M6.73241 10V14M4.99999 11L8.46409 13M8.46386 11L4.99976 13"/>
+                                    <path d="M17.2681 10V14M15.5356 11L18.9997 13M18.9995 11L15.5354 13"/>
+                                    <path d="M22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C21.4816 5.82475 21.7706 6.69989 21.8985 8"/>
+                                </>
+                            )}
+                            onChange={(e) => setData('password', e.target.value)}
+                            error={errors.password}
+                        />
+
+                        <InputError message={errors.password} className="mt-2"/>
+                    </div>
+
+                    <div className="w-full md:w-1/2">
+                        <TextInput
+                            id="confirm_password"
+                            type="password"
+                            name="confirm_password"
+                            label="تکرار کلمه عبور"
+                            value={data.confirm_password}
+                            svgIcon={(
+                                <>
+                                    <path d="M12 10V14M10.2676 11L13.7317 13M13.7314 11L10.2673 13"/>
+                                    <path d="M6.73241 10V14M4.99999 11L8.46409 13M8.46386 11L4.99976 13"/>
+                                    <path d="M17.2681 10V14M15.5356 11L18.9997 13M18.9995 11L15.5354 13"/>
+                                    <path d="M22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C21.4816 5.82475 21.7706 6.69989 21.8985 8"/>
+                                </>
+                            )}
+                            onChange={(e) => setData('confirm_password', e.target.value)}
+                            error={errors.confirm_password}
+                        />
+
+                        <InputError message={errors.confirm_password} className="mt-2"/>
                     </div>
                 </div>
 

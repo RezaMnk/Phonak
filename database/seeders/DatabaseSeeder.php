@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
          $user = \App\Models\User::create([
              'name' => 'رضا نداف',
              'national_code' => '0012345678',
+             'email' => 'mirnadaf.reza@gmail.com',
              'password' => '0012345678',
              'grad_year' => '1380',
              'med_number' => '123456',
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
              'state' => 'تهران',
              'city' => 'تهران',
              'role' => 'admin',
-             'verified' => true,
+             'status' => 'approved',
          ]);
 
          $user->address()->create([

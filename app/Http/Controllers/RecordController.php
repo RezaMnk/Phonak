@@ -6,12 +6,25 @@ use App\Models\Audiogram;
 use App\Models\Patient;
 use App\Models\Product;
 use App\Models\Record;
+use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class RecordController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware only applied to these methods
+        $this->middleware('group_check', [
+            'only' => [
+                'create',
+                'store',
+            ]
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +40,10 @@ class RecordController extends Controller
      */
     public function create(): \Inertia\Response
     {
-        return Inertia::render('Records/Create');
+        return Inertia::render('Records/Create', [
+            'setting' => Auth::user()->setting ?: null,
+            'setting.orders' => Auth::user()->setting_time_orders,
+        ]);
     }
 
     /**
@@ -63,7 +79,7 @@ class RecordController extends Controller
     public function store_aid_type(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
-            'brand' => ['required', 'in:phonak,hansaton'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron'],
             'type' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC'],
             'ear' => ['required', 'in:left,right,both'],
             'product' => ['required', 'numeric', 'exists:products,id'],
@@ -119,7 +135,6 @@ class RecordController extends Controller
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
             {
-
                 $request->validate([
                     $ear .'.ac_250' => ['required', 'numeric'],
                     $ear .'.ac_500' => ['required', 'numeric'],
@@ -134,6 +149,15 @@ class RecordController extends Controller
                     $ear .'.audiogram_image' => ['required'],
                     $ear .'.id_card_image' => ['required'],
                 ]);
+
+                if ($request->hasFile($ear.'.audiogram_image'))
+                    $request->validate([
+                        $ear .'.audiogram_image' => ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
+                    ]);
+                if ($request->hasFile($ear.'.id_card_image'))
+                    $request->validate([
+                        $ear .'.id_card_image' => ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
+                    ]);
             }
         }
         foreach (['left', 'right'] as $ear) {
@@ -243,16 +267,27 @@ class RecordController extends Controller
             'brand' => ['required', 'in:phonak,hansaton,unitron'],
         ]);
 
-        $products = Product::query()->where('category', $request->type)->where('brand', $request->brand)->get();
+        if ($request->user()->group == 0)
+            $products = Product::all()->where('category', $request->type)->where('brand', $request->brand);
+        else
+            $products = $request->user()->products()->where('category', $request->type)->where('brand', $request->brand);
+
         return response()->json(['products' => $products]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Record $record)
+    public function show(Record $record): \Inertia\Response
     {
-        //
+        return Inertia::render('Records/Show', [
+            'record' => $record,
+            'record.patient' => $record->patient,
+            'record.product' => $record->product,
+            'record.shipping' => $record->shipping,
+            'record.record_aids' => $record->record_aids,
+            'record.audiograms' => $record->audiograms,
+        ]);
     }
 
     /**
@@ -261,6 +296,8 @@ class RecordController extends Controller
     public function edit(Record $record): \Inertia\Response
     {
         return Inertia::render('Records/Create', [
+            'setting' => Auth::user()->setting ?: null,
+            'setting.orders' => Auth::user()->setting_time_orders,
             'record' => $record,
             'record.patient' => $record->patient,
             'record.aid.right' => $record->record_aids->firstWhere('ear', 'right'),
@@ -312,6 +349,32 @@ class RecordController extends Controller
     public function audiogram_uploads(Request $request)
     {
         $request->validate([]);
+    }
+
+
+    private function request_to_pay(Record $record)
+    {
+        $price = $record->product->price;
+
+        if ($record->ear == 'both')
+            $price *= 2;
+
+        $request = Toman::amount($price)
+            ->callback(route('payments.verify_record', $record->id))
+            ->mobile($record->user->info->phone)
+            ->request();
+
+        if ($request->successful()) {
+            $transactionId = $request->transactionId();
+
+            $record->payment()->create([
+                'transaction_id' => $transactionId
+            ]);
+
+            return $request->pay();
+        }
+
+        return false;
     }
 
 

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_settings', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('transaction_id');
+            $table->string('reference_id')->nullable();
+            $table->enum('type', ['record', 'accessory']);
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_settings');
+        Schema::dropIfExists('payments');
     }
 };

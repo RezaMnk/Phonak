@@ -68,17 +68,17 @@ export default function AidStep() {
         <>
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
-                    <div className="flex mt-3">
-                        <div className="w-1/4 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                        <div className="w-full md:w-1/4 ml-5">
                             <AidSize ear={ear} />
                         </div>
-                        <div className="w-1/4 ml-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <VentSize ear={ear} />
                         </div>
-                        <div className="w-1/4 ml-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <WaxGuard ear={ear} />
                         </div>
-                        <div className="w-1/4">
+                        <div className="w-full md:w-1/4">
                             <ReceiverType ear={ear} />
                         </div>
                     </div>
@@ -90,18 +90,18 @@ export default function AidStep() {
                         <HasMold ear={ear} />
                     </div>
                     {data[ear].has_mold && (
-                        <div className="flex mt-6">
-                            <div className={`${data[ear].has_vent ? 'w-3/12' : 'w-3/12'} ml-5 flex items-center`}>
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
+                            <div className={`${data[ear].has_vent ? 'w-full md:w-3/12' : 'w-full md:w-3/12'} ml-5 flex items-center`}>
                                 <MoldMaterial ear={ear} />
                             </div>
-                            <div className={`${data[ear].has_vent ? 'w-2/12' : 'w-3/12'} ml-5 flex items-center`}>
+                            <div className={`${data[ear].has_vent ? 'w-full md:w-2/12' : 'w-full md:w-3/12'} ml-5 flex items-center`}>
                                 <HasVent ear={ear} />
                             </div>
-                            <div className={`${data[ear].has_vent ? 'w-4/12 ml-5' : 'w-6/12'}`}>
+                            <div className={`${data[ear].has_vent ? 'w-full md:w-4/12 ml-5' : 'w-full md:w-6/12'}`}>
                                 <MoldSize ear={ear} />
                             </div>
                             {data[ear].has_vent && (
-                                <div className="w-3/12">
+                                <div className="w-full md:w-3/12">
                                     <VentSize ear={ear} />
                                 </div>
                             )}
@@ -116,30 +116,30 @@ export default function AidStep() {
                         <HasMold ear={ear} />
                     </div>
                     {data[ear].has_mold ? (
-                        <div className="flex mt-6">
-                            <div className="w-1/3 flex items-center">
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
+                            <div className="w-full md:w-1/3 flex items-center">
                                 <HasVent ear={ear} />
                             </div>
-                            <div className={`${data[ear].has_vent ? 'w-1/3 ml-5' : 'w-2/3'}`}>
+                            <div className={`${data[ear].has_vent ? 'w-full md:w-1/3 ml-5' : 'w-full md:w-2/3'}`}>
                                 <TubeSize ear={ear} />
                             </div>
                             {data[ear].has_vent && (
                                 <>
-                                    <div className="w-1/2">
+                                    <div className="w-full md:w-1/2">
                                         <VentSize ear={ear} />
                                     </div>
                                 </>
                             )}
                         </div>
                     ) : (
-                        <div className="flex mt-6">
-                            <div className="w-1/3 ml-5">
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
+                            <div className="w-full md:w-1/3 ml-5">
                                 <TubeSize ear={ear} />
                             </div>
-                            <div className="w-1/3 ml-5">
+                            <div className="w-full md:w-1/3 ml-5">
                                 <DomeType ear={ear} />
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-full md:w-1/3">
                                 <DomeSize ear={ear} />
                             </div>
                         </div>
@@ -151,34 +151,34 @@ export default function AidStep() {
                     <div className="w-full">
                         <HasMold ear={ear} />
                     </div>
-                    <div className="flex mt-6">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
                         {data[ear].has_mold ? (
                             <>
-                                <div className="w-1/4 ml-5">
+                                <div className="w-full md:-1/4 ml-5">
                                     <ReceiverType ear={ear} type="RIC - mold" />
                                 </div>
-                                <div className="w-1/4 ml-5">
+                                <div className="w-full md:w-1/4 ml-5">
                                     <ShellType ear={ear} />
                                 </div>
-                                <div className="w-1/4 ml-5">
+                                <div className="w-full md:w-1/4 ml-5">
                                     <ExternalReceiverSize ear={ear} />
                                 </div>
-                                <div className="w-1/4">
+                                <div className="w-full md:w-1/4">
                                     <VentSize required={false} ear={ear} />
                                 </div>
                             </>
                         ) : (
                             <>
-                                <div className="w-1/4 ml-5">
+                                <div className="w-full md:w-1/4 ml-5">
                                     <ReceiverType ear={ear} type="RIC - no mold" />
                                 </div>
-                                <div className="w-1/4 ml-5">
+                                <div className="w-full md:w-1/4 ml-5">
                                     <ExternalReceiverSize ear={ear} />
                                 </div>
-                                <div className="w-1/4 ml-5">
+                                <div className="w-full md:w-1/4 ml-5">
                                     <DomeType ear={ear} />
                                 </div>
-                                <div className="w-1/4">
+                                <div className="w-full md:w-1/4">
                                     <DomeSize ear={ear} />
                                 </div>
                             </>
@@ -212,7 +212,7 @@ export default function AidStep() {
                     )}
 
                     {(record.ear === 'right' || record.ear === 'both') && (
-                        <div className={record.ear === 'both' ? 'mt-8' : undefined}>
+                        <div className={record.ear === 'both' ? 'mt-8' : ''}>
                             <div className="mb-8">
                                 <div className="inline-block ml-2 w-3 h-3 bg-red-600 dark:bg-red-400 rounded-full"></div>
                                 <span className="text-lg text-gray-700 dark:text-slate-200">

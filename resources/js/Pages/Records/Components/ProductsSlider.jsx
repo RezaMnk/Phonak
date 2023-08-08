@@ -20,7 +20,14 @@ export default ({ products, product: selected_product, setProduct, error }) => {
             }}
             modules={[Pagination]}
             spaceBetween={30}
-            slidesPerView={5}
+            breakpoints={{
+                576: {
+                    slidesPerView: 3,
+                },
+                768: {
+                    slidesPerView: 5
+                },
+            }}
             initialSlide={(selected_product-3) || 0}
         >
             {Object.values(products).map((product, key) => (
@@ -31,7 +38,6 @@ export default ({ products, product: selected_product, setProduct, error }) => {
                         name="product"
                         checked={selected_product === product.id}
                         onChange={() => setProduct(product.id)}
-                        required
                     />
 
                     <InputLabel

@@ -1,16 +1,18 @@
-import TextInput from "@/Components/TextInput.jsx";
 import {ToastContainer} from "react-toastify";
 import "../../css/toastify/main.scss"
 import useMemorable from "@/Hooks/useMemorable.js";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {usePage} from "@inertiajs/react";
 import {toast as toastify} from "react-toastify";
 import UserSidebar from "@/Layouts/UserSidebar.jsx";
 import AdminSidebar from "@/Layouts/AdminSidebar.jsx";
+import Icon from "@/Components/Icon.jsx";
 
-export default function Authenticated({ header, breadcrumbs, headerButton = <></>, children }) {
+export default function Authenticated({ header, breadcrumbs, headerExtra, children }) {
     const [minimize, setMinimize] = useMemorable(false, 'minimize');
     const [dark, setDark] = useMemorable(false, 'dark');
+
+    const [hamburgerMenu, setHamburgerMenu] = useState(false)
 
     const { toast, auth } = usePage().props;
 
@@ -57,20 +59,20 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                 theme={dark ? "dark" : "light"}
             />
             <div className="min-h-screen bg-gray-100 dark:bg-slate-800">
+                <div className={`fixed transition-all duration-100 ${hamburgerMenu ? 'w-full' : 'w-0'} h-full z-40 bg-black/40`} onClick={() => setHamburgerMenu(false)}></div>
                 {auth.user.is_admin ? (
-                    <AdminSidebar minimize={minimize} changeMinimize={changeMinimize} dark={dark} />
+                    <AdminSidebar minimize={minimize} changeMinimize={changeMinimize} hamburgerMenu={hamburgerMenu} setHamburgerMenu={setHamburgerMenu} dark={dark} />
                 ) : (
-                    <UserSidebar minimize={minimize} changeMinimize={changeMinimize} dark={dark} />
+                    <UserSidebar minimize={minimize} changeMinimize={changeMinimize} hamburgerMenu={hamburgerMenu} setHamburgerMenu={setHamburgerMenu} dark={dark} />
                 )}
 
 
                 {header && (
-                    <header className={`bg-white dark:bg-slate-900 transition-all ${minimize ? 'mr-24' : 'mr-60'} print:hidden`}>
+                    <header className={`bg-white dark:bg-slate-900 transition-all ${minimize ? 'md:mr-24' : 'md:mr-60'} print:hidden`}>
                         <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             <div className="flex justify-between">
                                 <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
-                                <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 items-center justify-center" onClick={toggleDarkMode}>
-
+                                <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 md:ml-0 items-center justify-center" onClick={toggleDarkMode}>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500 dark:text-slate-300" viewBox="0 0 24 24" fill="none">
                                         {dark ? (
                                             <path d="M20 14.12A7.78 7.78 0 019.88 4a7.782 7.782 0 002.9 15A7.782 7.782 0 0020 14.12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -85,59 +87,64 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                                         )}
                                     </svg>
                                 </button>
-                                <div className="relative">
-                                    <TextInput
-                                        id="search"
-                                        className="py-2 text-sm"
-                                        label="جستجو"
-                                        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}
-                                        size="1"
-                                    />
-                                    <div className="absolute z-10 top-12 left-0 hidden w-full bg-white rounded-lg p-4 border border-gray-200 text-sm">
-                                        <p className="text-gray-700 border-b border-gray-300 text-xs pb-1">
-                                            سفارشات
-                                        </p>
-                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
-                                            <p>#11</p>
-                                            <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
-                                        </div>
-                                        <hr className="border-gray-300 dark:border-slate-600"/>
-                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
-                                            <p>#11</p>
-                                            <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
-                                        </div>
-                                        <hr className="border-gray-300 dark:border-slate-600"/>
-                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
-                                            <p>#11</p>
-                                            <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
-                                        </div>
+                                <button className="md:hidden flex bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 items-center justify-center" onClick={() => setHamburgerMenu(true)}>
+                                    <Icon viewBox="0 0 24 24" type="stroke">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </Icon>
+                                </button>
+{/*                                <div className="relative">*/}
+{/*/!*                                    <TextInput*/}
+{/*                                        id="search"*/}
+{/*                                        className="py-2 text-sm"*/}
+{/*                                        label="جستجو"*/}
+{/*                                        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}*/}
+{/*                                        size="1"*/}
+{/*                                    />*!/*/}
+{/*                                    <div className="absolute z-10 top-12 left-0 hidden w-full bg-white rounded-lg p-4 border border-gray-200 text-sm">*/}
+{/*                                        <p className="text-gray-700 border-b border-gray-300 text-xs pb-1">*/}
+{/*                                            سفارشات*/}
+{/*                                        </p>*/}
+{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+{/*                                            <p>#11</p>*/}
+{/*                                            <p>رضا نداف</p>*/}
+{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+{/*                                        </div>*/}
+{/*                                        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+{/*                                            <p>#11</p>*/}
+{/*                                            <p>رضا نداف</p>*/}
+{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+{/*                                        </div>*/}
+{/*                                        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+{/*                                            <p>#11</p>*/}
+{/*                                            <p>رضا نداف</p>*/}
+{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+{/*                                        </div>*/}
 
-                                        <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">
-                                            کاربران
-                                        </p>
-                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
-                                            <p>#11</p>
-                                            <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
-                                        </div>
-                                        <hr className="border-gray-300 dark:border-slate-600"/>
-                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">
-                                            <p>#11</p>
-                                            <p>رضا نداف</p>
-                                            <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>
-                                        </div>
-                                    </div>
-                                </div>
+{/*                                        <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">*/}
+{/*                                            کاربران*/}
+{/*                                        </p>*/}
+{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+{/*                                            <p>#11</p>*/}
+{/*                                            <p>رضا نداف</p>*/}
+{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+{/*                                        </div>*/}
+{/*                                        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+{/*                                            <p>#11</p>*/}
+{/*                                            <p>رضا نداف</p>*/}
+{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+{/*                                        </div>*/}
+{/*                                    </div>*/}
+{/*                                </div>*/}
                             </div>
                         </div>
 
-                        {(breadcrumbs || headerButton) && (
+                        {(breadcrumbs || headerExtra) && (
                             <>
                                 <hr className="w-fulll border-gray-300 dark:border-slate-600"/>
-                                <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between py-4 overflow-x-auto whitespace-nowrap">
+                                <div className={`container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex ${(breadcrumbs && headerExtra) ? 'flex-col md:flex-row space-y-5 md:space-y-0' : ''} justify-between py-4 overflow-x-auto whitespace-nowrap`}>
                                     {breadcrumbs && (
                                         <div className="flex items-center">
                                             <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
@@ -166,8 +173,8 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                                             })}
                                         </div>
                                     )}
-                                    {headerButton && (
-                                        headerButton
+                                    {headerExtra && (
+                                        headerExtra
                                     )}
                                 </div>
                             </>
@@ -176,7 +183,7 @@ export default function Authenticated({ header, breadcrumbs, headerButton = <></
                     </header>
                 )}
 
-                <div className={`transition-all ${minimize ? 'mr-24' : 'mr-60'} print:m-auto`}>
+                <div className={`transition-all ${minimize ? 'md:mr-24' : 'md:mr-60'} print:m-auto`}>
                     <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 xl:py-12">{children}</main>
                 </div>
             </div>

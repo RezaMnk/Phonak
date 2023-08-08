@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee03464c564e522be19633f3b59b29b3",
+    "content-hash": "a582887c4c49377b1485f8ee36e8beb2",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -3254,6 +3254,90 @@
                 }
             ],
             "time": "2023-04-15T23:01:58+00:00"
+        },
+        {
+            "name": "rezamnk/laravel-toman",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RezaMnk/laravel-toman.git",
+                "reference": "54829b5a3d5b36a35f4f55fec330b61a56451ef9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RezaMnk/laravel-toman/zipball/54829b5a3d5b36a35f4f55fec330b61a56451ef9",
+                "reference": "54829b5a3d5b36a35f4f55fec330b61a56451ef9",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3|^7.0",
+                "illuminate/support": "^7.0|^8.0|^9.0|^10.0",
+                "php": "^7.3|^8.0|^8.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "sempro/phpunit-pretty-print": "^1.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Evryn\\LaravelToman\\LaravelTomanServiceProvider"
+                    ],
+                    "aliases": {
+                        "Payment": "Evryn\\LaravelToman\\Facades\\Payment"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Evryn\\LaravelToman\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amirreza Nasiri",
+                    "email": "nasiri.amirreza.96@gmail.com",
+                    "homepage": "https://amirreza.in"
+                }
+            ],
+            "description": "A simple stable Laravel package to handle popular payment gateways in Iran including ZarinPal and IDPay.",
+            "homepage": "https://github.com/evryn/laravel-toman",
+            "keywords": [
+                "gateway",
+                "idpay",
+                "laravel",
+                "laravel-toman",
+                "laraveltoman",
+                "payment",
+                "toman",
+                "zarinpal",
+                "آیدی پی",
+                "درگاه",
+                "زرین پال",
+                "پرداخت"
+            ],
+            "support": {
+                "source": "https://github.com/RezaMnk/laravel-toman/tree/master"
+            },
+            "funding": [
+                {
+                    "url": "https://yekpay.me/en/AmirrezaNasiri",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://zarinp.al/@amirrezan",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-08-05T15:04:59+00:00"
         },
         {
             "name": "symfony/console",
@@ -8272,7 +8356,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,

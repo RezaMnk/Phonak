@@ -3,7 +3,7 @@ import {Head, Link, router, useForm} from '@inertiajs/react';
 import SecondaryButton from "@/Components/SecondaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import Modal from "@/Components/Modal.jsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Pagination from "@/Components/Pagination.jsx";
 import TextInput from "@/Components/TextInput.jsx";
@@ -35,10 +35,6 @@ export default function Index({ products }) {
     const updateInventory = (product_id, event) => {
         let value = parseInt(event.target.value)
         setProductInventories((prev) => {
-            console.log({
-                ...prev,
-                [product_id]: value
-            })
             return {
                 ...prev,
                 [product_id]: value
@@ -67,7 +63,7 @@ export default function Index({ products }) {
                     'محصولات': route('products.index')
                 }
             }
-            headerButton={
+            headerExtra={
                 <PrimaryButton
                     link={true}
                     href={route('products.create')}
@@ -84,20 +80,23 @@ export default function Index({ products }) {
                 <table className="w-full text-right text-gray-500 dark:text-slate-400">
                     <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 تصویر محصول
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 نام محصول
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 برند
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 دسته بندی
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
                                 موجودی
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                وضعیت
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 عملیات
@@ -107,36 +106,37 @@ export default function Index({ products }) {
                     <tbody>
                     {Object.keys(data_products).length ? Object.values(data_products).map((product) => {
                         const is_last = data_products[Object.keys(data_products).length-1] === product;
+
                         return (
-                            <tr key={product.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : undefined} border-gray-200 dark:border-slate-600`}>
-                                <td className="px-6 py-2">
+                            <tr key={product.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
+                                <td className="px-6 py-2 hidden md:table-cell">
                                     <img src={product.image_url} alt={product.name} className="w-14 h-14 rounded-lg object-cover bg-gray-100 dark:bg-slate-800 p-1"/>
                                 </td>
                                 <th scope="row"
                                     className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
                                     {product.name}
                                 </th>
+                                <td className="px-6 py-4 hidden md:table-cell">
+                                    {product.brand === 'phonak' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                    {product.brand === 'hansaton' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-gray-50 dark:bg-gray-500/30 px-2 py-1 text-sm font-medium text-gray-800 dark:text-gray-300/70 ring-1 ring-inset ring-gray-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                    {product.brand === 'unitron' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-blue-50 dark:bg-blue-500/30 px-2 py-1 text-sm font-medium text-blue-800 dark:text-blue-300/70 ring-1 ring-inset ring-blue-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                </td>
                                 <td className="px-6 py-4">
                                     {product.category}
                                 </td>
-                                <td className="px-6 py-4">
-                                    {product.brand == 'phonak' && (
-                                        <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
-                                            {product.brand}
-                                        </span>
-                                    )}
-                                    {product.brand == 'hansaton' && (
-                                        <span className="inline-flex items-center rounded-md bg-gray-50 dark:bg-gray-500/30 px-2 py-1 text-sm font-medium text-gray-800 dark:text-gray-300/70 ring-1 ring-inset ring-gray-600/20">
-                                            {product.brand}
-                                        </span>
-                                    )}
-                                    {product.brand == 'unitron' && (
-                                        <span className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-500/30 px-2 py-1 text-sm font-medium text-blue-800 dark:text-blue-300/70 ring-1 ring-inset ring-blue-600/20">
-                                            {product.brand}
-                                        </span>
-                                    )}
-                                </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 hidden md:table-cell">
                                     <TextInput
                                         className="!w-12 !p-1 text-center"
                                         size="1"
@@ -147,6 +147,17 @@ export default function Index({ products }) {
                                         />
                                 </td>
                                 <td className="px-6 py-4">
+                                    {product.group_products.length ? (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            گروهبندی شده
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
+                                            گروهبندی نشده
+                                        </span>
+                                    )}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     <Link href={route('products.edit', [product.id])}
                                         className="inline-flex px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
                                     >
@@ -166,7 +177,7 @@ export default function Index({ products }) {
                     }) : (
                         <tr className="bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900">
                             <th scope="row"
-                                colSpan="6"
+                                colSpan="7"
                                 className="text-lg px-6 py-6">
                                 هیچ محصولی یافت نشد!
                                 <Link href={route('products.create')}
@@ -192,7 +203,7 @@ export default function Index({ products }) {
                         با حذف محصول، سفارشاتی که با این محصول انجام شده باشند دچار مشکل خواهند شد!
                     </p>
                     <div className="mt-6 flex justify-between">
-                        <SecondaryButton className="!px-4 !py-2 text-xs" onClick={(closeModal)}>
+                        <SecondaryButton className="!px-4 !py-2 text-xs" type="button" onClick={(closeModal)}>
                             لغو
                         </SecondaryButton>
 

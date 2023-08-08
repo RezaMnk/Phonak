@@ -61,12 +61,11 @@ export default function Edit({ patient }) {
                                     id="name"
                                     name="name"
                                     value={data.name}
-                                    label="نام کاربر"
+                                    label="نام و نام خانوادگی کاربر"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('name', e.target.value)}
                                     error={errors.name}
-                                    required
                                 />
 
                                 <InputError message={errors.name} className="mt-2"/>
@@ -83,7 +82,6 @@ export default function Edit({ patient }) {
                                         strokeLinecap="round" strokeLinejoin="round"/>}
                                     onChange={(e) => setData('national_code', e.target.value)}
                                     error={errors.national_code}
-                                    required
                                 />
 
                                 <InputError message={errors.national_code} className="mt-2"/>
@@ -99,7 +97,6 @@ export default function Edit({ patient }) {
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('birth_year', e.target.value)}
                                     error={errors.birth_year}
-                                    required
                                 />
 
                                 <InputError message={errors.birth_year} className="mt-2"/>
@@ -110,12 +107,11 @@ export default function Edit({ patient }) {
                                     name="phone"
                                     type="number"
                                     value={data.phone}
-                                    label="شماره تلفن کاربر"
+                                    label="تلفن همراه کاربر"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('phone', e.target.value)}
                                     error={errors.phone}
-                                    required
                                 />
 
                                 <InputError message={errors.phone} className="mt-2"/>
@@ -125,12 +121,11 @@ export default function Edit({ patient }) {
                                     id="eng_name"
                                     name="eng_name"
                                     value={data.eng_name}
-                                    label="نام کاربر به انگلیسی"
+                                    label="نام کاربر به لاتین"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('eng_name', e.target.value)}
                                     error={errors.eng_name}
-                                    required
                                 />
 
                                 <InputError message={errors.eng_name} className="mt-2"/>
@@ -142,10 +137,9 @@ export default function Edit({ patient }) {
                                     id="state"
                                     name="state"
                                     value={data.state}
-                                    label="استان اقامت"
+                                    label="استان محل اقامت"
                                     onChange={(e) => setData('state', e.target.value)}
                                     error={errors.state}
-                                    required
                                 >
                                     <IranStatesOptions />
                                 </SelectInput>
@@ -160,7 +154,6 @@ export default function Edit({ patient }) {
                                     label="شهر محل اقامت"
                                     onChange={(e) => setData('city', e.target.value)}
                                     error={errors.city}
-                                    required
                                 >
                                     <Cities state={data.state} />
                                 </SelectInput>
@@ -184,7 +177,6 @@ export default function Edit({ patient }) {
                                     autoComplete="post_code"
                                     onChange={(e) => setData('post_code', e.target.value)}
                                     error={errors.post_code}
-                                    required
                                 />
 
                                 <InputError message={errors.post_code} className="mt-2"/>
@@ -203,7 +195,7 @@ export default function Edit({ patient }) {
                                 name="address"
                                 value={data.address}
                                 rows="4"
-                                label="آدرس محل اقامت"
+                                label="آدرس کامل محل اقامت"
                                 svgIcon={<path
                                     d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
                                     strokeLinecap="round" strokeLinejoin="round"/>}

@@ -1,13 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, useForm} from '@inertiajs/react';
+import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
-import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import WarningButton from "@/Components/WarningButton.jsx";
 import {useEffect, useState} from "react";
+import Modal from "@/Components/Modal.jsx";
 
 export default function Edit({ user }) {
     const {data, setData, reset, put, processing, errors} = useForm({
@@ -15,28 +16,46 @@ export default function Edit({ user }) {
         password: '',
         confirm_password: '',
         group: user.group,
-        verified: user.verified ? 'true' : 'false',
+        status: user.status,
     });
 
     const [submitVerify, setSubmitVerify] = useState(false);
 
     useEffect(() => {
+        console.log(submitVerify)
         if (submitVerify)
             put(route('users.update', user), {
                 onSuccess: () => reset('password', 'confirm_password')
             });
-    }, [data.verified])
+        return setSubmitVerify(false)
+    }, [submitVerify])
+
+
+    const [modalShow, setModalShow] = useState(false);
+    const {post: modal_post, data: modal_data, setData: modal_setData, errors: modal_errors} = useForm();
+
+    const closeModal = () => {
+        setModalShow(false)
+    }
+    const disapprove = (e) => {
+        e.preventDefault();
+
+        modal_post(route('users.disapprove', user), {
+            preserveScroll: true,
+            onSuccess: () => closeModal(),
+        });
+    };
 
     const submit = (e) => {
         e.preventDefault();
         put(route('users.update', user), {
-            onSuccess: () => reset('password', 'confirm_password')
+            onSuccess: () => reset('password', 'confirm_pthxlassword')
         });
     };
 
     const submit_verified = (e) => {
         e.preventDefault();
-        setData('verified', 'true');
+        setData('status', 'approved');
 
         setSubmitVerify(true)
     };
@@ -409,20 +428,21 @@ export default function Edit({ user }) {
                             </div>
                             <div className="w-2/12 ml-5">
                                 <SelectInput
-                                    className={data.verified === 'true' ? '!bg-green-50' : '!bg-yellow-50'}
-                                    id="verified"
-                                    name="verified"
-                                    value={data.verified}
+                                    className={data.status === 'approved' ? '!bg-green-50 dark:!bg-green-900/50' : data.status === 'waiting' ? '!bg-yellow-50 dark:!bg-yellow-900/50' : '!bg-red-50 dark:!bg-red-900/50'}
+                                    id="status"
+                                    name="status"
+                                    value={data.status}
                                     label="وضعیت تایید"
-                                    onChange={(e) => setData('verified', e.target.value)}
-                                    error={errors.verified}
+                                    onChange={(e) => setData('status', e.target.value)}
+                                    error={errors.status}
                                     required
                                 >
-                                    <option value="true" className="bg-green-100">تایید شده</option>
-                                    <option value="false" className="bg-yellow-100">در انتظار بررسی</option>
+                                    <option value="approved" className="bg-white dark:bg-slate-800">تایید شده</option>
+                                    <option value="waiting" className="bg-white dark:bg-slate-800">در انتظار بررسی</option>
+                                    <option value="unapproved" className="bg-white dark:bg-slate-800">عدم تایید</option>
                                 </SelectInput>
 
-                                <InputError message={errors.verified} className="mt-2"/>
+                                <InputError message={errors.status} className="mt-2"/>
                             </div>
                             <div className="w-3/12 ml-5">
                                 <TextInput
@@ -476,7 +496,7 @@ export default function Edit({ user }) {
                             <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex mt-3">
-                            <div className="w-1/3 ml-5">
+                            <div className="relative w-1/3 ml-5">
                                 <a
                                     href={user.info.id_card_image_url}
                                     target="_blank"
@@ -484,8 +504,15 @@ export default function Edit({ user }) {
                                 >
                                     مشاهده تصویر کارت ملی جدید
                                 </a>
+                                <a
+                                    className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
+                                    href={route('users.download', {user: user.id, name: 'id'})}
+                                    target="_blank"
+                                >
+                                    دانلود
+                                </a>
                             </div>
-                            <div className="w-1/3 ml-5">
+                            <div className="relative w-1/3 ml-5">
                                 <a
                                     href={user.info.med_card_image_url}
                                     target="_blank"
@@ -493,8 +520,15 @@ export default function Edit({ user }) {
                                 >
                                     مشاهده تصویر کارت نظام پزشکی
                                 </a>
+                                <a
+                                    className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
+                                    href={route('users.download', {user: user.id, name: 'med_card'})}
+                                    target="_blank"
+                                >
+                                    دانلود
+                                </a>
                             </div>
-                            <div className="w-1/3">
+                            <div className="relative w-1/3">
                                 <a
                                     href={user.info.license_image_url}
                                     target="_blank"
@@ -502,8 +536,33 @@ export default function Edit({ user }) {
                                 >
                                     مشاهده تصویر مجوز فعالیت
                                 </a>
+                                <a
+                                    className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
+                                    href={route('users.download', {user: user.id, name: 'license'})}
+                                    target="_blank"
+                                >
+                                    دانلود
+                                </a>
                             </div>
                         </div>
+
+                        {(user.status === 'unapproved' && user.disapprove) && (
+                            <>
+                                <div className="mt-12 text-gray-700 dark:text-slate-200">
+                                    <h5>
+                                        دلیل عدم تایید کاربر
+                                    </h5>
+                                    <hr className="dark:border-slate-600"/>
+                                </div>
+                                <div className="flex mt-3 text-gray-700 dark:text-slate-200">
+                                    <span className="ml-2 font-semibold">
+                                        پیام مدیریت:
+                                    </span>
+                                    {user.disapprove}
+                                </div>
+                            </>
+                        )}
+
                         <div className="flex justify-between mt-8">
                             <DangerButton
                                 className="!px-4 !py-2"
@@ -512,15 +571,27 @@ export default function Edit({ user }) {
                             >
                                 لغو
                             </DangerButton>
-                            {! user.verified && (
-                                <WarningButton
-                                    className="!px-4 !py-2 ml-5 mr-auto"
-                                    disabled={processing}
-                                    type="button"
-                                    onClick={submit_verified}
-                                >
-                                    تایید همکار و ثبت تغییرات
-                                </WarningButton>
+                            {user.status !== 'approved' && (
+                                <>
+                                    <DangerButton
+                                        type="button"
+                                        onClick={() => {
+                                        setModalShow(true);
+                                    }}
+                                        className="!px-4 !py-2 ml-5 mr-auto"
+                                    >
+                                        عدم تایید
+                                    </DangerButton>
+                                    <WarningButton
+                                        className="!px-4 !py-2 ml-5"
+                                        disabled={processing}
+                                        type="button"
+                                        onClick={submit_verified}
+                                    >
+                                        تایید همکار و ثبت تغییرات
+                                    </WarningButton>
+                                </>
+
                             )}
                             <PrimaryButton
                                 className="!px-4 !py-2"
@@ -533,6 +604,34 @@ export default function Edit({ user }) {
                 </div>
             </div>
 
+            <Modal show={modalShow} onClose={closeModal} maxWidth="lg">
+                <form onSubmit={disapprove} className="p-6">
+                    <h2 className="mb-5 text-lg font-semibold text-gray-700 dark:text-slate-200">
+                        عدم تایید همکار
+                    </h2>
+                    <TextAreaInput
+                        id="disapprove"
+                        name="disapprove"
+                        value={modal_data.disapprove}
+                        rows="3"
+                        label="دلیل عدم تایید همکار"
+                        onChange={(e) => modal_setData('disapprove', e.target.value)}
+                        error={modal_errors.disapprove}
+                        isFocused={true}
+                    />
+
+                    <InputError message={modal_errors.disapprove} className="mt-2"/>
+                    <div className="mt-6 flex justify-between">
+                        <DangerButton className="!px-4 !py-2 text-xs" type="button" onClick={(closeModal)}>
+                            لغو
+                        </DangerButton>
+
+                        <PrimaryButton className="mr-3 !px-4 !py-2 text-xs" disabled={processing}>
+                            ثبت
+                        </PrimaryButton>
+                    </div>
+                </form>
+            </Modal>
 
         </AuthenticatedLayout>
     );

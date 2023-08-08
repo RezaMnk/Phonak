@@ -4,14 +4,10 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import {Head, useForm} from '@inertiajs/react';
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
-import RadioInput from "@/Components/RadioInput.jsx";
-import InputLabel from "@/Components/InputLabel.jsx";
-import Icon from "@/Components/Icon.jsx";
-import {useEffect, useState} from "react";
 import FileInput from "@/Components/FileInput.jsx";
 
 export default function Info() {
-    const {data, setData, post, reset, processing, errors} = useForm({
+    const {data, setData, post, processing, errors} = useForm({
         phone: '',
         landline: '',
         whatsapp_phone: '',
@@ -26,8 +22,6 @@ export default function Info() {
         license_image: '',
     });
 
-    console.log(errors)
-
     const submit = (e) => {
         e.preventDefault();
 
@@ -35,8 +29,8 @@ export default function Info() {
     };
 
     return (
-        <GuestLayout className="!max-w-5xl">
-            <Head title="اطلاعات"/>
+        <GuestLayout className="!max-w-5xl" name="اطلاعات تکمیلی">
+            <Head title="اطلاعات تکمیلی"/>
 
             <form className="w-full h-1/2" onSubmit={submit}>
                 <div className="flex">
@@ -67,7 +61,6 @@ export default function Info() {
                                     isFocused={true}
                                     onChange={(e) => setData('phone', e.target.value)}
                                     error={errors.phone}
-                                    required
                                 />
 
                                 <InputError message={errors.phone} className="mt-2"/>
@@ -90,7 +83,6 @@ export default function Info() {
                                     autoComplete="landline"
                                     onChange={(e) => setData('landline', e.target.value)}
                                     error={errors.landline}
-                                    required
                                 />
 
                                 <InputError message={errors.landline} className="mt-2"/>
@@ -113,7 +105,6 @@ export default function Info() {
                                     autoComplete="whatsapp_phone"
                                     onChange={(e) => setData('whatsapp_phone', e.target.value)}
                                     error={errors.whatsapp_phone}
-                                    required
                                 />
 
                                 <InputError message={errors.whatsapp_phone} className="mt-2"/>
@@ -274,7 +265,7 @@ export default function Info() {
                                 name="id_card_image"
                                 fileName={data.id_card_image}
                                 label="تصویر واضح کارت ملی جدید (یا قدیم به همراه رسید تعویض)"
-                                accept="image/*"
+                                accept=".jpg, .jpeg"
                                 setData={(e) => setData('id_card_image', e.target.files[0])}
                                 error={errors.id_card_image}
                             />
@@ -285,7 +276,7 @@ export default function Info() {
                                 name="med_card_image"
                                 fileName={data.med_card_image}
                                 label="تصویر واضح کارت نظام پزشکی"
-                                accept="image/*"
+                                accept=".jpg, .jpeg"
                                 setData={(e) => setData('med_card_image', e.target.files[0])}
                                 error={errors.med_card_image}
                             />
@@ -296,7 +287,7 @@ export default function Info() {
                                 name="license_image"
                                 fileName={data.license_image}
                                 label="تصویر واضح مجوز فعالیت با تاریخ معتبر که هم نام دو مدرك اول باشد."
-                                accept="image/*"
+                                accept=".jpg, .jpeg"
                                 setData={(e) => setData('license_image', e.target.files[0])}
                                 error={errors.license_image}
                             />
