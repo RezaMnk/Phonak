@@ -7,6 +7,7 @@ import {toast as toastify} from "react-toastify";
 import UserSidebar from "@/Layouts/UserSidebar.jsx";
 import AdminSidebar from "@/Layouts/AdminSidebar.jsx";
 import Icon from "@/Components/Icon.jsx";
+import TextInput from "@/Components/TextInput.jsx";
 
 export default function Authenticated({ header, breadcrumbs, headerExtra, children }) {
     const [minimize, setMinimize] = useMemorable(false, 'minimize');
@@ -59,7 +60,7 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                 theme={dark ? "dark" : "light"}
             />
             <div className="min-h-screen bg-gray-100 dark:bg-slate-800">
-                <div className={`fixed transition-all duration-100 ${hamburgerMenu ? 'w-full' : 'w-0'} h-full z-40 bg-black/40`} onClick={() => setHamburgerMenu(false)}></div>
+                <div className={`fixed w-full ${hamburgerMenu ? 'block' : 'hidden'} h-full z-40 bg-black/40`} onClick={() => setHamburgerMenu(false)}></div>
                 {auth.user.is_admin ? (
                     <AdminSidebar minimize={minimize} changeMinimize={changeMinimize} hamburgerMenu={hamburgerMenu} setHamburgerMenu={setHamburgerMenu} dark={dark} />
                 ) : (
@@ -92,52 +93,55 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                     </Icon>
                                 </button>
-{/*                                <div className="relative">*/}
-{/*/!*                                    <TextInput*/}
-{/*                                        id="search"*/}
-{/*                                        className="py-2 text-sm"*/}
-{/*                                        label="جستجو"*/}
-{/*                                        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}*/}
-{/*                                        size="1"*/}
-{/*                                    />*!/*/}
-{/*                                    <div className="absolute z-10 top-12 left-0 hidden w-full bg-white rounded-lg p-4 border border-gray-200 text-sm">*/}
-{/*                                        <p className="text-gray-700 border-b border-gray-300 text-xs pb-1">*/}
-{/*                                            سفارشات*/}
-{/*                                        </p>*/}
-{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-{/*                                            <p>#11</p>*/}
-{/*                                            <p>رضا نداف</p>*/}
-{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-{/*                                        </div>*/}
-{/*                                        <hr className="border-gray-300 dark:border-slate-600"/>*/}
-{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-{/*                                            <p>#11</p>*/}
-{/*                                            <p>رضا نداف</p>*/}
-{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-{/*                                        </div>*/}
-{/*                                        <hr className="border-gray-300 dark:border-slate-600"/>*/}
-{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-{/*                                            <p>#11</p>*/}
-{/*                                            <p>رضا نداف</p>*/}
-{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-{/*                                        </div>*/}
+                                {/*<div className="relative group z-20 peer">*/}
+                                {/*    <TextInput*/}
+                                {/*        id="search"*/}
+                                {/*        className="py-2 text-sm peer"*/}
+                                {/*        label="جستجو"*/}
+                                {/*        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}*/}
+                                {/*        size="1"*/}
+                                {/*    />*/}
+                                {/*    <div className="absolute z-10 top-12 left-0 w-full group-focus-within:block hover:block hidden peer-focus:block bg-white rounded-lg p-4 border border-gray-200 text-sm">*/}
+                                {/*        <p className="text-gray-700 border-b border-gray-300 text-xs pb-1">*/}
+                                {/*            سفارشات*/}
+                                {/*        </p>*/}
+                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                {/*            <p>#11</p>*/}
+                                {/*            <p>رضا نداف</p>*/}
+                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                {/*        </div>*/}
+                                {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                {/*            <p>#11</p>*/}
+                                {/*            <p>رضا نداف</p>*/}
+                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                {/*        </div>*/}
+                                {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                {/*            <p>#11</p>*/}
+                                {/*            <p>رضا نداف</p>*/}
+                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                {/*        </div>*/}
 
-{/*                                        <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">*/}
-{/*                                            کاربران*/}
-{/*                                        </p>*/}
-{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-{/*                                            <p>#11</p>*/}
-{/*                                            <p>رضا نداف</p>*/}
-{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-{/*                                        </div>*/}
-{/*                                        <hr className="border-gray-300 dark:border-slate-600"/>*/}
-{/*                                        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-{/*                                            <p>#11</p>*/}
-{/*                                            <p>رضا نداف</p>*/}
-{/*                                            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-{/*                                        </div>*/}
-{/*                                    </div>*/}
-{/*                                </div>*/}
+                                {/*        <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">*/}
+                                {/*            کاربران*/}
+                                {/*        </p>*/}
+                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                {/*            <p>#11</p>*/}
+                                {/*            <p>رضا نداف</p>*/}
+                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                {/*        </div>*/}
+                                {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                {/*            <p>#11</p>*/}
+                                {/*            <p>رضا نداف</p>*/}
+                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<div className="hidden top-0 right-0 z-10 fixed bg-gray-900/30 w-screen h-screen peer-focus-within:block peer-hover:block">*/}
+
+                                {/*</div>*/}
                             </div>
                         </div>
 

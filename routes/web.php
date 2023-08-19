@@ -26,15 +26,10 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+//    return redirect()->route('dashboard');
 
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    return Inertia::render('Welcome');
+})->name('home');
 
 Route::middleware(['auth', 'auth.verified'])->group(function () {
 
@@ -122,11 +117,14 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::get('/test', function () {
-    dd(\Illuminate\Support\Facades\Auth::user()->setting_time_orders);
-});
+Route::prefix('admin-fklhf83')->group(function () {
+    Route::get('/import', function () {
+        \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ImportUser,
+            \Illuminate\Support\Facades\Storage::path('public/excel.xlsx'));
+    });
 
 
-Route::get('storage-link', function () {
-    dd(\Illuminate\Support\Facades\Artisan::call('storage:link'));
+    Route::get('storage-link', function () {
+        dd(\Illuminate\Support\Facades\Artisan::call('storage:link'));
+    });
 });

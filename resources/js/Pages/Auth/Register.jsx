@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import {Head, Link, useForm} from '@inertiajs/react';
 import SelectInput from "@/Components/SelectInput.jsx";
 import IranStatesOptions, {Cities} from "@/Partials/IranStatesOptions.jsx";
+import Icon from "@/Components/Icon.jsx";
 
 export default function Register() {
     const {data, setData, post, processing, errors} = useForm({
@@ -22,6 +23,23 @@ export default function Register() {
         <GuestLayout className="!max-w-2xl" name="ثبت نام">
             <Head title="ثبت نام" />
 
+            <div className="flex flex-col space-y-2 text-sm text-gray-500 dark:text-slate-400">
+                <span className="text-base font-semibold text-red-400 dark:text-red-700 animate-pulse">
+                    توجه:
+                </span>
+                <p>
+                    ثبت نام شما به عنوان همکار شنوایی شناس انجام خواهد شد. شما برای ثبت نام نیازمند موارد زیر خواهید بود:
+                </p>
+                <p>
+                    کارت نظام پزشکی، مجوز فعالیت و کارت ملی جدید (یا قدیم به همراه رسید تعویض)
+                </p>
+                <p>
+                    <Icon type="stroke" width="2" className="inline-block ml-1 !w-3 !h-3 text-gray-500 dark:text-slate-400">
+                        <path d="M4 12.6111L8.92308 17.5L20 6.5"/>
+                    </Icon>
+                    پس از ثبت نام، اطلاعات شما بررسی و بصورت تلفنی به شما اطلاع رسانی خواهد شد.
+                </p>
+            </div>
             <form onSubmit={submit}>
                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
                     <div className="w-full md:w-1/2 ml-5">
@@ -51,7 +69,7 @@ export default function Register() {
                             svgIcon={<path
                                 d="M6 18C6.06366 18 6.12926 18 6.19691 18H12M6 18C5.01173 17.9992 4.49334 17.9868 4.0918 17.7822C3.71547 17.5905 3.40973 17.2837 3.21799 16.9074C3 16.4796 3 15.9203 3 14.8002V9.2002C3 8.08009 3 7.51962 3.21799 7.0918C3.40973 6.71547 3.71547 6.40973 4.0918 6.21799C4.51962 6 5.08009 6 6.2002 6H17.8002C18.9203 6 19.4796 6 19.9074 6.21799C20.2837 6.40973 20.5905 6.71547 20.7822 7.0918C21 7.5192 21 8.07899 21 9.19691V14.8031C21 15.921 21 16.48 20.7822 16.9074C20.5905 17.2837 20.2837 17.5905 19.9074 17.7822C19.48 18 18.921 18 17.8031 18H12M6 18C6.00004 16.8954 7.34317 16 9 16C10.6569 16 12 16.8954 12 18M6 18C6 18 6 17.9999 6 18ZM18 14H14M18 11H15M9 13C7.89543 13 7 12.1046 7 11C7 9.89543 7.89543 9 9 9C10.1046 9 11 9.89543 11 11C11 12.1046 10.1046 13 9 13Z"
                                 strokeLinecap="round" strokeLinejoin="round"/>}
-                            autoComplete="username"
+                            autoComplete="national_code"
                             onChange={(e) => setData('national_code', e.target.value)}
                             error={errors.national_code}
                         />
@@ -69,7 +87,7 @@ export default function Register() {
                             label="ایمیل"
                             value={data.email}
                             svgIcon={<path d="M21 8L17.4392 9.97822C15.454 11.0811 14.4614 11.6326 13.4102 11.8488C12.4798 12.0401 11.5202 12.0401 10.5898 11.8488C9.53864 11.6326 8.54603 11.0811 6.5608 9.97822L3 8M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z"/>}
-                            autoComplete="username"
+                            autoComplete="email"
                             onChange={(e) => setData('email', e.target.value)}
                             error={errors.email}
                         />
@@ -111,8 +129,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex mt-5">
-                    <div className="w-1/2 md:w-3/5 ml-5">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                    <div className="w-full md:w-3/5 ml-5">
                         <SelectInput
                             id="state"
                             name="state"
@@ -126,7 +144,7 @@ export default function Register() {
 
                         <InputError message={errors.state} className="mt-2"/>
                     </div>
-                    <div className="w-1/2 md:w-2/5">
+                    <div className="w-full md:w-2/5">
                         <SelectInput
                             id="city"
                             name="name"

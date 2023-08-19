@@ -42,7 +42,7 @@ class RecordController extends Controller
     {
         return Inertia::render('Records/Create', [
             'setting' => Auth::user()->setting ?: null,
-            'setting.orders' => Auth::user()->setting_time_orders,
+            'setting_time_orders' => Auth::user()->setting_time_orders,
         ]);
     }
 
@@ -297,7 +297,7 @@ class RecordController extends Controller
     {
         return Inertia::render('Records/Create', [
             'setting' => Auth::user()->setting ?: null,
-            'setting.orders' => Auth::user()->setting_time_orders,
+            'setting_time_orders' => Auth::user()->setting_time_orders,
             'record' => $record,
             'record.patient' => $record->patient,
             'record.aid.right' => $record->record_aids->firstWhere('ear', 'right'),
@@ -341,6 +341,9 @@ class RecordController extends Controller
      */
     public function destroy(Record $record): \Illuminate\Http\RedirectResponse
     {
+        if (Storage::disk('audiograms')->directoryExists($record->id))
+            Storage::disk('audiograms')->deleteDirectory($record->id);
+
         $record->delete();
         return redirect()->route('records.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
     }

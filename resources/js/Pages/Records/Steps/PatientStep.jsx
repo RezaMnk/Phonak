@@ -120,8 +120,8 @@ export default function PatientStep() {
                     </div>
                     <hr className="dark:border-slate-600"/>
                 </div>
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                    <div className="w-full md:w-1/6 ml-5">
+                <div className="flex flex-col md:flex-row gap-5 mt-6 mb-5">
+                    <div className="w-full md:w-1/6">
                         <TextInput
                             id="national_code"
                             name="national_code"
@@ -137,7 +137,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.national_code} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4 ml-5">
+                    <div className="w-full md:w-1/4">
                         <TextInput
                             id="name"
                             name="name"
@@ -151,7 +151,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-[12%] ml-5">
+                    <div className="w-full md:w-[12%]">
                         <TextInput
                             id="birth_year"
                             name="birth_year"
@@ -166,7 +166,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.birth_year} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4 ml-5">
+                    <div className="w-full md:w-1/4">
                         <TextInput
                             id="phone"
                             name="phone"
@@ -196,36 +196,34 @@ export default function PatientStep() {
                         <InputError message={errors.eng_name} className="mt-2"/>
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                    <div className="flex w-full">
-                        <div className="w-1/2 ml-5">
-                            <SelectInput
-                                id="state"
-                                name="state"
-                                value={data.state}
-                                label="استان محل اقامت"
-                                onChange={(e) => setData('state', e.target.value)}
-                                error={errors.state}
-                            >
-                                <IranStatesOptions />
-                            </SelectInput>
+                <div className="flex flex-col md:flex-row gap-5 mt-3">
+                    <div className="w-full md:w-1/3">
+                        <SelectInput
+                            id="state"
+                            name="state"
+                            value={data.state}
+                            label="استان محل اقامت"
+                            onChange={(e) => setData('state', e.target.value)}
+                            error={errors.state}
+                        >
+                            <IranStatesOptions />
+                        </SelectInput>
 
-                            <InputError message={errors.state} className="mt-2"/>
-                        </div>
-                        <div className="w-1/2 md:ml-5">
-                            <SelectInput
-                                id="city"
-                                name="name"
-                                value={data.city}
-                                label="شهر محل اقامت"
-                                onChange={(e) => setData('city', e.target.value)}
-                                error={errors.city}
-                            >
-                                <Cities state={data.state} />
-                            </SelectInput>
+                        <InputError message={errors.state} className="mt-2"/>
+                    </div>
+                    <div className="w-full md:w-1/3">
+                        <SelectInput
+                            id="city"
+                            name="name"
+                            value={data.city}
+                            label="شهر محل اقامت"
+                            onChange={(e) => setData('city', e.target.value)}
+                            error={errors.city}
+                        >
+                            <Cities state={data.state} />
+                        </SelectInput>
 
-                            <InputError message={errors.city} className="mt-2"/>
-                        </div>
+                        <InputError message={errors.city} className="mt-2"/>
                     </div>
                     <div className="w-full md:w-1/3">
                         <TextInput

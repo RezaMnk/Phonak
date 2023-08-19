@@ -137,11 +137,16 @@ class User extends Authenticatable
      */
     public function products(): Collection
     {
-        $products = [];
-        foreach ($this->group_products as $group_product)
-            $products[] = $group_product->product;
+        if ($this->group)
+        {
+            $products = [];
+            foreach ($this->group_products as $group_product)
+                $products[] = $group_product->product;
 
-        return collect($products);
+            return collect($products);
+        }
+
+        return Product::all();
     }
 
 

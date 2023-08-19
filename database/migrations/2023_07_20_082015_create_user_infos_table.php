@@ -15,18 +15,18 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('phone');
-            $table->string('landline');
-            $table->string('whatsapp_phone');
-            $table->string('referral_name');
-            $table->string('referral_phone');
-            $table->string('second_referral_name');
-            $table->string('second_referral_phone');
+            $table->string('phone')->nullable();
+            $table->string('landline')->nullable();
+            $table->string('whatsapp_phone')->nullable();
+            $table->string('referral_name')->nullable();
+            $table->string('referral_phone')->nullable();
+            $table->string('second_referral_name')->nullable();
+            $table->string('second_referral_phone')->nullable();
             $table->text('history_description')->nullable();
             $table->text('conditions_description')->nullable();
-            $table->string('id_card_image');
-            $table->string('med_card_image');
-            $table->string('license_image');
+            $table->string('id_card_image')->nullable();
+            $table->string('med_card_image')->nullable();
+            $table->string('license_image')->nullable();
 
             $table->timestamps();
         });

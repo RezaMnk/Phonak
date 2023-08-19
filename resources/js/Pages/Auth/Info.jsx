@@ -111,7 +111,7 @@ export default function Info() {
                             </div>
                         </div>
 
-                        <div className="mt-8 text-gray-700 dark:text-slate-200">
+                        <div className="mt-16 text-gray-700 dark:text-slate-200">
                             <h5>
                                 مشخصات معرف ها
                             </h5>
@@ -208,7 +208,7 @@ export default function Info() {
                             </div>
                         </div>
 
-                        <div className="mt-8 text-gray-700 dark:text-slate-200">
+                        <div className="mt-16 text-gray-700 dark:text-slate-200">
                             <h5>
                                 توضیحات
                             </h5>

@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index(): \Inertia\Response
     {
         return Inertia::render('Users/Index', [
-            'users' => User::query()->where('role', 'user')->latest()->paginate()
+            'users' => User::query()->where('role', 'user')->whereHas('user_info')->latest()->paginate()->onEachSide(0)
         ]);
     }
 
@@ -26,7 +26,7 @@ class UserController extends Controller
     public function not_verified(): \Inertia\Response
     {
         return Inertia::render('Users/Index', [
-            'users' => User::query()->where('role', 'user')->where('verified', '0')->latest()->paginate()
+            'users' => User::query()->where('role', 'user')->whereNot('status', 'approved')->latest()->paginate()
         ]);
     }
 

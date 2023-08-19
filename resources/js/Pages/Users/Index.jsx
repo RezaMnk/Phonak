@@ -60,7 +60,7 @@ export default function Index({ users }) {
                                     {user.group === 0 ? 'گروه بندی نشده' : user.group}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {user.verified ? (
+                                    {user.status === 'approved' ? (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                             تایید شده
                                         </span>
@@ -91,7 +91,7 @@ export default function Index({ users }) {
                     </tbody>
                 </table>
             </div>
-
+            {console.log(users)}
             <Pagination data={users}/>
 
         </AuthenticatedLayout>

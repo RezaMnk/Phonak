@@ -10,7 +10,7 @@ import ShippingStep from "@/Pages/Records/Steps/ShippingStep.jsx";
 
 export const StepContext = createContext();
 
-export default function Create({ record, setting }) {
+export default function Create({ record, setting, setting_time_orders }) {
     const [step, setStep] = useState(parseInt(new URLSearchParams(window.location.search).get('step')) || 1);
     const passedSteps = record?.status ? (record.status === 'completed' ? 6 : record?.status) : 1;
 
@@ -31,7 +31,6 @@ export default function Create({ record, setting }) {
         setStep((prev) => prev + 1)
     };
 
-
     const showStep = () => {
         switch (step) {
             case 1:
@@ -46,8 +45,6 @@ export default function Create({ record, setting }) {
                 return <ShippingStep />;
         }
     }
-
-    console.log(setting)
 
     return (
         <AuthenticatedLayout
@@ -77,7 +74,7 @@ export default function Create({ record, setting }) {
                     <span>
                         تعداد سفارشات باقی مانده شما:
                         <span className="mx-1 font-semibold underline">
-                            {setting.orders}
+                            {setting_time_orders}
                         </span>
                         از
                         <span className="mr-1 font-semibold underline">

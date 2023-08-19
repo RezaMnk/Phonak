@@ -54,7 +54,6 @@ export default function Edit({ user }) {
             has_second: !!user.address.second_work_address,
         },
     });
-    console.log(errors)
 
     const [ hasSecondAddress, setHasSecondAddress ] = useState(!!user.address.second_work_address)
     const [ showAddAddressBtn, setShowAddAddressBtn ] = useState(!user.address.second_work_address)
@@ -83,8 +82,18 @@ export default function Edit({ user }) {
                     has_second: value,
                 }
             }))
-
     }
+
+    const update_data = (main_key, key, e) => {
+        setData((prevData) => ({
+            ...prevData,
+            [main_key]: {
+                ...prevData[main_key],
+                [key]: e.target.value
+            },
+        }))
+    };
+
 
     const submit = (e) => {
         e.preventDefault();
@@ -103,8 +112,8 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex mt-6 mb-5">
-                        <div className="w-4/12 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
+                        <div className="w-full md:w-4/12 ml-5">
                             <TextInput
                                 id="name"
                                 name="name"
@@ -118,7 +127,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.name} className="mt-2"/>
                         </div>
-                        <div className="w-3/12 ml-5">
+                        <div className="w-full md:w-3/12 ml-5">
                             <TextInput
                                 id="national_code"
                                 type="number"
@@ -134,7 +143,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.national_code} className="mt-2"/>
                         </div>
-                        <div className="w-2/12 ml-5">
+                        <div className="w-full md:w-2/12 ml-5">
                             <TextInput
                                 id="grad_year"
                                 type="number"
@@ -149,7 +158,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.grad_year} className="mt-2"/>
                         </div>
-                        <div className="w-3/12">
+                        <div className="w-full md:w-3/12">
                             <TextInput
                                 id="med_number"
                                 type="number"
@@ -164,8 +173,8 @@ export default function Edit({ user }) {
                             <InputError message={errors.med_number} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex mt-3">
-                        <div className="w-1/4 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                        <div className="w-full md:w-1/4 ml-5">
                             <SelectInput
                                 id="grade"
                                 name="grade"
@@ -182,7 +191,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.grade} className="mt-2"/>
                         </div>
-                        <div className="w-1/4 ml-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <TextInput
                                 id="university"
                                 name="university"
@@ -207,7 +216,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.university} className="mt-2"/>
                         </div>
-                        <div className="w-1/4 ml-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <SelectInput
                                 id="state"
                                 name="state"
@@ -221,7 +230,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.state} className="mt-2"/>
                         </div>
-                        <div className="w-1/4">
+                        <div className="w-full md:w-1/4">
                             <SelectInput
                                 id="city"
                                 name="name"
@@ -247,21 +256,21 @@ export default function Edit({ user }) {
                                               onClick={() => has_second_address(true)}
                                               type="button"
                                 >
-                                    افزودن آدرس محل کار دوم
+                                    افزودن محل کار دوم
                                 </PrimaryButton>
                             ) : (
                                 <DangerButton className="mb-1 text-xs !px-2 !py-1"
                                               onClick={() => has_second_address(false)}
                                               type="button"
                                 >
-                                    حذف آدرس محل کار دوم
+                                    حذف محل کار دوم
                                 </DangerButton>
                             )}
                         </div>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex mt-6 mb-5">
-                        <div className="w-2/12 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
+                        <div className="w-full md:w-2/12 ml-5">
                             <TextInput
                                 id="home_post_code"
                                 name="address.home_post_code"
@@ -282,7 +291,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.home_post_code} className="mt-2"/>
                         </div>
-                        <div className="w-2/12 ml-5">
+                        <div className="w-full md:w-2/12 ml-5">
                             <TextInput
                                 id="home_phone"
                                 type="number"
@@ -298,7 +307,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.home_phone} className="mt-2"/>
                         </div>
-                        <div className="w-8/12">
+                        <div className="w-full md:w-8/12">
                             <TextInput
                                 id="home_address"
                                 name="address.home_address"
@@ -314,8 +323,8 @@ export default function Edit({ user }) {
                             <InputError message={errors.address?.home_address} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex mt-6 mb-5">
-                        <div className="w-2/12 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
+                        <div className="w-full md:w-2/12 ml-5">
                             <TextInput
                                 id="work_post_code"
                                 name="address.work_post_code"
@@ -337,7 +346,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.work_post_code} className="mt-2"/>
                         </div>
-                        <div className="w-2/12 ml-5">
+                        <div className="w-full md:w-2/12 ml-5">
                             <TextInput
                                 id="work_phone"
                                 type="number"
@@ -354,7 +363,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.work_phone} className="mt-2"/>
                         </div>
-                        <div className="w-8/12">
+                        <div className="w-full md:w-8/12">
                             <TextInput
                                 id="work_address"
                                 name="address.work_address"
@@ -372,8 +381,8 @@ export default function Edit({ user }) {
                         </div>
                     </div>
                     {hasSecondAddress && (
-                        <div className="flex mt-6 mb-5">
-                            <div className="w-2/12 ml-5">
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
+                            <div className="w-full md:w-2/12 ml-5">
                                 <TextInput
                                     id="second_work_post_code"
                                     name="address.second_work_post_code"
@@ -395,7 +404,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.address?.second_work_post_code} className="mt-2"/>
                             </div>
-                            <div className="w-2/12 ml-5">
+                            <div className="w-full md:w-2/12 ml-5">
                                 <TextInput
                                     id="second_work_phone"
                                     type="number"
@@ -412,7 +421,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.address?.second_work_phone} className="mt-2"/>
                             </div>
-                            <div className="w-8/12">
+                            <div className="w-full md:w-8/12">
                                 <TextInput
                                     id="second_work_address"
                                     name="address.second_work_address"
@@ -431,7 +440,7 @@ export default function Edit({ user }) {
                         </div>
                     )}
                     <div className="flex mt-5">
-                        <div className="w-1/2 ml-5 text-gray-700 dark:text-slate-200">
+                        <div className="w-full ml-5 text-gray-700 dark:text-slate-200">
                             <p>
                                 مرسولات شما به کدام آدرس ارسال شوند؟
                             </p>
@@ -496,67 +505,48 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex mt-3">
-                        <div className="w-1/3 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                        <div className="w-full md:w-1/3 ml-5">
                             <TextInput
                                 id="phone"
                                 type="number"
                                 name="info.phone"
                                 value={data.info.phone}
                                 label="شماره تلفن همراه"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
-                                onChange={(e) => setData('info.phone', e.target.value)}
+                                svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
+                                onChange={(e) => update_data('info', 'phone', e)}
                                 error={errors.info?.phone}
                                 required
                             />
 
                             <InputError message={errors.info?.phone} className="mt-2"/>
                         </div>
-                        <div className="w-1/3 ml-5">
+                        <div className="w-full md:w-1/3 ml-5">
                             <TextInput
                                 id="landline"
                                 type="number"
                                 name="info.landline"
                                 value={data.info.landline}
                                 label="شماره تلفن ثابت"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
-                                onChange={(e) => setData('info.landline', e.target.value)}
+                                svgIcon={<path
+                                    d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
+                                    strokeLinecap="round" strokeLinejoin="round"/>}
+                                onChange={(e) => update_data('info', 'landline', e)}
                                 error={errors.info?.landline}
                                 required
                             />
 
                             <InputError message={errors.info?.landline} className="mt-2"/>
                         </div>
-                        <div className="w-1/3">
+                        <div className="w-full md:w-1/3">
                             <TextInput
                                 id="whatsapp_phone"
                                 type="number"
                                 name="info.whatsapp_phone"
                                 value={data.info.whatsapp_phone}
                                 label="شماره تلفن واتساپ"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
-                                onChange={(e) => setData('info.whatsapp_phone', e.target.value)}
+                                svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
+                                onChange={(e) => update_data('info', 'whatsapp_phone', e)}
                                 error={errors.info?.whatsapp_phone}
                                 required
                             />
@@ -564,88 +554,62 @@ export default function Edit({ user }) {
                             <InputError message={errors.info?.whatsapp_phone} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex mt-5">
-                        <div className="w-1/4 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <TextInput
                                 id="referral_name"
                                 name="info.referral_name"
                                 value={data.info.referral_name}
                                 label="نام معرف اول"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
+                                svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
+                                                   d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                 autoComplete="info.referral_name"
-                                onChange={(e) => setData('info.referral_name', e.target.value)}
+                                onChange={(e) => update_data('info', 'referral_name', e)}
                                 error={errors.info?.referral_name}
                             />
 
                             <InputError message={errors.info?.referral_name} className="mt-2"/>
                         </div>
-                        <div className="w-1/4 ml-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <TextInput
                                 id="referral_phone"
                                 type="number"
                                 name="info.referral_phone"
                                 value={data.info.referral_phone}
                                 label="شماره تلفن معرف اول"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
+                                svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
                                 autoComplete="info.referral_phone"
-                                onChange={(e) => setData('info.referral_phone', e.target.value)}
+                                onChange={(e) => update_data('info', 'referral_phone', e)}
                                 error={errors.info?.referral_phone}
                             />
 
                             <InputError message={errors.info?.referral_phone} className="mt-2"/>
                         </div>
-                        <div className="w-1/4 ml-5">
+                        <div className="w-full md:w-1/4 ml-5">
                             <TextInput
                                 id="second_referral_name"
                                 name="info.second_referral_name"
                                 value={data.info.second_referral_name}
                                 label="نام معرف دوم"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
+                                svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
+                                                   d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                 autoComplete="info.second_referral_name"
-                                onChange={(e) => setData('info.second_referral_name', e.target.value)}
+                                onChange={(e) => update_data('info', 'second_referral_name', e)}
                                 error={errors.info?.second_referral_name}
                             />
 
                             <InputError message={errors.info?.second_referral_name} className="mt-2"/>
                         </div>
-                        <div className="w-1/4">
+                        <div className="w-full md:w-1/4">
                             <TextInput
                                 id="second_referral_phone"
                                 type="number"
                                 name="info.second_referral_phone"
                                 value={data.info.second_referral_phone}
                                 label="شماره تلفن معرف دوم"
-                                svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
-                                )}
+                                svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
                                 autoComplete="info.second_referral_phone"
-                                onChange={(e) => setData('info.second_referral_phone', e.target.value)}
+                                onChange={(e) => update_data('info', 'second_referral_phone', e)}
                                 error={errors.info?.second_referral_phone}
                             />
 
@@ -654,49 +618,57 @@ export default function Edit({ user }) {
                     </div>
                     {user.info.history_description && (
                         <div className="flex mt-5">
-                            <TextAreaInput
-                                id="history_description"
-                                name="info.history_description"
-                                value={data.info.history_description}
-                                rows="3"
-                                label="در صورتیکه سابقه همکاری با فوناک را داشته اید، ‌لطفا شرح مختصری از آن بنویسید"
-                                svgIcon={<path
-                                    d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                                    strokeLinecap="round" strokeLinejoin="round"/>}
-                                onChange={(e) => setData('info.history_description', e.target.value)}
-                                error={errors.info?.history_description}
-                            />
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="history_description"
+                                    value="در صورتیکه سابقه همکاری با فوناک را داشته اید، ‌لطفا شرح مختصری از آن بنویسید"
+                                    className="text-gray-500 dark:text-slate-400"
+                                />
 
-                            <InputError message={errors.info?.history_description} className="mt-2"/>
+                                <TextAreaInput
+                                    id="history_description"
+                                    name="info.history_description"
+                                    value={data.info.history_description}
+                                    rows="3"
+                                    onChange={(e) => update_data('info', 'history_description', e)}
+                                    error={errors.info?.history_description}
+                                />
+
+                                <InputError message={errors.info?.history_description} className="mt-2"/>
+                            </div>
                         </div>
                     )}
                     {user.info.conditions_description && (
                         <div className="flex mt-5">
-                            <TextAreaInput
-                                id="conditions_description"
-                                name="info.conditions_description"
-                                value={data.info.conditions_description}
-                                rows="3"
-                                label="چنانچه مرکز شما دارای شرایط خاصی است که نیاز به توضیح دارد،‌خیلی مختصر اینجا مرقوم بفرمایید"
-                                svgIcon={<path
-                                    d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                                    strokeLinecap="round" strokeLinejoin="round"/>}
-                                onChange={(e) => setData('info.conditions_description', e.target.value)}
-                                error={errors.info?.conditions_description}
-                            />
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="history_description"
+                                    value="چنانچه مرکز شما دارای شرایط خاصی است که نیاز به توضیح دارد،‌خیلی مختصر اینجا مرقوم بفرمایید"
+                                    className="text-gray-500 dark:text-slate-400"
+                                />
 
-                            <InputError message={errors.info?.conditions_description} className="mt-2"/>
+                                <TextAreaInput
+                                    id="conditions_description"
+                                    name="info.conditions_description"
+                                    value={data.info.conditions_description}
+                                    rows="3"
+                                    onChange={(e) => update_data('info', 'conditions_description', e)}
+                                    error={errors.info?.conditions_description}
+                                />
+
+                                <InputError message={errors.info?.conditions_description} className="mt-2"/>
+                            </div>
                         </div>
                     )}
 
                     <div className="mt-12 text-gray-700 dark:text-slate-200">
                         <h5>
-                            تنظیمات امنیتی
+                            تغییر کلمه عبور
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex mt-5">
-                        <div className="w-1/3 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
+                        <div className="w-full md:w-1/3 ml-5">
                             <TextInput
                                 id="password"
                                 type="password"
@@ -704,12 +676,12 @@ export default function Edit({ user }) {
                                 value={data.password}
                                 label="کلمه عبور فعلی"
                                 svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
+                                    <>
+                                        <path d="M12 10V14M10.2676 11L13.7317 13M13.7314 11L10.2673 13"/>
+                                        <path d="M6.73241 10V14M4.99999 11L8.46409 13M8.46386 11L4.99976 13"/>
+                                        <path d="M17.2681 10V14M15.5356 11L18.9997 13M18.9995 11L15.5354 13"/>
+                                        <path d="M22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C21.4816 5.82475 21.7706 6.69989 21.8985 8"/>
+                                    </>
                                 )}
                                 onChange={(e) => setData('password', e.target.value)}
                                 error={errors.password}
@@ -717,7 +689,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.password} className="mt-2"/>
                         </div>
-                        <div className="w-1/3 ml-5">
+                        <div className="w-full md:w-1/3 ml-5">
                             <TextInput
                                 id="new_password"
                                 type="password"
@@ -725,12 +697,12 @@ export default function Edit({ user }) {
                                 value={data.new_password}
                                 label="کلمه عبور جدید"
                                 svgIcon={(
-                                    <g>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                    </g>
+                                    <>
+                                        <path d="M12 10V14M10.2676 11L13.7317 13M13.7314 11L10.2673 13"/>
+                                        <path d="M6.73241 10V14M4.99999 11L8.46409 13M8.46386 11L4.99976 13"/>
+                                        <path d="M17.2681 10V14M15.5356 11L18.9997 13M18.9995 11L15.5354 13"/>
+                                        <path d="M22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C21.4816 5.82475 21.7706 6.69989 21.8985 8"/>
+                                    </>
                                 )}
                                 autoComplete="new-new_password"
                                 onChange={(e) => setData('new_password', e.target.value)}
@@ -739,7 +711,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.new_password} className="mt-2"/>
                         </div>
-                        <div className="w-1/3">
+                        <div className="w-full md:w-1/3">
                             <TextInput
                                 id="confirm_password"
                                 type="password"
@@ -768,12 +740,12 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex mt-3">
-                        <div className="w-1/3 ml-5">
+                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                        <div className="w-full md:w-1/3 ml-5">
                             <FileInput
                                 className="!p-4 h-36"
                                 name="id_card_image"
-                                viewLink={user.info.id_card_image_url}
+                                viewLink={user.info.id_card_image && user.info.id_card_image_url}
                                 fileName={data.id_card_image}
                                 label="تصویر واضح کارت ملی جدید (یا قدیم به همراه رسید تعویض)"
                                 accept=".jpg, .jpeg"
@@ -781,11 +753,11 @@ export default function Edit({ user }) {
                                 error={errors.id_card_image}
                             />
                         </div>
-                        <div className="w-1/3 ml-5">
+                        <div className="w-full md:w-1/3 ml-5">
                             <FileInput
                                 className="!p-4 h-36"
                                 name="med_card_image"
-                                viewLink={user.info.med_card_image_url}
+                                viewLink={user.info.med_card_image && user.info.med_card_image_url}
                                 fileName={data.med_card_image}
                                 label="تصویر واضح کارت نظام پزشکی"
                                 accept=".jpg, .jpeg"
@@ -793,11 +765,11 @@ export default function Edit({ user }) {
                                 error={errors.med_card_image}
                             />
                         </div>
-                        <div className="w-1/3">
+                        <div className="w-full md:w-1/3">
                             <FileInput
                                 className="!p-4 h-36"
                                 name="license_image"
-                                viewLink={user.info.license_image_url}
+                                viewLink={user.info.license_image && user.info.license_image_url}
                                 fileName={data.license_image}
                                 label="تصویر واضح مجوز فعالیت با تاریخ معتبر که هم نام دو مدرك اول باشد."
                                 accept=".jpg, .jpeg"

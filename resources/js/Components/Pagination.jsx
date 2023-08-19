@@ -20,7 +20,7 @@ export default function Pagination({ data }) {
                         {total}
                     </span>
                 </p>
-                <div className="flex space-x-2 space-x-reverse mt-2">
+                <div className="flex flex-wrap gap-2 mt-2">
                     {links.map((link, key) => {
                         const is_prev_next = () => [0, Object.keys(links).length-1].includes(key);
                         return (
@@ -28,11 +28,14 @@ export default function Pagination({ data }) {
                                 {
                                     link.url === null ?
                                         (
-                                            <div
-                                                className={`${is_prev_next() ? 'px-4' : 'w-8'} h-8 cursor-default flex items-center justify-center text-sm leading-4 bg-gray-200 dark:bg-slate-900 text-gray-400 dark:text-slate-500 rounded`}
-                                            >
-                                                {link.label}
-                                            </div>
+                                            <>
+                                                <div
+                                                    className={`hidden md:flex ${is_prev_next() ? 'px-4' : 'w-8'} h-8 cursor-default items-center justify-center text-sm leading-4 bg-gray-200 dark:bg-slate-900 text-gray-400 dark:text-slate-500 rounded`}
+                                                >
+                                                    {link.label}
+                                                </div>
+                                                <div className="block md:hidden h-8 w-[2px] bg-gray-200 dark:bg-slate-900 rounded-lg"></div>
+                                            </>
                                         ) : link.active ? (
                                             <div
                                                 className="w-8 h-8 flex items-center justify-center text-sm cursor-pointer leading-4 bg-sky-500 dark:bg-sky-700 rounded text-white"

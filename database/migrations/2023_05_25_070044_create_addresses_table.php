@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('home_address');
             $table->unsignedBigInteger('home_post_code');
-            $table->string('home_phone');
+            $table->string('home_phone')->nullable();
             $table->string('work_address');
             $table->unsignedBigInteger('work_post_code');
-            $table->string('work_phone');
+            $table->string('work_phone')->nullable();
             $table->string('second_work_address')->nullable();
             $table->unsignedBigInteger('second_work_post_code')->nullable();
             $table->string('second_work_phone')->nullable();

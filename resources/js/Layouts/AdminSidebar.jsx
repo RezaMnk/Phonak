@@ -1,14 +1,15 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLink from "@/Components/NavLink.jsx";
 import Icon from "@/Components/Icon.jsx";
+import {Link} from "@inertiajs/react";
 
 export default function AdminSidebar({ minimize, changeMinimize, hamburgerMenu, dark }) {
     return (
         <aside
-            className={`fixed hidden md:flex hide-scrollbar flex-col transition-all ${hamburgerMenu ? 'w-60 absolute !flex z-50' : 'w-0'} ${minimize ? 'md:w-24' : 'md:w-60'} h-screen px-8 py-6 overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900 print:hidden`}>
-            <a href={route('dashboard.admin')}>
+            className={`fixed md:flex hide-scrollbar flex-col transition-all ${hamburgerMenu ? 'w-60 !flex z-50 px-8 py-6' : 'w-0 !p-0 md:!px-8 md:!py-6'} ${minimize ? 'md:w-24' : 'md:w-60'} h-screen overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900 print:hidden`}>
+            <Link href={route('dashboard.admin')}>
                 <ApplicationLogo dark={dark} small={minimize} />
-            </a>
+            </Link>
 
             <div className="flex flex-col justify-between flex-1 mt-6">
                 <nav className={`-mx-3 flex flex-col justify-between ${minimize ? 'items-center' : ''} flex-1`}>

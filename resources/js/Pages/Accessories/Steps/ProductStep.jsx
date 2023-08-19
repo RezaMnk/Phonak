@@ -87,8 +87,8 @@ export default function ProductStep() {
 
                          <InputError message={errors.brand} className="mt-2"/>
 
-                         <div className="mt-5 flex justify-between md:justify-start">
-                             <div className="inline-block ml-5">
+                         <div className="mt-5 flex flex-wrap gap-10 justify-around md:justify-start">
+                             <div className="inline-block">
                                  <RadioInput
                                      id="brand_phonak"
                                      className="hidden peer"
@@ -110,7 +110,7 @@ export default function ProductStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block ml-5">
+                             <div className="inline-block">
                                  <RadioInput
                                      id="brand_hansaton"
                                      className="hidden peer"
@@ -132,7 +132,7 @@ export default function ProductStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block ml-5">
+                             <div className="inline-block">
                                  <RadioInput
                                      id="brand_unitron"
                                      className="hidden peer"
@@ -154,7 +154,7 @@ export default function ProductStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block ml-5">
+                             <div className="inline-block">
                                  <RadioInput
                                      id="brand_rayovac"
                                      className="hidden peer"
@@ -176,7 +176,7 @@ export default function ProductStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block ml-5">
+                             <div className="inline-block">
                                  <RadioInput
                                      id="brand_detax"
                                      className="hidden peer"
