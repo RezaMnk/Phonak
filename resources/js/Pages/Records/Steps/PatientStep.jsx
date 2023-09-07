@@ -8,6 +8,7 @@ import SelectInput from "@/Components/SelectInput.jsx";
 import IranStatesOptions, {Cities} from "@/Partials/IranStatesOptions.jsx";
 import {useContext, useState} from "react";
 import {StepContext} from "@/Pages/Records/Create.jsx";
+import FileInput from "@/Components/FileInput.jsx";
 
 export default function PatientStep() {
 
@@ -19,11 +20,14 @@ export default function PatientStep() {
         national_code: record?.patient?.national_code || '',
         name: record?.patient?.name || '',
         eng_name: record?.patient?.eng_name || '',
+        insurance: record?.patient?.insurance || '',
         address: record?.patient?.address || '',
         post_code: record?.patient?.post_code || '',
         phone: record?.patient?.phone || '',
-        birth_year: record?.patient?.birth_year || ''
+        birth_year: record?.patient?.birth_year || '',
+        prescription_image: record?.prescription_image || ''
     });
+    console.log(errors)
 
     const [ oldPatient, setOldPatient ] = useState(false)
 
@@ -101,20 +105,22 @@ export default function PatientStep() {
 
     return (
         <>
-            <Head title="سفارش - کاربر" />
+            <Head title="سفارش - کاربر"/>
 
-             <form className="w-full" onSubmit={submit}>
+            <form className="w-full" onSubmit={submit}>
                 <div className="text-gray-700 dark:text-slate-200">
                     <div className="flex justify-between items-end">
                         <h5>
                             اطلاعات کاربر
                         </h5>
-                        <div className={`transition-all ${data.national_code.length === 10 ? 'opacity-1 visible' : 'opacity-0 invisible'}`}>
-                            <div className={`inline-block ml-1 w-2 h-2 ${oldPatient ? 'bg-red-500 dark:bg-red-300' : ''} rounded-full`}></div>
+                        <div
+                            className={`transition-all ${data.national_code.length === 10 ? 'opacity-1 visible' : 'opacity-0 invisible'}`}>
+                            <div
+                                className={`inline-block ml-1 w-2 h-2 ${oldPatient ? 'bg-red-500 dark:bg-red-300' : ''} rounded-full`}></div>
                             {oldPatient && (
                                 <span className="text-sm">
-                                    کاربر قبلا پرونده داشته است!
-                                </span>
+                                کاربر قبلا پرونده داشته است!
+                            </span>
                             )}
                         </div>
                     </div>
@@ -136,6 +142,15 @@ export default function PatientStep() {
                         />
 
                         <InputError message={errors.national_code} className="mt-2"/>
+
+                        <PrimaryButton
+                            className="text-xs rounded mt-2 !px-2 !py-1"
+                            link
+                            target="_blank"
+                            href="https://searchline.ir/NationalCode"
+                        >
+                            استعلام صحت کد ملی
+                        </PrimaryButton>
                     </div>
                     <div className="w-full md:w-1/4">
                         <TextInput
@@ -186,7 +201,7 @@ export default function PatientStep() {
                             id="eng_name"
                             name="eng_name"
                             value={data.eng_name}
-                            label="نام کاربر به لاتین"
+                            label="نام و نام خانوادگی کاربر به لاتین"
                             svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                            d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                             onChange={(e) => setData('eng_name', e.target.value)}
@@ -196,8 +211,21 @@ export default function PatientStep() {
                         <InputError message={errors.eng_name} className="mt-2"/>
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-5 mt-3">
-                    <div className="w-full md:w-1/3">
+                <div className="flex flex-col md:flex-row gap-5 mt-8">
+                    <div className="w-full md:w-1/4">
+                        <TextInput
+                            id="insurance"
+                            name="insurance"
+                            value={data.insurance}
+                            label="نوع بیمه"
+                            svgIcon={<path d="M9 14H15M12 11V17M8 7H7.8C6.11984 7 5.27976 7 4.63803 7.32698C4.07354 7.6146 3.6146 8.07354 3.32698 8.63803C3 9.27976 3 10.1198 3 11.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V11.8C21 10.1198 21 9.27976 20.673 8.63803C20.3854 8.07354 19.9265 7.6146 19.362 7.32698C18.7202 7 17.8802 7 16.2 7H16M8 7V6C8 4.34315 9.34315 3 11 3H13C14.6569 3 16 4.34315 16 6V7M8 7H16"/>}
+                            onChange={(e) => setData('insurance', e.target.value)}
+                            error={errors.insurance}
+                        />
+
+                        <InputError message={errors.insurance} className="mt-2"/>
+                    </div>
+                    <div className="w-full md:w-1/4">
                         <SelectInput
                             id="state"
                             name="state"
@@ -206,12 +234,12 @@ export default function PatientStep() {
                             onChange={(e) => setData('state', e.target.value)}
                             error={errors.state}
                         >
-                            <IranStatesOptions />
+                            <IranStatesOptions/>
                         </SelectInput>
 
                         <InputError message={errors.state} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/3">
+                    <div className="w-full md:w-1/4">
                         <SelectInput
                             id="city"
                             name="name"
@@ -220,12 +248,12 @@ export default function PatientStep() {
                             onChange={(e) => setData('city', e.target.value)}
                             error={errors.city}
                         >
-                            <Cities state={data.state} />
+                            <Cities state={data.state}/>
                         </SelectInput>
 
                         <InputError message={errors.city} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/3">
+                    <div className="w-full md:w-1/4">
                         <TextInput
                             id="post_code"
                             name="post_code"
@@ -247,44 +275,39 @@ export default function PatientStep() {
                         <InputError message={errors.post_code} className="mt-2"/>
 
                         <span className="inline-block mt-2 text-sm text-gray-500 dark:text-slate-400">
-                            لطفا صحت کد پستی را بررسی فرمایید:
-                            <PrimaryButton
-                                className="text-xs rounded !px-2 !py-1 mr-1"
-                                link
-                                target="_blank"
-                                href="https://searchline.ir/PostalCode"
-                            >
-                                استعلام کد پستی
-                            </PrimaryButton>
-                        </span>
+                        لطفا صحت کد پستی را بررسی فرمایید:
+                        <PrimaryButton
+                            className="text-xs rounded !px-2 !py-1 mr-1"
+                            link
+                            target="_blank"
+                            href="https://searchline.ir/PostalCode"
+                        >
+                            استعلام کد پستی
+                        </PrimaryButton>
+                    </span>
                     </div>
                 </div>
+                <div className="flex flex-col md:flex-row gap-5 mt-8">
+                    <div className="w-full">
+                        <TextAreaInput
+                            id="address"
+                            name="address"
+                            value={data.address}
+                            rows="4"
+                            label="آدرس کامل محل اقامت"
+                            svgIcon={<path
+                                d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
+                                strokeLinecap="round" strokeLinejoin="round"/>}
+                            autoComplete="address"
+                            onChange={(e) => setData('address', e.target.value)}
+                            error={errors.address}
+                        />
 
-                <div className="mt-12 text-gray-700 dark:text-slate-200">
-                    <h5>
-                        مشخصات محل اقامت کاربر
-                    </h5>
-                    <hr className="dark:border-slate-600"/>
-                </div>
-                <div className="flex mt-3">
-                    <TextAreaInput
-                        id="address"
-                        name="address"
-                        value={data.address}
-                        rows="4"
-                        label="آدرس کامل محل اقامت"
-                        svgIcon={<path
-                            d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                            strokeLinecap="round" strokeLinejoin="round"/>}
-                        autoComplete="address"
-                        onChange={(e) => setData('address', e.target.value)}
-                        error={errors.address}
-                    />
-
-                    <InputError message={errors.address} className="mt-2"/>
+                        <InputError message={errors.address} className="mt-2"/>
+                    </div>
                 </div>
                 <div className="flex justify-end mt-8">
-                     <PrimaryButton
+                    <PrimaryButton
                         className="!px-4 !py-2"
                         disabled={processing}
                         type="submit"

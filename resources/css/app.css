@@ -96,11 +96,22 @@
 }
 
 @layer base {
+    html {
+        scroll-behavior: smooth
+    }
+
     html, .Toastify__toast-body {
         font-family: dana, sans-serif;
         -moz-font-feature-settings: "ss02";
         -webkit-font-feature-settings: "ss02";
         font-feature-settings: "ss02";
+    }
+
+    .eng-num {
+        font-family: dana, sans-serif;
+        -moz-font-feature-settings: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
     }
 
     input[type='number']::-webkit-outer-spin-button,
@@ -119,6 +130,12 @@
         background-image: radial-gradient(rgb(14, 165, 233) 0.75px, transparent 0.75px), radial-gradient(rgb(14, 165, 233) 0.75px, rgba(255, 255, 255, 0) 0.75px);
         background-size: 30px 30px;
         background-position: 0 0, 15px 15px;
+    }
+
+    @media print {
+        body {
+            background: revert;
+        }
     }
 }
 

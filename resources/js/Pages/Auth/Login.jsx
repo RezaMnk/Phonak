@@ -11,8 +11,8 @@ import Icon from "@/Components/Icon.jsx";
 
 export default function Login({ status }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        med_number: '1234',
-        password: '0012345677',
+        med_number: '',
+        password: '',
         remember: false,
     });
 

@@ -10,55 +10,49 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function verify_payment(Request $request, $model)
+    public function verify_payment(Request $request, $model, $type)
     {
+        if ($type == 'record')
+            $route = 'records.index';
+        elseif ($type == 'accessory')
+            $route = 'accessories.index';
+
         if ($request->Status == 'OK')
-            $payment = Toman::transactionId($model->transaction_id)
+            $payment = Toman::transactionId($model->payment->transaction_id)
                 ->amount($model->total_price)
                 ->verify();
 
-        else {
-            $model->status = 'failed';
-            $model->touch();
-
-            return redirect()->route('home.profile', $model->id)->with('toast.danger', 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.');
-        }
+        else
+            return redirect()->route($route, $model->id)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
 
         if ($payment->successful() || $payment->alreadyVerified()) {
             $referenceId = $payment->referenceId();
-            $model->reference_id = $referenceId;
-            $model->status = 'success';
+            $model->payment->reference_id = $referenceId;
+            $model->status = 'paid';
             $model->touch();
 
-            cart()->clear();
-            session()->forget('discount');
+            $model->update_product_inventory();
 
-            event(new NewOrder($model));
-
-            if (setting('send_order_submit_sms') == 'true')
-                auth()->user()->send_sms([$model->id], setting('sms_order_submit'));
-
-            return redirect()->route('order.invoice', $model->id)->with('toast.success', 'سفارش با موفقیت ثبت شد');
+            return redirect()->route($route, $model->id)->with('toast', ['success' => 'سفارش با موفقیت ثبت شد']);
         }
 
         if ($payment->failed()) {
             $referenceId = $payment->referenceId();
             $model->reference_id = $referenceId;
-            $model->status = 'failed';
             $model->touch();
 
-            return redirect()->route('home.profile', $model->id)->with('toast.danger', 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.');
+            return redirect()->route($route, $model->id)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
         }
     }
 
 
     public function verify_record(Request $request, Record $record)
     {
-        return $this->verify_payment($request, $record);
+        return $this->verify_payment($request, $record, 'record');
     }
 
     public function verify_accessory(Request $request, Accessory $accessory)
     {
-        return $this->verify_payment($request, $accessory);
+        return $this->verify_payment($request, $accessory, 'accessory');
     }
 }

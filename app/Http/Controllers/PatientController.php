@@ -15,7 +15,7 @@ class PatientController extends Controller
     public function index(): \Inertia\Response
     {
         return Inertia::render('Patients/Index', [
-            'patients' => Patient::latest()->paginate()
+            'patients' => auth()->user()->patients()->latest()->paginate()
         ]);
     }
 

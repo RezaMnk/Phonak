@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import {Head, useForm} from '@inertiajs/react';
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import FileInput from "@/Components/FileInput.jsx";
+import InputLabel from "@/Components/InputLabel.jsx";
 
 export default function Info() {
     const {data, setData, post, processing, errors} = useForm({
@@ -33,16 +34,16 @@ export default function Info() {
             <Head title="اطلاعات تکمیلی"/>
 
             <form className="w-full h-1/2" onSubmit={submit}>
-                <div className="flex">
-                    <div className="w-3/4 ml-12">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
+                    <div className="w-full md:w-3/4 ml-12">
                         <div className="text-gray-700 dark:text-slate-200">
                             <h5>
                                 اطلاعات تماس
                             </h5>
                             <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
-                        <div className="flex mt-3">
-                            <div className="w-1/3 ml-5">
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                            <div className="w-full md:w-1/3 ml-5">
                                 <TextInput
                                     id="phone"
                                     type="number"
@@ -65,13 +66,13 @@ export default function Info() {
 
                                 <InputError message={errors.phone} className="mt-2"/>
                             </div>
-                            <div className="w-1/3 ml-5">
+                            <div className="w-full md:w-1/3 ml-5">
                                 <TextInput
                                     id="landline"
                                     type="number"
                                     name="landline"
                                     value={data.landline}
-                                    label="شماره تلفن ثابت"
+                                    label="شماره تلفن ثابت (به همراه کد شهر)"
                                     svgIcon={(
                                         <g>
                                             <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
@@ -87,7 +88,7 @@ export default function Info() {
 
                                 <InputError message={errors.landline} className="mt-2"/>
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-full md:w-1/3">
                                 <TextInput
                                     id="whatsapp_phone"
                                     type="number"
@@ -117,8 +118,8 @@ export default function Info() {
                             </h5>
                             <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
-                        <div className="flex mt-3">
-                            <div className="w-1/2 ml-5">
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                            <div className="w-full md:w-1/2 ml-5">
                                 <TextInput
                                     id="referral_name"
                                     name="referral_name"
@@ -139,7 +140,7 @@ export default function Info() {
 
                                 <InputError message={errors.referral_name} className="mt-2"/>
                             </div>
-                            <div className="w-1/2">
+                            <div className="w-full md:w-1/2">
                                 <TextInput
                                     id="referral_phone"
                                     type="number"
@@ -162,8 +163,8 @@ export default function Info() {
                                 <InputError message={errors.referral_phone} className="mt-2"/>
                             </div>
                         </div>
-                        <div className="flex mt-3">
-                            <div className="w-1/2 ml-5">
+                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                            <div className="w-full md:w-1/2 ml-5">
                                 <TextInput
                                     id="second_referral_name"
                                     name="second_referral_name"
@@ -184,7 +185,7 @@ export default function Info() {
 
                                 <InputError message={errors.second_referral_name} className="mt-2"/>
                             </div>
-                            <div className="w-1/2">
+                            <div className="w-full md:w-1/2">
                                 <TextInput
                                     id="second_referral_phone"
                                     type="number"
@@ -216,15 +217,17 @@ export default function Info() {
                         </div>
                         <div className="flex mt-3">
                             <div className="w-full">
+                                <InputLabel
+                                    htmlFor="history_description"
+                                    value="در صورتیکه سابقه همکاری با فوناک را داشته اید، ‌لطفا شرح مختصری از آن بنویسید"
+                                    className="text-gray-500 dark:text-slate-400"
+                                />
+
                                 <TextAreaInput
                                     id="history_description"
                                     name="history_description"
                                     value={data.history_description}
                                     rows="3"
-                                    label="در صورتیکه سابقه همکاری با فوناک را داشته اید، ‌لطفا شرح مختصری از آن بنویسید"
-                                    svgIcon={<path
-                                        d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                                        strokeLinecap="round" strokeLinejoin="round"/>}
                                     onChange={(e) => setData('history_description', e.target.value)}
                                     error={errors.history_description}
                                 />
@@ -234,15 +237,17 @@ export default function Info() {
                         </div>
                         <div className="flex mt-3">
                             <div className="w-full">
+                                <InputLabel
+                                    htmlFor="conditions_description"
+                                    value="چنانچه مرکز شما دارای شرایط خاصی است که نیاز به توضیح دارد،‌خیلی مختصر اینجا مرقوم بفرمایید"
+                                    className="text-gray-500 dark:text-slate-400"
+                                />
+
                                 <TextAreaInput
                                     id="conditions_description"
                                     name="conditions_description"
                                     value={data.conditions_description}
                                     rows="3"
-                                    label="چنانچه مرکز شما دارای شرایط خاصی است که نیاز به توضیح دارد،‌خیلی مختصر اینجا مرقوم بفرمایید"
-                                    svgIcon={<path
-                                        d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                                        strokeLinecap="round" strokeLinejoin="round"/>}
                                     onChange={(e) => setData('conditions_description', e.target.value)}
                                     error={errors.conditions_description}
                                 />
@@ -252,14 +257,14 @@ export default function Info() {
                         </div>
 
                     </div>
-                    <div className="w-1/4">
+                    <div className="w-full md:w-1/4">
                         <div className="text-gray-700 dark:text-slate-200">
                             <h5>
                                 فایل مدارک
                             </h5>
                             <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
-                        <div className="flex mt-3">
+                        <div className="flex mt-3 w-full [&>div]:w-full">
                             <FileInput
                                 className="!p-4"
                                 name="id_card_image"
@@ -270,7 +275,7 @@ export default function Info() {
                                 error={errors.id_card_image}
                             />
                         </div>
-                        <div className="flex mt-3">
+                        <div className="flex mt-3 w-full [&>div]:w-full">
                             <FileInput
                                 className="!p-4"
                                 name="med_card_image"
@@ -281,7 +286,7 @@ export default function Info() {
                                 error={errors.med_card_image}
                             />
                         </div>
-                        <div className="flex mt-3">
+                        <div className="flex mt-3 w-full [&>div]:w-full">
                             <FileInput
                                 className="!p-4"
                                 name="license_image"

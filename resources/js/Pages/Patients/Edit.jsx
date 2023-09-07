@@ -13,6 +13,7 @@ export default function Edit({ patient }) {
         name: patient.name,
         eng_name: patient.eng_name,
         national_code: patient.national_code,
+        insurance: patient.insurance,
         state: patient.state,
         city: patient.city,
         address: patient.address,
@@ -55,8 +56,8 @@ export default function Edit({ patient }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex mt-6 mb-5">
-                            <div className="w-1/4 ml-5">
+                        <div className="flex flex-col md:flex-row gap-5 mt-6 mb-5">
+                            <div className="w-full md:w-1/4">
                                 <TextInput
                                     id="name"
                                     name="name"
@@ -70,7 +71,7 @@ export default function Edit({ patient }) {
 
                                 <InputError message={errors.name} className="mt-2"/>
                             </div>
-                            <div className="w-1/6 ml-5">
+                            <div className="w-full md:w-1/6">
                                 <TextInput
                                     id="national_code"
                                     name="national_code"
@@ -86,7 +87,7 @@ export default function Edit({ patient }) {
 
                                 <InputError message={errors.national_code} className="mt-2"/>
                             </div>
-                            <div className="w-[12%] ml-5">
+                            <div className="w-full md:w-[12%]">
                                 <TextInput
                                     id="birth_year"
                                     name="birth_year"
@@ -101,7 +102,7 @@ export default function Edit({ patient }) {
 
                                 <InputError message={errors.birth_year} className="mt-2"/>
                             </div>
-                            <div className="w-1/4 ml-5">
+                            <div className="w-full md:w-1/4">
                                 <TextInput
                                     id="phone"
                                     name="phone"
@@ -116,12 +117,12 @@ export default function Edit({ patient }) {
 
                                 <InputError message={errors.phone} className="mt-2"/>
                             </div>
-                            <div className="w-1/4">
+                            <div className="w-full md:w-1/4">
                                 <TextInput
                                     id="eng_name"
                                     name="eng_name"
                                     value={data.eng_name}
-                                    label="نام کاربر به لاتین"
+                                    label="نام و نام خانوادگی کاربر به لاتین"
                                     svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                     onChange={(e) => setData('eng_name', e.target.value)}
@@ -131,8 +132,21 @@ export default function Edit({ patient }) {
                                 <InputError message={errors.eng_name} className="mt-2"/>
                             </div>
                         </div>
-                        <div className="flex mt-3">
-                            <div className="w-1/3 ml-5">
+                        <div className="flex flex-col md:flex-row gap-5 mt-3">
+                            <div className="w-full md:w-1/4">
+                                <TextInput
+                                    id="insurance"
+                                    name="insurance"
+                                    value={data.insurance}
+                                    label="نوع بیمه"
+                                    svgIcon={<path d="M9 14H15M12 11V17M8 7H7.8C6.11984 7 5.27976 7 4.63803 7.32698C4.07354 7.6146 3.6146 8.07354 3.32698 8.63803C3 9.27976 3 10.1198 3 11.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V11.8C21 10.1198 21 9.27976 20.673 8.63803C20.3854 8.07354 19.9265 7.6146 19.362 7.32698C18.7202 7 17.8802 7 16.2 7H16M8 7V6C8 4.34315 9.34315 3 11 3H13C14.6569 3 16 4.34315 16 6V7M8 7H16"/>}
+                                    onChange={(e) => setData('insurance', e.target.value)}
+                                    error={errors.insurance}
+                                />
+
+                                <InputError message={errors.insurance} className="mt-2"/>
+                            </div>
+                            <div className="w-full md:w-1/4">
                                 <SelectInput
                                     id="state"
                                     name="state"
@@ -146,7 +160,7 @@ export default function Edit({ patient }) {
 
                                 <InputError message={errors.state} className="mt-2"/>
                             </div>
-                            <div className="w-1/3 ml-5">
+                            <div className="w-full md:w-1/4">
                                 <SelectInput
                                     id="city"
                                     name="name"
@@ -160,7 +174,7 @@ export default function Edit({ patient }) {
 
                                 <InputError message={errors.city} className="mt-2"/>
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-full md:w-1/4">
                                 <TextInput
                                     id="post_code"
                                     name="post_code"

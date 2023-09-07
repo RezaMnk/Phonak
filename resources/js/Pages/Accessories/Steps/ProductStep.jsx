@@ -187,7 +187,7 @@ export default function ProductStep() {
 
                                  <InputLabel
                                      htmlFor="brand_detax"
-                                     className="bg-slate-500/30 dark:bg-slate-400/40 peer-checked:bg-slate-500/50 peer-checked:dark:bg-slate-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-slate-400"
+                                     className="bg-slate-500/30 dark:bg-slate-300/40 peer-checked:bg-slate-500/50 peer-checked:dark:bg-slate-300/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-slate-400"
                                  >
                                      <div className="p-2">
                                          <img src="/storage/brands/detax.png" alt="" className="w-20 h-20 object-contain"/>
@@ -234,6 +234,7 @@ export default function ProductStep() {
                          )}
                          <div className={`transition-all ${! accessory?.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>
                              <ProductsSlider products={products} setProduct={setProduct} product={product.id} error={errors.product} />
+                             <InputError message={errors.product} className="mt-2"/>
                          </div>
                      </div>
                  </div>

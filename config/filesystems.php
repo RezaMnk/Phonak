@@ -60,10 +60,10 @@ return [
             'throw' => false,
         ],
 
-        'audiograms' => [
+        'records' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/audiograms'),
-            'url' => env('APP_URL').'/storage/audiograms',
+            'root' => storage_path('app/public/records'),
+            'url' => env('APP_URL').'/storage/records',
             'visibility' => 'public',
             'throw' => false,
         ],

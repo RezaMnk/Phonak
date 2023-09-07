@@ -26,8 +26,6 @@ return new class extends Migration
             $table->string('bc_1000')->nullable();
             $table->string('bc_2000')->nullable();
             $table->string('bc_4000')->nullable();
-            $table->string('audiogram_image');
-            $table->string('id_card_image');
             $table->timestamps();
         });
     }

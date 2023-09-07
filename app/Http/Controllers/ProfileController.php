@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use http\Client\Curl\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -84,27 +85,31 @@ class ProfileController extends Controller
             'info.license_image' => ['required'],
         ]);
 
-        if ($request->password && ! Hash::check($request->password, $request->user()->password))
+        $user = $request->user();
+
+        if ($request->password && ! Hash::check($request->password, $user->password))
         {
             return back()->withErrors(['password' => trans('auth.failed')]);
         }
 
-        $request->user()->fill([
+        $user->fill([
             ...$request->only(['name', 'national_code', 'grad_year', 'med_number', 'grade', 'state', 'city', 'university']),
             'password' => $request->new_password
         ]);
 
-        $request->user()->status = 'waiting';
+        if (! $user->isDirty('password'))
+            if ($user->role != 'admin')
+                $user->status = 'waiting';
 
-        $request->user()->save();
+        $user->save();
 
-        $request->user()->address->fill($request->only([
+        $user->address->fill($request->only([
             'address.home_address', 'address.home_post_code', 'address.home_phone', 'address.work_address', 'address.work_post_code', 'address.work_phone', 'address.has_second', 'address.mail_address'
         ]));
 
-        $request->user()->address->save();
+        $user->address->save();
 
-        $request->user()->user_info->fill($request->only([
+        $user->user_info->fill($request->only([
             'phone', 'landline', 'whatsapp_phone', 'referral_name', 'referral_phone', 'second_referral_name', 'second_referral_phone', 'history_description', 'conditions_description'
         ]));
 
@@ -112,23 +117,23 @@ class ProfileController extends Controller
         {
             $id_card_image = $request->file('id_card_image');
             $id_card_image_name = 'id_card.'. $id_card_image->getClientOriginalExtension();
-            Storage::disk('users')->putFileAs($request->user()->id, $id_card_image, $id_card_image_name);
-            $request->user()->user_info->id_card_image = $id_card_image_name;
+            Storage::disk('users')->putFileAs($user->id, $id_card_image, $id_card_image_name);
+            $user->user_info->id_card_image = $id_card_image_name;
         }
 
         if ($request->hasFile('med_card_image'))
         {
             $med_card_image = $request->file('med_card_image');
             $med_card_image_name = 'med_card.'. $med_card_image->getClientOriginalExtension();
-            Storage::disk('users')->putFileAs($request->user()->id, $med_card_image, $med_card_image_name);
-            $request->user()->user_info->med_card_image = $med_card_image_name;
+            Storage::disk('users')->putFileAs($user->id, $med_card_image, $med_card_image_name);
+            $user->user_info->med_card_image = $med_card_image_name;
         }
 
         if ($request->hasFile('license_image')) {
             $license_image = $request->file('license_image');
             $license_image_name = 'license.' . $license_image->getClientOriginalExtension();
-            Storage::disk('users')->putFileAs($request->user()->id, $license_image, $license_image_name);
-            $request->user()->user_info->license_image = $license_image_name;
+            Storage::disk('users')->putFileAs($user->id, $license_image, $license_image_name);
+            $user->user_info->license_image = $license_image_name;
         }
 
         $request->user()->user_info->save();

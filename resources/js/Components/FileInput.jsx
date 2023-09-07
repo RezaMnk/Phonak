@@ -60,6 +60,12 @@ export default forwardRef(function FileInput({name = 'file', fileName = null, vi
                     حداکثر سایز جهت آپلود: 512 کیلوبایت
                 </p>
 
+                {error && (
+                    <p className="mt-5 text-xs text-red-500">
+                        {error}
+                    </p>
+                )}
+
                 {/*            <div className="flex justify-end w-full mt-2 text-xs bg-gray-100 dark:bg-slate-800 rounded-full">
                 <span className="w-[50%] bg-green-300 dark:bg-green-700 animate-pulse rounded-full">
                     50%

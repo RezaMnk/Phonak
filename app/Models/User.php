@@ -162,16 +162,23 @@ class User extends Authenticatable
     }
 
 
-    public function reached_limit(): bool
+    public function reached_limit($this_count = 0): bool
     {
         if ($setting = $this->setting)
             $max_order = $setting->max_order;
         else
             return false;
 
-        $today_order = $this->records()->whereDate('created_at', Carbon::today())->count();
+        $today_order = $this->records()->whereIn('status', ['completed', 'paid'])
+                ->whereDate('created_at', '>=', $setting->start_time)
+                ->whereDate('created_at', '<=', $setting->end_time)->get()
+                ->sum(function ($record) {
+                    if ($record->ear == 'both')
+                        return 2;
+                    return 1;
+                }) + $this_count;
 
-        return $today_order >= $max_order;
+        return $today_order > $max_order;
     }
 
 
@@ -268,5 +275,36 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function can_buy($product_id, $count, $type = 'record'): bool
+    {
+        if ($this->group == 0) return true;
+
+        $total_ordered = $count;
+        $product = $this->products()->firstWhere('id', $product_id);
+        $count_can_buy = $this->group_products->firstWhere('product_id', $product_id)->count;
+
+        if ($type == 'record')
+            $user_all_records = Record::whereIn('status', ['completed', 'paid'])->whereHas('user', function ($query) {
+                $query->where('group', $this->group);
+            })->whereHas('product', function ($query) use ($product) {
+                $query->where('product_id', $product->id);
+            })->get();
+        else
+            $user_all_records = Accessory::whereIn('status', ['completed', 'paid'])->whereHas('user', function ($query) {
+                $query->where('group', $this->group);
+            })->whereHas('product', function ($query) use ($product) {
+                $query->where('product_id', $product->id);
+            })->get();
+
+
+        foreach ($user_all_records as $record)
+        {
+            if ($record->ear == 'both') $total_ordered += 2;
+            else $total_ordered++;
+        }
+
+        return $total_ordered <= $count_can_buy;
     }
 }

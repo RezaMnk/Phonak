@@ -187,16 +187,17 @@ export default function Edit({ user }) {
                                             </span>
                                         )}
                                     </p>
-                                    <p className="mt-2">
-                                    <span className="inline-block">
-                                        {user.address.home_address}
-                                    </span>
-                                        <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-600">
-                                    کدپستی: {user.address.home_post_code}
-                                    </span>
-                                        <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-600">
-                                    تلفن: {user.address.home_phone}
-                                    </span>
+                                    <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                        <span className="inline-block">
+                                            {user.address.second_work_address}
+                                        </span>
+                                            <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                        کدپستی: {user.address.second_work_post_code}
+                                        </span>
+                                        {user.address.second_work_phone && (<span
+                                            className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                        تلفن: {user.address.second_work_phone}
+                                        </span>)}
                                     </p>
                                 </div>
                             </div>

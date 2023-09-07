@@ -101,7 +101,11 @@ export default function Index({ records }) {
                                 <td className="px-6 py-4">
                                     {record.status === 'completed' ? (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
-                                            تکمیل شده
+                                            در انتظار پرداخت
+                                        </span>
+                                    ) : record.status === 'paid' ? (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            پرداخت شده
                                         </span>
                                     ) : (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
@@ -110,24 +114,37 @@ export default function Index({ records }) {
                                     )}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    {/*<Link href={route('records.show', [record.id])}*/}
-                                    {/*    className="inline-flex px-2 py-1 text-xs text-center text-green-900 dark:text-green-200 transition-colors duration-300 bg-green-100 dark:bg-green-600/50 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-200 dark:hover:bg-green-600 focus:outline-none focus:ring-0 focus:border-green-500"*/}
-                                    {/*>*/}
-                                    {/*    نمایش*/}
-                                    {/*</Link>*/}
-                                    <Link href={route('records.edit', [record.id])}
-                                        className="inline-flex mr-2 px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
-                                    >
-                                        ویرایش
-                                    </Link>
-                                    <button type="button" onClick={() => {
-                                        setDeleteModalShow(true);
-                                        setModalRecord(record)
-                                    }}
-                                        className="inline-flex mr-2 px-2 py-1 text-xs text-center text-red-900 dark:text-red-200 transition-colors duration-300 bg-red-100 dark:bg-red-600/50 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-200 dark:hover:bg-red-600 focus:outline-none focus:ring-0 focus:border-red-500"
-                                    >
-                                        حذف
-                                    </button>
+                                    {record.status === 'completed' && (
+                                        <a href={route('records.pay', [record.id])}
+                                            className="inline-flex px-2 py-1 text-xs text-center text-green-900 dark:text-green-200 transition-colors duration-300 bg-green-100 dark:bg-green-600/50 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-200 dark:hover:bg-green-600 focus:outline-none focus:ring-0 focus:border-green-500"
+                                            target="_blank"
+                                        >
+                                            پرداخت سفارش
+                                        </a>
+                                    )}
+                                    {record.status === 'paid' ? (
+                                        <Link href={route('records.show', [record.id])}
+                                              className="inline-flex px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
+                                        >
+                                            نمایش
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <Link href={route('records.edit', [record.id])}
+                                                  className="inline-flex mr-2 px-2 py-1 text-xs text-center text-yellow-900 dark:text-yellow-200 transition-colors duration-300 bg-yellow-100 dark:bg-yellow-600/50 border border-yellow-200 dark:border-yellow-800 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-600 focus:outline-none focus:ring-0 focus:border-yellow-500"
+                                            >
+                                                ویرایش
+                                            </Link>
+                                            <button type="button" onClick={() => {
+                                                setDeleteModalShow(true);
+                                                setModalRecord(record)
+                                            }}
+                                                    className="inline-flex mr-2 px-2 py-1 text-xs text-center text-red-900 dark:text-red-200 transition-colors duration-300 bg-red-100 dark:bg-red-600/50 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-200 dark:hover:bg-red-600 focus:outline-none focus:ring-0 focus:border-red-500"
+                                            >
+                                                حذف
+                                            </button>
+                                        </>
+                                    )}
                                 </td>
                             </tr>
                         )

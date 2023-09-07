@@ -22,6 +22,7 @@ class ProductFactory extends Factory
             'category' => fake()->randomElement(['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories']),
             'brand' => fake()->randomElement(['phonak', 'hansaton', 'unitron']),
             'price' => fake()->randomNumber(7),
+            'IRC' => fake()->randomNumber(4),
             'expire_date' => null,
             'inventory' => 20,
         ];

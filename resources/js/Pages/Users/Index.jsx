@@ -1,9 +1,31 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, Link} from '@inertiajs/react';
+import {Head, Link, router} from '@inertiajs/react';
 import Pagination from "@/Components/Pagination.jsx";
+import {useEffect, useState} from "react";
+import TextInput from "@/Components/TextInput.jsx";
+import {useFirstRender} from "@/Hooks/useFirstRender.js";
 
 export default function Index({ users }) {
-    const data_users = users.data
+
+    const [usersData, setUsersData] = useState(users)
+
+    const [search, setSearch] = useState((new URLSearchParams(window.location.search).get('search')) || '')
+
+    const firstRender = useFirstRender();
+
+
+    useEffect(() => {
+        if (! firstRender)
+        {
+            const delayDebounceFn = setTimeout( () => {
+                router.get(route(users.status === 'unapproved' ? 'users.not_verified' : 'users.index'), {
+                    search: search
+                })
+            }, 1500)
+
+            return () => clearTimeout(delayDebounceFn)
+        }
+    }, [search])
 
     return (
         <AuthenticatedLayout
@@ -12,6 +34,19 @@ export default function Index({ users }) {
                 {
                     'همکاران': route('users.index')
                 }
+            }
+            headerExtra={
+                <form id="search">
+                    <TextInput
+                        id="search-input"
+                        name="search"
+                        value={search}
+                        label="جستوجو..."
+                        className="!py-2 !px-4"
+                        autoComplete="name"
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </form>
             }
         >
             <Head title="همکاران" />
@@ -42,8 +77,8 @@ export default function Index({ users }) {
                         </tr>
                     </thead>
                     <tbody>
-                    {Object.keys(data_users).length ? Object.values(data_users).map((user) => {
-                        const is_last = data_users[Object.keys(data_users).length-1] === user;
+                    {Object.keys(usersData.data).length ? Object.values(usersData.data).map((user) => {
+                        const is_last = usersData.data[Object.keys(usersData.data).length-1] === user;
                         return (
                             <tr key={user.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
                                 <th scope="row"
@@ -91,8 +126,8 @@ export default function Index({ users }) {
                     </tbody>
                 </table>
             </div>
-            {console.log(users)}
-            <Pagination data={users}/>
+
+            <Pagination data={usersData} search={search}/>
 
         </AuthenticatedLayout>
     );

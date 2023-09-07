@@ -19,6 +19,7 @@ class Patient extends Model
         'name',
         'eng_name',
         'national_code',
+        'insurance',
         'state',
         'city',
         'address',

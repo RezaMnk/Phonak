@@ -31,6 +31,12 @@ return new class extends Migration
 
             $table->enum('status', [1,2,3,4,5, 'completed', 'paid'])->default(1);
 
+            $table->unsignedBigInteger('total_price')->nullable();
+
+            $table->string('id_card_image')->nullable();
+            $table->string('prescription_image')->nullable();
+            $table->string('audiogram_image')->nullable();
+
             $table->timestamps();
         });
     }

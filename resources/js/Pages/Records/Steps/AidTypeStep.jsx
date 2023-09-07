@@ -169,12 +169,15 @@ export default function AidTypeStep() {
                                      value={data.ear}
                                      label="نوع تجویز"
                                      onChange={(e) => setData('ear', e.target.value)}
+                                     error={errors.ear}
                                  >
                                      <option value="" disabled="disabled">انتخاب کنید</option>
                                      <option value="right">تجویز تک گوشی گوش راست</option>
                                      <option value="left">تجویز تک گوشی گوش چپ</option>
                                      <option value="both">تجویز دو گوشی</option>
                                  </SelectInput>
+
+                                 <InputError message={errors.ear} className="mt-2"/>
                              </div>
                          </div>
                          {Object.keys(products).length === 0 && (
@@ -184,6 +187,7 @@ export default function AidTypeStep() {
                          )}
                          <div className={`!mt-5 transition-all ${! record.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>
                              <ProductsSlider products={products}  setProduct={setProduct} product={product} error={errors.product} />
+                             <InputError message={errors.product} className="mt-2"/>
                          </div>
                      </div>
 

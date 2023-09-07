@@ -64,7 +64,7 @@ class SettingController extends Controller
             'group' => ['required', 'numeric', 'min:1'],
             'max_order' => ['required', 'min:0'],
             'start_time' => ['required', 'date_format:Y-m-d\TH:i'],
-            'end_time' => ['required', 'date_format:Y-m-d\TH:i', 'after:start_date'],
+            'end_time' => ['required', 'date_format:Y-m-d\TH:i', 'after:start_time'],
         ]);
 
         $validated['start_time'] = Carbon::createFromFormat('Y-m-d\TH:i', $validated['start_time']);
@@ -98,7 +98,7 @@ class SettingController extends Controller
             'group' => ['required', 'numeric', 'min:1'],
             'max_order' => ['required', 'min:0'],
             'start_time' => ['required', 'date_format:Y-m-d\TH:i'],
-            'end_time' => ['required', 'date_format:Y-m-d\TH:i', 'after:start_date'],
+            'end_time' => ['required', 'date_format:Y-m-d\TH:i', 'after:start_time'],
         ]);
 
         $validated['start_time'] = Carbon::createFromFormat('Y-m-d\TH:i', $validated['start_time']);

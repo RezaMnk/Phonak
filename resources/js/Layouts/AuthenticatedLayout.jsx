@@ -36,6 +36,17 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
     }, [toast]);
 
 
+    window.onbeforeprint = (event) => {
+        if (dark)
+            document.body.classList.remove('dark')
+    };
+
+    window.onafterprint = (event) => {
+        if (dark) {
+            document.body.classList.add('dark')
+        }
+    };
+
     const toggleDarkMode = () => {
         setDark(! dark);
     };
@@ -68,100 +79,101 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                 )}
 
 
-                {header && (
-                    <header className={`bg-white dark:bg-slate-900 transition-all ${minimize ? 'md:mr-24' : 'md:mr-60'} print:hidden`}>
-                        <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                            <div className="flex justify-between">
-                                <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
-                                <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 md:ml-0 items-center justify-center" onClick={toggleDarkMode}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500 dark:text-slate-300" viewBox="0 0 24 24" fill="none">
-                                        {dark ? (
-                                            <path d="M20 14.12A7.78 7.78 0 019.88 4a7.782 7.782 0 002.9 15A7.782 7.782 0 0020 14.12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                        ) : (
-                                            <>
-                                                <circle cx="12" cy="12" r="4.14113" stroke="currentColor" strokeWidth="1.91129"/>
-                                                <path d="M12.9556 3.08065C12.9556 2.55286 12.5277 2.125 12 2.125C11.4722 2.125 11.0443 2.55286 11.0443 3.08065L11.0443 5.64078C11.3561 5.59432 11.6753 5.57024 12 5.57024C12.3247 5.57024 12.6438 5.59431 12.9556 5.64076L12.9556 3.08065ZM12.9556 18.3594C12.6438 18.4059 12.3247 18.4299 12 18.4299C11.6753 18.4299 11.3561 18.4058 11.0443 18.3594L11.0443 20.9194C11.0443 21.4471 11.4722 21.875 12 21.875C12.5277 21.875 12.9556 21.4471 12.9556 20.9194L12.9556 18.3594Z" fill="currentColor"/>
-                                                <path d="M20.9194 12.9556C21.4471 12.9556 21.875 12.5277 21.875 12C21.875 11.4722 21.4471 11.0443 20.9194 11.0443L18.3592 11.0443C18.4057 11.3561 18.4298 11.6753 18.4298 12C18.4298 12.3247 18.4057 12.6438 18.3592 12.9556L20.9194 12.9556ZM5.6406 12.9556C5.59415 12.6438 5.57008 12.3247 5.57008 12C5.57008 11.6753 5.59416 11.3561 5.64062 11.0443L3.08064 11.0443C2.55286 11.0443 2.125 11.4722 2.125 12C2.125 12.5277 2.55286 12.9556 3.08064 12.9556L5.6406 12.9556Z" fill="currentColor"/>
-                                                <path d="M18.9828 6.36876C19.356 5.99555 19.356 5.39047 18.9828 5.01727C18.6096 4.64407 18.0045 4.64407 17.6313 5.01727L15.8209 6.82764C16.0743 7.01528 16.3169 7.22391 16.5466 7.45354C16.7762 7.68315 16.9848 7.92581 17.1724 8.17912L18.9828 6.36876ZM8.17898 17.1725C7.92567 16.9849 7.68302 16.7763 7.45341 16.5467C7.22378 16.3171 7.01514 16.0744 6.82751 15.8211L5.01742 17.6311C4.64422 18.0043 4.64422 18.6094 5.01742 18.9826C5.39062 19.3558 5.9957 19.3558 6.36891 18.9826L8.17898 17.1725Z" fill="currentColor"/>
-                                                <path d="M6.36888 5.01722C5.99568 4.64402 5.3906 4.64402 5.01739 5.01722C4.64419 5.39043 4.64419 5.99551 5.01739 6.36871L6.82776 8.17908C7.0154 7.92574 7.22403 7.68306 7.45366 7.45342C7.68327 7.22381 7.92593 7.0152 8.17924 6.82758L6.36888 5.01722ZM17.1727 15.821C16.9851 16.0743 16.7764 16.317 16.5468 16.5466C16.3172 16.7762 16.0745 16.9849 15.8212 17.1725L17.6313 18.9826C18.0045 19.3558 18.6095 19.3558 18.9828 18.9826C19.356 18.6094 19.356 18.0043 18.9828 17.6311L17.1727 15.821Z" fill="currentColor"/>
-                                            </>
-                                        )}
-                                    </svg>
-                                </button>
-                                <button className="md:hidden flex bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 items-center justify-center" onClick={() => setHamburgerMenu(true)}>
-                                    <Icon viewBox="0 0 24 24" type="stroke">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                    </Icon>
-                                </button>
-                                {/*<div className="relative group z-20 peer">*/}
-                                {/*    <TextInput*/}
-                                {/*        id="search"*/}
-                                {/*        className="py-2 text-sm peer"*/}
-                                {/*        label="جستجو"*/}
-                                {/*        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}*/}
-                                {/*        size="1"*/}
-                                {/*    />*/}
-                                {/*    <div className="absolute z-10 top-12 left-0 w-full group-focus-within:block hover:block hidden peer-focus:block bg-white rounded-lg p-4 border border-gray-200 text-sm">*/}
-                                {/*        <p className="text-gray-700 border-b border-gray-300 text-xs pb-1">*/}
-                                {/*            سفارشات*/}
-                                {/*        </p>*/}
-                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-                                {/*            <p>#11</p>*/}
-                                {/*            <p>رضا نداف</p>*/}
-                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-                                {/*        </div>*/}
-                                {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
-                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-                                {/*            <p>#11</p>*/}
-                                {/*            <p>رضا نداف</p>*/}
-                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-                                {/*        </div>*/}
-                                {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
-                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-                                {/*            <p>#11</p>*/}
-                                {/*            <p>رضا نداف</p>*/}
-                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-                                {/*        </div>*/}
+                <div className={`min-h-screen relative pb-24 md:pb-12 print:p-0 transition-all ${minimize ? 'md:mr-24' : 'md:mr-60'}`}>
+                    {header && (
+                        <header className={`bg-white dark:bg-slate-900 transition-all print:hidden`}>
+                            <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                                <div className="flex justify-between">
+                                    <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
+                                    <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 md:ml-0 items-center justify-center" onClick={toggleDarkMode}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500 dark:text-slate-300" viewBox="0 0 24 24" fill="none">
+                                            {dark ? (
+                                                <path d="M20 14.12A7.78 7.78 0 019.88 4a7.782 7.782 0 002.9 15A7.782 7.782 0 0020 14.12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            ) : (
+                                                <>
+                                                    <circle cx="12" cy="12" r="4.14113" stroke="currentColor" strokeWidth="1.91129"/>
+                                                    <path d="M12.9556 3.08065C12.9556 2.55286 12.5277 2.125 12 2.125C11.4722 2.125 11.0443 2.55286 11.0443 3.08065L11.0443 5.64078C11.3561 5.59432 11.6753 5.57024 12 5.57024C12.3247 5.57024 12.6438 5.59431 12.9556 5.64076L12.9556 3.08065ZM12.9556 18.3594C12.6438 18.4059 12.3247 18.4299 12 18.4299C11.6753 18.4299 11.3561 18.4058 11.0443 18.3594L11.0443 20.9194C11.0443 21.4471 11.4722 21.875 12 21.875C12.5277 21.875 12.9556 21.4471 12.9556 20.9194L12.9556 18.3594Z" fill="currentColor"/>
+                                                    <path d="M20.9194 12.9556C21.4471 12.9556 21.875 12.5277 21.875 12C21.875 11.4722 21.4471 11.0443 20.9194 11.0443L18.3592 11.0443C18.4057 11.3561 18.4298 11.6753 18.4298 12C18.4298 12.3247 18.4057 12.6438 18.3592 12.9556L20.9194 12.9556ZM5.6406 12.9556C5.59415 12.6438 5.57008 12.3247 5.57008 12C5.57008 11.6753 5.59416 11.3561 5.64062 11.0443L3.08064 11.0443C2.55286 11.0443 2.125 11.4722 2.125 12C2.125 12.5277 2.55286 12.9556 3.08064 12.9556L5.6406 12.9556Z" fill="currentColor"/>
+                                                    <path d="M18.9828 6.36876C19.356 5.99555 19.356 5.39047 18.9828 5.01727C18.6096 4.64407 18.0045 4.64407 17.6313 5.01727L15.8209 6.82764C16.0743 7.01528 16.3169 7.22391 16.5466 7.45354C16.7762 7.68315 16.9848 7.92581 17.1724 8.17912L18.9828 6.36876ZM8.17898 17.1725C7.92567 16.9849 7.68302 16.7763 7.45341 16.5467C7.22378 16.3171 7.01514 16.0744 6.82751 15.8211L5.01742 17.6311C4.64422 18.0043 4.64422 18.6094 5.01742 18.9826C5.39062 19.3558 5.9957 19.3558 6.36891 18.9826L8.17898 17.1725Z" fill="currentColor"/>
+                                                    <path d="M6.36888 5.01722C5.99568 4.64402 5.3906 4.64402 5.01739 5.01722C4.64419 5.39043 4.64419 5.99551 5.01739 6.36871L6.82776 8.17908C7.0154 7.92574 7.22403 7.68306 7.45366 7.45342C7.68327 7.22381 7.92593 7.0152 8.17924 6.82758L6.36888 5.01722ZM17.1727 15.821C16.9851 16.0743 16.7764 16.317 16.5468 16.5466C16.3172 16.7762 16.0745 16.9849 15.8212 17.1725L17.6313 18.9826C18.0045 19.3558 18.6095 19.3558 18.9828 18.9826C19.356 18.6094 19.356 18.0043 18.9828 17.6311L17.1727 15.821Z" fill="currentColor"/>
+                                                </>
+                                            )}
+                                        </svg>
+                                    </button>
+                                    <button className="md:hidden flex bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 items-center justify-center" onClick={() => setHamburgerMenu(true)}>
+                                        <Icon viewBox="0 0 24 24" type="stroke">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                        </Icon>
+                                    </button>
+                                    {/*<div className="relative group z-20 peer">*/}
+                                    {/*    <TextInput*/}
+                                    {/*        id="search"*/}
+                                    {/*        className="py-2 text-sm peer"*/}
+                                    {/*        label="جستجو"*/}
+                                    {/*        svgIcon={<path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"></path>}*/}
+                                    {/*        size="1"*/}
+                                    {/*    />*/}
+                                    {/*    <div className="absolute z-10 top-12 left-0 w-full group-focus-within:block hover:block hidden peer-focus:block bg-white rounded-lg p-4 border border-gray-200 text-sm">*/}
+                                    {/*        <p className="text-gray-700 border-b border-gray-300 text-xs pb-1">*/}
+                                    {/*            سفارشات*/}
+                                    {/*        </p>*/}
+                                    {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                    {/*            <p>#11</p>*/}
+                                    {/*            <p>رضا نداف</p>*/}
+                                    {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                    {/*        </div>*/}
+                                    {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+                                    {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                    {/*            <p>#11</p>*/}
+                                    {/*            <p>رضا نداف</p>*/}
+                                    {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                    {/*        </div>*/}
+                                    {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+                                    {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                    {/*            <p>#11</p>*/}
+                                    {/*            <p>رضا نداف</p>*/}
+                                    {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                    {/*        </div>*/}
 
-                                {/*        <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">*/}
-                                {/*            کاربران*/}
-                                {/*        </p>*/}
-                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-                                {/*            <p>#11</p>*/}
-                                {/*            <p>رضا نداف</p>*/}
-                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-                                {/*        </div>*/}
-                                {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
-                                {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
-                                {/*            <p>#11</p>*/}
-                                {/*            <p>رضا نداف</p>*/}
-                                {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className="hidden top-0 right-0 z-10 fixed bg-gray-900/30 w-screen h-screen peer-focus-within:block peer-hover:block">*/}
+                                    {/*        <p className="text-gray-700 border-b border-gray-300 text-xs mt-4 pb-1">*/}
+                                    {/*            کاربران*/}
+                                    {/*        </p>*/}
+                                    {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                    {/*            <p>#11</p>*/}
+                                    {/*            <p>رضا نداف</p>*/}
+                                    {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                    {/*        </div>*/}
+                                    {/*        <hr className="border-gray-300 dark:border-slate-600"/>*/}
+                                    {/*        <div className="flex flex-row justify-between space-x-reverse py-4 px-2 m-1 rounded-lg items-center transition hover:bg-gray-100">*/}
+                                    {/*            <p>#11</p>*/}
+                                    {/*            <p>رضا نداف</p>*/}
+                                    {/*            <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 px-2 py-1 text-xs text-sky-800 ring-1 ring-inset ring-sky-600/20">تکمیل</span>*/}
+                                    {/*        </div>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="hidden top-0 right-0 z-10 fixed bg-gray-900/30 w-screen h-screen peer-focus-within:block peer-hover:block">*/}
 
-                                {/*</div>*/}
+                                    {/*</div>*/}
+                                </div>
                             </div>
-                        </div>
 
-                        {(breadcrumbs || headerExtra) && (
-                            <>
-                                <hr className="w-fulll border-gray-300 dark:border-slate-600"/>
-                                <div className={`container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex ${(breadcrumbs && headerExtra) ? 'flex-col md:flex-row space-y-5 md:space-y-0' : ''} justify-between py-4 overflow-x-auto whitespace-nowrap`}>
-                                    {breadcrumbs && (
-                                        <div className="flex items-center">
-                                            <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path
-                                                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                                                </svg>
-                                            </a>
+                            {(breadcrumbs || headerExtra) && (
+                                <>
+                                    <hr className="w-fulll border-gray-300 dark:border-slate-600"/>
+                                    <div className={`container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex ${(breadcrumbs && headerExtra) ? 'flex-col md:flex-row space-y-5 md:space-y-0' : ''} justify-between py-4 overflow-x-auto whitespace-nowrap`}>
+                                        {breadcrumbs && (
+                                            <div className="flex items-center">
+                                                <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path
+                                                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                                                    </svg>
+                                                </a>
 
-                                            {Object.keys(breadcrumbs).map((sectionName, i) => {
-                                                const keys = Object.keys(breadcrumbs);
-                                                return (
-                                                    <div className="flex items-center" key={i}>
+                                                {Object.keys(breadcrumbs).map((sectionName, i) => {
+                                                    const keys = Object.keys(breadcrumbs);
+                                                    return (
+                                                        <div className="flex items-center" key={i}>
                                                         <span className="mx-5 text-gray-500  dark:text-slate-100">
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" stroke="currentColor" fill="currentColor">
                                                                 <path
@@ -169,26 +181,42 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                                                                 />
                                                             </svg>
                                                         </span>
-                                                        <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-sky-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
-                                                            {sectionName}
-                                                        </a>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    )}
-                                    {headerExtra && (
-                                        headerExtra
-                                    )}
-                                </div>
-                            </>
-                        )}
+                                                            <a href={breadcrumbs[sectionName]} className={`${keys[keys.length-1] === sectionName ? 'text-sky-500 font-semibold' : 'text-gray-600 dark:text-slate-200'} hover:underline`}>
+                                                                {sectionName}
+                                                            </a>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        {headerExtra && (
+                                            headerExtra
+                                        )}
+                                    </div>
+                                </>
+                            )}
 
-                    </header>
-                )}
+                        </header>
+                    )}
 
-                <div className={`transition-all ${minimize ? 'md:mr-24' : 'md:mr-60'} print:m-auto`}>
-                    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 xl:py-12">{children}</main>
+                    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 xl:py-12 print:p-0 print:h-full">{children}</main>
+
+                    <div className="absolute bottom-0 right-0 w-full border-t border-gray-200 dark:border-slate-700 print:hidden">
+                        <footer className="container mx-auto flex flex-col md:flex-row space-y-5 md:space-y-0 items-center px-4 sm:px-6 lg:px-8 py-4 text-gray-500 dark:text-slate-400">
+                            <div className="w-full md:w-1/2 text-center md:text-right">
+                                طراحی و توسعه توسط <a href="https://rahamteam.com" className="text-sm text-blue-500 font-semibold">رهام</a>
+                            </div>
+                            <div className="w-full md:w-1/2 flex items-center justify-center md:justify-start text-xs font-semibold eng-num" dir="ltr">
+                                <Icon viewBox="0 0 24 24" type="stroke" width="2" className="!w-4 !h-4 inline mr-1">
+                                    <path d="M14 15.6672C13.475 15.8812 12.8952 16 12.2857 16C9.91878 16 8 14.2091 8 12C8 9.79086 9.91878 8 12.2857 8C12.8952 8 13.475 8.11876 14 8.33283"/>
+                                    <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"/>
+                                </Icon>
+                                <span className="mt-1">
+                                {new Date().getFullYear()} Neda Samak Ashena. All Rights Reserved.
+                            </span>
+                            </div>
+                        </footer>
+                    </div>
                 </div>
             </div>
         </div>

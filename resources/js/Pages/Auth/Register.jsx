@@ -33,12 +33,6 @@ export default function Register() {
                 <p>
                     کارت نظام پزشکی، مجوز فعالیت و کارت ملی جدید (یا قدیم به همراه رسید تعویض)
                 </p>
-                <p>
-                    <Icon type="stroke" width="2" className="inline-block ml-1 !w-3 !h-3 text-gray-500 dark:text-slate-400">
-                        <path d="M4 12.6111L8.92308 17.5L20 6.5"/>
-                    </Icon>
-                    پس از ثبت نام، اطلاعات شما بررسی و بصورت تلفنی به شما اطلاع رسانی خواهد شد.
-                </p>
             </div>
             <form onSubmit={submit}>
                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">

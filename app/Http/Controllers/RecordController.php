@@ -6,9 +6,11 @@ use App\Models\Audiogram;
 use App\Models\Patient;
 use App\Models\Product;
 use App\Models\Record;
+use App\Models\User;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -31,7 +33,7 @@ class RecordController extends Controller
     public function index(): \Inertia\Response
     {
         return Inertia::render('Records/Index', [
-            'records' => Record::with('patient')->latest()->paginate(10)
+            'records' => auth()->user()->records()->with('patient')->latest()->paginate(10)
         ]);
     }
 
@@ -55,6 +57,7 @@ class RecordController extends Controller
             'national_code' => ['required', 'numeric', 'digits:10'],
             'name' => ['required', 'string', 'max:255'],
             'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
+            'insurance' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string'],
             'city' => ['required', 'string'],
             'address' => ['required', 'string', 'max:255'],
@@ -64,10 +67,11 @@ class RecordController extends Controller
         ]);
 
         $patient = auth()->user()->patients()->updateOrCreate(['national_code' => $request->national_code], $request->only([
-            'name', 'national_code', 'eng_name', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year',
+            'name', 'national_code', 'eng_name', 'insurance', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year',
         ]));
 
         $record = auth()->user()->records()->create(['patient_id' => $patient->id]);
+
         $record->set_step(2);
 
         return redirect()->route('records.edit', ['record' => $record, 'step' => 2])->with(['toast', ['success' => 'مرحله اول ذخیره شد']]);
@@ -89,6 +93,14 @@ class RecordController extends Controller
             'product_id' => $request->product,
             ...$request->only(['brand', 'type', 'ear'])
         ];
+
+        $count = $request->ear == 'both' ? 2 : 1;
+        if (!$record->user->can_buy($request->product, $count)) {
+            return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
+        }
+        elseif ($record->user->reached_limit($count)) {
+            return back()->withErrors(['product' => 'تعداد ظرفیت سفارش بیش از حد مجاز می باشد']);
+        }
 
         $record->update($data);
         $record->set_step(3);
@@ -132,10 +144,15 @@ class RecordController extends Controller
      */
     public function store_audiogram(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
+        $to_validate = [
+            'id_card_image' => ['required'],
+            'prescription_image' => ['required'],
+            'audiogram_image' => ['required'],
+        ];
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
             {
-                $request->validate([
+                $to_validate = [
                     $ear .'.ac_250' => ['required', 'numeric'],
                     $ear .'.ac_500' => ['required', 'numeric'],
                     $ear .'.ac_1000' => ['required', 'numeric'],
@@ -146,20 +163,22 @@ class RecordController extends Controller
                     $ear .'.bc_1000' => ['nullable', 'numeric'],
                     $ear .'.bc_2000' => ['nullable', 'numeric'],
                     $ear .'.bc_4000' => ['nullable', 'numeric'],
-                    $ear .'.audiogram_image' => ['required'],
-                    $ear .'.id_card_image' => ['required'],
-                ]);
-
-                if ($request->hasFile($ear.'.audiogram_image'))
-                    $request->validate([
-                        $ear .'.audiogram_image' => ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
-                    ]);
-                if ($request->hasFile($ear.'.id_card_image'))
-                    $request->validate([
-                        $ear .'.id_card_image' => ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)],
-                    ]);
+                    ...$to_validate,
+                ];
             }
         }
+
+        if ($request->hasFile('id_card_image'))
+            $to_validate['id_card_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
+        if ($request->hasFile('prescription_image'))
+            $to_validate['prescription_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
+        if ($request->hasFile('audiogram_image'))
+            $to_validate['audiogram_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
+        $request->validate($to_validate);
+
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
             {
@@ -171,31 +190,38 @@ class RecordController extends Controller
                     }
                 }
 
-                $save_image = function($type) use ($ear, $request, $record)
-                {
-                    if ($exists = $record->audiograms->where('ear', $ear)->first())
-                        Storage::disk('audiograms')->delete($record->id .'/'. $exists->toArray()[$type]);
-
-                    $image = $request->file($ear.'.'.$type);
-                    $file_name = $type . '-' . $ear . '.' . $image->getClientOriginalExtension();
-                    Storage::disk('audiograms')->putFileAs($record->id, $image, $file_name);
-
-                    return $file_name;
-                };
-
-                if ($request->hasFile($ear.'.audiogram_image')) {
-                    $data['audiogram_image'] = $save_image('audiogram_image');
-                }
-                if ($request->hasFile($ear.'.id_card_image')) {
-                    $data['id_card_image'] = $save_image('id_card_image');
-                }
-
                 $record->audiograms()->updateOrCreate(['ear' => $ear], $data);
             }
 
             else
                 if ($audiogram = $record->audiograms->firstWhere('ear', $ear))
                     $audiogram->delete();
+
+            if ($request->hasFile('prescription_image')) {
+                $image = $request->file('prescription_image');
+                $file_name = 'prescription_image.jpg';
+                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+                $record->prescription_image = $file_name;
+            }
+
+            if ($request->hasFile('id_card_image')) {
+                $image = $request->file('id_card_image');
+                $file_name = 'id_card_image.jpg';
+                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+                $record->id_card_image = $file_name;
+            }
+
+            if ($request->hasFile('audiogram_image')) {
+                $image = $request->file('audiogram_image');
+                $file_name = 'audiogram_image.jpg';
+                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+                $record->audiogram_image = $file_name;
+            }
+
+            $record->touch();
         }
 
         $record->set_step(5);
@@ -280,21 +306,48 @@ class RecordController extends Controller
      */
     public function show(Record $record): \Inertia\Response
     {
+        if ($record->shipping->mail_address == 'home')
+            $record_address = [
+                'address' => $record->user->address->home_address,
+                'post_code' => $record->user->address->home_post_code,
+                'phone' => $record->user->address->home_phone
+            ];
+        elseif ($record->shipping->mail_address == 'work')
+            $record_address = [
+                'address' => $record->user->address->work_address,
+                'post_code' => $record->user->address->work_post_code,
+                'phone' => $record->user->address->work_phone
+            ];
+        elseif ($record->shipping->mail_address == 'second_work')
+            $record_address = [
+                'address' => $record->user->address->second_work_address,
+                'post_code' => $record->user->address->second_work_post_code,
+                'phone' => $record->user->address->second_work_phone
+            ];
+
         return Inertia::render('Records/Show', [
+            'user' => Auth::user(),
             'record' => $record,
+            'record.user' => $record->user,
             'record.patient' => $record->patient,
             'record.product' => $record->product,
             'record.shipping' => $record->shipping,
-            'record.record_aids' => $record->record_aids,
-            'record.audiograms' => $record->audiograms,
+            'record.shipping.address' => $record_address,
+            'record.record_aid.left' => $record->record_aids()->firstWhere('ear', 'left'),
+            'record.audiogram.right' => $record->audiograms()->firstWhere('ear', 'right'),
+            'record.audiogram.left' => $record->audiograms()->firstWhere('ear', 'left'),
+            'record.record_aid.right' => $record->record_aids()->firstWhere('ear', 'right'),
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Record $record): \Inertia\Response
+    public function edit(Record $record): \Illuminate\Http\RedirectResponse|\Inertia\Response
     {
+        if ($record->status == 'paid')
+            return redirect()->route('records.index')->with('toast', ['error' => 'پرونده قابل ویرایش نمی باشد']);
+
         return Inertia::render('Records/Create', [
             'setting' => Auth::user()->setting ?: null,
             'setting_time_orders' => Auth::user()->setting_time_orders,
@@ -318,6 +371,7 @@ class RecordController extends Controller
             'national_code' => ['required', 'numeric', 'digits:10'],
             'name' => ['required', 'string', 'max:255'],
             'eng_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/u'],
+            'insurance' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string'],
             'city' => ['required', 'string'],
             'address' => ['required', 'string', 'max:255'],
@@ -327,7 +381,7 @@ class RecordController extends Controller
         ]);
 
         $patient = auth()->user()->patients()->updateOrCreate(['national_code' => $request->national_code], $request->only([
-            'name', 'national_code', 'eng_name', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year',
+            'name', 'national_code', 'eng_name', 'insurance', 'state', 'city', 'address', 'post_code', 'phone', 'birth_year',
         ]));
 
         $record->update(['patient_id' => $patient->id]);
@@ -341,8 +395,11 @@ class RecordController extends Controller
      */
     public function destroy(Record $record): \Illuminate\Http\RedirectResponse
     {
-        if (Storage::disk('audiograms')->directoryExists($record->id))
-            Storage::disk('audiograms')->deleteDirectory($record->id);
+        if ($record->status == 'paid')
+            return redirect()->route('records.index')->with('toast', ['error' => 'پرونده قابل حذف نمی باشد']);
+
+        if (Storage::disk('records')->directoryExists($record->id))
+            Storage::disk('records')->deleteDirectory($record->id);
 
         $record->delete();
         return redirect()->route('records.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
@@ -354,8 +411,52 @@ class RecordController extends Controller
         $request->validate([]);
     }
 
+    public function download(Record $record, String $name, bool $archive = false)
+    {
+        $files = [
+            'id' => ['name' => $record->patient->name .'-'. $record->user->name .'-id.jpg', 'file' => "id_card_image.jpg"],
+            'audiogram' => ['name' => $record->patient->name .'-'. $record->user->name .'-audiogram.jpg', 'file' => "audiogram_image.jpg"],
+            'prescription' => ['name' => $record->patient->name .'-'. $record->user->name .'-prescription.jpg', 'file' => "prescription_image.jpg"],
+            'all' => [],
+        ];
+        if (! in_array($name, array_keys($files)))
+            return back()->with('toast', ['error' => 'مدرک یافت نشد']);
 
-    private function request_to_pay(Record $record)
+        if ($archive) return $this->download_archive($record);
+
+        $headers = array(
+            'Content-Type: image/jpg',
+        );
+
+        $file = $record->id. '/' .$files[$name]['file'];
+
+        if (Storage::disk('records')->exists($file))
+            return Response::download('storage/records/'.$file, $files[$name]['name'], $headers);
+        else
+            return false;
+    }
+
+    private function download_archive(Record $record)
+    {
+        $zip_file = "سفارش سمعک شماره {$record->id}.zip";
+        $zip = new \ZipArchive();
+        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        $files = [
+            $record->patient->name .'-'. $record->user->name .'-audiogram.jpg' => "audiogram_image.jpg",
+            $record->patient->name .'-'. $record->user->name .'-prescription.jpg' => "prescription_image.jpg",
+            $record->patient->name .'-'. $record->user->name .'-id.jpg' => "id_card_image.jpg",
+        ];
+
+        foreach ($files as $name => $file)
+            $zip->addFile(Storage::disk('records')->path($record->id.'/'.$file), $name);
+
+        $zip->close();
+        return response()->download($zip_file)->deleteFileAfterSend(true);
+    }
+
+
+    public function pay(Record $record)
     {
         $price = $record->product->price;
 
@@ -364,15 +465,19 @@ class RecordController extends Controller
 
         $request = Toman::amount($price)
             ->callback(route('payments.verify_record', $record->id))
-            ->mobile($record->user->info->phone)
+//            ->mobile($record->user->info->phone)
             ->request();
 
         if ($request->successful()) {
             $transactionId = $request->transactionId();
 
-            $record->payment()->create([
+            $payment = $record->payment()->create([
                 'transaction_id' => $transactionId
             ]);
+
+            $record->payment_id = $payment->id;
+            $record->total_price = $price;
+            $record->touch();
 
             return $request->pay();
         }
@@ -400,9 +505,13 @@ class RecordController extends Controller
                 {
                     $only[] = 'mold_material';
                     $only[] = 'mold_size';
-                    $only[] = 'has_vent';
-                    if ($data['has_vent'])
-                        $only[] = 'vent_size';
+                    if ($data['mold_material'] != 'soft')
+                    {
+                        $only[] = 'has_vent';
+                        if ($data['has_vent'])
+                            $only[] = 'vent_size';
+                    }
+
                 }
                 return $only;
 
@@ -442,14 +551,23 @@ class RecordController extends Controller
     private function validateAidData(Record $record, Request $request)
     {
         $ears = $record->ear === 'both' ? ['left', 'right'] : [$record->ear];
+
         foreach ($ears as $ear)
         {
             switch ($record->type)
             {
                 case 'CIC':
+                    $request->validate([
+                        $ear. '.hearing_aid_size' => ['required', 'in:Canal,Full shell'],
+                        $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
+                        $ear. '.wax_guard' => ['required', 'in:normal,rotating'],
+                        $ear. '.receiver' => ['required', 'in:standard,power,super power'],
+                    ]);
+                    break;
+
                 case 'ITC':
                     $request->validate([
-                        $ear. '.hearing_aid_size' => ['required', 'in:CIC,Canal,Full shell'],
+                        $ear. '.hearing_aid_size' => ['required', 'in:Canal,Full shell'],
                         $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
                         $ear. '.wax_guard' => ['required', 'in:normal,rotating'],
                         $ear. '.receiver' => ['required', 'in:standard,power,super power,ultra power'],
@@ -465,12 +583,17 @@ class RecordController extends Controller
                         $request->validate([
                             $ear. '.mold_material' => ['required', 'in:soft,hard'],
                             $ear. '.mold_size' => ['required', 'in:Canal,Half shell,Full shell,Skeleton shell'],
-                            $ear. '.has_vent' => ['boolean'],
                         ]);
-                        if ($request[$ear]['has_vent'])
+                        if ($request[$ear]['mold_material'] != 'soft')
+                        {
                             $request->validate([
-                                $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
+                                $ear. '.has_vent' => ['boolean'],
                             ]);
+                            if ($request[$ear]['has_vent'])
+                                $request->validate([
+                                    $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
+                                ]);
+                        }
                     }
                     break;
 
@@ -504,14 +627,23 @@ class RecordController extends Controller
                     if ($request[$ear]['has_mold'])
                     {
                         $request->validate([
-                            $ear. '.receiver' => ['required', 'in:moderate,super power,ultra power'],
-                            $ear. '.shell_type' => ['required', 'in:cshell,Slimtip'],
+                            $ear. '.receiver' => ['required', 'in:moderate,power,ultra power'],
                             $ear. '.external_receiver_size' => ['required', 'in:0,1,2,3'],
                             $ear. '.vent_size' => ['nullable', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
                         ]);
+
+                        if ($request->get($ear.'.receiver') == 'ultra power')
+                            $request->validate([
+                                $ear. '.shell_type' => ['required', 'in:cshell'],
+                            ]);
+                        else
+                            $request->validate([
+                                $ear. '.shell_type' => ['required', 'in:cshell,Slimtip'],
+                            ]);
+
                     } else {
                         $request->validate([
-                            $ear. '.receiver' => ['required', 'in:moderate,super power,ultra power'],
+                            $ear. '.receiver' => ['required', 'in:moderate,power'],
                             $ear. '.external_receiver_size' => ['required', 'in:0,1,2,3'],
                             $ear. '.dome_type' => ['required', 'in:open,closed,vented,power'],
                             $ear. '.dome_size' => ['required', 'in:large,medium,small'],

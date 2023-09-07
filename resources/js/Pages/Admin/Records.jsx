@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head} from '@inertiajs/react';
+import {Head, Link} from '@inertiajs/react';
 import Pagination from "@/Components/Pagination.jsx";
 
 export default function Index({ records }) {
@@ -41,6 +41,9 @@ export default function Index({ records }) {
                             <th scope="col" className="px-6 py-3">
                                 وضعیت
                             </th>
+                            <th scope="col" className="px-6 py-3">
+                                عملیات
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,8 +69,12 @@ export default function Index({ records }) {
                                 </td>
                                 <td className="px-6 py-4">
                                     {record.status === 'completed' ? (
-                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
-                                            تکمیل شده
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
+                                            در انتظار پرداخت
+                                        </span>
+                                    ) : record.status === 'paid' ? (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                            پرداخت شده
                                         </span>
                                     ) : (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
@@ -75,12 +82,21 @@ export default function Index({ records }) {
                                         </span>
                                     )}
                                 </td>
+                                <td className="px-6 py-4">
+                                    {record.status === 'paid' && (
+                                        <Link href={route('records.show', [record.id])}
+                                              className="inline-flex px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
+                                        >
+                                            نمایش
+                                        </Link>
+                                    )}
+                                </td>
                             </tr>
                         )
                     }) : (
                         <tr className="bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900">
                             <th scope="row"
-                                colSpan="6"
+                                colSpan="7"
                                 className="text-lg px-6 py-6">
                                 هیچ سفارشی یافت نشد!
                             </th>

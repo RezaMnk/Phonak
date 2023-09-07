@@ -19,9 +19,10 @@ class Accessory extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'payment_id',
         'count',
         'brand',
-        'brand',
+        'total_price',
     ];
 
 
@@ -63,5 +64,21 @@ class Accessory extends Model
     public function payment(): BelongsTo
     {
         return $this->belongsTo(Payment::class);
+    }
+
+
+    public function update_product_inventory(): bool
+    {
+        $product = $this->product;
+        $count = $this->count ?: 1;
+
+        if ($product->inventory >= $count)
+        {
+            $product->inventory = $product->inventory - $count;
+            $product->touch();
+            return true;
+        }
+        else
+            return false;
     }
 }

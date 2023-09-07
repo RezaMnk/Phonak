@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
             'confirm_password' => ['required', 'same:password'],
         ]);
 
-        $data = [...$request->all(), 'password' => $request->national_code];
+        $data = [...$request->all()];
 
         $user = User::create($data);
 

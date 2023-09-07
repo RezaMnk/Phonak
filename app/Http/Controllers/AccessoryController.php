@@ -17,7 +17,7 @@ class AccessoryController extends Controller
     public function index(): \Inertia\Response
     {
         return Inertia::render('Accessories/Index', [
-            'accessories' => Accessory::with('product')->latest()->paginate(10)
+            'accessories' => auth()->user()->accessories()->with('product')->latest()->paginate(10)
         ]);
     }
 
@@ -30,7 +30,10 @@ class AccessoryController extends Controller
             'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
 
-        $products = Product::query()->where('category', 'accessories')->where('brand', $request->brand)->get();
+        if ($request->user()->group == 0)
+            $products = Product::all()->where('category', 'accessories')->where('brand', $request->brand);
+        else
+            $products = $request->user()->products()->where('category', 'accessories')->where('brand', $request->brand);
         return response()->json(['products' => $products]);
     }
 
@@ -50,7 +53,7 @@ class AccessoryController extends Controller
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
             'count' => ['nullable'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
 
         $product = Product::find($request->product);
@@ -65,6 +68,10 @@ class AccessoryController extends Controller
             'product_id' => $request->product,
             ...$request->only(['count', 'brand'])
         ];
+
+        if (!auth()->user()->can_buy($request->product, $request->count, 'accessory')) {
+            return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
+        }
 
         $accessory = Auth::user()->accessories()->create($data);
 
@@ -115,6 +122,41 @@ class AccessoryController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Accessory $accessory): \Inertia\Response
+    {
+        if ($accessory->shipping->mail_address == 'home')
+            $accessory_address = [
+                'address' => $accessory->user->address->home_address,
+                'post_code' => $accessory->user->address->home_post_code,
+                'phone' => $accessory->user->address->home_phone
+            ];
+        elseif ($accessory->shipping->mail_address == 'work')
+            $accessory_address = [
+                'address' => $accessory->user->address->work_address,
+                'post_code' => $accessory->user->address->work_post_code,
+                'phone' => $accessory->user->address->work_phone
+            ];
+        elseif ($accessory->shipping->mail_address == 'second_work')
+            $accessory_address = [
+                'address' => $accessory->user->address->second_work_address,
+                'post_code' => $accessory->user->address->second_work_post_code,
+                'phone' => $accessory->user->address->second_work_phone
+            ];
+
+        return Inertia::render('Accessories/Show', [
+            'user' => Auth::user(),
+            'accessory' => $accessory,
+            'accessory.user' => $accessory->user,
+            'accessory.patient' => $accessory->patient,
+            'accessory.product' => $accessory->product,
+            'accessory.shipping' => $accessory->shipping,
+            'accessory.shipping.address' => $accessory_address,
+        ]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Accessory $accessory): \Inertia\Response
@@ -135,13 +177,17 @@ class AccessoryController extends Controller
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
             'count' => ['nullable', 'numeric'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+                'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
 
         $data = [
             'product_id' => $request->product,
             ...$request->only(['count', 'brand'])
         ];
+
+        if (!$accessory->user->can_buy($request->product, $request->count, 'accessory')) {
+            return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
+        }
 
         $accessory->update($data);
 
@@ -157,7 +203,7 @@ class AccessoryController extends Controller
         return redirect()->route('accessories.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
     }
 
-    private function request_to_pay(Accessory $accessory)
+    public function pay(Accessory $accessory)
     {
         $price = $accessory->product->price;
 
@@ -165,16 +211,20 @@ class AccessoryController extends Controller
             $price *= $accessory->count;
 
         $request = Toman::amount($price)
-            ->callback(route('payments.verify_record', $accessory->id))
-            ->mobile($accessory->user->info->phone)
+            ->callback(route('payments.verify_accessory', $accessory->id))
+//            ->mobile($accessory->user->info->phone)
             ->request();
 
         if ($request->successful()) {
             $transactionId = $request->transactionId();
 
-            $accessory->payment()->create([
+            $payment = $accessory->payment()->create([
                 'transaction_id' => $transactionId
             ]);
+
+            $accessory->payment_id = $payment->id;
+            $accessory->total_price = $price;
+            $accessory->touch();
 
             return $request->pay();
         }

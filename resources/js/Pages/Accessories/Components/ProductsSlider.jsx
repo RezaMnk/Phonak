@@ -60,11 +60,17 @@ export default ({ products, product: selected_product, setProduct, error }) => {
                             )}
                             <hr className="my-2 border-gray-200 dark:border-slate-500"/>
                             <p className="text-center text-xs font-bold">
-                                {product.price.toLocaleString()} تومان
+                                {product.price.toLocaleString()} ریال
                             </p>
                             <hr className="my-2 border-gray-200 dark:border-slate-500"/>
                             <p className="text-center">
+                                {product.brand === 'etc' && (product.etc_brand + ' - ')}
                                 {product.name}
+                            </p>
+                            <hr className="my-2 border-gray-200 dark:border-slate-500"/>
+                            <p className="text-center text-xs">
+                                <bdi className="ml-1">کد IRC:</bdi>
+                                {product.irc}
                             </p>
                         </div>
                     </InputLabel>

@@ -11,7 +11,7 @@ export default function UserSidebar({ minimize, changeMinimize, hamburgerMenu, d
             </a>
 
             <div className="flex flex-col justify-between flex-1 mt-6">
-                <nav className={`-mx-3 flex flex-col justify-between ${minimize ? 'items-center' : ''} flex-1`}>
+                <nav className={`-mx-3 flex flex-col md:justify-between ${minimize ? 'items-center' : ''} flex-1`}>
                     <div className={! minimize ? 'space-y-8' : ''}>
                         <NavLink
                             className=""

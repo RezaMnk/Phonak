@@ -13,22 +13,58 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Inertia\Response
+    public function index(Request $request): \Inertia\Response
     {
+        $request->validate([
+            'search' => ['nullable', 'string']
+        ]);
+
+
         return Inertia::render('Users/Index', [
-            'users' => User::query()->where('role', 'user')->whereHas('user_info')->latest()->paginate()->onEachSide(0)
+            'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->where(function ($query) use ($request) {
+            if ($request->has('search'))
+                $query->where('name', 'LIKE', '%'. $request->search .'%')
+                    ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+        })->whereHas('user_info')->latest()->paginate()->onEachSide(0),
+            'users.status' => 'all'
         ]);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function not_verified(): \Inertia\Response
+    public function not_verified(Request $request): \Inertia\Response
     {
+        $request->validate([
+            'search' => ['nullable', 'string']
+        ]);
+
+
         return Inertia::render('Users/Index', [
-            'users' => User::query()->where('role', 'user')->whereNot('status', 'approved')->latest()->paginate()
+            'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->where(function ($query) use ($request) {
+            if ($request->has('search'))
+                $query->where('name', 'LIKE', '%'. $request->search .'%')
+                    ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+        })->whereNot('status', 'approved')->latest()->paginate(),
+            'users.status' => 'unapproved'
         ]);
     }
+
+    public function search(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'search' => ['required', 'string'],
+            'status' => ['required', 'in:all,unapproved'],
+        ]);
+
+        $users = User::query()->where('role', 'user')->where(function ($query) use ($request) {
+            if ($request->status == 'unapproved')
+                $query->whereNot('status', 'approved');
+        })->where('name', 'LIKE', '%'. $request->search .'%')->whereHas('user_info')->latest()->paginate()->onEachSide(0);
+
+        return response()->json(['users' => $users]);
+    }
+
 
     public function download(User $user, String $name)
     {
@@ -130,10 +166,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): \Illuminate\Http\RedirectResponse
+    public function destroy(User $user)
     {
-        $user->delete();
-
-        return back()->with('toast', ['success' => 'همکار با موفقیت حذف گردید']);
+//        $user->delete();
+//
+//        return back()->with('toast', ['success' => 'همکار با موفقیت حذف گردید']);
     }
 }

@@ -59,8 +59,8 @@ export default function Address() {
                     </h5>
                     <hr className="border-gray-300 dark:border-slate-600"/>
                 </div>
-                <div className="flex mt-3">
-                    <div className="w-1/2 ml-5">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                    <div className="w-full md:w-1/2 ml-5">
                         <div className="mb-5">
                             <TextInput
                                 id="home_post_code"
@@ -89,7 +89,7 @@ export default function Address() {
                                 id="home_phone"
                                 type="number"
                                 name="home_phone"
-                                label="تلفن منزل"
+                                label="تلفن منزل (به همراه کد شهر)"
                                 value={data.home_phone}
                                 svgIcon={<path
                                     d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
@@ -102,7 +102,7 @@ export default function Address() {
                         </div>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="w-full md:w-1/2">
                         <TextAreaInput
                             id="home_address"
                             name="home_address"
@@ -126,8 +126,8 @@ export default function Address() {
                     </h5>
                     <hr className="border-gray-300 dark:border-slate-600"/>
                 </div>
-                <div className="flex mt-3">
-                    <div className="w-1/2 ml-5">
+                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                    <div className="w-full md:w-1/2 ml-5">
                         <div className="mb-5">
                             <TextInput
                                 id="work_post_code"
@@ -168,7 +168,7 @@ export default function Address() {
                         </div>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="w-full md:w-1/2">
                         <TextAreaInput
                             id="work_address"
                             name="work_address"
@@ -218,8 +218,8 @@ export default function Address() {
                                 </DangerButton>
                             </div>
                             <hr className="w-full mt-1 border-gray-300 dark:border-slate-600"/>
-                            <div className="flex mt-3">
-                                <div className="w-1/2 ml-5">
+                            <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
+                                <div className="w-full md:w-1/2 ml-5">
                                     <div className="mb-5">
                                         <TextInput
                                             id="second_work_post_code"
@@ -262,7 +262,7 @@ export default function Address() {
                                     </div>
                                 </div>
 
-                                <div className="w-1/2">
+                                <div className="w-full md:w-1/2">
                                     <TextAreaInput
                                         id="second_work_address"
                                         name="second_work_address"
@@ -284,7 +284,7 @@ export default function Address() {
                     </div>
                 </div>
                 <div className="flex mt-8">
-                    <div className="w-1/2 ml-5 text-gray-700 dark:text-slate-200">
+                    <div className="w-full ml-5 text-gray-700 dark:text-slate-200">
                         <p>
                             مرسولات شما به کدام آدرس ارسال شوند؟
                         </p>

@@ -36,10 +36,12 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
             'inventory' => ['required', 'numeric', 'max:1000'],
             'expire_date' => ['nullable', 'date'],
-            'price' => ['required', 'numeric', 'max:10000000'],
+            'price' => ['required', 'numeric', 'max:100000000'],
+            'irc' => ['required', 'numeric', 'max:99999999'],
+            'etc_brand' => ['required_if:brand,etc', 'string', 'max:255'],
             'has_count' => ['boolean'],
             'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
             'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
@@ -50,6 +52,9 @@ class ProductController extends Controller
             'groups.*.number' => ['required', 'numeric'],
             'groups.*.count' => ['required', 'numeric'],
         ]);
+
+        if ($request->category != 'accessories' && in_array($request->brand, ['rayovac', 'detax', 'etc']))
+            return back()->withErrors(['brand' => 'این برند برای لوازم جانبی می باشد']);
 
         $sum_of_groups = 0;
         $groups = [];
@@ -105,10 +110,12 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
             'inventory' => ['required', 'numeric', 'max:1000'],
             'expire_date' => ['nullable', 'date'],
-            'price' => ['required', 'numeric', 'max:10000000'],
+            'price' => ['required', 'numeric', 'max:100000000'],
+            'irc' => ['required', 'numeric', 'max:99999999'],
+            'etc_brand' => ['required_if:brand,etc', 'string', 'max:255'],
             'has_count' => ['boolean'],
             'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
             'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
@@ -119,6 +126,9 @@ class ProductController extends Controller
             'groups.*.number' => ['required', 'numeric'],
             'groups.*.count' => ['required', 'numeric'],
         ]);
+
+        if ($request->category != 'accessories' && in_array($request->brand, ['rayovac', 'detax', 'etc']))
+            return back()->withErrors(['brand' => 'این برند برای لوازم جانبی می باشد']);
 
         $sum_of_groups = 0;
         $groups = [];

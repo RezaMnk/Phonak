@@ -132,6 +132,21 @@ export default function Index({ products }) {
                                             {product.brand}
                                         </span>
                                     )}
+                                    {product.brand === 'rayovac' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                    {product.brand === 'detax' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-stone-50 dark:bg-stone-500/30 px-2 py-1 text-sm font-medium text-stone-800 dark:text-stone-300/70 ring-1 ring-inset ring-stone-600/20">
+                                            {product.brand}
+                                        </span>
+                                    )}
+                                    {product.brand === 'etc' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-pink-50 dark:bg-pink-500/30 px-2 py-1 text-sm font-medium text-pink-800 dark:text-pink-300/70 ring-1 ring-inset ring-pink-600/20">
+                                            سایر
+                                        </span>
+                                    )}
                                 </td>
                                 <td className="px-6 py-4">
                                     {product.category}

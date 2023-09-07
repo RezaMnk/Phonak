@@ -191,7 +191,7 @@ export default function Admin({ users, records, data }) {
                                             {user.med_number}
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            {user.verified ? (
+                                            {user.status === 'approved' ? (
                                                 <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                                     تایید شده
                                                 </span>
@@ -217,7 +217,7 @@ export default function Admin({ users, records, data }) {
                             سفارشات هفته اخیر
                         </p>
                         <p className="text-sm text-gray-700 dark:text-slate-300">
-                            مجموع سفارشات: {data.charts_data.records} تومان
+                            مجموع سفارشات: {data.charts_data.records} ریال
                             <span
                                 className="inline-flex mr-2 text-[.7rem] rounded-md bg-green-50 dark:bg-green-500/30 px-1 py-0.5 text-green-800 dark:text-green-300 ring-1 ring-green-600/20">
                                 تسویه شده

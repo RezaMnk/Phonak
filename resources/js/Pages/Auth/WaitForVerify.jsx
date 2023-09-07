@@ -10,7 +10,7 @@ export default function Address({ user }) {
         <GuestLayout className="!max-w-3xl">
             <Head title="در انتظار تایید"/>
 
-            <div className="w-full text-center">
+            <div className="w-full text-center text-gray-700 dark:text-slate-200">
                 <Player
                     autoplay
                     loop
@@ -19,15 +19,15 @@ export default function Address({ user }) {
                 >
                 </Player>
                 <h4 className="font-bold text-lg">
-                    {user.status === 'waiting' ?  'در حال بررسی اطلاعات' : 'اطلاعات شما تایید نشدند!'}
+                    {user.status === 'waiting' ?  'در حال بررسی اطلاعات' : 'اطلاعات شما تایید نشد!'}
                 </h4>
                 <p className="px-40 mt-5 mb-12">
                     {user.status === 'waiting'
-                        ? 'اطلاعات شما در حال بررسی می باشد، ظرف یکروز کاری اینده اطلاعات شما بررسی میگردد.'
+                        ? 'اطلاعات شما در حال بررسی می باشد، ظرف 48 ساعت کاری اینده اطلاعات شما بررسی میگردد و پس از تایید، به گروه واتساپی خانواده آشنا خواهید پیوست.'
                         : user.disapprove ? 'پیام مدیرییت: ' + user.disapprove : 'اطلاعات شما مورد تایید واقع نشدند. لطفا مجددا اطلاعات خود را بررسی بفرمایید.'
                     }
                 </p>
-                <hr className="my-2 border-gray-300" />
+                <hr className="my-2 border-gray-300 border-slate-600" />
                 <div className="flex">
                     <PrimaryButton
                         className="w-9/12 ml-5 !px-4 !py-2"

@@ -30,19 +30,6 @@ class Audiogram extends Model
         'bc_1000',
         'bc_2000',
         'bc_4000',
-        'audiogram_image',
-        'id_card_image',
-    ];
-
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'audiogram_image_url',
-        'id_card_image_url',
     ];
 
 
@@ -54,19 +41,5 @@ class Audiogram extends Model
     public function record(): BelongsTo
     {
         return $this->belongsTo(Record::class);
-    }
-
-    protected function audiogramImageUrl(): Attribute
-    {
-        return new Attribute(
-            get: fn () => Storage::disk('audiograms')->url($this->record->id.'/'.$this->audiogram_image),
-        );
-    }
-
-    protected function idCardImageUrl(): Attribute
-    {
-        return new Attribute(
-            get: fn () => Storage::disk('audiograms')->url($this->record->id.'/'.$this->id_card_image),
-        );
     }
 }

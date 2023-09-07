@@ -23,6 +23,8 @@ class Product extends Model
         'category',
         'brand',
         'price',
+        'irc',
+        'etc_brand',
         'expire_date',
         'inventory',
         'has_count',

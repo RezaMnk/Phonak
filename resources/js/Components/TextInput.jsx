@@ -23,7 +23,7 @@ export default forwardRef(function TextInput({type = 'text', className = '', lab
                     placeholder={label ? " " : props.placeholder}
                     type={type}
                     className={`block w-full py-${size} text-gray-700 dark:text-gray-100 bg-white dark:bg-slate-800 dark:[color-scheme:dark] border border-gray-300 dark:border-slate-500 rounded-lg ${svgIcon ? 'pr-11' : 'pr-5'} pl-5 focus:border-blue-900 dark:focus:border-blue-300 focus:ring-0 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-700 ` +
-                        (error ? 'border-red-400 focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40 text-red-600' : '') +
+                        (error ? 'border-red-400 focus:border-red-400 focus:ring-red-300 focus:ring-opacity-40 text-red-600 dark:!border-red-600 dark:focus:!border-red-600 dark:focus:!ring-red-700 dark:focus:!ring-opacity-40 dark:!text-red-400 ' : '') +
                         (label && 'peer ') +
                         className
                     }

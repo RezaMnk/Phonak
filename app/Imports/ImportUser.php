@@ -38,7 +38,10 @@ class ImportUser implements ToCollection
                 'mail_address' => 'work',
             ]);
 
-            $user->user_info()->create([]);
+            $user->user_info()->create([
+                'phone' => $row[5],
+                'whatsapp_phone' => $row[5],
+            ]);
         }
     }
 }

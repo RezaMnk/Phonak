@@ -26,10 +26,12 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-//    return redirect()->route('dashboard');
-
     return Inertia::render('Welcome');
 })->name('home');
+
+Route::get('/terms', function () {
+    return Inertia::render('Terms');
+})->name('terms');
 
 Route::middleware(['auth', 'auth.verified'])->group(function () {
 
@@ -48,6 +50,10 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
         Route::post('/store-aid/{record}', 'store_aid')->name('.store_aid');
         Route::post('/store-audiogram/{record}', 'store_audiogram')->name('.store_audiogram');
         Route::post('/store-shipping/{record}', 'store_shipping')->name('.store_shipping');
+
+        Route::get('/download/{record}/{name}/{ear?}/{archive?}', 'download')->name('.download');
+
+        Route::get('/pay/{record}', 'pay')->name('.pay');
     });
     Route::resource('records', RecordController::class);
 
@@ -55,6 +61,8 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
         Route::post('/products', 'get_products')->name('.products');
 
         Route::post('/store-shipping/{accessory}', 'store_shipping')->name('.store_shipping');
+
+        Route::get('/pay/{accessory}', 'pay')->name('.pay');
     });
     Route::resource('accessories', AccessoryController::class);
 
@@ -71,7 +79,8 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
     });
 
     Route::controller(PaymentController::class)->name('payments')->prefix('payments')->group(function () {
-        Route::get('verify-record', 'verify_record')->name('verify_record');
+        Route::get('verify-record/{record}', 'verify_record')->name('.verify_record');
+        Route::get('verify-accessory/{accessory}', 'verify_accessory')->name('.verify_accessory');
     });
 });
 
@@ -89,6 +98,8 @@ Route::middleware(['auth', 'auth.is_admin'])->group(function () {
         Route::get('/not-verified', 'not_verified')->name('.not_verified');
         Route::get('/download/{user}/{name}', 'download')->name('.download');
         Route::post('/disapprove/{user}', 'disapprove')->name('.disapprove');
+
+        Route::post('/search', 'search')->name('.search');
     });
     Route::resource('users', UserController::class);
 
@@ -101,6 +112,9 @@ Route::middleware(['auth', 'auth.is_admin'])->group(function () {
     Route::controller(AdminController::class)->name('admin')->prefix('admin')->group(function () {
         Route::get('/records', 'records')->name('.records');
         Route::get('/accessories', 'accessories')->name('.accessories');
+
+        Route::get('/download-record/{record}', 'download_record')->name('.download_record');
+        Route::get('/download-accessory/{accessory}', 'download_accessory')->name('.download_accessory');
     });
 });
 
@@ -127,4 +141,10 @@ Route::prefix('admin-fklhf83')->group(function () {
     Route::get('storage-link', function () {
         dd(\Illuminate\Support\Facades\Artisan::call('storage:link'));
     });
+});
+
+Route::get('test', function () {
+    dd(
+        auth()->user()->group_products()->get()
+    );
 });

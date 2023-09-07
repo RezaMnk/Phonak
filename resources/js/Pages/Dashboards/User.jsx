@@ -203,7 +203,7 @@ export default function User({ patients, records, data }) {
                             سفارشات هفته اخیر
                         </p>
                         <p className="text-sm text-gray-700 dark:text-slate-300">
-                            مجموع سفارشات: {data.charts_data.records} تومان
+                            مجموع سفارشات: {data.charts_data.records} ریال
                             <span
                                 className="inline-flex mr-2 text-[.7rem] rounded-md bg-green-50 dark:bg-green-500/30 px-1 py-0.5 text-green-800 dark:text-green-300 ring-1 ring-green-600/20">
                                 تسویه شده

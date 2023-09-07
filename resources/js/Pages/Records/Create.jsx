@@ -61,7 +61,7 @@ export default function Create({ record, setting, setting_time_orders }) {
             }
             headerExtra={setting && (
                 <div className="flex flex-col text-sm text-gray-700 dark:text-slate-300">
-                    <span>
+                    <span className="mb-3">
                         ساعت سفارش گذاری:
                         <span className="mx-1 font-semibold underline">
                             {setting.start_time_readable}
@@ -72,7 +72,7 @@ export default function Create({ record, setting, setting_time_orders }) {
                         </span>
                     </span>
                     <span>
-                        تعداد سفارشات باقی مانده شما:
+                        تعداد سفارشات ثبت شده:
                         <span className="mx-1 font-semibold underline">
                             {setting_time_orders}
                         </span>

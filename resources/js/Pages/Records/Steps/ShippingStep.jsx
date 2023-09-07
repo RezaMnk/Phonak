@@ -23,6 +23,7 @@ export default function ShippingStep() {
         phone: record.shipping?.phone || '',
         audiologist_med_number: record.shipping?.audiologist_med_number || '',
         otolaryngologist_med_number: record.shipping?.otolaryngologist_med_number || '',
+        supplementary_insurance: record.shipping?.supplementary_insurance || '',
         description: record.shipping?.description || '',
         mail_address: record.shipping?.mail_address || record.shipping?.address.mail_address,
     });
@@ -123,16 +124,17 @@ export default function ShippingStep() {
                                          <h6 className="font-semibold border-b pb-2">
                                              محل کار
                                          </h6>
-                                         <p className="mt-2">
+                                         <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
                                             <span className="inline-block">
                                                 {record.shipping.address.work_address}
                                             </span>
-                                             <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-500">
+                                                     <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.work_post_code}
                                             </span>
-                                             <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-500">
+                                             {record.shipping.address.work_phone && (<span
+                                                 className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.work_phone}
-                                            </span>
+                                            </span>)}
                                          </p>
                                      </div>
                                  </InputLabel>
@@ -155,16 +157,17 @@ export default function ShippingStep() {
                                              <h6 className="font-semibold border-b pb-2">
                                                  محل کار دوم
                                              </h6>
-                                             <p className="mt-2">
-                                                <span>
+                                             <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                                <span className="inline-block">
                                                     {record.shipping.address.second_work_address}
                                                 </span>
-                                                 <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-500">
+                                                         <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
                                                 کدپستی: {record.shipping.address.second_work_post_code}
                                                 </span>
-                                                 <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-500">
+                                                         {record.shipping.address.second_work_phone && (<span
+                                                             className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
                                                 تلفن: {record.shipping.address.second_work_phone}
-                                                </span>
+                                                </span>)}
                                              </p>
                                          </div>
                                      </InputLabel>
@@ -187,16 +190,17 @@ export default function ShippingStep() {
                                          <h6 className="font-semibold border-b pb-2">
                                              محل سکونت
                                          </h6>
-                                         <p className="mt-2">
+                                         <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
                                             <span className="inline-block">
                                                 {record.shipping.address.home_address}
                                             </span>
-                                             <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-500">
+                                                     <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.home_post_code}
                                             </span>
-                                             <span className="inline-block mr-5 pr-5 border-r border-gray-300 dark:border-slate-500">
+                                             {record.shipping.address.home_phone && (<span
+                                                 className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.home_phone}
-                                            </span>
+                                            </span>)}
                                          </p>
                                      </div>
                                  </InputLabel>
@@ -267,7 +271,7 @@ export default function ShippingStep() {
 
                              <InputError message={errors.otolaryngologist_med_number} className="mt-2"/>
                          </div>
-                         <div className="w-full md:w-1/4 ml-5">
+                         <div className="w-full md:w-1/4">
                              <TextInput
                                  id="supplementary_insurance"
                                  name="supplementary_insurance"

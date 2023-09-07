@@ -16,6 +16,8 @@ export default function CreateOrEdit({ product }) {
         brand: product?.brand || '',
         expire_date: product?.expire_date || '',
         price: product?.price || '',
+        irc: product?.irc || '',
+        etc_brand: product?.etc_brand || '',
         inventory: product?.inventory || '',
         has_count: product?.has_count || false,
         min_count: product?.min_count || '',
@@ -108,7 +110,7 @@ export default function CreateOrEdit({ product }) {
                         </div>
                         <div className="flex flex-col space-y-5 mt-6 mb-5">
                             <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 md:space-x-reverse">
-                                <div className="w-full md:w-6/12">
+                                <div className={`w-full ${data.brand === 'etc' ? 'md:w-3/12' : 'md:w-6/12'}`}>
                                     <TextInput
                                         id="name"
                                         name="name"
@@ -142,6 +144,25 @@ export default function CreateOrEdit({ product }) {
                                     </SelectInput>
 
                                     <InputError message={errors.brand} className="mt-2"/>
+                                </div>
+                                <div className={`w-full md:w-3/12 ${data.brand === 'etc' ? 'block' : 'hidden'}`}>
+                                    <TextInput
+                                        id="etc_brand"
+                                        name="etc_brand"
+                                        value={data.etc_brand}
+                                        label="نام برند"
+                                        svgIcon={
+                                            <g>
+                                                <path d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12"/>
+                                                <circle cx="12" cy="12" r="2"/>
+                                                <path d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10"/>
+                                            </g>
+                                        }
+                                        onChange={(e) => setData('etc_brand', e.target.value)}
+                                        error={errors.etc_brand}
+                                    />
+
+                                    <InputError message={errors.etc_brand} className="mt-2"/>
                                 </div>
                                 <div className="w-full md:w-3/12">
                                     <SelectInput
@@ -182,26 +203,47 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.inventory} className="mt-2"/>
                                 </div>
-                                <div className="w-full md:w-4/12">
-                                    <TextInput
-                                        id="price"
-                                        name="price"
-                                        type="number"
-                                        value={data.price}
-                                        label="قیمت"
-                                        svgIcon={
-                                            <>
-                                                <circle cx="12" cy="12" r="10"/>
-                                                <path d="M12 17V17.5V18"/>
-                                                <path d="M12 6V6.5V7"/>
-                                                <path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"/>
-                                            </>
-                                        }
-                                        onChange={(e) => setData('price', e.target.value)}
-                                        error={errors.price}
-                                    />
+                                <div className="w-full md:w-2/12">
+                                    <div className="relative">
+                                        <TextInput
+                                            id="price"
+                                            name="price"
+                                            type="number"
+                                            value={data.price}
+                                            label="قیمت"
+                                            svgIcon={
+                                                <>
+                                                    <circle cx="12" cy="12" r="10"/>
+                                                    <path d="M12 17V17.5V18"/>
+                                                    <path d="M12 6V6.5V7"/>
+                                                    <path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"/>
+                                                </>
+                                            }
+                                            onChange={(e) => setData('price', e.target.value)}
+                                            error={errors.price}
+                                        />
+
+                                        <span className="absolute top-1/2 -translate-y-1/2 left-3 text-sm font-semibold text-gray-700 dark:text-slate-200">
+                                            ریال
+                                        </span>
+                                    </div>
 
                                     <InputError message={errors.price} className="mt-2"/>
+                                </div>
+                                <div className="w-full md:w-2/12">
+                                    <TextInput
+                                        id="irc"
+                                        name="irc"
+                                        type="number"
+                                        value={data.irc}
+                                        label="کد IRC"
+                                        svgIcon={
+                                            <path xmlns="http://www.w3.org/2000/svg" d="M7.0498 7.0498H7.0598M10.5118 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V10.5118C3 11.2455 3 11.6124 3.08289 11.9577C3.15638 12.2638 3.27759 12.5564 3.44208 12.8249C3.6276 13.1276 3.88703 13.387 4.40589 13.9059L9.10589 18.6059C10.2939 19.7939 10.888 20.388 11.5729 20.6105C12.1755 20.8063 12.8245 20.8063 13.4271 20.6105C14.112 20.388 14.7061 19.7939 15.8941 18.6059L18.6059 15.8941C19.7939 14.7061 20.388 14.112 20.6105 13.4271C20.8063 12.8245 20.8063 12.1755 20.6105 11.5729C20.388 10.888 19.7939 10.2939 18.6059 9.10589L13.9059 4.40589C13.387 3.88703 13.1276 3.6276 12.8249 3.44208C12.5564 3.27759 12.2638 3.15638 11.9577 3.08289C11.6124 3 11.2455 3 10.5118 3ZM7.5498 7.0498C7.5498 7.32595 7.32595 7.5498 7.0498 7.5498C6.77366 7.5498 6.5498 7.32595 6.5498 7.0498C6.5498 6.77366 6.77366 6.5498 7.0498 6.5498C7.32595 6.5498 7.5498 6.77366 7.5498 7.0498Z"/>                                        }
+                                        onChange={(e) => setData('irc', e.target.value)}
+                                        error={errors.irc}
+                                    />
+
+                                    <InputError message={errors.irc} className="mt-2"/>
                                 </div>
                                 {data.category === 'accessories' && (
                                     <>

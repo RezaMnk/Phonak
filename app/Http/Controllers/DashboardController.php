@@ -38,7 +38,7 @@ class DashboardController extends Controller
     public function admin_index()
     {
         return Inertia::render('Dashboards/Admin', [
-            'users' => User::all()->where('role', 'user')->sortDesc()->take(3),
+            'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->get()->sortDesc()->take(3),
             'records' => Record::with('patient')->whereIn('status', ['completed', 'paid'])->get()->sortDesc()->take(3),
 
             'data' => $this->admin_statistics()
@@ -72,8 +72,8 @@ class DashboardController extends Controller
                 'verified' => User::query()->where('role', 'user')->where('status', 'approved')->count(),
             ],
             'records' => [
-                'all' => Record::all()->count(),
-                'paid' => Record::query()->where('status', 'paid')->count(),
+                'all' => Record::all()->count() + Accessory::all()->count(),
+                'paid' => Record::query()->where('status', 'paid')->count() + Accessory::query()->where('status', 'paid')->count(),
             ],
             'products' => [
                 'all' => Product::all()->count(),

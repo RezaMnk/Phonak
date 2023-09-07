@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('category', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories']);
             $table->string('expire_date')->nullable();
             $table->unsignedBigInteger('price');
+            $table->string('etc_brand')->nullable();
+            $table->string('irc');
             $table->unsignedInteger('inventory');
             $table->boolean('has_count')->default(false);
             $table->unsignedInteger('min_count')->nullable();

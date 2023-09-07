@@ -95,14 +95,6 @@ export default function Index({ patients }) {
                                     >
                                         ویرایش
                                     </Link>
-                                    <button type="button" onClick={() => {
-                                        setDeleteModalShow(true);
-                                        setModalPatient(patient)
-                                    }}
-                                        className="inline-flex mr-2 px-2 py-1 text-xs text-center text-red-900 dark:text-red-200 transition-colors duration-300 bg-red-100 dark:bg-red-600/50 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-200 dark:hover:bg-red-600 focus:outline-none focus:ring-0 focus:border-red-500"
-                                    >
-                                        حذف
-                                    </button>
                                 </td>
                             </tr>
                         )
@@ -112,11 +104,6 @@ export default function Index({ patients }) {
                                 colSpan="6"
                                 className="text-lg px-6 py-6">
                                 هیچ کاربری یافت نشد!
-                                <Link href={route('patients.create')}
-                                      className="mr-2 text-sky-500 text-base"
-                                >
-                                    ایجاد اولین کاربر
-                                </Link>
                             </th>
                         </tr>
                     )}

@@ -9,7 +9,7 @@ import TextInput from "@/Components/TextInput.jsx";
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
 
 
-export const AidSize = ({ ear }) => {
+export const AidSize = ({ ear, is_itc = false }) => {
     const {data, setData, errors} = useContext(AidContext)
     return (
         <>
@@ -29,12 +29,12 @@ export const AidSize = ({ ear }) => {
                 required
             >
                 <option value="" disabled="disabled">انتخاب کنید</option>
-                <option value="CIC">CIC</option>
+                {! is_itc && (<option value="CIC">CIC</option>)}
                 <option value="Canal">Canal</option>
                 <option value="Full shell">Full shell</option>
             </SelectInput>
 
-            <InputError message={errors['hearing_aid_size.' + ear]} className="mt-2"/>
+            <InputError message={errors[ear]?.hearing_aid_size} className="mt-2"/>
         </>
     );
 }
@@ -67,7 +67,7 @@ export const VentSize = ({ ear, required }) => {
                 <option value="none">هیچکدام</option>
             </SelectInput>
 
-            <InputError message={errors.vent_size} className="mt-2"/>
+            <InputError message={errors[ear]?.vent_size} className="mt-2"/>
         </>
     );
 }
@@ -96,7 +96,7 @@ export const WaxGuard = ({ ear }) => {
                 <option value="rotating">چرخشی</option>
             </SelectInput>
 
-            <InputError message={errors.wax_guard} className="mt-2"/>
+            <InputError message={errors[ear]?.wax_guard} className="mt-2"/>
         </>
     );
 }
@@ -126,6 +126,13 @@ export const ReceiverType = ({ type = 'CIC', ear }) => {
                         <option value="standard">standard</option>
                         <option value="power">power</option>
                         <option value="super power">super power</option>
+                    </>
+                )}
+                {type === 'ITC' && (
+                    <>
+                        <option value="standard">standard</option>
+                        <option value="power">power</option>
+                        <option value="super power">super power</option>
                         <option value="ultra power">ultra power</option>
                     </>
                 )}
@@ -144,7 +151,7 @@ export const ReceiverType = ({ type = 'CIC', ear }) => {
                 )}
             </SelectInput>
 
-            <InputError message={errors.receiver} className="mt-2"/>
+            <InputError message={errors[ear]?.receiver} className="mt-2"/>
         </>
     );
 }
@@ -183,7 +190,7 @@ export const MoldMaterial = ({ ear }) => {
                 جنس قالب:
             </p>
 
-            <InputError message={errors.mail_address} className="mt-2"/>
+            <InputError message={errors[ear]?.mail_address} className="mt-2"/>
 
             <div className="inline-block mr-4">
                 <div className="inline-block ml-8 mt-2">
@@ -259,7 +266,7 @@ export const MoldSize = ({ ear }) => {
                 <option value="Skeleton shell">Skeleton shell</option>
             </SelectInput>
 
-            <InputError message={errors.mold_size} className="mt-2"/>
+            <InputError message={errors[ear]?.mold_size} className="mt-2"/>
         </>
     );
 }
@@ -316,7 +323,7 @@ export const TubeSize = ({ ear }) => {
                 <option value="3">سایز 3</option>
             </SelectInput>
 
-            <InputError message={errors.tube_size} className="mt-2"/>
+            <InputError message={errors[ear]?.tube_size} className="mt-2"/>
         </>
     );
 }
@@ -347,7 +354,7 @@ export const DomeType = ({ ear }) => {
                 <option value="power">power</option>
             </SelectInput>
 
-            <InputError message={errors.dome_type} className="mt-2"/>
+            <InputError message={errors[ear]?.dome_type} className="mt-2"/>
         </>
     );
 }
@@ -377,7 +384,7 @@ export const DomeSize = ({ ear }) => {
                 <option value="small">کوچک</option>
             </SelectInput>
 
-            <InputError message={errors.dome_size} className="mt-2"/>
+            <InputError message={errors[ear]?.dome_size} className="mt-2"/>
         </>
     );
 }
@@ -408,12 +415,12 @@ export const ExternalReceiverSize = ({ ear }) => {
                 <option value="3">سایز 3</option>
             </SelectInput>
 
-            <InputError message={errors.external_receiver_size} className="mt-2"/>
+            <InputError message={errors[ear]?.external_receiver_size} className="mt-2"/>
         </>
     );
 }
 
-export const ShellType = ({ ear }) => {
+export const ShellType = ({ ear, hasSlimtip = true }) => {
     const {data, setData, errors} = useContext(AidContext)
     return (
         <>
@@ -434,10 +441,10 @@ export const ShellType = ({ ear }) => {
             >
                 <option value="" disabled="disabled">انتخاب کنید</option>
                 <option value="cshell">cshell</option>
-                <option value="Slimtip">Slimtip</option>
+                {hasSlimtip && (<option value="Slimtip">Slimtip</option>)}
             </SelectInput>
 
-            <InputError message={errors.shell_type} className="mt-2"/>
+            <InputError message={errors[ear]?.shell_type} className="mt-2"/>
         </>
     );
 }
@@ -462,7 +469,7 @@ export const Description = ({ ear }) => {
                 error={errors.description}
             />
 
-            <InputError message={errors.description} className="mt-2"/>
+            <InputError message={errors[ear]?.description} className="mt-2"/>
         </>
     );
 }

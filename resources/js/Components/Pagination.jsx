@@ -1,6 +1,6 @@
 import {Link} from "@inertiajs/react";
 
-export default function Pagination({ data }) {
+export default function Pagination({ data, search = '' }) {
     const { links, from, to, total } = data
 
     return (
@@ -30,11 +30,11 @@ export default function Pagination({ data }) {
                                         (
                                             <>
                                                 <div
-                                                    className={`hidden md:flex ${is_prev_next() ? 'px-4' : 'w-8'} h-8 cursor-default items-center justify-center text-sm leading-4 bg-gray-200 dark:bg-slate-900 text-gray-400 dark:text-slate-500 rounded`}
+                                                    className={`${is_prev_next() ? 'px-4 flex' : 'w-8 hidden md:flex'} h-8 cursor-default items-center justify-center text-sm leading-4 bg-gray-200 dark:bg-slate-900 text-gray-400 dark:text-slate-500 rounded`}
                                                 >
                                                     {link.label}
                                                 </div>
-                                                <div className="block md:hidden h-8 w-[2px] bg-gray-200 dark:bg-slate-900 rounded-lg"></div>
+                                                <div className={`${is_prev_next() ? 'hidden' : 'block md:hidden'} h-8 w-[2px] bg-gray-200 dark:bg-slate-900 rounded-lg`}></div>
                                             </>
                                         ) : link.active ? (
                                             <div
@@ -45,7 +45,7 @@ export default function Pagination({ data }) {
                                         ) : (
                                             <Link
                                                 className={`${is_prev_next() ? 'px-4' : 'w-8'} h-8 flex items-center justify-center text-sm leading-4 bg-white dark:bg-slate-700 dark:text-slate-100 rounded hover:bg-gray-200/70 dark:hover:bg-slate-600 focus:outline-none focus:ring-sky-500 focus:ring-2`}
-                                                href={link.url}
+                                                href={search ? link.url + '&search=' + search : link.url}
                                             >
                                                 {link.label}
                                             </Link>
