@@ -35,8 +35,8 @@ export default function Register() {
                 </p>
             </div>
             <form onSubmit={submit}>
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                    <div className="w-full md:w-1/2 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                    <div className="w-full xl:w-1/2 ml-5">
                         <TextInput
                             id="name"
                             name="name"
@@ -53,7 +53,7 @@ export default function Register() {
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
 
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full xl:w-1/2">
                         <TextInput
                             id="national_code"
                             type="number"
@@ -90,8 +90,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                    <div className="w-full md:w-2/5 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                    <div className="w-full xl:w-2/5 ml-5">
                         <TextInput
                             id="grad_year"
                             type="number"
@@ -107,7 +107,7 @@ export default function Register() {
                         <InputError message={errors.grad_year} className="mt-2"/>
                     </div>
 
-                    <div className="w-full md:w-3/5">
+                    <div className="w-full xl:w-3/5">
                         <TextInput
                             id="med_number"
                             type="number"
@@ -123,8 +123,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                    <div className="w-full md:w-3/5 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                    <div className="w-full xl:w-3/5 ml-5">
                         <SelectInput
                             id="state"
                             name="state"
@@ -138,7 +138,7 @@ export default function Register() {
 
                         <InputError message={errors.state} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-2/5">
+                    <div className="w-full xl:w-2/5">
                         <SelectInput
                             id="city"
                             name="name"
@@ -154,8 +154,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                    <div className="w-full md:w-1/2 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                    <div className="w-full xl:w-1/2 ml-5">
                         <SelectInput
                             id="grade"
                             name="grade"
@@ -175,7 +175,7 @@ export default function Register() {
                         <InputError message={errors.grade} className="mt-2"/>
                     </div>
 
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full xl:w-1/2">
                         <TextInput
                             id="university"
                             name="university"
@@ -202,8 +202,8 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                    <div className="w-full md:w-1/2 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                    <div className="w-full xl:w-1/2 ml-5">
                         <TextInput
                             id="password"
                             type="password"
@@ -225,7 +225,7 @@ export default function Register() {
                         <InputError message={errors.password} className="mt-2"/>
                     </div>
 
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full xl:w-1/2">
                         <TextInput
                             id="confirm_password"
                             type="password"

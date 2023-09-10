@@ -6,6 +6,7 @@ import AidTypeStep from "@/Pages/Records/Steps/AidTypeStep.jsx";
 import AidStep from "@/Pages/Records/Steps/AidStep.jsx";
 import AudiogramStep from "@/Pages/Records/Steps/AudiogramStep.jsx";
 import ShippingStep from "@/Pages/Records/Steps/ShippingStep.jsx";
+import {toast as toastify} from "react-toastify";
 
 
 export const StepContext = createContext();
@@ -19,7 +20,6 @@ export default function Create({ record, setting, setting_time_orders }) {
     };
 
     useEffect(() => {
-
         const searchParams = new URLSearchParams(window.location.search);
         searchParams.set('step', step);
 

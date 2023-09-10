@@ -38,8 +38,8 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     نام و نام خانوادگی
@@ -48,7 +48,7 @@ export default function Edit({ user }) {
                                     {user.name}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     کد ملی
@@ -57,7 +57,7 @@ export default function Edit({ user }) {
                                     {user.national_code}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شماره نظام پزشکی
@@ -66,7 +66,7 @@ export default function Edit({ user }) {
                                     {user.med_number}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     سال فارغ التحصیلی
@@ -75,7 +75,7 @@ export default function Edit({ user }) {
                                     {user.grad_year ? user.grad_year : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     دانشگاه فارغ التحصیلی
@@ -85,8 +85,8 @@ export default function Edit({ user }) {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     ایمیل
@@ -95,7 +95,7 @@ export default function Edit({ user }) {
                                     {user.email ? user.email : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     استان محل اقامت
@@ -104,7 +104,7 @@ export default function Edit({ user }) {
                                     {user.state ? user.state : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شهر محل اقامت
@@ -123,7 +123,7 @@ export default function Edit({ user }) {
                         </div>
                         <div className="flex mt-6">
                             <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
-                                <p className="text-xs flex flex-col md:flex-row space-y-5 md:space-y-0 items-start md:items-center">
+                                <p className="text-xs flex flex-col xl:flex-row space-y-5 xl:space-y-0 items-start xl:items-center">
                                     <span className="flex items-center">
                                         <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                         محل سکونت
@@ -134,15 +134,15 @@ export default function Edit({ user }) {
                                         )}
                                     </span>
                                 </p>
-                                <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                     <span className="inline-block">
                                         {user.address.home_address}
                                     </span>
-                                    <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                     کدپستی: {user.address.home_post_code}
                                     </span>
                                     {user.address.home_phone && (<span
-                                        className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                     تلفن: {user.address.home_phone}
                                     </span>)}
                                 </p>
@@ -150,7 +150,7 @@ export default function Edit({ user }) {
                         </div>
                         <div className="flex mt-8">
                             <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
-                                <p className="text-xs flex flex-col md:flex-row space-y-5 md:space-y-0 items-start md:items-center">
+                                <p className="text-xs flex flex-col xl:flex-row space-y-5 xl:space-y-0 items-start xl:items-center">
                                     <span className="flex items-center">
                                         <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                         محل کار
@@ -161,15 +161,15 @@ export default function Edit({ user }) {
                                         )}
                                     </span>
                                 </p>
-                                <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                     <span className="inline-block">
                                         {user.address.work_address}
                                     </span>
-                                    <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                     کدپستی: {user.address.work_post_code}
                                     </span>
                                     {user.address.work_phone && (<span
-                                        className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                     تلفن: {user.address.work_phone}
                                     </span>)}
                                 </p>
@@ -187,15 +187,15 @@ export default function Edit({ user }) {
                                             </span>
                                         )}
                                     </p>
-                                    <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                    <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                         <span className="inline-block">
                                             {user.address.second_work_address}
                                         </span>
-                                            <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                            <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                         کدپستی: {user.address.second_work_post_code}
                                         </span>
                                         {user.address.second_work_phone && (<span
-                                            className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                            className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                         تلفن: {user.address.second_work_phone}
                                         </span>)}
                                     </p>
@@ -208,8 +208,8 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شماره تلفن همراه
@@ -218,7 +218,7 @@ export default function Edit({ user }) {
                                     {user.info.phone}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شماره تلفن ثابت
@@ -227,7 +227,7 @@ export default function Edit({ user }) {
                                     {user.info.landline ? user.info.landline : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شماره تلفن واتساپ
@@ -237,8 +237,8 @@ export default function Edit({ user }) {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     نام معرف اول
@@ -247,7 +247,7 @@ export default function Edit({ user }) {
                                     {user.info.referral_name ? user.info.referral_name : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شماره تلفن معرف اول
@@ -256,9 +256,9 @@ export default function Edit({ user }) {
                                     {user.info.referral_phone ? user.info.referral_phone : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="hidden md:block w-fit p-2 mx-2 border-r border-gray-200 dark:border-slate-700">
+                            <div className="hidden xl:block w-fit p-2 mx-2 border-r border-gray-200 dark:border-slate-700">
                             </div>
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     نام معرف دوم
@@ -267,7 +267,7 @@ export default function Edit({ user }) {
                                     {user.info.second_referral_name ? user.info.second_referral_name : 'تعریف نشده!'}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     شماره تلفن معرف دوم
@@ -303,8 +303,8 @@ export default function Edit({ user }) {
                                 </div>
                             </div>
                         )}
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-12">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-12">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     تصویر کارت ملی
@@ -319,7 +319,7 @@ export default function Edit({ user }) {
                                     </p>
                                 )}
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-12">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-12">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     تصویر کارت نظام پزشکی
@@ -334,7 +334,7 @@ export default function Edit({ user }) {
                                     </p>
                                 )}
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     تصویر مجوز فعالیت

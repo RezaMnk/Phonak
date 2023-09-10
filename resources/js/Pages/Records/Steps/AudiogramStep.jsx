@@ -63,8 +63,8 @@ export default function AudiogramStep() {
 
     const render_ear = (ear) => (
         <>
-            <div className="flex flex-col md:flex-row md:space-x-reverse md:space-x-5 space-y-5 md:space-y-0">
-                <div className="w-full flex flex-col-reverse md:flex-row md:space-x-reverse md:space-x-10 space-y-reverse space-y-5 md:space-y-0">
+            <div className="flex flex-col xl:flex-row xl:space-x-reverse xl:space-x-5 space-y-5 xl:space-y-0">
+                <div className="w-full flex flex-col-reverse xl:flex-row xl:space-x-reverse xl:space-x-10 space-y-reverse space-y-5 xl:space-y-0">
                     {[...tests_list].reverse().map((item, index) => (
                         <div key={index} className="flex text-gray-800 dark:text-slate-200">
                             <div className="w-full flex flex-col space-y-3">
@@ -108,7 +108,7 @@ export default function AudiogramStep() {
                                     />
                                 </div>
                             </div>
-                            <div className="flex md:hidden">
+                            <div className="flex xl:hidden">
                                 <div className="w-full flex flex-col space-y-3 mr-5 text-gray-800 dark:text-slate-200">
                                     <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-2 px-2">Frequency</div>
                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2">AC</div>
@@ -117,7 +117,7 @@ export default function AudiogramStep() {
                             </div>
                         </div>
                     ))}
-                    <div className="hidden md:flex md:flex-col space-y-3 w-1/12 text-gray-800 dark:text-slate-200">
+                    <div className="hidden xl:flex xl:flex-col space-y-3 w-1/12 text-gray-800 dark:text-slate-200">
                         <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-2 px-2">Frequency</div>
                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2">AC</div>
                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2">BC</div>
@@ -166,8 +166,8 @@ export default function AudiogramStep() {
                             </span>
                             <hr className="mt-1 dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                            <div className="w-full md:w-1/3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <FileInput
                                     name="left.audiogram_image"
                                     fileName={data.audiogram_image}
@@ -178,7 +178,7 @@ export default function AudiogramStep() {
                                     error={errors.audiogram_image}
                                 />
                             </div>
-                            <div className="w-full md:w-1/3 ml-5">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <FileInput
                                     name="left.id_card_image"
                                     fileName={data.id_card_image}
@@ -189,7 +189,7 @@ export default function AudiogramStep() {
                                     error={errors.id_card_image}
                                 />
                             </div>
-                            <div className="w-full md:w-1/3">
+                            <div className="w-full xl:w-1/3">
                                 <FileInput
                                     name="prescription_image"
                                     fileName={data.prescription_image}

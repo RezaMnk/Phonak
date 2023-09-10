@@ -27,7 +27,6 @@ export default function PatientStep() {
         birth_year: record?.patient?.birth_year || '',
         prescription_image: record?.prescription_image || ''
     });
-    console.log(errors)
 
     const [ oldPatient, setOldPatient ] = useState(false)
 
@@ -56,6 +55,7 @@ export default function PatientStep() {
             ...data,
             name: new_patient.name,
             eng_name: new_patient.eng_name,
+            insurance: new_patient.insurance,
             state: new_patient.state,
             city: new_patient.city,
             address: new_patient.address,
@@ -70,6 +70,7 @@ export default function PatientStep() {
             ...data,
             name: '',
             eng_name: '',
+            insurance: '',
             state: 'تهران',
             city: 'تهران',
             address: '',
@@ -89,6 +90,7 @@ export default function PatientStep() {
         try {
             const response = await axios.post(route('records.check_national_code'), { national_code });
             let patient = response.data.patient;
+
             if (patient) {
                 update_patient(response.data.patient);
                 setOldPatient(true);
@@ -126,8 +128,8 @@ export default function PatientStep() {
                     </div>
                     <hr className="dark:border-slate-600"/>
                 </div>
-                <div className="flex flex-col md:flex-row gap-5 mt-6 mb-5">
-                    <div className="w-full md:w-1/6">
+                <div className="flex flex-col xl:flex-row gap-5 mt-6 mb-5">
+                    <div className="w-full xl:w-1/6">
                         <TextInput
                             id="national_code"
                             name="national_code"
@@ -152,7 +154,7 @@ export default function PatientStep() {
                             استعلام صحت کد ملی
                         </PrimaryButton>
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <TextInput
                             id="name"
                             name="name"
@@ -166,7 +168,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.name} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-[12%]">
+                    <div className="w-full xl:w-[12%]">
                         <TextInput
                             id="birth_year"
                             name="birth_year"
@@ -181,7 +183,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.birth_year} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <TextInput
                             id="phone"
                             name="phone"
@@ -196,7 +198,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.phone} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <TextInput
                             id="eng_name"
                             name="eng_name"
@@ -211,8 +213,8 @@ export default function PatientStep() {
                         <InputError message={errors.eng_name} className="mt-2"/>
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-5 mt-8">
-                    <div className="w-full md:w-1/4">
+                <div className="flex flex-col xl:flex-row gap-5 mt-8">
+                    <div className="w-full xl:w-1/4">
                         <TextInput
                             id="insurance"
                             name="insurance"
@@ -225,7 +227,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.insurance} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <SelectInput
                             id="state"
                             name="state"
@@ -239,7 +241,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.state} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <SelectInput
                             id="city"
                             name="name"
@@ -253,7 +255,7 @@ export default function PatientStep() {
 
                         <InputError message={errors.city} className="mt-2"/>
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <TextInput
                             id="post_code"
                             name="post_code"
@@ -287,7 +289,7 @@ export default function PatientStep() {
                     </span>
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-5 mt-8">
+                <div className="flex flex-col xl:flex-row gap-5 mt-8">
                     <div className="w-full">
                         <TextAreaInput
                             id="address"

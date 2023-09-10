@@ -80,19 +80,19 @@ export default function Index({ products }) {
                 <table className="w-full text-right text-gray-500 dark:text-slate-400">
                     <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                         <tr>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 تصویر محصول
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 نام محصول
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 برند
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 دسته بندی
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 موجودی
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -109,14 +109,14 @@ export default function Index({ products }) {
 
                         return (
                             <tr key={product.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
-                                <td className="px-6 py-2 hidden md:table-cell">
+                                <td className="px-6 py-2 hidden xl:table-cell">
                                     <img src={product.image_url} alt={product.name} className="w-14 h-14 rounded-lg object-cover bg-gray-100 dark:bg-slate-800 p-1"/>
                                 </td>
                                 <th scope="row"
                                     className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
                                     {product.name}
                                 </th>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     {product.brand === 'phonak' && (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
                                             {product.brand}
@@ -151,7 +151,7 @@ export default function Index({ products }) {
                                 <td className="px-6 py-4">
                                     {product.category}
                                 </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     <TextInput
                                         className="!w-12 !p-1 text-center"
                                         size="1"

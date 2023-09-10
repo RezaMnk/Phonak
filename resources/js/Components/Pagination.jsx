@@ -30,11 +30,11 @@ export default function Pagination({ data, search = '' }) {
                                         (
                                             <>
                                                 <div
-                                                    className={`${is_prev_next() ? 'px-4 flex' : 'w-8 hidden md:flex'} h-8 cursor-default items-center justify-center text-sm leading-4 bg-gray-200 dark:bg-slate-900 text-gray-400 dark:text-slate-500 rounded`}
+                                                    className={`${is_prev_next() ? 'px-4 flex' : 'w-8 hidden xl:flex'} h-8 cursor-default items-center justify-center text-sm leading-4 bg-gray-200 dark:bg-slate-900 text-gray-400 dark:text-slate-500 rounded`}
                                                 >
                                                     {link.label}
                                                 </div>
-                                                <div className={`${is_prev_next() ? 'hidden' : 'block md:hidden'} h-8 w-[2px] bg-gray-200 dark:bg-slate-900 rounded-lg`}></div>
+                                                <div className={`${is_prev_next() ? 'hidden' : 'block xl:hidden'} h-8 w-[2px] bg-gray-200 dark:bg-slate-900 rounded-lg`}></div>
                                             </>
                                         ) : link.active ? (
                                             <div

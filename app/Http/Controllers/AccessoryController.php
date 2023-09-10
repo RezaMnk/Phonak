@@ -52,7 +52,7 @@ class AccessoryController extends Controller
     {
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
-            'count' => ['nullable'],
+            'count' => ['nullable', 'numeric'],
             'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
 
@@ -177,8 +177,16 @@ class AccessoryController extends Controller
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
             'count' => ['nullable', 'numeric'],
-                'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
         ]);
+
+        $product = Product::find($request->product);
+        if ($product->has_count)
+        {
+            $request->validate([
+                'count' => ['required', 'numeric', 'min:'. $product->min_count, 'max:'. $product->max_count],
+            ]);
+        }
 
         $data = [
             'product_id' => $request->product,

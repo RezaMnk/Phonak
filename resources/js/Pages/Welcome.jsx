@@ -29,7 +29,7 @@ export default function Welcome() {
 
             <div className="w-full min-h-screen bg-white">
                 <div className="h-full relative">
-                    <div className="flex justify-center bg-gray-50 shadow-lg py-5 px-8 md:px-32">
+                    <div className="flex justify-center bg-gray-50 shadow-lg py-5 px-8 xl:px-32">
                         <div className="w-1/3"></div>
                         <div className="w-1/3 flex justify-center">
                             <Link href={route('home')}>
@@ -39,15 +39,15 @@ export default function Welcome() {
                         <div className="w-1/3 flex justify-end items-center">
                             <div className="flex flex-col items-center">
                                 <PrimaryButton
-                                    className="h-fit !px-4 md:px-6"
+                                    className="h-fit !px-4 xl:px-6"
                                     link
                                     href={route('login')}
                                 >
-                                <span className="hidden md:inline-block">
+                                <span className="hidden xl:inline-block">
                                     پورتال فروش
                                 </span>
                                     <Icon
-                                        className="text-white md:mr-3"
+                                        className="text-white xl:mr-3"
                                         type="fill"
                                         viewBox="0 0 24 24"
                                     >
@@ -55,13 +55,13 @@ export default function Welcome() {
                                         <path d="M6.38776 13.5017C6.08163 13.8052 6.08163 14.3111 6.38776 14.6146C6.4898 14.7158 6.69388 14.8169 6.89796 14.8169C7.10204 14.8169 7.30612 14.7158 7.40816 14.6146L9.44898 12.5912C9.55102 12.49 9.55102 12.3889 9.65306 12.3889C9.65306 12.2877 9.7551 12.1865 9.7551 12.0854C9.7551 11.9842 9.7551 11.883 9.65306 11.7819C9.65306 11.6807 9.55102 11.5795 9.44898 11.5795L7.40816 9.55612C7.10204 9.25261 6.59184 9.25261 6.28571 9.55612C5.97959 9.85963 5.97959 10.3655 6.28571 10.669L7 11.3772H2.81633C2.40816 11.3772 2 11.6807 2 12.1865C2 12.6924 2.30612 12.9959 2.81633 12.9959H7.10204L6.38776 13.5017Z"/>
                                     </Icon>
                                 </PrimaryButton>
-                                <span className="mt-2 text-sm hidden md:inline-block text-gray-700">
+                                <span className="mt-2 text-sm hidden xl:inline-block text-gray-700">
                                     (ویژه متخصصین)
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div className="max-w-6xl mx-8 md:mx-auto mt-12 text-justify bg-gray-100 p-8 rounded-lg border-b-4 leading-8" id="about-us">
+                    <div className="max-w-6xl mx-8 xl:mx-auto mt-12 text-justify bg-gray-100 p-8 rounded-lg border-b-4 leading-8" id="about-us">
                         <h4 className="text-lg text-gray-600 font-bold text-xl mb-6 after:content-[''] after:w-24 after:border-b after:border-2 after:border-sky-500 after:block">
                             درباره ما
                         </h4>
@@ -87,12 +87,12 @@ export default function Welcome() {
                             است.
                         </p>
                     </div>
-                    <div className="max-w-4xl mx-8 md:mx-auto mt-12 relative">
+                    <div className="max-w-4xl mx-8 xl:mx-auto mt-12 relative">
                         <div className={`absolute z-10 flex items-center justify-center h-full w-full bg-gray-900/70 top-0 left-0 rounded-lg transition-all ${showPlayBtn ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
                              onClick={playVideo}
                         >
-                            <div className="bg-sky-500/80 hover:bg-sky-500 hover:scale-105 transition-all cursor-pointer p-3 rounded-full h-20 w-20 md:h-28 md:w-28 flex items-center justify-center">
-                                <Icon viewBox="0 0 24 24" className="!w-12 !h-12 md:!w-20 md:!h-20 text-white -mr-2">
+                            <div className="bg-sky-500/80 hover:bg-sky-500 hover:scale-105 transition-all cursor-pointer p-3 rounded-full h-20 w-20 xl:h-28 xl:w-28 flex items-center justify-center">
+                                <Icon viewBox="0 0 24 24" className="!w-12 !h-12 xl:!w-20 xl:!h-20 text-white -mr-2">
                                     <path d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"/>
                                 </Icon>
                             </div>
@@ -106,9 +106,9 @@ export default function Welcome() {
                             ساپورت نمیشه
                         </video>
                     </div>
-                    <div className="max-w-7xl mx-8 md:mx-auto mt-24 relative">
-                        <div className="flex flex-col md:flex-row gap-24">
-                            <a href="https://phonak.ir" className="w-full md:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
+                    <div className="max-w-7xl mx-8 xl:mx-auto mt-24 relative">
+                        <div className="flex flex-col xl:flex-row gap-24">
+                            <a href="https://phonak.ir" className="w-full xl:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
                                 <img src="/storage/media/phonak.jpg" alt="phonak" className="rounded-lg transition-all" />
                                 <div className="mt-5 flex items-center font-semibold text-lg">
                                     <div className="flex-grow h-px bg-gray-300"></div>
@@ -118,7 +118,7 @@ export default function Welcome() {
                                     <div className="flex-grow h-px bg-gray-300"></div>
                                 </div>
                             </a>
-                            <a href="https://iranhansaton.ir" className="w-full md:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
+                            <a href="https://iranhansaton.ir" className="w-full xl:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
                                 <img src="/storage/media/hansaton.jpg" alt="hansaton" className="rounded-lg transition-all" />
                                 <div className="mt-5 flex items-center font-semibold text-lg">
                                     <div className="flex-grow h-px bg-gray-300"></div>
@@ -128,7 +128,7 @@ export default function Welcome() {
                                     <div className="flex-grow h-px bg-gray-300"></div>
                                 </div>
                             </a>
-                            <div className="w-full md:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
+                            <div className="w-full xl:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
                                 <img src="/storage/media/unitron.jpg" alt="unitron" className="rounded-lg transition-all" />
                                 <div className="mt-5 flex items-center font-semibold text-lg select-none">
                                     <div className="flex-grow h-px bg-gray-300"></div>
@@ -143,9 +143,9 @@ export default function Welcome() {
                     <footer className="bg-gray-100">
                         <hr className="mt-12 border-2"/>
                         <div
-                            className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-24 py-12 px-3 md:px-0">
-                            <div className="w-full flex flex-col items-center md:items-start gap-6">
-                                <h4 className="inline-block relative text-gray-600 font-bold text-xl mb-6 after:content-[''] after:absolute after:right-1/2 after:translate-x-1/2 md:after:right-0 md:after:translate-x-0 after:w-16 after:border-b after:border-2 after:border-sky-500 after:block">
+                            className="container mx-auto grid grid-cols-1 xl:grid-cols-3 gap-0 xl:gap-24 py-12 px-3 xl:px-0">
+                            <div className="w-full flex flex-col items-center xl:items-start gap-6">
+                                <h4 className="inline-block relative text-gray-600 font-bold text-xl mb-6 after:content-[''] after:absolute after:right-1/2 after:translate-x-1/2 xl:after:right-0 xl:after:translate-x-0 after:w-16 after:border-b after:border-2 after:border-sky-500 after:block">
                                     تماس با ما
                                 </h4>
                                 <div className="whitespace-nowrap">
@@ -199,7 +199,7 @@ export default function Welcome() {
                                         </span>
                                     </a>
                                 </div>
-                                <div className="mx-6 md:mx-0 text-center md:text-right">
+                                <div className="mx-6 xl:mx-0 text-center xl:text-right">
                                     <p className="text-sm text-gray-700">
                                         <span className="font-semibold ml-1">
                                             ساعت پاسخگویی:
@@ -208,7 +208,7 @@ export default function Welcome() {
                                         - پنج شنبه ۸:۳۰ الی ۱۳
                                     </p>
                                 </div>
-                                <div className="mx-6 md:mx-0 text-center md:text-right">
+                                <div className="mx-6 xl:mx-0 text-center xl:text-right">
                                     <p className="text-sm text-gray-700">
                                         <span className="font-semibold ml-1">
                                             آدرس:
@@ -217,8 +217,8 @@ export default function Welcome() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="w-full md:mr-12 flex flex-col items-center md:items-start gap-6 border-t pt-4 md:pt-0 mt-4 md:mt-0 md:border-0">
-                                <h4 className="inline-block relative text-gray-600 font-bold text-xl mb-6 after:content-[''] after:absolute after:right-1/2 after:translate-x-1/2 md:after:right-0 md:after:translate-x-0 after:w-24 after:border-b after:border-2 after:border-sky-500 after:block">
+                            <div className="w-full xl:mr-12 flex flex-col items-center xl:items-start gap-6 border-t pt-4 xl:pt-0 mt-4 xl:mt-0 xl:border-0">
+                                <h4 className="inline-block relative text-gray-600 font-bold text-xl mb-6 after:content-[''] after:absolute after:right-1/2 after:translate-x-1/2 xl:after:right-0 xl:after:translate-x-0 after:w-24 after:border-b after:border-2 after:border-sky-500 after:block">
                                     لینک های دسترسی
                                 </h4>
                                 <div>
@@ -265,7 +265,7 @@ export default function Welcome() {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="w-full flex gap-24 md:gap-12 items-center justify-center border-t pt-4 md:pt-0 mt-4 md:mt-0 md:border-0">
+                            <div className="w-full flex gap-24 xl:gap-12 items-center justify-center border-t pt-4 xl:pt-0 mt-4 xl:mt-0 xl:border-0">
                                 <img src="/storage/media/zarinpal.png" alt="zarinpal" className="h-24"/>
                                 <a
                                     referrerPolicy="origin"
@@ -281,13 +281,13 @@ export default function Welcome() {
                         </div>
                         <div className="w-full border-t border-gray-200 bg-gray-50">
                             <div
-                                className="container mx-auto flex flex-col md:flex-row space-y-5 md:space-y-0 items-center px-4 sm:px-6 md:px-0 py-4 text-gray-500 dark:text-slate-400">
-                                <div className="w-full md:w-1/2 text-center md:text-right">
+                                className="container mx-auto flex flex-col xl:flex-row space-y-5 xl:space-y-0 items-center px-4 sm:px-6 xl:px-0 py-4 text-gray-500 dark:text-slate-400">
+                                <div className="w-full xl:w-1/2 text-center xl:text-right">
                                     طراحی و توسعه توسط <a href="https://rahamteam.com"
                                                           className="text-sm text-blue-500 font-semibold">رهام</a>
                                 </div>
                                 <div
-                                    className="w-full md:w-1/2 flex items-center justify-center md:justify-start text-xs font-semibold eng-num"
+                                    className="w-full xl:w-1/2 flex items-center justify-center xl:justify-start text-xs font-semibold eng-num"
                                     dir="ltr">
                                     <Icon viewBox="0 0 24 24" type="stroke" width="2" className="!w-4 !h-4 inline mr-1">
                                         <path

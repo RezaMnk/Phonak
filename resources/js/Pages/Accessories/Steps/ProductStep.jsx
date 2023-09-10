@@ -79,15 +79,15 @@ export default function ProductStep() {
              <Head title="سفارش - محصول" />
 
              <form className="w-full" onSubmit={submit} noValidate>
-                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                     <div className="w-full md:w-2/5 ml-5 text-gray-700 dark:text-slate-200">
+                 <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                     <div className="w-full xl:w-2/5 ml-5 text-gray-700 dark:text-slate-200">
                          <p>
                              برند مورد سفارش:
                          </p>
 
                          <InputError message={errors.brand} className="mt-2"/>
 
-                         <div className="mt-5 flex flex-wrap gap-10 justify-around md:justify-start">
+                         <div className="mt-5 flex flex-wrap gap-10 justify-around xl:justify-start">
                              <div className="inline-block">
                                  <RadioInput
                                      id="brand_phonak"
@@ -223,7 +223,7 @@ export default function ProductStep() {
                              </div>
                          </div>
                      </div>
-                     <div className="w-full md:w-3/5 flex flex-col space-y-5 md:space-y-0">
+                     <div className="w-full xl:w-3/5 flex flex-col space-y-5 xl:space-y-0">
                          <p className="mb-5 text-gray-700 dark:text-slate-200">
                              محصولات:
                          </p>

@@ -34,16 +34,16 @@ export default function Info() {
             <Head title="اطلاعات تکمیلی"/>
 
             <form className="w-full h-1/2" onSubmit={submit}>
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
-                    <div className="w-full md:w-3/4 ml-12">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0">
+                    <div className="w-full xl:w-3/4 ml-12">
                         <div className="text-gray-700 dark:text-slate-200">
                             <h5>
                                 اطلاعات تماس
                             </h5>
                             <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                            <div className="w-full md:w-1/3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <TextInput
                                     id="phone"
                                     type="number"
@@ -66,7 +66,7 @@ export default function Info() {
 
                                 <InputError message={errors.phone} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-1/3 ml-5">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <TextInput
                                     id="landline"
                                     type="number"
@@ -88,7 +88,7 @@ export default function Info() {
 
                                 <InputError message={errors.landline} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-1/3">
+                            <div className="w-full xl:w-1/3">
                                 <TextInput
                                     id="whatsapp_phone"
                                     type="number"
@@ -118,8 +118,8 @@ export default function Info() {
                             </h5>
                             <hr className="border-gray-300 dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                            <div className="w-full md:w-1/2 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                            <div className="w-full xl:w-1/2 ml-5">
                                 <TextInput
                                     id="referral_name"
                                     name="referral_name"
@@ -140,7 +140,7 @@ export default function Info() {
 
                                 <InputError message={errors.referral_name} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-1/2">
+                            <div className="w-full xl:w-1/2">
                                 <TextInput
                                     id="referral_phone"
                                     type="number"
@@ -163,8 +163,8 @@ export default function Info() {
                                 <InputError message={errors.referral_phone} className="mt-2"/>
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                            <div className="w-full md:w-1/2 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                            <div className="w-full xl:w-1/2 ml-5">
                                 <TextInput
                                     id="second_referral_name"
                                     name="second_referral_name"
@@ -185,7 +185,7 @@ export default function Info() {
 
                                 <InputError message={errors.second_referral_name} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-1/2">
+                            <div className="w-full xl:w-1/2">
                                 <TextInput
                                     id="second_referral_phone"
                                     type="number"
@@ -257,7 +257,7 @@ export default function Info() {
                         </div>
 
                     </div>
-                    <div className="w-full md:w-1/4">
+                    <div className="w-full xl:w-1/4">
                         <div className="text-gray-700 dark:text-slate-200">
                             <h5>
                                 فایل مدارک

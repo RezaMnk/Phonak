@@ -109,8 +109,8 @@ export default function CreateOrEdit({ product }) {
                             <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex flex-col space-y-5 mt-6 mb-5">
-                            <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 md:space-x-reverse">
-                                <div className={`w-full ${data.brand === 'etc' ? 'md:w-3/12' : 'md:w-6/12'}`}>
+                            <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
+                                <div className={`w-full ${data.brand === 'etc' ? 'xl:w-3/12' : 'xl:w-6/12'}`}>
                                     <TextInput
                                         id="name"
                                         name="name"
@@ -125,7 +125,7 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.name} className="mt-2"/>
                                 </div>
-                                <div className="w-full md:w-3/12">
+                                <div className="w-full xl:w-3/12">
                                     <SelectInput
                                         id="brand"
                                         name="brand"
@@ -145,7 +145,7 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.brand} className="mt-2"/>
                                 </div>
-                                <div className={`w-full md:w-3/12 ${data.brand === 'etc' ? 'block' : 'hidden'}`}>
+                                <div className={`w-full xl:w-3/12 ${data.brand === 'etc' ? 'block' : 'hidden'}`}>
                                     <TextInput
                                         id="etc_brand"
                                         name="etc_brand"
@@ -164,7 +164,7 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.etc_brand} className="mt-2"/>
                                 </div>
-                                <div className="w-full md:w-3/12">
+                                <div className="w-full xl:w-3/12">
                                     <SelectInput
                                         id="category"
                                         name="category"
@@ -186,8 +186,8 @@ export default function CreateOrEdit({ product }) {
                                 </div>
                             </div>
 
-                            <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 md:space-x-reverse">
-                                <div className="w-full md:w-2/12">
+                            <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
+                                <div className="w-full xl:w-2/12">
                                     <TextInput
                                         id="inventory"
                                         name="inventory"
@@ -203,7 +203,7 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.inventory} className="mt-2"/>
                                 </div>
-                                <div className="w-full md:w-2/12">
+                                <div className="w-full xl:w-2/12">
                                     <div className="relative">
                                         <TextInput
                                             id="price"
@@ -230,7 +230,7 @@ export default function CreateOrEdit({ product }) {
 
                                     <InputError message={errors.price} className="mt-2"/>
                                 </div>
-                                <div className="w-full md:w-2/12">
+                                <div className="w-full xl:w-2/12">
                                     <TextInput
                                         id="irc"
                                         name="irc"
@@ -247,7 +247,7 @@ export default function CreateOrEdit({ product }) {
                                 </div>
                                 {data.category === 'accessories' && (
                                     <>
-                                        <div className="w-full md:w-3/12">
+                                        <div className="w-full xl:w-3/12">
                                             <TextInput
                                                 id="expire_date"
                                                 name="expire_date"
@@ -260,7 +260,7 @@ export default function CreateOrEdit({ product }) {
 
                                             <InputError message={errors.expire_date} className="mt-2"/>
                                         </div>
-                                        <div className="w-full md:w-2/12 !mt-8 md:!mt-0 md:!mr-10 flex items-center">
+                                        <div className="w-full xl:w-2/12 !mt-8 xl:!mt-0 xl:!mr-10 flex items-center">
                                             <CheckboxInput
                                                 id="has_count"
                                                 name="has_count"
@@ -278,8 +278,8 @@ export default function CreateOrEdit({ product }) {
                                 )}
                             </div>
                             {(data.category === 'accessories' && data.has_count) && (
-                                <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 md:space-x-reverse">
-                                        <div className="w-full md:w-4/12">
+                                <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
+                                        <div className="w-full xl:w-4/12">
                                             <TextInput
                                                 id="min_count"
                                                 name="min_count"
@@ -292,7 +292,7 @@ export default function CreateOrEdit({ product }) {
 
                                             <InputError message={errors.min_count} className="mt-2"/>
                                         </div>
-                                        <div className="w-full md:w-4/12">
+                                        <div className="w-full xl:w-4/12">
                                             <TextInput
                                                 id="max_count"
                                                 name="max_count"
@@ -327,9 +327,9 @@ export default function CreateOrEdit({ product }) {
                             {Object.values(data.groups).map((group, index) => {
                                 const is_last = data.groups[Object.keys(data.groups).length-1] === group;
                                 return (
-                                    <div className="w-full flex flex-col md:flex-row md:space-x-5 md:space-x-reverse"
+                                    <div className="w-full flex flex-col xl:flex-row xl:space-x-5 xl:space-x-reverse"
                                          key={index}>
-                                        <div className="w-full md:w-5/12">
+                                        <div className="w-full xl:w-5/12">
                                             <TextInput
                                                 id={`group-number-` + index}
                                                 name={`group-number-` + index}
@@ -344,7 +344,7 @@ export default function CreateOrEdit({ product }) {
                                             )}
 
                                         </div>
-                                        <div className="w-full md:w-7/12 mt-5 md:mt-0 flex">
+                                        <div className="w-full xl:w-7/12 mt-5 xl:mt-0 flex">
                                             <div className="w-full ml-5">
                                                 <TextInput
                                                     id={`group-count-` + index}
@@ -363,7 +363,7 @@ export default function CreateOrEdit({ product }) {
                                             </div>
                                             <div className="w-fit flex">
                                                 <DangerButton
-                                                    className="w-full h-full items-center !px-2 md:!px-4"
+                                                    className="w-full h-full items-center !px-2 xl:!px-4"
                                                     onClick={() => remGroup(index)}
                                                     type="button"
                                                 >
@@ -377,7 +377,7 @@ export default function CreateOrEdit({ product }) {
                                             </div>
                                         </div>
                                         {! is_last && (
-                                            <hr className="block md:hidden mt-5 border-gray-200 dark:border-slate-500"/>
+                                            <hr className="block xl:hidden mt-5 border-gray-200 dark:border-slate-500"/>
                                         )}
                                     </div>
                                 )

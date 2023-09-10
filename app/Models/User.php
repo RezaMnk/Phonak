@@ -177,8 +177,8 @@ class User extends Authenticatable
                         return 2;
                     return 1;
                 }) + $this_count;
-
-        return $today_order > $max_order;
+//        dd($today_order, $max_order);
+        return $today_order >= $max_order;
     }
 
 
@@ -207,6 +207,7 @@ class User extends Authenticatable
         if ($this->setting)
             return new Attribute(
                 get: fn () =>  $this->records()
+                    ->whereIn('status', ['completed', 'paid'])
                     ->whereDate('created_at', '>=', $this->setting->start_time)
                     ->whereDate('created_at', '<=', $this->setting->end_time)
                     ->count()

@@ -53,8 +53,8 @@ export default function ShippingStep() {
                     </div>
                     <hr className="dark:border-slate-600"/>
                 </div>
-                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                    <div className="w-full md:w-1/3 ml-5">
+                 <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                    <div className="w-full xl:w-1/3 ml-5">
                         <SelectInput
                             id="type"
                             name="type"
@@ -76,7 +76,7 @@ export default function ShippingStep() {
                         <InputError message={errors.type} className="mt-2"/>
                     </div>
                     {data.type === 'etc' && (
-                        <div className="w-full md:w-2/3">
+                        <div className="w-full xl:w-2/3">
                             <TextInput
                                 id="etc_delivery"
                                 etc_delivery="etc_delivery"
@@ -124,15 +124,15 @@ export default function ShippingStep() {
                                          <h6 className="font-semibold border-b pb-2">
                                              محل کار
                                          </h6>
-                                         <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                         <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                             <span className="inline-block">
                                                 {accessory.shipping.address.work_address}
                                             </span>
-                                                     <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                                     <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.work_post_code}
                                             </span>
                                              {accessory.shipping.address.work_phone && (<span
-                                                 className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                                 className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {accessory.shipping.address.work_phone}
                                             </span>)}
                                          </p>
@@ -157,15 +157,15 @@ export default function ShippingStep() {
                                              <h6 className="font-semibold border-b pb-2">
                                                  محل کار دوم
                                              </h6>
-                                             <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                             <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                                 <span className="inline-block">
                                                     {accessory.shipping.address.second_work_address}
                                                 </span>
-                                                         <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                                         <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                                 کدپستی: {accessory.shipping.address.second_work_post_code}
                                                 </span>
                                                          {accessory.shipping.address.second_work_phone && (<span
-                                                             className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                                             className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                                 تلفن: {accessory.shipping.address.second_work_phone}
                                                 </span>)}
                                              </p>
@@ -190,15 +190,15 @@ export default function ShippingStep() {
                                          <h6 className="font-semibold border-b pb-2">
                                              محل سکونت
                                          </h6>
-                                         <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                         <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                             <span className="inline-block">
                                                 {accessory.shipping.address.home_address}
                                             </span>
-                                                     <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                                     <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.home_post_code}
                                             </span>
                                              {accessory.shipping.address.home_phone && (<span
-                                                 className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                                 className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {accessory.shipping.address.home_phone}
                                             </span>)}
                                          </p>
@@ -231,8 +231,8 @@ export default function ShippingStep() {
                      </div>
                  </div>
                 {data.has_health_insurance && (
-                     <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                         <div className="w-full md:w-1/4 ml-5">
+                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                         <div className="w-full xl:w-1/4 ml-5">
                              <TextInput
                                  id="phone"
                                  name="phone"
@@ -245,7 +245,7 @@ export default function ShippingStep() {
 
                              <InputError message={errors.phone} className="mt-2"/>
                          </div>
-                         <div className="w-full md:w-1/4 ml-5">
+                         <div className="w-full xl:w-1/4 ml-5">
                              <TextInput
                                  id="audiologist_med_number"
                                  name="audiologist_med_number"
@@ -258,7 +258,7 @@ export default function ShippingStep() {
 
                              <InputError message={errors.audiologist_med_number} className="mt-2"/>
                          </div>
-                         <div className="w-full md:w-1/4 ml-5">
+                         <div className="w-full xl:w-1/4 ml-5">
                              <TextInput
                                  id="otolaryngologist_med_number"
                                  name="otolaryngologist_med_number"
@@ -271,7 +271,7 @@ export default function ShippingStep() {
 
                              <InputError message={errors.otolaryngologist_med_number} className="mt-2"/>
                          </div>
-                         <div className="w-full md:w-1/4">
+                         <div className="w-full xl:w-1/4">
                              <TextInput
                                  id="supplementary_insurance"
                                  name="supplementary_insurance"

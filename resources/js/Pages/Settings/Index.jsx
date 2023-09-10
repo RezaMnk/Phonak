@@ -53,7 +53,7 @@ export default function Index({ settings }) {
 
 
             <div className="relative overflow-x-auto rounded-lg">
-                <table className="w-full text-right text-gray-500 dark:text-slate-400 md:table-fixed">
+                <table className="w-full text-right text-gray-500 dark:text-slate-400 xl:table-fixed">
                     <thead className="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-slate-700">
                         <tr>
                             <th scope="col" className="px-6 py-3">

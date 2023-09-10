@@ -101,9 +101,32 @@ class RecordController extends Controller
         elseif ($record->user->reached_limit($count)) {
             return back()->withErrors(['product' => 'تعداد ظرفیت سفارش بیش از حد مجاز می باشد']);
         }
+        $record->set_step(3);
+
+        if (($record->type != $request->type) && $record->record_aids->count())
+        {
+            foreach ($record->record_aids as $record_aid)
+                $record_aid->update([
+                    'hearing_aid_size' => null,
+                    'vent_size' => null,
+                    'wax_guard' => null,
+                    'receiver' => null,
+                    'has_mold' => null,
+                    'mold_material' => null,
+                    'mold_size' => null,
+                    'has_vent' => null,
+                    'tube_size' => null,
+                    'dome_type' => null,
+                    'dome_size' => null,
+                    'external_receiver_size' => null,
+                    'shell_type' => null
+                ]);
+
+            $record->status = 3;
+            $record->touch();
+        }
 
         $record->update($data);
-        $record->set_step(3);
 
         return redirect()->route('records.edit', ['record' => $record, 'step' => 3])->with(['toast', ['success' => 'مرحله دوم ذخیره شد']]);
     }
@@ -153,16 +176,16 @@ class RecordController extends Controller
             if ($record->ear == $ear || $record->ear == 'both')
             {
                 $to_validate = [
-                    $ear .'.ac_250' => ['required', 'numeric'],
-                    $ear .'.ac_500' => ['required', 'numeric'],
-                    $ear .'.ac_1000' => ['required', 'numeric'],
-                    $ear .'.ac_2000' => ['required', 'numeric'],
-                    $ear .'.ac_4000' => ['required', 'numeric'],
-                    $ear .'.bc_250' => ['nullable', 'numeric'],
-                    $ear .'.bc_500' => ['nullable', 'numeric'],
-                    $ear .'.bc_1000' => ['nullable', 'numeric'],
-                    $ear .'.bc_2000' => ['nullable', 'numeric'],
-                    $ear .'.bc_4000' => ['nullable', 'numeric'],
+                    $ear .'.ac_250' => ['required', 'numeric', 'max:120'],
+                    $ear .'.ac_500' => ['required', 'numeric', 'max:120'],
+                    $ear .'.ac_1000' => ['required', 'numeric', 'max:120'],
+                    $ear .'.ac_2000' => ['required', 'numeric', 'max:120'],
+                    $ear .'.ac_4000' => ['required', 'numeric', 'max:120'],
+                    $ear .'.bc_250' => ['nullable', 'numeric', 'max:120'],
+                    $ear .'.bc_500' => ['nullable', 'numeric', 'max:120'],
+                    $ear .'.bc_1000' => ['nullable', 'numeric', 'max:120'],
+                    $ear .'.bc_2000' => ['nullable', 'numeric', 'max:120'],
+                    $ear .'.bc_4000' => ['nullable', 'numeric', 'max:120'],
                     ...$to_validate,
                 ];
             }
@@ -279,7 +302,7 @@ class RecordController extends Controller
             'national_code' => ['required', 'numeric', 'digits:10']
         ]);
 
-        $patient = Patient::query()->where('national_code', $request->national_code)->first();
+        $patient = auth()->user()->patients()->where('national_code', $request->national_code)->first();
         return response()->json(['patient' => $patient]);
     }
 
@@ -552,105 +575,124 @@ class RecordController extends Controller
     {
         $ears = $record->ear === 'both' ? ['left', 'right'] : [$record->ear];
 
+        $to_validate = [];
+
         foreach ($ears as $ear)
         {
             switch ($record->type)
             {
                 case 'CIC':
-                    $request->validate([
-                        $ear. '.hearing_aid_size' => ['required', 'in:Canal,Full shell'],
+                    $to_validate = [
+                        ...$to_validate,
+                        $ear. '.hearing_aid_size' => ['required', 'in:CIC,Canal'],
                         $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
                         $ear. '.wax_guard' => ['required', 'in:normal,rotating'],
                         $ear. '.receiver' => ['required', 'in:standard,power,super power'],
-                    ]);
+                    ];
                     break;
 
                 case 'ITC':
-                    $request->validate([
+                    $to_validate = [
+                        ...$to_validate,
                         $ear. '.hearing_aid_size' => ['required', 'in:Canal,Full shell'],
                         $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
                         $ear. '.wax_guard' => ['required', 'in:normal,rotating'],
                         $ear. '.receiver' => ['required', 'in:standard,power,super power,ultra power'],
-                    ]);
+                    ];
                     break;
 
                 case 'BTE mold':
-                    $request->validate([
+                    $to_validate = [
+                        ...$to_validate,
                         $ear. '.has_mold' => ['boolean'],
-                    ]);
+                    ];
                     if ($request[$ear]['has_mold'])
                     {
-                        $request->validate([
+                        $to_validate = [
+                            ...$to_validate,
                             $ear. '.mold_material' => ['required', 'in:soft,hard'],
                             $ear. '.mold_size' => ['required', 'in:Canal,Half shell,Full shell,Skeleton shell'],
-                        ]);
+                        ];
                         if ($request[$ear]['mold_material'] != 'soft')
                         {
-                            $request->validate([
+                            $to_validate = [
+                                ...$to_validate,
                                 $ear. '.has_vent' => ['boolean'],
-                            ]);
+                            ];
                             if ($request[$ear]['has_vent'])
-                                $request->validate([
+                                $to_validate = [
+                                    ...$to_validate,
                                     $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
-                                ]);
+                                ];
                         }
                     }
                     break;
 
                 case 'BTE tube':
-                    $request->validate([
+                    $to_validate = [
+                        ...$to_validate,
                         $ear. '.has_mold' => ['boolean'],
-                    ]);
+                    ];
                     if ($request[$ear]['has_mold'])
                     {
-                        $request->validate([
+                        $to_validate = [
+                            ...$to_validate,
                             $ear. '.tube_size' => ['required', 'in:0,1,2,3'],
                             $ear. '.has_vent' => ['boolean'],
-                        ]);
+                        ];
                         if ($request[$ear]['has_vent'])
-                            $request->validate([
+                            $to_validate = [
+                                ...$to_validate,
                                 $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
-                            ]);
+                            ];
                     } else {
-                        $request->validate([
+                        $to_validate = [
+                            ...$to_validate,
                             $ear. '.tube_size' => ['required', 'in:0,1,2,3'],
                             $ear. '.dome_type' => ['required', 'in:open,closed,vented,power'],
                             $ear. '.dome_size' => ['required', 'in:large,medium,small'],
-                        ]);
+                        ];
                     }
                     break;
 
                 case 'RIC':
-                    $request->validate([
+                    $to_validate = [
+                        ...$to_validate,
                         $ear. '.has_mold' => ['boolean'],
-                    ]);
+                    ];
                     if ($request[$ear]['has_mold'])
                     {
-                        $request->validate([
+                        $to_validate = [
+                            ...$to_validate,
                             $ear. '.receiver' => ['required', 'in:moderate,power,ultra power'],
                             $ear. '.external_receiver_size' => ['required', 'in:0,1,2,3'],
                             $ear. '.vent_size' => ['nullable', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
-                        ]);
+                        ];
 
                         if ($request->get($ear.'.receiver') == 'ultra power')
-                            $request->validate([
+                            $to_validate = [
+                                ...$to_validate,
                                 $ear. '.shell_type' => ['required', 'in:cshell'],
-                            ]);
+                            ];
                         else
-                            $request->validate([
+                            $to_validate = [
+                                ...$to_validate,
                                 $ear. '.shell_type' => ['required', 'in:cshell,Slimtip'],
-                            ]);
+                            ];
 
                     } else {
-                        $request->validate([
+                        $to_validate = [
+                            ...$to_validate,
                             $ear. '.receiver' => ['required', 'in:moderate,power'],
                             $ear. '.external_receiver_size' => ['required', 'in:0,1,2,3'],
                             $ear. '.dome_type' => ['required', 'in:open,closed,vented,power'],
                             $ear. '.dome_size' => ['required', 'in:large,medium,small'],
-                        ]);
+                        ];
                     }
                     break;
             }
         }
+
+        $request->validate($to_validate);
     }
 }

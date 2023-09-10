@@ -7,7 +7,6 @@ import {toast as toastify} from "react-toastify";
 import UserSidebar from "@/Layouts/UserSidebar.jsx";
 import AdminSidebar from "@/Layouts/AdminSidebar.jsx";
 import Icon from "@/Components/Icon.jsx";
-import TextInput from "@/Components/TextInput.jsx";
 
 export default function Authenticated({ header, breadcrumbs, headerExtra, children }) {
     const [minimize, setMinimize] = useMemorable(false, 'minimize');
@@ -70,7 +69,7 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                 pauseOnHover
                 theme={dark ? "dark" : "light"}
             />
-            <div className="min-h-screen bg-gray-100 dark:bg-slate-800">
+            <div className="min-h-screen bg-gray-100 dark:bg-slate-800 print:bg-white">
                 <div className={`fixed w-full ${hamburgerMenu ? 'block' : 'hidden'} h-full z-40 bg-black/40`} onClick={() => setHamburgerMenu(false)}></div>
                 {auth.user.is_admin ? (
                     <AdminSidebar minimize={minimize} changeMinimize={changeMinimize} hamburgerMenu={hamburgerMenu} setHamburgerMenu={setHamburgerMenu} dark={dark} />
@@ -79,13 +78,13 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                 )}
 
 
-                <div className={`min-h-screen relative pb-24 md:pb-12 print:p-0 transition-all ${minimize ? 'md:mr-24' : 'md:mr-60'}`}>
+                <div className={`min-h-screen relative pb-24 xl:pb-12 print:p-0 transition-all ${minimize ? 'xl:mr-24' : 'xl:mr-60'}`}>
                     {header && (
                         <header className={`bg-white dark:bg-slate-900 transition-all print:hidden`}>
                             <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
                                 <div className="flex justify-between">
                                     <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
-                                    <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 md:ml-0 items-center justify-center" onClick={toggleDarkMode}>
+                                    <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 xl:ml-0 items-center justify-center" onClick={toggleDarkMode}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500 dark:text-slate-300" viewBox="0 0 24 24" fill="none">
                                             {dark ? (
                                                 <path d="M20 14.12A7.78 7.78 0 019.88 4a7.782 7.782 0 002.9 15A7.782 7.782 0 0020 14.12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -100,7 +99,7 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                                             )}
                                         </svg>
                                     </button>
-                                    <button className="md:hidden flex bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 items-center justify-center" onClick={() => setHamburgerMenu(true)}>
+                                    <button className="xl:hidden flex bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 items-center justify-center" onClick={() => setHamburgerMenu(true)}>
                                         <Icon viewBox="0 0 24 24" type="stroke">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                         </Icon>
@@ -160,7 +159,7 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                             {(breadcrumbs || headerExtra) && (
                                 <>
                                     <hr className="w-fulll border-gray-300 dark:border-slate-600"/>
-                                    <div className={`container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex ${(breadcrumbs && headerExtra) ? 'flex-col md:flex-row space-y-5 md:space-y-0' : ''} justify-between py-4 overflow-x-auto whitespace-nowrap`}>
+                                    <div className={`container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex ${(breadcrumbs && headerExtra) ? 'flex-col xl:flex-row space-y-5 xl:space-y-0' : ''} justify-between py-4 overflow-x-auto whitespace-nowrap`}>
                                         {breadcrumbs && (
                                             <div className="flex items-center">
                                                 <a href={route('dashboard')} className="text-gray-600 dark:text-slate-200">
@@ -202,11 +201,11 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                     <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 xl:py-12 print:p-0 print:h-full">{children}</main>
 
                     <div className="absolute bottom-0 right-0 w-full border-t border-gray-200 dark:border-slate-700 print:hidden">
-                        <footer className="container mx-auto flex flex-col md:flex-row space-y-5 md:space-y-0 items-center px-4 sm:px-6 lg:px-8 py-4 text-gray-500 dark:text-slate-400">
-                            <div className="w-full md:w-1/2 text-center md:text-right">
+                        <footer className="container mx-auto flex flex-col xl:flex-row space-y-5 xl:space-y-0 items-center px-4 sm:px-6 lg:px-8 py-4 text-gray-500 dark:text-slate-400">
+                            <div className="w-full xl:w-1/2 text-center xl:text-right">
                                 طراحی و توسعه توسط <a href="https://rahamteam.com" className="text-sm text-blue-500 font-semibold">رهام</a>
                             </div>
-                            <div className="w-full md:w-1/2 flex items-center justify-center md:justify-start text-xs font-semibold eng-num" dir="ltr">
+                            <div className="w-full xl:w-1/2 flex items-center justify-center xl:justify-start text-xs font-semibold eng-num" dir="ltr">
                                 <Icon viewBox="0 0 24 24" type="stroke" width="2" className="!w-4 !h-4 inline mr-1">
                                     <path d="M14 15.6672C13.475 15.8812 12.8952 16 12.2857 16C9.91878 16 8 14.2091 8 12C8 9.79086 9.91878 8 12.2857 8C12.8952 8 13.475 8.11876 14 8.33283"/>
                                     <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"/>

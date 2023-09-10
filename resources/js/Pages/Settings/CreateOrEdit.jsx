@@ -53,8 +53,8 @@ export default function CreateOrEdit({ setting }) {
                             <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex flex-col space-y-5 mt-6 mb-5">
-                            <div className="w-full flex space-x-5 space-x-reverse">
-                                <div className="w-1/4">
+                            <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
+                                <div className="w-full xl:w-1/4">
                                     <TextInput
                                         id="group"
                                         name="group"
@@ -70,7 +70,7 @@ export default function CreateOrEdit({ setting }) {
 
                                     <InputError message={errors.group} className="mt-2"/>
                                 </div>
-                                <div className="w-1/4">
+                                <div className="w-full xl:w-1/4">
                                     <TextInput
                                         id="max_order"
                                         name="max_order"
@@ -86,7 +86,7 @@ export default function CreateOrEdit({ setting }) {
 
                                     <InputError message={errors.max_order} className="mt-2"/>
                                 </div>
-                                <div className="w-1/4">
+                                <div className="w-full xl:w-1/4">
                                     <TextInput
                                         id="start_time"
                                         name="start_time"
@@ -99,7 +99,7 @@ export default function CreateOrEdit({ setting }) {
 
                                     <InputError message={errors.start_time} className="mt-2"/>
                                 </div>
-                                <div className="w-1/4">
+                                <div className="w-full xl:w-1/4">
                                     <TextInput
                                         id="end_time"
                                         name="end_time"

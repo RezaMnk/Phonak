@@ -5,13 +5,13 @@ import Icon from "@/Components/Icon.jsx";
 export default function UserSidebar({ minimize, changeMinimize, hamburgerMenu, dark }) {
     return (
         <aside
-            className={`fixed md:flex hide-scrollbar flex-col transition-all ${hamburgerMenu ? 'w-60 !flex z-50 px-8 py-6' : 'w-0 !p-0 md:!px-8 md:!py-6'} ${minimize ? 'md:w-24' : 'md:w-60'} h-screen overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900 print:hidden`}>
+            className={`fixed xl:flex hide-scrollbar flex-col transition-all ${hamburgerMenu ? 'w-60 !flex z-50 px-8 py-6' : 'w-0 !p-0 xl:!px-8 xl:!py-6'} ${minimize ? 'xl:w-24' : 'xl:w-60'} h-screen overflow-y-auto bg-white border-l dark:bg-slate-800 dark:border-slate-900 print:hidden`}>
             <a href={route('dashboard')} className="-mx-2">
                 <ApplicationLogo dark={dark} small={minimize} className={`transition-all ${minimize ? 'w-12 h-12' : 'h-16'}`} />
             </a>
 
             <div className="flex flex-col justify-between flex-1 mt-6">
-                <nav className={`-mx-3 flex flex-col md:justify-between ${minimize ? 'items-center' : ''} flex-1`}>
+                <nav className={`-mx-3 flex flex-col xl:justify-between ${minimize ? 'items-center' : ''} flex-1`}>
                     <div className={! minimize ? 'space-y-8' : ''}>
                         <NavLink
                             className=""
@@ -133,7 +133,7 @@ export default function UserSidebar({ minimize, changeMinimize, hamburgerMenu, d
                             minimize={minimize}
                         />
                         <NavLink
-                            className="!mt-5 hidden md:flex"
+                            className="!mt-5 hidden xl:flex"
                             role="button"
                             icon={
                                 <Icon viewBox="0 0 24 24" type="stroke" width="2">

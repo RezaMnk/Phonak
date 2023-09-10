@@ -1,41 +1,55 @@
-import {Head} from '@inertiajs/react';
-import {useEffect} from "react";
-import {router} from "@inertiajs/react";
+import {Head, router} from '@inertiajs/react';
+import {useEffect, useState} from "react";
+import manifest from '../../../../public/build/manifest.json'; // Update the path accordingly
 
 export default function Record({ record }) {
 
+    const [first, setFirst] = useState(true)
+
     useEffect(() => {
-        function downloadAndInlineResources(url, callback) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => callback(data))
-                .catch(error => console.error('Error fetching resource:', error));
+        if (first) {
+            function inlineExternalScriptsAndStyles() {
+                const modulePreloadTags = Array.from(document.querySelectorAll('link[rel="modulepreload"][href]'));
+                const scriptTags = Array.from(document.querySelectorAll('script[src]'));
+
+                modulePreloadTags.forEach(modulePreloadTag => modulePreloadTag.remove());
+                scriptTags.forEach(scriptTag => scriptTag.remove());
+
+                // Get the CSS filename from the manifest
+                const cssFilename = manifest['resources/js/app.jsx'].css[0];
+
+                // Construct the CSS file URL dynamically
+                const cssUrl = `${document.location.origin}/build/${cssFilename}`;
+
+                // Fetch the CSS file
+                fetch(cssUrl)
+                    .then((response) => response.text())
+                    .then((cssData) => {
+                        // Set the CSS content
+                        document.getElementById('local-css').innerHTML = cssData
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching CSS:', error);
+                    });
+
+                router.get(route('records.download', {record: record.id, name: 'audiogram', archive: true}));
+
+                setTimeout(() => {
+                    const modifiedHtml = document.documentElement.outerHTML;
+                    const blob = new Blob([modifiedHtml], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'سفارش سمعک شماره ' + record.id + '.html';
+                    a.click();
+                    window.close()
+                }, 4000)
+            }
+
+            inlineExternalScriptsAndStyles()
         }
 
-        function inlineExternalScriptsAndStyles() {
-            const modulePreloadTags = Array.from(document.querySelectorAll('link[rel="modulepreload"][href]'));
-            const scriptTags = Array.from(document.querySelectorAll('script[src]'));
-
-            modulePreloadTags.forEach(modulePreloadTag => modulePreloadTag.remove());
-            scriptTags.forEach(scriptTag => scriptTag.remove());
-
-            const modifiedHtml = document.documentElement.outerHTML;
-            const blob = new Blob([modifiedHtml], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'سفارش سمعک شماره ' + record.id + '.html';
-            a.click();
-
-            router.get(route('records.download', {record: record.id, name: 'audiogram', ear: 'both', archive: true}));
-
-            setTimeout(() => {
-                window.close()
-            }, 4000)
-        }
-
-        inlineExternalScriptsAndStyles()
+        return setFirst(false);
     }, [])
 
     const vent_sizes = {
@@ -74,8 +88,8 @@ export default function Record({ record }) {
         <>
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه سمعک
@@ -84,7 +98,7 @@ export default function Record({ record }) {
                                 {record.record_aid[ear].hearing_aid_size}
                             </p>
                         </div>
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه ونت
@@ -93,7 +107,7 @@ export default function Record({ record }) {
                                 {vent_sizes[record.record_aid[ear].vent_size]}
                             </p>
                         </div>
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 مدل وکسگارد
@@ -102,7 +116,7 @@ export default function Record({ record }) {
                                 {record.record_aid[ear].wax_guard}
                             </p>
                         </div>
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 نوع رسیور
@@ -116,8 +130,8 @@ export default function Record({ record }) {
             )}
             {record.type === 'BTE mold' && (
                 <>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 قالب دارد؟
@@ -128,7 +142,7 @@ export default function Record({ record }) {
                         </div>
                         {record.record_aid[ear].has_mold === 1 && (
                             <>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         جنس قالب
@@ -137,7 +151,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].mold_material === 'hard' ? 'سخت' : 'نرم'}
                                     </p>
                                 </div>
-                                <div className={`w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ` + record.record_aid[ear].has_vent ? 'ml-5' : ''}>
+                                <div className={`w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ` + record.record_aid[ear].has_vent ? 'ml-5' : ''}>
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه قالب
@@ -153,8 +167,8 @@ export default function Record({ record }) {
             )}
             {record.type === 'BTE tube' && (
                 <>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 قالب دارد؟
@@ -165,7 +179,7 @@ export default function Record({ record }) {
                         </div>
                         {record.record_aid[ear].has_mold ? (
                             <>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         ونت دارد؟
@@ -174,7 +188,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].has_vent ? 'بله' : 'خیر'}
                                     </p>
                                 </div>
-                                <div className={`w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5`}>
+                                <div className={`w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5`}>
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه اسلیم تیوب
@@ -184,7 +198,7 @@ export default function Record({ record }) {
                                     </p>
                                 </div>
                                 {record.record_aid[ear].has_vent && (
-                                    <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                    <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                         <p className="text-xs flex items-center">
                                             <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                             اندازه ونت
@@ -197,7 +211,7 @@ export default function Record({ record }) {
                             </>
                         ) : (
                             <>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه اسلیم تیوب
@@ -206,7 +220,7 @@ export default function Record({ record }) {
                                         سایز {record.record_aid[ear].tube_size}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع Dome
@@ -215,7 +229,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].dome_type}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه Dome
@@ -232,8 +246,8 @@ export default function Record({ record }) {
             )}
             {record.type === 'RIC' && (
                 <>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 قالب دارد؟
@@ -244,7 +258,7 @@ export default function Record({ record }) {
                         </div>
                         {record.record_aid[ear].has_mold ? (
                             <>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع رسیور
@@ -253,7 +267,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].receiver}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع پوسته
@@ -262,7 +276,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].shell_type}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه رسیور خارجی
@@ -271,7 +285,7 @@ export default function Record({ record }) {
                                         سایز {record.record_aid[ear].external_receiver_size}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه ونت
@@ -283,7 +297,7 @@ export default function Record({ record }) {
                             </>
                         ) : (
                             <>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع رسیور
@@ -292,7 +306,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].receiver}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه رسیور خارجی
@@ -301,7 +315,7 @@ export default function Record({ record }) {
                                         سایز {record.record_aid[ear].external_receiver_size}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع Dome
@@ -310,7 +324,7 @@ export default function Record({ record }) {
                                         {record.record_aid[ear].dome_type}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه Dome
@@ -344,6 +358,8 @@ export default function Record({ record }) {
         <div className="bg-gray-100 p-24 print:p-4">
             <Head title="نمایش سفارش" />
 
+            <style type="text/css" id="local-css"></style>
+
             <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg" id="info">
                     <div className="w-full text-gray-700 dark:text-slate-200">
@@ -353,8 +369,8 @@ export default function Record({ record }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نام و نام خانوادگی
@@ -363,7 +379,7 @@ export default function Record({ record }) {
                                     {record.patient.name}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نام و نام خانوادگی به لاتین
@@ -372,7 +388,7 @@ export default function Record({ record }) {
                                     {record.patient.eng_name}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     کد ملی
@@ -381,7 +397,7 @@ export default function Record({ record }) {
                                     {record.patient.national_code}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     سال تولد
@@ -390,7 +406,7 @@ export default function Record({ record }) {
                                     {record.patient.birth_year}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     موقعیت
@@ -400,8 +416,8 @@ export default function Record({ record }) {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                            <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نوع بیمه
@@ -410,7 +426,7 @@ export default function Record({ record }) {
                                     {record.patient.insurance}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     تلفن همراه
@@ -419,7 +435,7 @@ export default function Record({ record }) {
                                     {record.patient.phone}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     کد پستی
@@ -428,7 +444,7 @@ export default function Record({ record }) {
                                     {record.patient.post_code}
                                 </p>
                             </div>
-                            <div className="w-full md:w-2/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-2/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس
@@ -445,8 +461,8 @@ export default function Record({ record }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     برند
@@ -455,7 +471,7 @@ export default function Record({ record }) {
                                     {record.brand}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نوع
@@ -464,7 +480,7 @@ export default function Record({ record }) {
                                     {record.type}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نام محصول
@@ -473,7 +489,7 @@ export default function Record({ record }) {
                                     {record.product.name}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     کد IRC
@@ -519,7 +535,7 @@ export default function Record({ record }) {
                                     <hr className="dark:border-slate-600"/>
                                 </div>
 
-                                <div className="flex flex-col-reverse md:flex-row space-y-5 space-y-reverse md:space-y-0 md:space-x-reverse md:space-x-10 mt-5 md:mt-8">
+                                <div className="flex flex-col-reverse xl:flex-row space-y-5 space-y-reverse xl:space-y-0 xl:space-x-reverse xl:space-x-10 mt-5 xl:mt-8">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
@@ -533,7 +549,7 @@ export default function Record({ record }) {
                                                     {record.audiogram.left["bc_" + item] ? record.audiogram.left["bc_" + item] : 'ثبت نشده'}
                                                 </div>
                                             </div>
-                                            <div className="flex md:hidden">
+                                            <div className="flex xl:hidden">
                                                 <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
                                                     <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
@@ -542,7 +558,7 @@ export default function Record({ record }) {
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden md:block w-1/12 text-gray-800 dark:text-slate-200">
+                                    <div className="hidden xl:block w-1/12 text-gray-800 dark:text-slate-200">
                                         <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
@@ -560,7 +576,7 @@ export default function Record({ record }) {
                                     <hr className="dark:border-slate-600"/>
                                 </div>
 
-                                <div className="flex flex-col-reverse md:flex-row space-y-5 space-y-reverse md:space-y-0 md:space-x-reverse md:space-x-10 mt-5 md:mt-8">
+                                <div className="flex flex-col-reverse xl:flex-row space-y-5 space-y-reverse xl:space-y-0 xl:space-x-reverse xl:space-x-10 mt-5 xl:mt-8">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
@@ -574,7 +590,7 @@ export default function Record({ record }) {
                                                     {record.audiogram.right["bc_" + item] ? record.audiogram.right["bc_" + item] : 'ثبت نشده'}
                                                 </div>
                                             </div>
-                                            <div className="flex md:hidden">
+                                            <div className="flex xl:hidden">
                                                 <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
                                                     <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
@@ -583,7 +599,7 @@ export default function Record({ record }) {
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden md:block w-1/12 text-gray-800 dark:text-slate-200">
+                                    <div className="hidden xl:block w-1/12 text-gray-800 dark:text-slate-200">
                                         <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
@@ -598,8 +614,8 @@ export default function Record({ record }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     شیوه ارسال
@@ -609,7 +625,7 @@ export default function Record({ record }) {
                                 </p>
                             </div>
                             {record.shipping.type === 'etc' && (
-                                <div className="w-full md:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         توضیحات شیوه ارسال
@@ -620,8 +636,8 @@ export default function Record({ record }) {
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     بیمه سلامت دارد؟
@@ -632,7 +648,7 @@ export default function Record({ record }) {
                             </div>
                             {record.shipping.has_health_insurance === 1 && (
                                 <>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             تلفن همراه کاربر
@@ -641,7 +657,7 @@ export default function Record({ record }) {
                                             {record.shipping.phone}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی شنوایی شناس
@@ -650,7 +666,7 @@ export default function Record({ record }) {
                                             {record.shipping.audiologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی پزشک گوش و حلق و بینی
@@ -659,7 +675,7 @@ export default function Record({ record }) {
                                             {record.shipping.otolaryngologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نوع بیمه تکمیلی
@@ -677,15 +693,15 @@ export default function Record({ record }) {
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                             <span className="inline-block">
                                                 {record.shipping.address.address}
                                             </span>
-                                    <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.post_code}
                                             </span>
                                     {record.shipping.address.phone && (<span
-                                        className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.phone}
                                             </span>)}
                                 </p>

@@ -69,7 +69,7 @@ export default function Index({ records }) {
                                 </td>
                                 <td className="px-6 py-4">
                                     {record.status === 'completed' ? (
-                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
                                             در انتظار پرداخت
                                         </span>
                                     ) : record.status === 'paid' ? (

@@ -52,13 +52,13 @@ export default function Index({ patients }) {
                             <th scope="col" className="px-6 py-3">
                                 کد ملی
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 سال تولد
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 شماره تماس
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 محل سکونت
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -78,15 +78,15 @@ export default function Index({ patients }) {
                                 <td className="px-6 py-4">
                                     {patient.national_code}
                                 </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                         {patient.birth_year}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     {patient.phone}
                                 </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     {patient.state} - {patient.city}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">

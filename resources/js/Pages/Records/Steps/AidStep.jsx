@@ -53,7 +53,7 @@ export default function AidStep() {
             description: record.aid?.right?.description || '',
         },
     });
-    console.log(errors)
+
     const submit = (e) => {
         e.preventDefault();
         post(route('records.store_aid', record.id), {
@@ -68,17 +68,17 @@ export default function AidStep() {
         <>
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                        <div className="w-full md:w-1/4 ml-5">
-                            <AidSize ear={ear} is_itc={record.type === 'ITC'} />
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                        <div className="w-full xl:w-1/4 ml-5">
+                            <AidSize ear={ear} is_cic={record.type === 'CIC'} />
                         </div>
-                        <div className="w-full md:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <VentSize ear={ear} />
                         </div>
-                        <div className="w-full md:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <WaxGuard ear={ear} />
                         </div>
-                        <div className="w-full md:w-1/4">
+                        <div className="w-full xl:w-1/4">
                             <ReceiverType ear={ear} type={record.type} />
                         </div>
                     </div>
@@ -90,21 +90,21 @@ export default function AidStep() {
                         <HasMold ear={ear} />
                     </div>
                     {data[ear].has_mold && (
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full md:w-3/12' : 'w-full md:w-3/12'} ml-5 flex items-center`}>
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full xl:w-3/12' : 'w-full xl:w-3/12'} ml-5 flex items-center`}>
                                 <MoldMaterial ear={ear} />
                             </div>
                             {data[ear].mold_material !== 'soft' && (
-                                <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full md:w-2/12' : 'w-full md:w-3/12'} ml-5 flex items-center`}>
+                                <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full xl:w-2/12' : 'w-full xl:w-3/12'} ml-5 flex items-center`}>
                                     <HasVent ear={ear} />
                                 </div>
                             )}
 
-                            <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full md:w-4/12 ml-5' : 'w-full md:w-6/12'}`}>
+                            <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full xl:w-4/12 ml-5' : 'w-full xl:w-6/12'}`}>
                                 <MoldSize ear={ear} />
                             </div>
                             {(data[ear].has_vent && data[ear].mold_material !== 'soft') && (
-                                <div className="w-full md:w-3/12">
+                                <div className="w-full xl:w-3/12">
                                     <VentSize ear={ear} />
                                 </div>
                             )}
@@ -119,30 +119,30 @@ export default function AidStep() {
                         <HasMold ear={ear} />
                     </div>
                     {data[ear].has_mold ? (
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/3 flex items-center">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/3 flex items-center">
                                 <HasVent ear={ear} />
                             </div>
-                            <div className={`${data[ear].has_vent ? 'w-full md:w-1/3 ml-5' : 'w-full md:w-2/3'}`}>
+                            <div className={`${data[ear].has_vent ? 'w-full xl:w-1/3 ml-5' : 'w-full xl:w-2/3'}`}>
                                 <TubeSize ear={ear} />
                             </div>
                             {data[ear].has_vent && (
                                 <>
-                                    <div className="w-full md:w-1/2">
+                                    <div className="w-full xl:w-1/2">
                                         <VentSize ear={ear} />
                                     </div>
                                 </>
                             )}
                         </div>
                     ) : (
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <TubeSize ear={ear} />
                             </div>
-                            <div className="w-full md:w-1/3 ml-5">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <DomeType ear={ear} />
                             </div>
-                            <div className="w-full md:w-1/3">
+                            <div className="w-full xl:w-1/3">
                                 <DomeSize ear={ear} />
                             </div>
                         </div>
@@ -154,34 +154,34 @@ export default function AidStep() {
                     <div className="w-full">
                         <HasMold ear={ear} />
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
                         {data[ear].has_mold ? (
                             <>
-                                <div className="w-full md:-1/4 ml-5">
+                                <div className="w-full xl:-1/4 ml-5">
                                     <ReceiverType ear={ear} type="RIC - mold" />
                                 </div>
-                                <div className="w-full md:w-1/4 ml-5">
+                                <div className="w-full xl:w-1/4 ml-5">
                                     <ShellType ear={ear} hasSlimtip={data[ear].receiver !== 'ultra power'} />
                                 </div>
-                                <div className="w-full md:w-1/4 ml-5">
+                                <div className="w-full xl:w-1/4 ml-5">
                                     <ExternalReceiverSize ear={ear} />
                                 </div>
-                                <div className="w-full md:w-1/4">
+                                <div className="w-full xl:w-1/4">
                                     <VentSize required={false} ear={ear} />
                                 </div>
                             </>
                         ) : (
                             <>
-                                <div className="w-full md:w-1/4 ml-5">
+                                <div className="w-full xl:w-1/4 ml-5">
                                     <ReceiverType ear={ear} type="RIC - no mold" />
                                 </div>
-                                <div className="w-full md:w-1/4 ml-5">
+                                <div className="w-full xl:w-1/4 ml-5">
                                     <ExternalReceiverSize ear={ear} />
                                 </div>
-                                <div className="w-full md:w-1/4 ml-5">
+                                <div className="w-full xl:w-1/4 ml-5">
                                     <DomeType ear={ear} />
                                 </div>
-                                <div className="w-full md:w-1/4">
+                                <div className="w-full xl:w-1/4">
                                     <DomeSize ear={ear} />
                                 </div>
                             </>

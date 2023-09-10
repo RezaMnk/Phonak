@@ -104,27 +104,27 @@ export default function Login({ status }) {
                 </div>
 
                 <div className="mt-6">
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
-                        <PrimaryButton className="w-full md:w-3/4 ml-5" disabled={processing}>
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0">
+                        <PrimaryButton className="w-full xl:w-3/4 ml-5" disabled={processing}>
                             ورود به حساب کاربری
                         </PrimaryButton>
                         <WarningButton
                             bordered={true}
-                            className="w-full md:w-1/4 text-xs md:text-sm"
+                            className="w-full xl:w-1/4 text-xs xl:text-sm"
                             href={route('register')}
                             link
                         >
                             ثبت نام
                         </WarningButton>
                     </div>
-                    <div className="mt-6 text-center">
-                        <Link
-                            href={route('password.request')}
-                            className="text-sm text-blue-950 dark:text-blue-300 hover:underline"
-                        >
-                            کلمه عبور خود را فراموش کرده اید؟
-                        </Link>
-                    </div>
+                    {/*<div className="mt-6 text-center">*/}
+                    {/*    <Link*/}
+                    {/*        href={route('password.request')}*/}
+                    {/*        className="text-sm text-blue-950 dark:text-blue-300 hover:underline"*/}
+                    {/*    >*/}
+                    {/*        کلمه عبور خود را فراموش کرده اید؟*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
                 </div>
             </form>
         </GuestLayout>

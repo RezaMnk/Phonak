@@ -46,8 +46,8 @@ export default function Show({ record, user }) {
         <>
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
-                    <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه سمعک
@@ -56,7 +56,7 @@ export default function Show({ record, user }) {
                                 {record.record_aid[ear].hearing_aid_size}
                             </p>
                         </div>
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه ونت
@@ -65,7 +65,7 @@ export default function Show({ record, user }) {
                                 {vent_sizes[record.record_aid[ear].vent_size]}
                             </p>
                         </div>
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 مدل وکسگارد
@@ -74,7 +74,7 @@ export default function Show({ record, user }) {
                                 {record.record_aid[ear].wax_guard}
                             </p>
                         </div>
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 نوع رسیور
@@ -88,8 +88,8 @@ export default function Show({ record, user }) {
             )}
             {record.type === 'BTE mold' && (
                 <>
-                    <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 قالب دارد؟
@@ -100,7 +100,7 @@ export default function Show({ record, user }) {
                         </div>
                         {record.record_aid[ear].has_mold === 1 && (
                             <>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         جنس قالب
@@ -110,7 +110,7 @@ export default function Show({ record, user }) {
                                     </p>
                                 </div>
                                 {record.record_aid[ear].mold_material !== 'soft' && (
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                             ونت دارد؟
@@ -120,7 +120,7 @@ export default function Show({ record, user }) {
                                         </p>
                                     </div>
                                 )}
-                                <div className={`w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ` + record.record_aid[ear].has_vent ? 'ml-5' : ''}>
+                                <div className={`w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ` + record.record_aid[ear].has_vent ? 'ml-5' : ''}>
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه قالب
@@ -130,7 +130,7 @@ export default function Show({ record, user }) {
                                     </p>
                                 </div>
                                 {record.record_aid[ear].has_vent && (
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
                                             <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                             اندازه ونت
@@ -147,8 +147,8 @@ export default function Show({ record, user }) {
             )}
             {record.type === 'BTE tube' && (
                 <>
-                    <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 قالب دارد؟
@@ -159,7 +159,7 @@ export default function Show({ record, user }) {
                         </div>
                         {record.record_aid[ear].has_mold ? (
                             <>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         ونت دارد؟
@@ -168,7 +168,7 @@ export default function Show({ record, user }) {
                                         {record.record_aid[ear].has_vent ? 'بله' : 'خیر'}
                                     </p>
                                 </div>
-                                <div className={`w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5`}>
+                                <div className={`w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5`}>
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه اسلیم تیوب
@@ -178,7 +178,7 @@ export default function Show({ record, user }) {
                                     </p>
                                 </div>
                                 {record.record_aid[ear].has_vent && (
-                                    <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                    <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
                                             <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                             اندازه ونت
@@ -191,7 +191,7 @@ export default function Show({ record, user }) {
                             </>
                         ) : (
                             <>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه اسلیم تیوب
@@ -200,7 +200,7 @@ export default function Show({ record, user }) {
                                         سایز {record.record_aid[ear].tube_size}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع Dome
@@ -209,7 +209,7 @@ export default function Show({ record, user }) {
                                         {record.record_aid[ear].dome_type}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه Dome
@@ -226,8 +226,8 @@ export default function Show({ record, user }) {
             )}
             {record.type === 'RIC' && (
                 <>
-                    <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                        <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 قالب دارد؟
@@ -238,7 +238,7 @@ export default function Show({ record, user }) {
                         </div>
                         {record.record_aid[ear].has_mold ? (
                             <>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع رسیور
@@ -247,7 +247,7 @@ export default function Show({ record, user }) {
                                         {record.record_aid[ear].receiver}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع پوسته
@@ -256,7 +256,7 @@ export default function Show({ record, user }) {
                                         {record.record_aid[ear].shell_type}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه رسیور خارجی
@@ -265,7 +265,7 @@ export default function Show({ record, user }) {
                                         سایز {record.record_aid[ear].external_receiver_size}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه ونت
@@ -277,7 +277,7 @@ export default function Show({ record, user }) {
                             </>
                         ) : (
                             <>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع رسیور
@@ -286,7 +286,7 @@ export default function Show({ record, user }) {
                                         {record.record_aid[ear].receiver}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه رسیور خارجی
@@ -295,7 +295,7 @@ export default function Show({ record, user }) {
                                         سایز {record.record_aid[ear].external_receiver_size}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع Dome
@@ -304,7 +304,7 @@ export default function Show({ record, user }) {
                                         {record.record_aid[ear].dome_type}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
                                         <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه Dome
@@ -351,7 +351,7 @@ export default function Show({ record, user }) {
                 <div className="flex gap-4">
                     <PrimaryButton
                         onClick={print}
-                        className="w-full md:w-fit !px-4 !py-2 text-xs"
+                        className="w-full xl:w-fit !px-4 !py-2 text-xs"
                     >
                         پرینت سفارش
                     </PrimaryButton>
@@ -383,8 +383,8 @@ export default function Show({ record, user }) {
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
                             </div>
-                            <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-6">
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         نام و نام خانوادگی
@@ -393,7 +393,7 @@ export default function Show({ record, user }) {
                                         {record.patient.name}
                                     </p>
                                 </div>
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         نام و نام خانوادگی به لاتین
@@ -402,7 +402,7 @@ export default function Show({ record, user }) {
                                         {record.patient.eng_name}
                                     </p>
                                 </div>
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         کد ملی
@@ -411,7 +411,7 @@ export default function Show({ record, user }) {
                                         {record.patient.national_code}
                                     </p>
                                 </div>
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         سال تولد
@@ -420,7 +420,7 @@ export default function Show({ record, user }) {
                                         {record.patient.birth_year}
                                     </p>
                                 </div>
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         موقعیت
@@ -430,8 +430,8 @@ export default function Show({ record, user }) {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         نوع بیمه
@@ -440,7 +440,7 @@ export default function Show({ record, user }) {
                                         {record.patient.insurance}
                                     </p>
                                 </div>
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         تلفن همراه
@@ -449,7 +449,7 @@ export default function Show({ record, user }) {
                                         {record.patient.phone}
                                     </p>
                                 </div>
-                                <div className="w-full print:w-1/5 md:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="w-full print:w-1/5 xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         کد پستی
@@ -458,7 +458,7 @@ export default function Show({ record, user }) {
                                         {record.patient.post_code}
                                     </p>
                                 </div>
-                                <div className="w-full md:w-2/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full xl:w-2/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         آدرس
@@ -476,8 +476,8 @@ export default function Show({ record, user }) {
                                     </h5>
                                     <hr className="dark:border-slate-600"/>
                                 </div>
-                                <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             برند
@@ -486,7 +486,7 @@ export default function Show({ record, user }) {
                                             {record.brand}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نوع
@@ -495,7 +495,7 @@ export default function Show({ record, user }) {
                                             {record.type}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نام محصول
@@ -504,7 +504,7 @@ export default function Show({ record, user }) {
                                             {record.product.name}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             کد IRC
@@ -552,7 +552,7 @@ export default function Show({ record, user }) {
                                     <hr className="dark:border-slate-600"/>
                                 </div>
 
-                                <div className="flex flex-col-reverse print:flex-row md:flex-row space-y-5 space-y-reverse print:space-y-0 md:space-y-0 print:space-x-reverse md:space-x-reverse print:space-x-10 md:space-x-10 mt-5 md:mt-8 break-inside-avoid">
+                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-10 xl:space-x-10 mt-5 xl:mt-8 break-inside-avoid">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
@@ -566,7 +566,7 @@ export default function Show({ record, user }) {
                                                     {record.audiogram.left["bc_" + item] ? record.audiogram.left["bc_" + item] : 'ثبت نشده'}
                                                 </div>
                                             </div>
-                                            <div className="flex md:hidden">
+                                            <div className="flex xl:hidden">
                                                 <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
                                                     <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
@@ -575,7 +575,7 @@ export default function Show({ record, user }) {
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden md:block w-1/12 text-gray-800 dark:text-slate-200">
+                                    <div className="hidden xl:block w-1/12 text-gray-800 dark:text-slate-200">
                                         <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
@@ -593,7 +593,7 @@ export default function Show({ record, user }) {
                                     <hr className="dark:border-slate-600"/>
                                 </div>
 
-                                <div className="flex flex-col-reverse print:flex-row md:flex-row space-y-5 space-y-reverse print:space-y-0 md:space-y-0 print:space-x-reverse md:space-x-reverse print:space-x-10 md:space-x-10 mt-5 md:mt-8 break-inside-avoid">
+                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-10 xl:space-x-10 mt-5 xl:mt-8 break-inside-avoid">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
@@ -607,7 +607,7 @@ export default function Show({ record, user }) {
                                                     {record.audiogram.right["bc_" + item] ? record.audiogram.right["bc_" + item] : 'ثبت نشده'}
                                                 </div>
                                             </div>
-                                            <div className="flex md:hidden">
+                                            <div className="flex xl:hidden">
                                                 <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
                                                     <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
@@ -616,7 +616,7 @@ export default function Show({ record, user }) {
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden md:block w-1/12 text-gray-800 dark:text-slate-200">
+                                    <div className="hidden xl:block w-1/12 text-gray-800 dark:text-slate-200">
                                         <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
                                         <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
@@ -632,8 +632,8 @@ export default function Show({ record, user }) {
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
                             </div>
-                            <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-6">
-                                <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         شیوه ارسال
@@ -643,7 +643,7 @@ export default function Show({ record, user }) {
                                     </p>
                                 </div>
                                 {record.shipping.type === 'etc' && (
-                                    <div className="w-full md:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                    <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             توضیحات شیوه ارسال
@@ -655,8 +655,8 @@ export default function Show({ record, user }) {
                                 )}
                             </div>
                         </div>
-                        <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-6 break-inside-avoid">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6 break-inside-avoid">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     بیمه سلامت دارد؟
@@ -667,7 +667,7 @@ export default function Show({ record, user }) {
                             </div>
                             {record.shipping.has_health_insurance === 1 && (
                                 <>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             تلفن همراه کاربر
@@ -676,7 +676,7 @@ export default function Show({ record, user }) {
                                             {record.shipping.phone}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی شنوایی شناس
@@ -685,7 +685,7 @@ export default function Show({ record, user }) {
                                             {record.shipping.audiologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی پزشک گوش و حلق و بینی
@@ -694,7 +694,7 @@ export default function Show({ record, user }) {
                                             {record.shipping.otolaryngologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نوع بیمه تکمیلی
@@ -712,15 +712,15 @@ export default function Show({ record, user }) {
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-2">
+                                <p className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-2">
                                             <span className="inline-block">
                                                 {record.shipping.address.address}
                                             </span>
-                                    <span className="inline-block md:mr-5 md:pr-5 md:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.post_code}
                                             </span>
                                     {record.shipping.address.phone && (<span
-                                        className="inline-block md:mr-5 md:pr-5 md:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.phone}
                                             </span>)}
                                 </p>
@@ -740,15 +740,15 @@ export default function Show({ record, user }) {
                             </div>
                         )}
 
-                        <div className="break-inside-avoid">
+                        <div className="break-inside-avoid print:hidden">
                             <div className="mt-12 print:mt-5">
                                 <h5>
                                     مدارک
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
                             </div>
-                            <div className="flex flex-col md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-3">
-                                <div className="w-full print:w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 md:ml-12 break-inside-avoid">
+                            <div className="flex flex-col xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-3">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         ادیوگرام
@@ -759,7 +759,7 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 md:ml-12 break-inside-avoid">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         مدرک شناسایی کاربر
@@ -770,7 +770,7 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         نسخه پزشک گوش و حلق و بینی

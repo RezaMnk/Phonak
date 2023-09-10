@@ -9,6 +9,8 @@ import SelectInput from "@/Components/SelectInput.jsx";
 import WarningButton from "@/Components/WarningButton.jsx";
 import {useEffect, useState} from "react";
 import Modal from "@/Components/Modal.jsx";
+import {toast as toastify} from "react-toastify";
+
 
 export default function Edit({ user }) {
     const {data, setData, reset, put, processing, errors} = useForm({
@@ -87,8 +89,8 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                            <div className="w-full md:w-4/12 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                            <div className="w-full xl:w-4/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.name}
@@ -97,7 +99,7 @@ export default function Edit({ user }) {
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-3/12 ml-5">
+                            <div className="w-full xl:w-3/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.national_code}
@@ -107,7 +109,7 @@ export default function Edit({ user }) {
                                         strokeLinecap="round" strokeLinejoin="round"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-2/12 ml-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.grad_year}
@@ -116,7 +118,7 @@ export default function Edit({ user }) {
                                                    d="M8 4H7.2002C6.08009 4 5.51962 4 5.0918 4.21799C4.71547 4.40973 4.40973 4.71547 4.21799 5.0918C4 5.51962 4 6.08009 4 7.2002V8M8 4H16M8 4V2M16 4H16.8002C17.9203 4 18.4796 4 18.9074 4.21799C19.2837 4.40973 19.5905 4.71547 19.7822 5.0918C20 5.5192 20 6.07899 20 7.19691V8M16 4V2M4 8V16.8002C4 17.9203 4 18.4801 4.21799 18.9079C4.40973 19.2842 4.71547 19.5905 5.0918 19.7822C5.5192 20 6.07899 20 7.19691 20H16.8031C17.921 20 18.48 20 18.9074 19.7822C19.2837 19.5905 19.5905 19.2842 19.7822 18.9079C20 18.4805 20 17.9215 20 16.8036V8M4 8H20M16 16H16.002L16.002 16.002L16 16.002V16ZM12 16H12.002L12.002 16.002L12 16.002V16ZM8 16H8.002L8.00195 16.002L8 16.002V16ZM16.002 12V12.002L16 12.002V12H16.002ZM12 12H12.002L12.002 12.002L12 12.002V12ZM8 12H8.002L8.00195 12.002L8 12.002V12Z"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-3/12">
+                            <div className="w-full xl:w-3/12">
                                 <TextInput
                                     disabled
                                     id="med_number"
@@ -126,8 +128,8 @@ export default function Edit({ user }) {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                            <div className="w-full md:w-1/4 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                            <div className="w-full xl:w-1/4 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.grade}
@@ -141,7 +143,7 @@ export default function Edit({ user }) {
                                     )}
                                 />
                             </div>
-                            <div className="w-full md:w-1/4 ml-5">
+                            <div className="w-full xl:w-1/4 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.university}
@@ -160,7 +162,7 @@ export default function Edit({ user }) {
                                     )}
                                 />
                             </div>
-                            <div className="w-full md:w-1/4 ml-5">
+                            <div className="w-full xl:w-1/4 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.state}
@@ -179,7 +181,7 @@ export default function Edit({ user }) {
                                     )}
                                 />
                             </div>
-                            <div className="w-full md:w-1/4">
+                            <div className="w-full xl:w-1/4">
                                 <TextInput
                                     disabled
                                     value={user.city}
@@ -206,8 +208,8 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                            <div className="w-full md:w-2/12 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.address.home_post_code}
@@ -222,7 +224,7 @@ export default function Edit({ user }) {
                                     )}
                                 />
                             </div>
-                            <div className="w-full md:w-2/12 ml-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.address.home_phone}
@@ -232,7 +234,7 @@ export default function Edit({ user }) {
                                         strokeLinecap="round" strokeLinejoin="round"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-8/12">
+                            <div className="w-full xl:w-8/12">
                                 <TextInput
                                     disabled
                                     value={user.address.home_address}
@@ -243,8 +245,8 @@ export default function Edit({ user }) {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                            <div className="w-full md:w-2/12 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.address.work_post_code}
@@ -259,7 +261,7 @@ export default function Edit({ user }) {
                                     )}
                                 />
                             </div>
-                            <div className="w-full md:w-2/12 ml-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.address.work_phone}
@@ -269,7 +271,7 @@ export default function Edit({ user }) {
                                         strokeLinecap="round" strokeLinejoin="round"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-8/12">
+                            <div className="w-full xl:w-8/12">
                                 <TextInput
                                     disabled
                                     value={user.address.work_address}
@@ -281,8 +283,8 @@ export default function Edit({ user }) {
                             </div>
                         </div>
                         {user.address.second_work_address && (
-                            <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                                <div className="w-full md:w-2/12 ml-5">
+                            <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                                <div className="w-full xl:w-2/12 ml-5">
                                     <TextInput
                                         disabled
                                         value={user.address.second_work_post_code}
@@ -297,7 +299,7 @@ export default function Edit({ user }) {
                                         )}
                                     />
                                 </div>
-                                <div className="w-full md:w-2/12 ml-5">
+                                <div className="w-full xl:w-2/12 ml-5">
                                     <TextInput
                                         disabled
                                         value={user.address.second_work_phone}
@@ -307,7 +309,7 @@ export default function Edit({ user }) {
                                             strokeLinecap="round" strokeLinejoin="round"/>}
                                     />
                                 </div>
-                                <div className="w-full md:w-8/12">
+                                <div className="w-full xl:w-8/12">
                                     <TextInput
                                         disabled
                                         value={user.address.second_work_address}
@@ -326,8 +328,8 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                            <div className="w-full md:w-1/3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.info.phone}
@@ -335,7 +337,7 @@ export default function Edit({ user }) {
                                     svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-1/3 ml-5">
+                            <div className="w-full xl:w-1/3 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.info.landline}
@@ -345,7 +347,7 @@ export default function Edit({ user }) {
                                         strokeLinecap="round" strokeLinejoin="round"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-1/3">
+                            <div className="w-full xl:w-1/3">
                                 <TextInput
                                     disabled
                                     value={user.info.whatsapp_phone}
@@ -354,8 +356,8 @@ export default function Edit({ user }) {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                            <div className="w-full md:w-1/4 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                            <div className="w-full xl:w-1/4 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.info.referral_name}
@@ -364,7 +366,7 @@ export default function Edit({ user }) {
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-1/4 ml-5">
+                            <div className="w-full xl:w-1/4 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.info.referral_phone}
@@ -372,7 +374,7 @@ export default function Edit({ user }) {
                                     svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-1/4 ml-5">
+                            <div className="w-full xl:w-1/4 ml-5">
                                 <TextInput
                                     disabled
                                     value={user.info.second_referral_name}
@@ -381,7 +383,7 @@ export default function Edit({ user }) {
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                                 />
                             </div>
-                            <div className="w-full md:w-1/4">
+                            <div className="w-full xl:w-1/4">
                                 <TextInput
                                     disabled
                                     value={user.info.second_referral_phone}
@@ -415,8 +417,8 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                            <div className="w-full md:w-2/12 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <SelectInput
                                     id="role"
                                     name="role"
@@ -432,7 +434,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.role} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-2/12 ml-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     id="group"
                                     type="number"
@@ -453,7 +455,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.group} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-2/12 ml-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <SelectInput
                                     className={data.status === 'approved' ? '!bg-green-50 dark:!bg-green-900/50' : data.status === 'waiting' ? '!bg-yellow-50 dark:!bg-yellow-900/50' : '!bg-red-50 dark:!bg-red-900/50'}
                                     id="status"
@@ -471,7 +473,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.status} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-3/12 ml-5">
+                            <div className="w-full xl:w-3/12 ml-5">
                                 <TextInput
                                     id="password"
                                     type="password"
@@ -493,7 +495,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.password} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-3/12">
+                            <div className="w-full xl:w-3/12">
                                 <TextInput
                                     id="confirm_password"
                                     type="password"
@@ -522,54 +524,75 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                            <div className="relative w-full md:w-1/3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                            <div className="relative w-full xl:w-1/3 ml-5">
                                 <a
-                                    href={user.info.id_card_image_url}
-                                    target="_blank"
+                                    href={user.info.id_card_image ? user.info.id_card_image_url : 'javascript:void(0)'}
+                                    target={user.info.id_card_image && "_blank"}
+                                    onClick={! user.info.id_card_image && (() => {
+                                        toastify('مدرک برای همکار ثبت نشده است', {
+                                            type: 'error'
+                                        });
+                                    })}
                                     className="inline-flex justify-center rounded-lg w-full font-semibold px-12 py-6 transition-colors duration-300 text-gray-900 dark:text-slate-200 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 hover:dark:bg-sky-900 border-2 border-sky-500 dark:border-sky-700 border-dashed"
                                 >
                                     مشاهده تصویر کارت ملی جدید
                                 </a>
-                                <a
+                                {user.info.id_card_image && (
+                                    <a
                                     className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
                                     href={route('users.download', {user: user.id, name: 'id'})}
                                     target="_blank"
                                 >
                                     دانلود
                                 </a>
+                                )}
                             </div>
-                            <div className="relative w-full md:w-1/3 ml-5">
+                            <div className="relative w-full xl:w-1/3 ml-5">
                                 <a
-                                    href={user.info.med_card_image_url}
-                                    target="_blank"
+                                    href={user.info.med_card_image ? user.info.med_card_image_url : 'javascript:void(0)'}
+                                    target={user.info.med_card_image && "_blank"}
+                                    onClick={! user.info.med_card_image && (() => {
+                                        toastify('مدرک برای همکار ثبت نشده است', {
+                                            type: 'error'
+                                        });
+                                    })}
                                     className="inline-flex justify-center rounded-lg w-full font-semibold px-12 py-6 transition-colors duration-300 text-gray-900 dark:text-slate-200 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 hover:dark:bg-sky-900 border-2 border-sky-500 dark:border-sky-700 border-dashed"
                                 >
                                     مشاهده تصویر کارت نظام پزشکی
                                 </a>
-                                <a
+                                {user.info.med_card_image && (
+                                    <a
                                     className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
                                     href={route('users.download', {user: user.id, name: 'med_card'})}
                                     target="_blank"
                                 >
                                     دانلود
                                 </a>
+                                )}
                             </div>
-                            <div className="relative w-full md:w-1/3">
+                            <div className="relative w-full xl:w-1/3">
                                 <a
-                                    href={user.info.license_image_url}
-                                    target="_blank"
+                                    href={user.info.license_image ? user.info.license_image_url : 'javascript:void(0)'}
+                                    target={user.info.license_image && "_blank"}
+                                    onClick={! user.info.license_image && (() => {
+                                        toastify('مدرک برای همکار ثبت نشده است', {
+                                            type: 'error'
+                                        });
+                                    })}
                                     className="inline-flex justify-center rounded-lg w-full font-semibold px-12 py-6 transition-colors duration-300 text-gray-900 dark:text-slate-200 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 hover:dark:bg-sky-900 border-2 border-sky-500 dark:border-sky-700 border-dashed"
                                 >
                                     مشاهده تصویر مجوز فعالیت
                                 </a>
-                                <a
+                                {user.info.license_image && (
+                                    <a
                                     className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
                                     href={route('users.download', {user: user.id, name: 'license'})}
                                     target="_blank"
                                 >
                                     دانلود
                                 </a>
+                                )}
                             </div>
                         </div>
 
@@ -589,7 +612,7 @@ export default function Edit({ user }) {
                                 </div>
                             </>
                         )}
-                        <div className="flex justify-between mt-8 block md:hidden">
+                        <div className="flex justify-between mt-8 block xl:hidden">
                             {user.status !== 'approved' && (
                                 <>
                                     <DangerButton
@@ -613,7 +636,7 @@ export default function Edit({ user }) {
 
                             )}
                         </div>
-                        <div className="flex justify-between mt-3 md:mt-8">
+                        <div className="flex justify-between mt-3 xl:mt-8">
                             <DangerButton
                                 className="!px-4 !py-2"
                                 link={true}
@@ -628,12 +651,12 @@ export default function Edit({ user }) {
                                         onClick={() => {
                                         setModalShow(true);
                                     }}
-                                        className="!px-4 !py-2 ml-5 mr-auto hidden md:inline-flex"
+                                        className="!px-4 !py-2 ml-5 mr-auto hidden xl:inline-flex"
                                     >
                                         عدم تایید
                                     </DangerButton>
                                     <WarningButton
-                                        className="!px-4 !py-2 ml-5 hidden md:inline-flex"
+                                        className="!px-4 !py-2 ml-5 hidden xl:inline-flex"
                                         disabled={processing}
                                         type="button"
                                         onClick={submit_verified}

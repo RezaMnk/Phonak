@@ -137,12 +137,16 @@ class UserController extends Controller
             'confirm_password' => ['required_with:password', 'same:password'],
         ]);
 
-        $user->update([
+        $data = [
             'role' => $request->role,
             'status' => $request->status,
-            'password' => $request->password,
             'group' => $request->group,
-        ]);
+        ];
+
+        if ($request->password)
+            $data['password'] = $request->password;
+
+        $user->update($data);
 
         return back()->with('toast', ['success' => 'اطلاعات همکار با موفقیت ویرایش شدند']);
     }

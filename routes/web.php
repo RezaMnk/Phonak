@@ -51,7 +51,7 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
         Route::post('/store-audiogram/{record}', 'store_audiogram')->name('.store_audiogram');
         Route::post('/store-shipping/{record}', 'store_shipping')->name('.store_shipping');
 
-        Route::get('/download/{record}/{name}/{ear?}/{archive?}', 'download')->name('.download');
+        Route::get('/download/{record}/{name}/{archive?}', 'download')->name('.download');
 
         Route::get('/pay/{record}', 'pay')->name('.pay');
     });
@@ -73,7 +73,7 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
 //        Route::delete('/{patient}', 'destroy')->name('.destroy');
 //    });
 
-    Route::controller(SettingController::class)->name('settings')->prefix('settings')->group(function () {
+    Route::controller(SettingController::class)->name('settings')->group(function () {
         Route::get('/off-limits', 'off_limits')->name('.off_limits');
         Route::get('/out-of-schedule', 'out_of_schedule')->name('.out_of_schedule');
     });

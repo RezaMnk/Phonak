@@ -59,8 +59,8 @@ export default function Address() {
                     </h5>
                     <hr className="border-gray-300 dark:border-slate-600"/>
                 </div>
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                    <div className="w-full md:w-1/2 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                    <div className="w-full xl:w-1/2 ml-5">
                         <div className="mb-5">
                             <TextInput
                                 id="home_post_code"
@@ -102,7 +102,7 @@ export default function Address() {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full xl:w-1/2">
                         <TextAreaInput
                             id="home_address"
                             name="home_address"
@@ -126,8 +126,8 @@ export default function Address() {
                     </h5>
                     <hr className="border-gray-300 dark:border-slate-600"/>
                 </div>
-                <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                    <div className="w-full md:w-1/2 ml-5">
+                <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                    <div className="w-full xl:w-1/2 ml-5">
                         <div className="mb-5">
                             <TextInput
                                 id="work_post_code"
@@ -168,7 +168,7 @@ export default function Address() {
                         </div>
                     </div>
 
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full xl:w-1/2">
                         <TextAreaInput
                             id="work_address"
                             name="work_address"
@@ -218,8 +218,8 @@ export default function Address() {
                                 </DangerButton>
                             </div>
                             <hr className="w-full mt-1 border-gray-300 dark:border-slate-600"/>
-                            <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                                <div className="w-full md:w-1/2 ml-5">
+                            <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                                <div className="w-full xl:w-1/2 ml-5">
                                     <div className="mb-5">
                                         <TextInput
                                             id="second_work_post_code"
@@ -262,7 +262,7 @@ export default function Address() {
                                     </div>
                                 </div>
 
-                                <div className="w-full md:w-1/2">
+                                <div className="w-full xl:w-1/2">
                                     <TextAreaInput
                                         id="second_work_address"
                                         name="second_work_address"

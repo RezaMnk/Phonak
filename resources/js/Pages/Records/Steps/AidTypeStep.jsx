@@ -31,7 +31,11 @@ export default function AidTypeStep() {
 
     useEffect(() => {
         if (data.type && data.brand)
+        {
             get_products(data.type)
+            setData('product', '')
+            setProduct('')
+        }
     }, [data.type, data.brand])
 
     const submit = (e) => {
@@ -64,15 +68,15 @@ export default function AidTypeStep() {
              <Head title="سفارش - نوع سفارش" />
 
              <form className="w-full" onSubmit={submit} noValidate>
-                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                     <div className="w-full md:w-1/3 ml-5 text-gray-700 dark:text-slate-200">
+                 <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                     <div className="w-full xl:w-1/3 ml-5 text-gray-700 dark:text-slate-200">
                          <p>
                              برند مورد سفارش:
                          </p>
 
                          <InputError message={errors.brand} className="mt-2"/>
 
-                         <div className="mt-5 flex justify-between md:justify-start">
+                         <div className="mt-5 flex justify-between xl:justify-start">
                              <div className="inline-block ml-5">
                                  <RadioInput
                                      id="brand_phonak"
@@ -141,9 +145,9 @@ export default function AidTypeStep() {
                              </div>
                          </div>
                      </div>
-                     <div className="w-full md:w-2/3 flex flex-col space-y-5 md:space-y-0">
-                         <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0">
-                             <div className="w-full md:w-1/2 ml-5 h-fit">
+                     <div className="w-full xl:w-2/3 flex flex-col space-y-5 xl:space-y-0">
+                         <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0">
+                             <div className="w-full xl:w-1/2 ml-5 h-fit">
                                  <SelectInput
                                      id="type"
                                      name="name"
@@ -162,7 +166,7 @@ export default function AidTypeStep() {
 
                                  <InputError message={errors.type} className="mt-2"/>
                              </div>
-                             <div className="w-full md:w-1/2 h-fit">
+                             <div className="w-full xl:w-1/2 h-fit">
                                  <SelectInput
                                      id="ear"
                                      name="ear"

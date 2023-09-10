@@ -59,13 +59,13 @@ export default function Index({ users }) {
                             <th scope="col" className="px-6 py-3">
                                 نام و نام خانوادگی
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 شماره نظام پزشکی
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 موقعیت
                             </th>
-                            <th scope="col" className="px-6 py-3 hidden md:table-cell">
+                            <th scope="col" className="px-6 py-3 hidden xl:table-cell">
                                 شماره گروه
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -85,13 +85,13 @@ export default function Index({ users }) {
                                     className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
                                     {user.name}
                                 </th>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     {user.med_number}
                                 </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     {user.state} - {user.city}
                                 </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
+                                <td className="px-6 py-4 hidden xl:table-cell">
                                     {user.group === 0 ? 'گروه بندی نشده' : user.group}
                                 </td>
                                 <td className="px-6 py-4">

@@ -1,38 +1,54 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.jsx';
 import {Head} from '@inertiajs/react';
-import WarningButton from "@/Components/WarningButton.jsx";
-import TextInput from "@/Components/TextInput.jsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import manifest from '../../../../public/build/manifest.json'; // Update the path accordingly
+
 
 export default function Record({ accessory }) {
 
+    const [first, setFirst] = useState(true)
+
     useEffect(() => {
-        function downloadAndInlineResources(url, callback) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => callback(data))
-                .catch(error => console.error('Error fetching resource:', error));
+        if (first) {
+            function inlineExternalScriptsAndStyles() {
+                const modulePreloadTags = Array.from(document.querySelectorAll('link[rel="modulepreload"][href]'));
+                const scriptTags = Array.from(document.querySelectorAll('script[src]'));
+
+                modulePreloadTags.forEach(modulePreloadTag => modulePreloadTag.remove());
+                scriptTags.forEach(scriptTag => scriptTag.remove());
+
+                // Get the CSS filename from the manifest
+                const cssFilename = manifest['resources/js/app.jsx'].css[0];
+
+                // Construct the CSS file URL dynamically
+                const cssUrl = `${document.location.origin}/build/${cssFilename}`;
+
+                // Fetch the CSS file
+                fetch(cssUrl)
+                    .then((response) => response.text())
+                    .then((cssData) => {
+                        // Set the CSS content
+                        document.getElementById('local-css').innerHTML = cssData
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching CSS:', error);
+                    });
+
+                setTimeout(() => {
+                    const modifiedHtml = document.documentElement.outerHTML;
+                    const blob = new Blob([modifiedHtml], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'سفارش لوازم جانبی شماره ' + accessory.id + '.html';
+                    a.click();
+                    window.close()
+                }, 2000)
+            }
+
+            inlineExternalScriptsAndStyles()
         }
 
-        function inlineExternalScriptsAndStyles() {
-            const modulePreloadTags = Array.from(document.querySelectorAll('link[rel="modulepreload"][href]'));
-            const scriptTags = Array.from(document.querySelectorAll('script[src]'));
-
-            modulePreloadTags.forEach(modulePreloadTag => modulePreloadTag.remove());
-            scriptTags.forEach(scriptTag => scriptTag.remove());
-
-            const modifiedHtml = document.documentElement.outerHTML;
-            const blob = new Blob([modifiedHtml], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'سفارش لوازم جانبی شماره ' + accessory.id + '.html';
-            a.click();
-            window.close();
-        }
-
-        inlineExternalScriptsAndStyles()
+        return setFirst(false);
     }, [])
 
     const shipping_types = {
@@ -59,6 +75,8 @@ export default function Record({ accessory }) {
         <div className="min-h-screen items-center flex bg-gray-100 p-24 print:p-4">
             <Head title="نمایش سفارش" />
 
+            <style type="text/css" id="local-css"></style>
+
             <div className="w-full flex flex-col sm:justify-center items-center">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
                     <div className="w-full text-gray-700 dark:text-slate-200">
@@ -68,8 +86,8 @@ export default function Record({ accessory }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-8">
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     برند
@@ -79,7 +97,7 @@ export default function Record({ accessory }) {
                                     {accessory.product.brand === 'etc' && (' - ' + accessory.product.etc_brand)}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نام محصول
@@ -88,7 +106,7 @@ export default function Record({ accessory }) {
                                     {accessory.product.name}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     کد IRC
@@ -105,8 +123,8 @@ export default function Record({ accessory }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     شیوه ارسال
@@ -116,7 +134,7 @@ export default function Record({ accessory }) {
                                 </p>
                             </div>
                             {accessory.shipping.type === 'etc' && (
-                                <div className="w-full md:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         توضیحات شیوه ارسال
@@ -127,8 +145,8 @@ export default function Record({ accessory }) {
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     بیمه سلامت دارد؟
@@ -139,7 +157,7 @@ export default function Record({ accessory }) {
                             </div>
                             {accessory.shipping.has_health_insurance === 1 && (
                                 <>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             تلفن همراه کاربر
@@ -148,7 +166,7 @@ export default function Record({ accessory }) {
                                             {accessory.shipping.phone}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی شنوایی شناس
@@ -157,7 +175,7 @@ export default function Record({ accessory }) {
                                             {accessory.shipping.audiologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی پزشک گوش و حلق و بینی
@@ -166,7 +184,7 @@ export default function Record({ accessory }) {
                                             {accessory.shipping.otolaryngologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نوع بیمه تکمیلی
@@ -184,15 +202,15 @@ export default function Record({ accessory }) {
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5 md:mt-2">
+                                <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
                                             <span className="inline-block">
                                                 {accessory.shipping.address.address}
                                             </span>
-                                    <span className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.post_code}
                                             </span>
                                     {accessory.shipping.address.phone && (<span
-                                        className="inline-block md:mr-5 md:pr-5 md:border-r border-gray-300 dark:border-slate-600">
+                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {accessory.shipping.address.phone}
                                             </span>)}
                                 </p>

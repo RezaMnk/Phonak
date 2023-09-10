@@ -19,7 +19,7 @@ export default function User({ patients, records, data }) {
         >
             <Head title="داشبورد" />
 
-            <div className="grid grid-cols-1 gap-8 xl:gap-16 md:grid-cols-2 xl:grid-cols-3 mb-16">
+            <div className="grid grid-cols-1 gap-8 xl:gap-16 xl:grid-cols-2 xl:grid-cols-3 mb-16">
                 <div className="flex justify-between items-center bg-white dark:bg-slate-900 rounded-lg p-6 group">
                     <div className="flex flex-col space-y-2 mr-5">
                         <p className="font-semibold text-red-900 dark:text-red-400">
@@ -195,7 +195,7 @@ export default function User({ patients, records, data }) {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-3 mb-16">
+            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 xl:grid-cols-3 mb-16">
                 <div className="w-full bg-white dark:bg-slate-900 rounded-lg p-6">
                     <div className="flex flex-col space-y-4">
                         <p className="text-gray-700 dark:text-slate-200 font-semibold">

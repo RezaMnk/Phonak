@@ -41,7 +41,7 @@ export default function Show({ accessory, user }) {
                 <div className="flex gap-4">
                     <PrimaryButton
                         onClick={print}
-                        className="w-full md:w-fit !px-4 !py-2 text-xs"
+                        className="w-full xl:w-fit !px-4 !py-2 text-xs"
                     >
                         پرینت سفارش
                     </PrimaryButton>
@@ -50,7 +50,7 @@ export default function Show({ accessory, user }) {
                             link={true}
                             href={route('admin.download_accessory', accessory.id)}
                             target="_blank"
-                            className="w-full md:w-fit !px-4 !py-2 text-xs"
+                            className="w-full xl:w-fit !px-4 !py-2 text-xs"
                         >
                             دریافت فایل سفارش
                         </WarningButton>
@@ -72,8 +72,8 @@ export default function Show({ accessory, user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-8">
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     برند
@@ -83,7 +83,7 @@ export default function Show({ accessory, user }) {
                                     {accessory.product.brand === 'etc' && (' - ' + accessory.product.etc_brand)}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نام محصول
@@ -92,7 +92,7 @@ export default function Show({ accessory, user }) {
                                     {accessory.product.name}
                                 </p>
                             </div>
-                            <div className="w-full md:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     کد IRC
@@ -109,8 +109,8 @@ export default function Show({ accessory, user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     شیوه ارسال
@@ -120,7 +120,7 @@ export default function Show({ accessory, user }) {
                                 </p>
                             </div>
                             {accessory.shipping.type === 'etc' && (
-                                <div className="w-full md:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                                <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         توضیحات شیوه ارسال
@@ -131,8 +131,8 @@ export default function Show({ accessory, user }) {
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-6">
-                            <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     بیمه سلامت دارد؟
@@ -143,7 +143,7 @@ export default function Show({ accessory, user }) {
                             </div>
                             {accessory.shipping.has_health_insurance === 1 && (
                                 <>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             تلفن همراه کاربر
@@ -152,7 +152,7 @@ export default function Show({ accessory, user }) {
                                             {accessory.shipping.phone}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی شنوایی شناس
@@ -161,7 +161,7 @@ export default function Show({ accessory, user }) {
                                             {accessory.shipping.audiologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             شماره نظام پزشکی پزشک گوش و حلق و بینی
@@ -170,7 +170,7 @@ export default function Show({ accessory, user }) {
                                             {accessory.shipping.otolaryngologist_med_number}
                                         </p>
                                     </div>
-                                    <div className="w-full md:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نوع بیمه تکمیلی
@@ -188,37 +188,19 @@ export default function Show({ accessory, user }) {
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col print:flex-row md:flex-row space-y-5 items-center print:space-y-0 md:space-y-0 mt-5 md:mt-2">
+                                <p className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-2">
                                             <span className="inline-block">
                                                 {accessory.shipping.address.address}
                                             </span>
-                                    <span className="inline-block md:mr-5 md:pr-5 md:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.post_code}
                                             </span>
                                     {accessory.shipping.address.phone && (<span
-                                        className="inline-block md:mr-5 md:pr-5 md:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {accessory.shipping.address.phone}
                                             </span>)}
                                 </p>
                             </div>
-                            {/*<div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">*/}
-                            {/*    <p className="text-xs flex items-center">*/}
-                            {/*        <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>*/}
-                            {/*        آدرس ارسال محصول*/}
-                            {/*    </p>*/}
-                            {/*    <p className="flex flex-col print:flex-col md:flex-row space-y-5 print:items-start items-center print:space-y-0 md:space-y-0 mt-5 md:mt-2">*/}
-                            {/*                <span className="inline-block">*/}
-                            {/*                    {accessory.shipping.address.address}*/}
-                            {/*                </span>*/}
-                            {/*        <span className="inline-block md:mr-5 md:pr-5 md:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">*/}
-                            {/*                کدپستی: {accessory.shipping.address.post_code}*/}
-                            {/*                </span>*/}
-                            {/*        {accessory.shipping.address.phone && (<span*/}
-                            {/*            className="inline-block md:mr-5 md:pr-5 md:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">*/}
-                            {/*                تلفن: {accessory.shipping.address.phone}*/}
-                            {/*                </span>)}*/}
-                            {/*    </p>*/}
-                            {/*</div>*/}
                         </div>
                         {accessory.shipping.description && (
                             <div className="flex mt-6">

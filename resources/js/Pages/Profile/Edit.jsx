@@ -112,8 +112,8 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                        <div className="w-full md:w-4/12 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                        <div className="w-full xl:w-4/12 ml-5">
                             <TextInput
                                 id="name"
                                 name="name"
@@ -127,7 +127,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.name} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-3/12 ml-5">
+                        <div className="w-full xl:w-3/12 ml-5">
                             <TextInput
                                 id="national_code"
                                 type="number"
@@ -143,7 +143,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.national_code} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-2/12 ml-5">
+                        <div className="w-full xl:w-2/12 ml-5">
                             <TextInput
                                 id="grad_year"
                                 type="number"
@@ -158,7 +158,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.grad_year} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-3/12">
+                        <div className="w-full xl:w-3/12">
                             <TextInput
                                 id="med_number"
                                 type="number"
@@ -173,8 +173,8 @@ export default function Edit({ user }) {
                             <InputError message={errors.med_number} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                        <div className="w-full md:w-1/4 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <SelectInput
                                 id="grade"
                                 name="grade"
@@ -191,7 +191,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.grade} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="university"
                                 name="university"
@@ -216,7 +216,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.university} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <SelectInput
                                 id="state"
                                 name="state"
@@ -230,7 +230,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.state} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/4">
+                        <div className="w-full xl:w-1/4">
                             <SelectInput
                                 id="city"
                                 name="name"
@@ -269,8 +269,8 @@ export default function Edit({ user }) {
                         </div>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                        <div className="w-full md:w-2/12 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                        <div className="w-full xl:w-2/12 ml-5">
                             <TextInput
                                 id="home_post_code"
                                 name="address.home_post_code"
@@ -291,7 +291,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.home_post_code} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-2/12 ml-5">
+                        <div className="w-full xl:w-2/12 ml-5">
                             <TextInput
                                 id="home_phone"
                                 type="number"
@@ -307,7 +307,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.home_phone} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-8/12">
+                        <div className="w-full xl:w-8/12">
                             <TextInput
                                 id="home_address"
                                 name="address.home_address"
@@ -323,8 +323,8 @@ export default function Edit({ user }) {
                             <InputError message={errors.address?.home_address} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                        <div className="w-full md:w-2/12 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                        <div className="w-full xl:w-2/12 ml-5">
                             <TextInput
                                 id="work_post_code"
                                 name="address.work_post_code"
@@ -346,7 +346,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.work_post_code} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-2/12 ml-5">
+                        <div className="w-full xl:w-2/12 ml-5">
                             <TextInput
                                 id="work_phone"
                                 type="number"
@@ -363,7 +363,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.work_phone} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-8/12">
+                        <div className="w-full xl:w-8/12">
                             <TextInput
                                 id="work_address"
                                 name="address.work_address"
@@ -381,8 +381,8 @@ export default function Edit({ user }) {
                         </div>
                     </div>
                     {hasSecondAddress && (
-                        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-6 mb-5">
-                            <div className="w-full md:w-2/12 ml-5">
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     id="second_work_post_code"
                                     name="address.second_work_post_code"
@@ -404,7 +404,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.address?.second_work_post_code} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-2/12 ml-5">
+                            <div className="w-full xl:w-2/12 ml-5">
                                 <TextInput
                                     id="second_work_phone"
                                     type="number"
@@ -421,7 +421,7 @@ export default function Edit({ user }) {
 
                                 <InputError message={errors.address?.second_work_phone} className="mt-2"/>
                             </div>
-                            <div className="w-full md:w-8/12">
+                            <div className="w-full xl:w-8/12">
                                 <TextInput
                                     id="second_work_address"
                                     name="address.second_work_address"
@@ -505,8 +505,8 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                        <div className="w-full md:w-1/3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <TextInput
                                 id="phone"
                                 type="number"
@@ -521,7 +521,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.info?.phone} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/3 ml-5">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <TextInput
                                 id="landline"
                                 type="number"
@@ -538,7 +538,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.info?.landline} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/3">
+                        <div className="w-full xl:w-1/3">
                             <TextInput
                                 id="whatsapp_phone"
                                 type="number"
@@ -554,8 +554,8 @@ export default function Edit({ user }) {
                             <InputError message={errors.info?.whatsapp_phone} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                        <div className="w-full md:w-1/4 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="referral_name"
                                 name="info.referral_name"
@@ -570,7 +570,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.info?.referral_name} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="referral_phone"
                                 type="number"
@@ -585,7 +585,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.info?.referral_phone} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="second_referral_name"
                                 name="info.second_referral_name"
@@ -600,7 +600,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.info?.second_referral_name} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/4">
+                        <div className="w-full xl:w-1/4">
                             <TextInput
                                 id="second_referral_phone"
                                 type="number"
@@ -667,8 +667,8 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-5">
-                        <div className="w-full md:w-1/3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <TextInput
                                 id="password"
                                 type="password"
@@ -689,7 +689,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.password} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/3 ml-5">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <TextInput
                                 id="new_password"
                                 type="password"
@@ -711,7 +711,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.new_password} className="mt-2"/>
                         </div>
-                        <div className="w-full md:w-1/3">
+                        <div className="w-full xl:w-1/3">
                             <TextInput
                                 id="confirm_password"
                                 type="password"
@@ -740,8 +740,8 @@ export default function Edit({ user }) {
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>
-                    <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 mt-3">
-                        <div className="w-full md:w-1/3 ml-5">
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <FileInput
                                 className="!p-4 h-36"
                                 name="id_card_image"
@@ -753,7 +753,7 @@ export default function Edit({ user }) {
                                 error={errors.id_card_image}
                             />
                         </div>
-                        <div className="w-full md:w-1/3 ml-5">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <FileInput
                                 className="!p-4 h-36"
                                 name="med_card_image"
@@ -765,7 +765,7 @@ export default function Edit({ user }) {
                                 error={errors.med_card_image}
                             />
                         </div>
-                        <div className="w-full md:w-1/3">
+                        <div className="w-full xl:w-1/3">
                             <FileInput
                                 className="!p-4 h-36"
                                 name="license_image"
