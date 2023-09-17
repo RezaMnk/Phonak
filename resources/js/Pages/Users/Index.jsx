@@ -7,8 +7,6 @@ import {useFirstRender} from "@/Hooks/useFirstRender.js";
 
 export default function Index({ users }) {
 
-    const [usersData, setUsersData] = useState(users)
-
     const [search, setSearch] = useState((new URLSearchParams(window.location.search).get('search')) || '')
 
     const firstRender = useFirstRender();
@@ -77,8 +75,8 @@ export default function Index({ users }) {
                         </tr>
                     </thead>
                     <tbody>
-                    {Object.keys(usersData.data).length ? Object.values(usersData.data).map((user) => {
-                        const is_last = usersData.data[Object.keys(usersData.data).length-1] === user;
+                    {Object.keys(users.data).length ? Object.values(users.data).map((user) => {
+                        const is_last = users.data[Object.keys(users.data).length-1] === user;
                         return (
                             <tr key={user.id} className={`bg-white dark:bg-slate-900 ${! is_last ? 'border-b' : ''} border-gray-200 dark:border-slate-600`}>
                                 <th scope="row"
@@ -127,7 +125,7 @@ export default function Index({ users }) {
                 </table>
             </div>
 
-            <Pagination data={usersData} search={search}/>
+            <Pagination data={users} search={search}/>
 
         </AuthenticatedLayout>
     );

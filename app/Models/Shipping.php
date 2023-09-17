@@ -17,6 +17,7 @@ class Shipping extends Model
      */
     protected $fillable = [
         'record_id',
+        'expert_phone',
         'type',
         'etc_delivery',
         'has_health_insurance',

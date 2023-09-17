@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('type', ['terminal', 'air', 'tipax', 'post', 'co-worker delivery', 'company delivery', 'etc']);
             $table->string('etc_delivery')->nullable();
             $table->boolean('has_health_insurance');
+            $table->string('expert_phone');
             $table->string('phone')->nullable();
             $table->string('audiologist_med_number')->nullable();
             $table->string('otolaryngologist_med_number')->nullable();

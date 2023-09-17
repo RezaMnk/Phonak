@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.jsx';
 import {Head} from '@inertiajs/react';
 import WarningButton from "@/Components/WarningButton.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import SecondaryButton from "@/Components/SecondaryButton.jsx";
 
 export default function Show({ accessory, user }) {
 
@@ -27,9 +28,29 @@ export default function Show({ accessory, user }) {
     return (
         <AuthenticatedLayout
             header={(
-                <>
-                    نمایش سفارش
-                </>
+                <div className="flex items-center gap-2">
+                    <p>
+                        نمایش سفارش لوازم جانبی شماره <span>{accessory.id}</span>
+                    </p>
+                    <span className="text-lg xl:mr-3">
+                        شنوایی شناس: {accessory.user.name}
+                    </span>
+                    {accessory.status === 'completed' && (
+                        <span className="text-lg text-yellow-600 dark:text-yellow-400">
+                            (پرداخت نشده)
+                        </span>
+                    )}
+                    {accessory.status === 'paid' && (
+                        <span className="text-lg text-sky-600 dark:text-sky-400">
+                            (پرداخت شده)
+                        </span>
+                    )}
+                    {accessory.status === 'approved' && (
+                        <span className="text-lg text-green-600 dark:text-green-400">
+                            (تایید شده)
+                        </span>
+                    )}
+                </div>
             )}
             breadcrumbs={
                 {
@@ -38,22 +59,35 @@ export default function Show({ accessory, user }) {
                 }
             }
             headerExtra={
-                <div className="flex gap-4">
-                    <PrimaryButton
-                        onClick={print}
-                        className="w-full xl:w-fit !px-4 !py-2 text-xs"
-                    >
-                        پرینت سفارش
-                    </PrimaryButton>
-                    {user.is_admin && (
-                        <WarningButton
-                            link={true}
-                            href={route('admin.download_accessory', accessory.id)}
-                            target="_blank"
+                <div className="flex xl:flex-row flex-col gap-4">
+                    <div className="flex gap-4">
+                        <SecondaryButton
+                            onClick={print}
                             className="w-full xl:w-fit !px-4 !py-2 text-xs"
                         >
-                            دریافت فایل سفارش
-                        </WarningButton>
+                            پرینت سفارش
+                        </SecondaryButton>
+                        {user.is_admin && (
+                            <>
+                                <WarningButton
+                                    link={true}
+                                    href={route('admin.download_accessory', accessory.id)}
+                                    target="_blank"
+                                    className="!px-4 !py-2 text-xs"
+                                >
+                                    دریافت فایل سفارش
+                                </WarningButton>
+                            </>
+                        )}
+                    </div>
+                    {(user.is_admin && accessory.status === 'paid') && (
+                        <PrimaryButton
+                            link
+                            href={route('admin.approve_accessory', accessory.id)}
+                            className="!px-4 !py-2 text-xs"
+                        >
+                            تایید سفارش
+                        </PrimaryButton>
                     )}
                 </div>
             }
@@ -63,8 +97,22 @@ export default function Show({ accessory, user }) {
             <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full print:h-screen px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
                     <div className="w-full text-gray-700 dark:text-slate-200">
-                        <div className="hidden print:block text-2xl font-semibold mb-12">
-                            سفارش لوازم جانبی شماره {accessory.id}
+                        <div className="hidden print:flex gap-2 items-center text-lg font-semibold mb-12">
+                            <p>
+                                سفارش لوازم جانبی شماره <span>{accessory.id}</span>
+                            </p>
+                            <span className="text-lg xl:mr-3">
+                                 - شنوایی شناس: {accessory.user.name}
+                            </span>
+                            {accessory.status === 'completed' ? (
+                                <span>
+                                (پرداخت نشده)
+                            </span>
+                            ) : (
+                                <span>
+                                (پرداخت شده)
+                            </span>
+                            )}
                         </div>
                         <div>
                             <h5>
@@ -110,6 +158,15 @@ export default function Show({ accessory, user }) {
                             <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    تلفن همراه کارشناس جهت ارسال صورتحساب
+                                </p>
+                                <p className="mt-2 print:mt-1 print:text-xs">
+                                    {accessory.shipping.expert_phone}
+                                </p>
+                            </div>
                             <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
@@ -120,7 +177,7 @@ export default function Show({ accessory, user }) {
                                 </p>
                             </div>
                             {accessory.shipping.type === 'etc' && (
-                                <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                                <div className="w-full xl:w-2/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         توضیحات شیوه ارسال

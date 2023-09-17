@@ -28,6 +28,8 @@ class Record extends Model
         'type',
         'total_price',
         'ear',
+        'has_mold',
+        'has_package',
         'id_card_image',
         'prescription_image',
         'audiogram_image',

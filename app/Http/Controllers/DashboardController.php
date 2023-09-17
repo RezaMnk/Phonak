@@ -39,7 +39,7 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboards/Admin', [
             'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->get()->sortDesc()->take(3),
-            'records' => Record::with('patient')->whereIn('status', ['completed', 'paid'])->get()->sortDesc()->take(3),
+            'records' => Record::with('patient')->whereIn('status', ['completed', 'paid', 'approved'])->get()->sortDesc()->take(3),
 
             'data' => $this->admin_statistics()
         ]);

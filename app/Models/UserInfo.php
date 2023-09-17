@@ -64,7 +64,7 @@ class UserInfo extends Model
     protected function idCardImageUrl(): Attribute
     {
         return new Attribute(
-            get: fn () => Storage::disk('users')->url($this->id .'/'. $this->id_card_image),
+            get: fn () => Storage::disk('users')->url($this->user->id .'/'. $this->id_card_image),
         );
     }
 
@@ -75,7 +75,7 @@ class UserInfo extends Model
     protected function medCardImageUrl(): Attribute
     {
         return new Attribute(
-            get: fn () => Storage::disk('users')->url($this->id .'/'. $this->med_card_image),
+            get: fn () => Storage::disk('users')->url($this->user->id .'/'. $this->med_card_image),
         );
     }
 
@@ -86,7 +86,7 @@ class UserInfo extends Model
     protected function licenseImageUrl(): Attribute
     {
         return new Attribute(
-            get: fn () => Storage::disk('users')->url($this->id .'/'. $this->license_image),
+            get: fn () => Storage::disk('users')->url($this->user->id .'/'. $this->license_image),
         );
     }
 }

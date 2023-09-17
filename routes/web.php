@@ -113,6 +113,9 @@ Route::middleware(['auth', 'auth.is_admin'])->group(function () {
         Route::get('/records', 'records')->name('.records');
         Route::get('/accessories', 'accessories')->name('.accessories');
 
+        Route::get('/approve-record/{record}', 'approve_record')->name('.approve_record');
+        Route::get('/approve-accessory/{accessory}', 'approve_accessory')->name('.approve_accessory');
+
         Route::get('/download-record/{record}', 'download_record')->name('.download_record');
         Route::get('/download-accessory/{accessory}', 'download_accessory')->name('.download_accessory');
     });

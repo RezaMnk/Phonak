@@ -1,53 +1,73 @@
 import {Head, router} from '@inertiajs/react';
 import {useEffect, useState} from "react";
-import manifest from '../../../../public/build/manifest.json'; // Update the path accordingly
+import manifest from '../../../../public/build/manifest.json';
+import JSZip from "jszip";
 
 export default function Record({ record }) {
 
     const [first, setFirst] = useState(true)
 
     useEffect(() => {
-        if (first) {
-            function inlineExternalScriptsAndStyles() {
-                const modulePreloadTags = Array.from(document.querySelectorAll('link[rel="modulepreload"][href]'));
-                const scriptTags = Array.from(document.querySelectorAll('script[src]'));
 
-                modulePreloadTags.forEach(modulePreloadTag => modulePreloadTag.remove());
-                scriptTags.forEach(scriptTag => scriptTag.remove());
+        let images = {
+            [record.audiogram_image_url]: record.patient.name +'-'+ record.user.name +'-audiogram.jpg',
+            [record.id_card_image_url]: record.patient.name +'-'+ record.user.name +'-id.jpg',
+            [record.prescription_image_url]: record.patient.name +'-'+ record.user.name +'-prescription.jpg'
+        };
 
-                // Get the CSS filename from the manifest
-                const cssFilename = manifest['resources/js/app.jsx'].css[0];
+        console.log(images)
 
-                // Construct the CSS file URL dynamically
-                const cssUrl = `${document.location.origin}/build/${cssFilename}`;
+        const zip = new JSZip();
 
-                // Fetch the CSS file
-                fetch(cssUrl)
-                    .then((response) => response.text())
-                    .then((cssData) => {
-                        // Set the CSS content
-                        document.getElementById('local-css').innerHTML = cssData
-                    })
-                    .catch((error) => {
-                        console.error('Error fetching CSS:', error);
-                    });
+        async function handleZip() {
+            // Add Images to the zip file
 
-                router.get(route('records.download', {record: record.id, name: 'audiogram', archive: true}));
-
-                setTimeout(() => {
-                    const modifiedHtml = document.documentElement.outerHTML;
-                    const blob = new Blob([modifiedHtml], { type: 'text/html' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'سفارش سمعک شماره ' + record.id + '.html';
-                    a.click();
-                    window.close()
-                }, 4000)
+            for (let url in images)
+            {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                zip.file(images[url], blob);
             }
 
-            inlineExternalScriptsAndStyles()
+            const modulePreloadTags = Array.from(document.querySelectorAll('link[rel="modulepreload"][href]'));
+            const scriptTags = Array.from(document.querySelectorAll('script[src]'));
+
+            modulePreloadTags.forEach(modulePreloadTag => modulePreloadTag.remove());
+            scriptTags.forEach(scriptTag => scriptTag.remove());
+
+            // Get the CSS filename from the manifest
+            const cssFilename = manifest['resources/js/app.jsx'].css[0];
+
+            // Construct the CSS file URL dynamically
+            const cssUrl = `${document.location.origin}/build/${cssFilename}`;
+
+            // Fetch the CSS file
+            fetch(cssUrl)
+                .then((response) => response.text())
+                .then(async (cssData) => {
+                    document.getElementById('local-css').innerHTML = cssData
+
+                    const modifiedHtml = document.documentElement.outerHTML;
+                    const blob = new Blob([modifiedHtml], {type: 'text/html'});
+                    zip.file('سفارش سمعک شماره ' + record.id + '.html', blob);
+
+                    const zipData = await zip.generateAsync({
+                        type: "blob",
+                        streamFiles: true,
+                    });
+                    const link = document.createElement("a");
+                    link.href = window.URL.createObjectURL(zipData);
+                    link.download = 'سفارش سمعک شماره ' + record.id + '.zip';
+                    link.click();
+                    window.close()
+                })
+                .catch((error) => {
+                    console.error('Error fetching CSS:', error);
+                });
         }
+
+        if (first)
+            handleZip();
 
         return setFirst(false);
     }, [])
@@ -98,7 +118,7 @@ export default function Record({ record }) {
                                 {record.record_aid[ear].hearing_aid_size}
                             </p>
                         </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه ونت
@@ -363,6 +383,26 @@ export default function Record({ record }) {
             <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg" id="info">
                     <div className="w-full text-gray-700 dark:text-slate-200">
+                        <div className="flex gap-2 items-center text-lg font-semibold mb-5">
+                            <p>
+                                سفارش سمعک شماره <span>{record.id}</span>
+                            </p>
+                            {record.status === 'completed' && (
+                                <span>
+                                    (پرداخت نشده)
+                                </span>
+                            )}
+                            {record.status === 'paid' && (
+                                <span>
+                                    (پرداخت شده)
+                                </span>
+                            )}
+                            {record.status === 'approved' && (
+                                <span>
+                                    (تایید شده)
+                                </span>
+                            )}
+                        </div>
                         <div>
                             <h5>
                                 اطلاعات کاربر
@@ -499,6 +539,44 @@ export default function Record({ record }) {
                                 </p>
                             </div>
                         </div>
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    تعداد مورد سفارش
+                                </p>
+                                <p className="mt-2">
+                                    {record.ear === 'both' ? 'دو عدد' : 'یک عدد'}
+                                </p>
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    سفارش پکیج دارد؟
+                                </p>
+                                <p className="mt-2">
+                                    {record.has_package ? 'بله' : 'خیر'}
+                                </p>
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    سفارش قالب دارد؟
+                                </p>
+                                <p className="mt-2">
+                                    {record.has_mold ? 'بله' : 'خیر'}
+                                </p>
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    جمع فاکتور سفارش
+                                </p>
+                                <p className="mt-2">
+                                    {record.total_price.toLocaleString('fa-IR')} ریال
+                                </p>
+                            </div>
+                        </div>
 
                         {record.record_aid.left && (
                             <>
@@ -530,7 +608,7 @@ export default function Record({ record }) {
                             <>
                                 <div className="mt-12">
                                     <h5>
-                                        ددیوگرام گوش چپ
+                                        ادیوگرام گوش چپ
                                     </h5>
                                     <hr className="dark:border-slate-600"/>
                                 </div>
@@ -618,6 +696,15 @@ export default function Record({ record }) {
                             <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    تلفن همراه کارشناس جهت ارسال صورتحساب
+                                </p>
+                                <p className="mt-2">
+                                    {record.shipping.expert_phone}
+                                </p>
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     شیوه ارسال
                                 </p>
                                 <p className="mt-2">
@@ -625,7 +712,7 @@ export default function Record({ record }) {
                                 </p>
                             </div>
                             {record.shipping.type === 'etc' && (
-                                <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-2/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         توضیحات شیوه ارسال

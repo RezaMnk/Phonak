@@ -17,6 +17,7 @@ export default function ShippingStep() {
     const {record, prevStep} = useContext(StepContext)
 
     const {data, setData, post, processing, errors} = useForm({
+        expert_phone: record.shipping?.expert_phone || '',
         type: record.shipping?.type || '',
         etc_delivery: record.shipping?.etc_delivery || '',
         has_health_insurance: record.shipping?.has_health_insurance || false,
@@ -55,6 +56,19 @@ export default function ShippingStep() {
                 </div>
                 <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
                     <div className="w-full xl:w-1/3 ml-5">
+                        <TextInput
+                            id="expert_phone"
+                            name="expert_phone"
+                            type="number"
+                            value={data.expert_phone}
+                            label={<span>تلفن همراه کارشناس <span className="text-xs"> جهت ارسال صورتحساب</span></span>}
+                            onChange={(e) => setData('expert_phone', e.target.value)}
+                            error={errors.expert_phone}
+                        />
+
+                        <InputError message={errors.expert_phone} className="mt-2"/>
+                    </div>
+                    <div className="w-full xl:w-1/3 ml-5">
                         <SelectInput
                             id="type"
                             name="type"
@@ -76,7 +90,7 @@ export default function ShippingStep() {
                         <InputError message={errors.type} className="mt-2"/>
                     </div>
                     {data.type === 'etc' && (
-                        <div className="w-full xl:w-2/3">
+                        <div className="w-full xl:w-1/3">
                             <TextInput
                                 id="etc_delivery"
                                 etc_delivery="etc_delivery"

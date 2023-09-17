@@ -74,7 +74,7 @@ class RecordController extends Controller
 
         $record->set_step(2);
 
-        return redirect()->route('records.edit', ['record' => $record, 'step' => 2])->with(['toast', ['success' => 'مرحله اول ذخیره شد']]);
+        return redirect()->route('records.edit', ['record' => $record, 'step' => 2])->with('toast', ['success' => 'مرحله اول ذخیره شد']);
     }
 
     /**
@@ -94,11 +94,37 @@ class RecordController extends Controller
             ...$request->only(['brand', 'type', 'ear'])
         ];
 
+        $product = Product::find($request->product);
+
+        if ($product->has_mold)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'has_mold' => ['boolean']
+                ])
+            ];
+
+        if ($product->has_package)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'has_package' => ['boolean']
+                ])
+            ];
+
         $count = $request->ear == 'both' ? 2 : 1;
-        if (!$record->user->can_buy($request->product, $count)) {
-            return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
+        if ($product->inventory < $count) {
+            return back()->withErrors(['product' => 'موجودی محصول به اتمام رسیده است']);
         }
-        elseif ($record->user->reached_limit($count)) {
+
+        if (! $record->product)
+            if (! $record->user->can_buy($request->product, $count)) {
+                return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
+            }
+
+        $limit_reached = $record->user->reached_limit($count, $record->product);
+
+        if ($limit_reached) {
             return back()->withErrors(['product' => 'تعداد ظرفیت سفارش بیش از حد مجاز می باشد']);
         }
         $record->set_step(3);
@@ -128,7 +154,7 @@ class RecordController extends Controller
 
         $record->update($data);
 
-        return redirect()->route('records.edit', ['record' => $record, 'step' => 3])->with(['toast', ['success' => 'مرحله دوم ذخیره شد']]);
+        return redirect()->route('records.edit', ['record' => $record, 'step' => 3])->with('toast', ['success' => 'مرحله دوم ذخیره شد']);
     }
 
     /**
@@ -159,7 +185,7 @@ class RecordController extends Controller
         $record->update($request->only(['brand', 'type', 'ear', 'product']));
         $record->set_step(4);
 
-        return redirect()->route('records.edit', ['record' => $record, 'step' => 4])->with(['toast', ['success' => 'مرحله سوم ذخیره شد']]);
+        return redirect()->route('records.edit', ['record' => $record, 'step' => 4])->with('toast', ['success' => 'مرحله سوم ذخیره شد']);
     }
 
     /**
@@ -249,7 +275,7 @@ class RecordController extends Controller
 
         $record->set_step(5);
 
-        return redirect()->route('records.edit', ['record' => $record, 'step' => 5])->with(['toast', ['success' => 'مرحله چهارم ذخیره شد']]);
+        return redirect()->route('records.edit', ['record' => $record, 'step' => 5])->with('toast', ['success' => 'مرحله چهارم ذخیره شد']);
     }
 
     /**
@@ -258,13 +284,14 @@ class RecordController extends Controller
     public function store_shipping(Request $request, Record $record): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
+            'expert_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
             'has_health_insurance' => ['boolean'],
             'description' => ['nullable', 'string'],
             'mail_address' => ['required', 'in:home,work,second_work'],
         ]);
 
-        $data = $request->only(['type','description','mail_address','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
+        $data = $request->only(['expert_phone','type','description','mail_address','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
 
         if ($request->type == 'etc')
             $request->validate([
@@ -290,7 +317,22 @@ class RecordController extends Controller
         $record->shipping()->updateOrCreate([], $data);
         $record->set_step('completed');
 
-        return redirect()->route('records.index')->with(['toast', ['success' => "سفارش شماره ". $record->id ." تکمیل شد"]]);
+        $price = $record->product->price;
+
+        $count = $record->ear == 'both' ? 2 : 1;
+
+        if ($record->has_mold)
+            $price += $record->product->mold_price;
+
+        if ($record->has_package)
+            $price += $record->product->package_price;
+
+        $price *= $count;
+
+        $record->total_price = $price;
+        $record->touch();
+
+        return redirect()->route('records.index')->with('toast', ['success' => "سفارش شماره ". $record->id ." تکمیل شد"]);
     }
 
     /**
@@ -410,7 +452,7 @@ class RecordController extends Controller
         $record->update(['patient_id' => $patient->id]);
         $record->set_step(2);
 
-        return redirect()->route('records.edit', ['record' => $record, 'step' => 2])->with(['toast', ['success' => 'مرحله اول ذخیره شد']]);
+        return redirect()->route('records.edit', ['record' => $record, 'step' => 2])->with('toast', ['success' => 'مرحله اول ذخیره شد']);
     }
 
     /**
@@ -425,7 +467,7 @@ class RecordController extends Controller
             Storage::disk('records')->deleteDirectory($record->id);
 
         $record->delete();
-        return redirect()->route('records.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
+        return redirect()->route('records.index')->with('toast', ['success' => 'سفارش حذف گردید']);
     }
 
 
@@ -483,8 +525,15 @@ class RecordController extends Controller
     {
         $price = $record->product->price;
 
-        if ($record->ear == 'both')
-            $price *= 2;
+        $count = $record->ear == 'both' ? 2 : 1;
+
+        if ($record->has_mold)
+            $price += $record->product->mold_price;
+
+        if ($record->has_package)
+            $price += $record->product->package_price;
+
+        $price *= $count;
 
         $request = Toman::amount($price)
             ->callback(route('payments.verify_record', $record->id))

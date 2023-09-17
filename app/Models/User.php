@@ -162,14 +162,20 @@ class User extends Authenticatable
     }
 
 
-    public function reached_limit($this_count = 0): bool
+    public function reached_limit($this_count = 0, $editing_model = null): bool
     {
         if ($setting = $this->setting)
             $max_order = $setting->max_order;
         else
             return false;
 
-        $today_order = $this->records()->whereIn('status', ['completed', 'paid'])
+        $today_order = $this->records()->whereIn('status', ['completed', 'paid', 'approved'])
+                ->where(function ($query) use ($editing_model) {
+                    if ($editing_model)
+                        $query->whereHas('product', function ($query) use ($editing_model) {
+                            $query->whereNot('id', $editing_model->id);
+                        });
+                })
                 ->whereDate('created_at', '>=', $setting->start_time)
                 ->whereDate('created_at', '<=', $setting->end_time)->get()
                 ->sum(function ($record) {
@@ -177,8 +183,12 @@ class User extends Authenticatable
                         return 2;
                     return 1;
                 }) + $this_count;
-//        dd($today_order, $max_order);
-        return $today_order >= $max_order;
+
+        if ($this_count || $editing_model)
+            return $today_order > $max_order;
+        else
+            return $today_order >= $max_order;
+
     }
 
 
@@ -207,7 +217,7 @@ class User extends Authenticatable
         if ($this->setting)
             return new Attribute(
                 get: fn () =>  $this->records()
-                    ->whereIn('status', ['completed', 'paid'])
+                    ->whereIn('status', ['completed', 'paid', 'approved'])
                     ->whereDate('created_at', '>=', $this->setting->start_time)
                     ->whereDate('created_at', '<=', $this->setting->end_time)
                     ->count()
@@ -278,7 +288,7 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function can_buy($product_id, $count, $type = 'record'): bool
+    public function can_buy($product_id, $count, $type = 'record', $editing = false): bool
     {
         if ($this->group == 0) return true;
 
@@ -287,13 +297,12 @@ class User extends Authenticatable
         $count_can_buy = $this->group_products->firstWhere('product_id', $product_id)->count;
 
         if ($type == 'record')
-            $user_all_records = Record::whereIn('status', ['completed', 'paid'])->whereHas('user', function ($query) {
-                $query->where('group', $this->group);
-            })->whereHas('product', function ($query) use ($product) {
-                $query->where('product_id', $product->id);
-            })->get();
+            $user_all_records = $this->records()->whereIn('status', ['completed', 'paid'])
+                ->whereHas('product', function ($query) use ($product) {
+                    $query->where('product_id', $product->id);
+                })->get();
         else
-            $user_all_records = Accessory::whereIn('status', ['completed', 'paid'])->whereHas('user', function ($query) {
+            $user_all_records = Accessory::whereIn('status', ['completed', 'paid', 'approved'])->whereHas('user', function ($query) {
                 $query->where('group', $this->group);
             })->whereHas('product', function ($query) use ($product) {
                 $query->where('product_id', $product->id);

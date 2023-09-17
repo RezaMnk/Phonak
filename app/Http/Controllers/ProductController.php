@@ -43,15 +43,30 @@ class ProductController extends Controller
             'irc' => ['required', 'numeric'],
             'etc_brand' => ['required_if:brand,etc', 'nullable', 'string', 'max:255'],
             'has_count' => ['boolean'],
+            'has_package' => ['boolean'],
+            'has_mold' => ['boolean'],
             'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
             'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
-        ]);
-
-        $request->validate([
             'groups' => ['nullable', 'array'],
             'groups.*.number' => ['required', 'numeric'],
             'groups.*.count' => ['required', 'numeric'],
         ]);
+
+        if ($request->has_mold)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'mold_price' => ['required', 'numeric', 'max:100000000'],
+                ])
+            ];
+
+        if ($request->has_package)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'package_price' => ['required', 'numeric', 'max:100000000'],
+                ])
+            ];
 
         if ($request->category != 'accessories' && in_array($request->brand, ['rayovac', 'detax', 'etc']))
             return back()->withErrors(['brand' => 'این برند برای لوازم جانبی می باشد']);
@@ -117,15 +132,30 @@ class ProductController extends Controller
             'irc' => ['required', 'numeric'],
             'etc_brand' => ['nullable', 'required_if:brand,etc', 'string', 'max:255'],
             'has_count' => ['boolean'],
+            'has_package' => ['boolean'],
+            'has_mold' => ['boolean'],
             'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
             'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
-        ]);
-
-        $request->validate([
             'groups' => ['nullable', 'array'],
             'groups.*.number' => ['required', 'numeric'],
             'groups.*.count' => ['required', 'numeric'],
         ]);
+
+        if ($request->has_mold)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'mold_price' => ['required', 'numeric', 'max:100000000'],
+                ])
+            ];
+
+        if ($request->has_package)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'package_price' => ['required', 'numeric', 'max:100000000'],
+                ])
+            ];
 
         if ($request->category != 'accessories' && in_array($request->brand, ['rayovac', 'detax', 'etc']))
             return back()->withErrors(['brand' => 'این برند برای لوازم جانبی می باشد']);

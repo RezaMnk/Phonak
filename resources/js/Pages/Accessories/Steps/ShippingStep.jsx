@@ -11,12 +11,14 @@ import CheckboxInput from "@/Components/CheckboxInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
+import Icon from "@/Components/Icon.jsx";
 
 export default function ShippingStep() {
 
     const {accessory, prevStep} = useContext(StepContext)
 
     const {data, setData, post, processing, errors} = useForm({
+        expert_phone: accessory.shipping?.expert_phone || '',
         type: accessory.shipping?.type || '',
         etc_delivery: accessory.shipping?.etc_delivery || '',
         has_health_insurance: accessory.shipping?.has_health_insurance || false,
@@ -55,6 +57,25 @@ export default function ShippingStep() {
                 </div>
                  <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
                     <div className="w-full xl:w-1/3 ml-5">
+                        <TextInput
+                            id="expert_phone"
+                            name="expert_phone"
+                            type="number"
+                            value={data.expert_phone}
+                            label="تلفن همراه کارشناس"
+                            onChange={(e) => setData('expert_phone', e.target.value)}
+                            error={errors.expert_phone}
+                        />
+                        <span className="text-gray-700 dark:text-slate-300 text-xs">
+                            <Icon className="inline-block !w-4 !h-4 ml-1" viewBox="0 0 24 24" type="fill">
+                                <path d="M15,8a1,1,0,0,1-1,1H6A1,1,0,0,1,6,7h8A1,1,0,0,1,15,8Zm-1,3H6a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Zm-4,4H6a1,1,0,0,0,0,2h4a1,1,0,0,0,0-2Zm13-3v8a3,3,0,0,1-3,3H4a3,3,0,0,1-3-3V4A3,3,0,0,1,4,1H16a3,3,0,0,1,3,3v7h3A1,1,0,0,1,23,12ZM17,4a1,1,0,0,0-1-1H4A1,1,0,0,0,3,4V20a1,1,0,0,0,1,1H17Zm4,9H19v8h1a1,1,0,0,0,1-1Z"/>
+                            </Icon>
+                            جهت ارسال صورتحساب
+                        </span>
+
+                        <InputError message={errors.expert_phone} className="mt-2"/>
+                    </div>
+                    <div className="w-full xl:w-1/3 ml-5">
                         <SelectInput
                             id="type"
                             name="type"
@@ -76,7 +97,7 @@ export default function ShippingStep() {
                         <InputError message={errors.type} className="mt-2"/>
                     </div>
                     {data.type === 'etc' && (
-                        <div className="w-full xl:w-2/3">
+                        <div className="w-full xl:w-1/3">
                             <TextInput
                                 id="etc_delivery"
                                 etc_delivery="etc_delivery"

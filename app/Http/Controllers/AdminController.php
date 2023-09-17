@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accessory;
 use App\Models\Record;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -12,21 +13,79 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function records()
+    public function records(Request $request)
     {
+        $request->validate([
+            'search' => ['nullable', 'string']
+        ]);
+
         return Inertia::render('Admin/Records', [
-            'records' => Record::with('patient')->with('user')->whereIn('status', ['completed', 'paid'])->paginate(),
+            'records' => Record::with('patient')->with('user')
+                ->where(function ($query) use ($request) {
+                    if ($request->has('search'))
+                        $query->whereHas('user', function ($query) use ($request) {
+                            $query->where('name', 'LIKE', '%'. $request->search .'%')
+                                ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+                        })->orWhereHas('patient', function ($query) use ($request) {
+                            $query->where('name', 'LIKE', '%'. $request->search .'%')
+                                ->orWhere('national_code' , 'LIKE', '%'. $request->search .'%');
+                        });
+
+                })
+                ->whereIn('status', ['completed', 'paid', 'approved'])->latest()->paginate()->onEachSide(0),
         ]);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function accessories()
+    public function accessories(Request $request)
     {
-        return Inertia::render('Admin/Accessories', [
-            'accessories' => Accessory::with('user')->whereIn('status', ['completed', 'paid'])->paginate(),
+        $request->validate([
+            'search' => ['nullable', 'string']
         ]);
+
+        return Inertia::render('Admin/Accessories', [
+            'accessories' => Accessory::with('user')->whereIn('status', ['completed', 'paid', 'approved'])
+                ->where(function ($query) use ($request) {
+                    if ($request->has('search'))
+                        $query->whereHas('user', function ($query) use ($request) {
+                            $query->where('name', 'LIKE', '%'. $request->search .'%')
+                                ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+                        });
+                })
+                ->paginate(),
+        ]);
+    }
+
+
+    /**
+     * Change the specified resource status.
+     */
+    public function approve_record(Record $record): \Illuminate\Http\RedirectResponse
+    {
+        if ($record->status != 'paid')
+            return back()->with('toast', ['error' => 'سفارش قابل تایید نمی باشد']);
+
+        $record->status = 'approved';
+        $record->touch();
+
+        return back()->with('toast', ['success' => 'سفارش با موفقیت تایید شد']);
+    }
+
+
+    /**
+     * Change the specified resource status.
+     */
+    public function approve_accessory(Accessory $accessory): \Illuminate\Http\RedirectResponse
+    {
+        if ($accessory->status != 'paid')
+            return back()->with('toast', ['error' => 'سفارش قابل تایید نمی باشد']);
+
+        $accessory->status = 'approved';
+        $accessory->touch();
+
+        return back()->with('toast', ['success' => 'سفارش با موفقیت تایید شد']);
     }
 
     /**

@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('irc');
             $table->unsignedInteger('inventory');
             $table->boolean('has_count')->default(false);
+            $table->boolean('has_mold')->default(false);
+            $table->unsignedBigInteger('mold_price')->nullable();
+            $table->boolean('has_package')->default(false);
+            $table->unsignedBigInteger('package_price')->nullable();
             $table->unsignedInteger('min_count')->nullable();
             $table->unsignedInteger('max_count')->nullable();
             $table->timestamps();

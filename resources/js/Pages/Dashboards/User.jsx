@@ -9,14 +9,7 @@ export default function User({ patients, records, data }) {
     data.charts.reverse()
 
     return (
-        <AuthenticatedLayout
-            header="داشبورد"
-            breadcrumbs={
-                {
-                    'داشبورد': "#"
-                }
-            }
-        >
+        <AuthenticatedLayout header="داشبورد">
             <Head title="داشبورد" />
 
             <div className="grid grid-cols-1 gap-8 xl:gap-16 xl:grid-cols-2 xl:grid-cols-3 mb-16">
@@ -88,7 +81,7 @@ export default function User({ patients, records, data }) {
                         </div>
                         <div className="inline-flex">
                             <ArrowLink
-                                href={route('admin.records')}
+                                href={route('records.index')}
                                 name="مشاهده همه"
                             />
                         </div>

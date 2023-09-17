@@ -9,6 +9,7 @@ import {StepContext} from "@/Pages/Records/Create.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 import ProductsSlider from "@/Pages/Records/Components/ProductsSlider.jsx";
+import {useFirstRender} from "@/Hooks/useFirstRender.js";
 
 export default function AidTypeStep() {
 
@@ -19,22 +20,43 @@ export default function AidTypeStep() {
         type: record.type || '',
         ear: record.ear || '',
         product: record.product_id || '',
+        has_mold: record.has_mold,
+        has_package: record.has_package,
     });
+
+    const firstRender = useFirstRender();
 
     const [ products, setProducts ] = useState({})
     const [ product, setProduct ] = useState(record.product_id || '')
+    const [ productsItems, setProductsItems ] = useState({})
+    const [ productItems, setProductItems ] = useState([])
 
     useEffect(() => {
         setData('product', product)
+        const items = firstRender ? [record.has_package && 'package', record.has_mold && 'mold'] : [];
+        setProductItems(items);
         clearErrors('product')
     }, [product])
 
     useEffect(() => {
+        setData((data) => ({
+            ...data,
+            has_package: productItems.includes('package'),
+            has_mold: productItems.includes('mold'),
+        }))
+    }, [productItems])
+
+    useEffect(() => {
         if (data.type && data.brand)
         {
-            get_products(data.type)
-            setData('product', '')
-            setProduct('')
+            get_products(data.type).then(() => {
+                if (! firstRender)
+                {
+                    setData('product', '')
+                    setProduct('')
+                }
+            })
+
         }
     }, [data.type, data.brand])
 
@@ -54,6 +76,18 @@ export default function AidTypeStep() {
             let new_products = response.data.products;
             if (new_products) {
                 setProducts(new_products)
+
+                let items = {};
+                for (let loop_product of Object.values(products)) {
+                    items[loop_product.id] = [];
+                    if (loop_product.has_package) {
+                        items[loop_product.id].push('package');
+                    }
+                    if (loop_product.has_mold) {
+                        items[loop_product.id].push('mold');
+                    }
+                }
+                setProductsItems(items)
             } else {
                 console.log('none')
             }
@@ -190,7 +224,7 @@ export default function AidTypeStep() {
                              </p>
                          )}
                          <div className={`!mt-5 transition-all ${! record.product_id && 'ease-in-out duration-500'} ${Object.keys(products).length ? 'max-h-full' : 'max-h-0'} overflow-hidden`}>
-                             <ProductsSlider products={products}  setProduct={setProduct} product={product} error={errors.product} />
+                             <ProductsSlider products={products} setProduct={setProduct} product={product} setProductItems={setProductItems} productItems={productItems} productsItems={productsItems} error={errors.product} />
                              <InputError message={errors.product} className="mt-2"/>
                          </div>
                      </div>

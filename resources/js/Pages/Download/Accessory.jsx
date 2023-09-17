@@ -26,23 +26,20 @@ export default function Record({ accessory }) {
                 fetch(cssUrl)
                     .then((response) => response.text())
                     .then((cssData) => {
-                        // Set the CSS content
                         document.getElementById('local-css').innerHTML = cssData
+
+                        const modifiedHtml = document.documentElement.outerHTML;
+                        const blob = new Blob([modifiedHtml], { type: 'text/html' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'سفارش لوازم جانبی شماره ' + accessory.id + '.html';
+                        a.click();
+                        window.close()
                     })
                     .catch((error) => {
                         console.error('Error fetching CSS:', error);
                     });
-
-                setTimeout(() => {
-                    const modifiedHtml = document.documentElement.outerHTML;
-                    const blob = new Blob([modifiedHtml], { type: 'text/html' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'سفارش لوازم جانبی شماره ' + accessory.id + '.html';
-                    a.click();
-                    window.close()
-                }, 2000)
             }
 
             inlineExternalScriptsAndStyles()
@@ -127,6 +124,15 @@ export default function Record({ accessory }) {
                             <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    تلفن همراه کارشناس جهت ارسال صورتحساب
+                                </p>
+                                <p className="mt-2">
+                                    {accessory.shipping.expert_phone}
+                                </p>
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     شیوه ارسال
                                 </p>
                                 <p className="mt-2">
@@ -134,7 +140,7 @@ export default function Record({ accessory }) {
                                 </p>
                             </div>
                             {accessory.shipping.type === 'etc' && (
-                                <div className="w-full xl:w-3/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-2/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         توضیحات شیوه ارسال

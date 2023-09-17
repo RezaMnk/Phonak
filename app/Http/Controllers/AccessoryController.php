@@ -62,6 +62,13 @@ class AccessoryController extends Controller
             $request->validate([
                 'count' => ['required', 'numeric', 'min:'. $product->min_count, 'max:'. $product->max_count],
             ]);
+            $count = $request->count;
+        }
+        else
+            $count = 1;
+
+        if ($product->inventory < $count) {
+            return back()->withErrors(['product' => 'موجودی محصول به اتمام رسیده است']);
         }
 
         $data = [
@@ -75,7 +82,7 @@ class AccessoryController extends Controller
 
         $accessory = Auth::user()->accessories()->create($data);
 
-        return redirect()->route('accessories.edit', ['accessory' => $accessory, 'step' => 2])->with(['toast', ['success' => 'مرحله دوم ذخیره شد']]);
+        return redirect()->route('accessories.edit', ['accessory' => $accessory, 'step' => 2])->with('toast', ['success' => 'مرحله دوم ذخیره شد']);
     }
 
     /**
@@ -84,13 +91,14 @@ class AccessoryController extends Controller
     public function store_shipping(Request $request, Accessory $accessory): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
+            'expert_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
             'has_health_insurance' => ['boolean'],
             'description' => ['nullable', 'string'],
             'mail_address' => ['required', 'in:home,work,second_work'],
         ]);
 
-        $data = $request->only(['type','description','mail_address','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
+        $data = $request->only(['expert_phone','type','description','mail_address','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
 
         if ($request->type == 'etc')
             $request->validate([
@@ -118,7 +126,7 @@ class AccessoryController extends Controller
         $accessory->status = 'completed';
         $accessory->touch();
 
-        return redirect()->route('accessories.index')->with(['toast', ['success' => "سفارش شماره لوازم جانبی ". $accessory->id ." تکمیل شد"]]);
+        return redirect()->route('accessories.index')->with('toast', ['success' => "سفارش شماره لوازم جانبی ". $accessory->id ." تکمیل شد"]);
     }
 
     /**
@@ -186,6 +194,13 @@ class AccessoryController extends Controller
             $request->validate([
                 'count' => ['required', 'numeric', 'min:'. $product->min_count, 'max:'. $product->max_count],
             ]);
+            $count = $request->count;
+        }
+        else
+            $count = 1;
+
+        if ($product->inventory < $count) {
+            return back()->withErrors(['product' => 'موجودی محصول به اتمام رسیده است']);
         }
 
         $data = [
@@ -199,7 +214,7 @@ class AccessoryController extends Controller
 
         $accessory->update($data);
 
-        return redirect()->route('accessories.edit', ['accessory' => $accessory, 'step' => 2])->with(['toast', ['success' => 'مرحله دوم ذخیره شد']]);
+        return redirect()->route('accessories.edit', ['accessory' => $accessory, 'step' => 2])->with('toast', ['success' => 'مرحله دوم ذخیره شد']);
     }
 
     /**
@@ -208,7 +223,7 @@ class AccessoryController extends Controller
     public function destroy(Accessory $accessory): \Illuminate\Http\RedirectResponse
     {
         $accessory->delete();
-        return redirect()->route('accessories.index')->with(['toast', ['success' => 'سفارش حذف گردید']]);
+        return redirect()->route('accessories.index')->with('toast', ['success' => 'سفارش حذف گردید']);
     }
 
     public function pay(Accessory $accessory)

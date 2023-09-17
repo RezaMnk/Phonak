@@ -20,6 +20,10 @@ export default function CreateOrEdit({ product }) {
         etc_brand: product?.etc_brand || '',
         inventory: product?.inventory || '',
         has_count: product?.has_count || false,
+        has_package: product?.has_package || false,
+        package_price: product?.package_price || false,
+        has_mold: product?.has_mold || false,
+        mold_price: product?.mold_price || false,
         min_count: product?.min_count || '',
         max_count: product?.max_count || '',
         groups: product?.groups || []
@@ -305,6 +309,98 @@ export default function CreateOrEdit({ product }) {
 
                                             <InputError message={errors.max_count} className="mt-2"/>
                                         </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
+                            <div className="w-full xl:w-2/12 !mt-8 xl:!mt-0 flex items-center">
+                                <CheckboxInput
+                                    id="has_package"
+                                    name="has_package"
+                                    checked={data.has_package}
+                                    onChange={(e) => setData('has_package', e.target.checked)}
+                                />
+
+                                <InputLabel
+                                    htmlFor="has_package"
+                                    value="دارای پکیج"
+                                    className="mr-2"
+                                />
+                            </div>
+                            {data.has_package && (
+                                <>
+                                    <div className="w-full xl:w-3/12">
+                                        <div className="relative">
+                                            <TextInput
+                                                id="package_price"
+                                                name="package_price"
+                                                type="number"
+                                                value={data.package_price}
+                                                label="قیمت پکیج"
+                                                svgIcon={
+                                                    <>
+                                                        <circle cx="12" cy="12" r="10"/>
+                                                        <path d="M12 17V17.5V18"/>
+                                                        <path d="M12 6V6.5V7"/>
+                                                        <path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"/>
+                                                    </>
+                                                }
+                                                onChange={(e) => setData('package_price', e.target.value)}
+                                                error={errors.package_price}
+                                            />
+
+                                            <span className="absolute top-1/2 -translate-y-1/2 left-3 text-sm font-semibold text-gray-700 dark:text-slate-200">
+                                            ریال
+                                        </span>
+                                        </div>
+
+                                        <InputError message={errors.package_price} className="mt-2"/>
+                                    </div>
+                                    <div className="w-full xl:w-1/12"></div>
+                                </>
+                            )}
+                            <div className="w-full xl:w-2/12 !mt-8 xl:!mt-0 flex items-center">
+                                <CheckboxInput
+                                    id="has_mold"
+                                    name="has_mold"
+                                    checked={data.has_mold}
+                                    onChange={(e) => setData('has_mold', e.target.checked)}
+                                />
+
+                                <InputLabel
+                                    htmlFor="has_mold"
+                                    value="دارای قالب"
+                                    className="mr-2"
+                                />
+                            </div>
+                            {data.has_mold && (
+                                <div className="w-full xl:w-3/12">
+                                    <div className="relative">
+                                        <TextInput
+                                            id="mold_price"
+                                            name="mold_price"
+                                            type="number"
+                                            value={data.mold_price}
+                                            label="قیمت قالب"
+                                            svgIcon={
+                                                <>
+                                                    <circle cx="12" cy="12" r="10"/>
+                                                    <path d="M12 17V17.5V18"/>
+                                                    <path d="M12 6V6.5V7"/>
+                                                    <path d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"/>
+                                                </>
+                                            }
+                                            onChange={(e) => setData('mold_price', e.target.value)}
+                                            error={errors.mold_price}
+                                        />
+
+                                        <span className="absolute top-1/2 -translate-y-1/2 left-3 text-sm font-semibold text-gray-700 dark:text-slate-200">
+                                            ریال
+                                        </span>
+                                    </div>
+
+                                    <InputError message={errors.mold_price} className="mt-2"/>
                                 </div>
                             )}
                         </div>

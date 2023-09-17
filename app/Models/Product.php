@@ -28,6 +28,10 @@ class Product extends Model
         'expire_date',
         'inventory',
         'has_count',
+        'has_package',
+        'has_mold',
+        'package_price',
+        'mold_price',
         'min_count',
         'max_count',
     ];

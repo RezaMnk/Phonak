@@ -29,7 +29,10 @@ return new class extends Migration
             $table->enum('type', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC'])->nullable(); // Nullable but important
             $table->enum('ear', ['left', 'right', 'both'])->nullable();
 
-            $table->enum('status', [1,2,3,4,5, 'completed', 'paid'])->default(1);
+            $table->boolean('has_mold')->default(false);
+            $table->boolean('has_package')->default(false);
+
+            $table->enum('status', [1,2,3,4,5, 'completed', 'paid', 'approved'])->default(1);
 
             $table->unsignedBigInteger('total_price')->nullable();
 
