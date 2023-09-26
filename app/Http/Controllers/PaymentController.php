@@ -23,7 +23,7 @@ class PaymentController extends Controller
                 ->verify();
 
         else
-            return redirect()->route($route, $model->id)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
+            return redirect()->route($route)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
 
         if ($payment->successful() || $payment->alreadyVerified()) {
             $referenceId = $payment->referenceId();
@@ -33,7 +33,7 @@ class PaymentController extends Controller
 
             $model->update_product_inventory();
 
-            return redirect()->route($route, $model->id)->with('toast', ['success' => 'سفارش با موفقیت ثبت شد']);
+            return redirect()->route($route)->with('toast', ['success' => 'سفارش با موفقیت ثبت شد']);
         }
 
         if ($payment->failed()) {
@@ -41,7 +41,7 @@ class PaymentController extends Controller
             $model->reference_id = $referenceId;
             $model->touch();
 
-            return redirect()->route($route, $model->id)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
+            return redirect()->route($route)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
         }
     }
 

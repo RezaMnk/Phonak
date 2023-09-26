@@ -161,7 +161,7 @@ export default function Show({ accessory, user }) {
                             <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                    تلفن همراه کارشناس جهت ارسال صورتحساب
+                                    تلفن همراه شنوایی شناس جهت ارسال صورتحساب
                                 </p>
                                 <p className="mt-2 print:mt-1 print:text-xs">
                                     {accessory.shipping.expert_phone}
@@ -245,18 +245,23 @@ export default function Show({ accessory, user }) {
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-2">
+                                <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
+                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
                                             <span className="inline-block">
                                                 {accessory.shipping.address.address}
                                             </span>
-                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.post_code}
                                             </span>
-                                    {accessory.shipping.address.phone && (<span
-                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        {accessory.shipping.address.phone && (<span
+                                            className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {accessory.shipping.address.phone}
                                             </span>)}
-                                </p>
+                                    </p>
+                                    <span className="hidden print:block text-xs mt-2">
+                                        شنوایی شناس: {accessory.user.name}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         {accessory.shipping.description && (

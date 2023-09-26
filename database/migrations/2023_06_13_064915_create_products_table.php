@@ -26,6 +26,8 @@ return new class extends Migration
             $table->unsignedBigInteger('mold_price')->nullable();
             $table->boolean('has_package')->default(false);
             $table->unsignedBigInteger('package_price')->nullable();
+            $table->boolean('has_charger')->default(false);
+            $table->unsignedBigInteger('charger_price')->nullable();
             $table->unsignedInteger('min_count')->nullable();
             $table->unsignedInteger('max_count')->nullable();
             $table->timestamps();

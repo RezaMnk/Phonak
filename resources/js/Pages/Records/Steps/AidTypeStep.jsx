@@ -22,6 +22,7 @@ export default function AidTypeStep() {
         product: record.product_id || '',
         has_mold: record.has_mold,
         has_package: record.has_package,
+        has_charger: record.has_charger,
     });
 
     const firstRender = useFirstRender();
@@ -33,7 +34,7 @@ export default function AidTypeStep() {
 
     useEffect(() => {
         setData('product', product)
-        const items = firstRender ? [record.has_package && 'package', record.has_mold && 'mold'] : [];
+        const items = firstRender ? [record.has_package && 'package', record.has_mold && 'mold', record.has_charger && 'charger'] : [];
         setProductItems(items);
         clearErrors('product')
     }, [product])
@@ -43,6 +44,7 @@ export default function AidTypeStep() {
             ...data,
             has_package: productItems.includes('package'),
             has_mold: productItems.includes('mold'),
+            has_charger: productItems.includes('charger'),
         }))
     }, [productItems])
 
@@ -85,6 +87,9 @@ export default function AidTypeStep() {
                     }
                     if (loop_product.has_mold) {
                         items[loop_product.id].push('mold');
+                    }
+                    if (loop_product.has_charger) {
+                        items[loop_product.id].push('charger');
                     }
                 }
                 setProductsItems(items)

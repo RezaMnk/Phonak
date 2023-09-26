@@ -62,7 +62,7 @@ export default function ShippingStep() {
                             name="expert_phone"
                             type="number"
                             value={data.expert_phone}
-                            label="تلفن همراه کارشناس"
+                            label="تلفن همراه شنوایی شناس"
                             onChange={(e) => setData('expert_phone', e.target.value)}
                             error={errors.expert_phone}
                         />

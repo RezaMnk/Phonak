@@ -117,14 +117,14 @@ export default function Login({ status }) {
                             ثبت نام
                         </WarningButton>
                     </div>
-                    {/*<div className="mt-6 text-center">*/}
-                    {/*    <Link*/}
-                    {/*        href={route('password.request')}*/}
-                    {/*        className="text-sm text-blue-950 dark:text-blue-300 hover:underline"*/}
-                    {/*    >*/}
-                    {/*        کلمه عبور خود را فراموش کرده اید؟*/}
-                    {/*    </Link>*/}
-                    {/*</div>*/}
+                    <div className="mt-6 text-center">
+                        <Link
+                            href={route('password.request')}
+                            className="text-sm text-blue-950 dark:text-blue-300 hover:underline"
+                        >
+                            کلمه عبور خود را فراموش کرده اید؟
+                        </Link>
+                    </div>
                 </div>
             </form>
         </GuestLayout>

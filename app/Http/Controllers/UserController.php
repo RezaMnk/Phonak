@@ -135,12 +135,14 @@ class UserController extends Controller
             'status' => ['required', 'in:approved,unapproved,waiting'],
             'password' => ['nullable', 'string', 'max:255'],
             'confirm_password' => ['required_with:password', 'same:password'],
+            'creditor' => ['boolean'],
         ]);
 
         $data = [
             'role' => $request->role,
             'status' => $request->status,
             'group' => $request->group,
+            'creditor' => $request->creditor,
         ];
 
         if ($request->password)

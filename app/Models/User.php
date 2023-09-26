@@ -37,6 +37,7 @@ class User extends Authenticatable
         'group',
         'status',
         'disapprove',
+        'creditor',
     ];
 
     /**

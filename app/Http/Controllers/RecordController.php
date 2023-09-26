@@ -112,6 +112,14 @@ class RecordController extends Controller
                 ])
             ];
 
+        if ($product->has_charger)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'has_charger' => ['boolean']
+                ])
+            ];
+
         $count = $request->ear == 'both' ? 2 : 1;
         if ($product->inventory < $count) {
             return back()->withErrors(['product' => 'موجودی محصول به اتمام رسیده است']);
@@ -329,6 +337,10 @@ class RecordController extends Controller
 
         $price *= $count;
 
+        if ($record->has_charger)
+            $price += $record->product->charger_price;
+
+
         $record->total_price = $price;
         $record->touch();
 
@@ -535,26 +547,46 @@ class RecordController extends Controller
 
         $price *= $count;
 
-        $request = Toman::amount($price)
-            ->callback(route('payments.verify_record', $record->id))
-//            ->mobile($record->user->info->phone)
-            ->request();
+        if ($record->has_charger)
+            $price += $record->product->charger_price;
 
-        if ($request->successful()) {
-            $transactionId = $request->transactionId();
-
+        if ($record->user->creditor)
+        {
             $payment = $record->payment()->create([
-                'transaction_id' => $transactionId
+                'transaction_id' => 0
             ]);
 
-            $record->payment_id = $payment->id;
             $record->total_price = $price;
+            $record->status = 'paid';
+            $record->payment_id = $payment->id;
             $record->touch();
 
-            return $request->pay();
-        }
+            $record->update_product_inventory();
 
-        return false;
+
+            return redirect()->route('records.index')->with('toast', ['success' => 'سفارش با موفقیت ثبت شد']);
+        } else {
+            $request = Toman::amount($price)
+                ->callback(route('payments.verify_record', $record->id))
+//            ->mobile($record->user->info->phone)
+                ->request();
+
+            if ($request->successful()) {
+                $transactionId = $request->transactionId();
+
+                $payment = $record->payment()->create([
+                    'transaction_id' => $transactionId
+                ]);
+
+                $record->payment_id = $payment->id;
+                $record->total_price = $price;
+                $record->touch();
+
+                return $request->pay();
+            }
+
+            return false;
+        }
     }
 
 

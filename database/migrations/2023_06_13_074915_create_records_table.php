@@ -31,6 +31,7 @@ return new class extends Migration
 
             $table->boolean('has_mold')->default(false);
             $table->boolean('has_package')->default(false);
+            $table->boolean('has_charger')->default(false);
 
             $table->enum('status', [1,2,3,4,5, 'completed', 'paid', 'approved'])->default(1);
 

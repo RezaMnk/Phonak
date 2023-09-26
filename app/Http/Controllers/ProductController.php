@@ -45,6 +45,7 @@ class ProductController extends Controller
             'has_count' => ['boolean'],
             'has_package' => ['boolean'],
             'has_mold' => ['boolean'],
+            'has_charger' => ['boolean'],
             'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
             'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
             'groups' => ['nullable', 'array'],
@@ -65,6 +66,14 @@ class ProductController extends Controller
                 ...$data,
                 ...$request->validate([
                     'package_price' => ['required', 'numeric', 'max:100000000'],
+                ])
+            ];
+
+        if ($request->has_charger)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'charger_price' => ['required', 'numeric', 'max:100000000'],
                 ])
             ];
 
@@ -134,6 +143,7 @@ class ProductController extends Controller
             'has_count' => ['boolean'],
             'has_package' => ['boolean'],
             'has_mold' => ['boolean'],
+            'has_charger' => ['boolean'],
             'min_count' => ['nullable', 'required_if:has_count,true', 'gte:1'],
             'max_count' => ['nullable', 'required_if:has_count,true', 'gt:min_count'],
             'groups' => ['nullable', 'array'],
@@ -154,6 +164,14 @@ class ProductController extends Controller
                 ...$data,
                 ...$request->validate([
                     'package_price' => ['required', 'numeric', 'max:100000000'],
+                ])
+            ];
+
+        if ($request->has_charger)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'charger_price' => ['required', 'numeric', 'max:100000000'],
                 ])
             ];
 

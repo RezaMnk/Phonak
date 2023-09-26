@@ -132,6 +132,40 @@ export default ({ products, product: selected_product, setProduct, setProductIte
                             </InputLabel>
                         </SwiperSlide>
                     )}
+                    {(selected_product === product.id && product.has_charger) && (
+                        <SwiperSlide key={'charger-' + key}>
+                            <CheckboxInput
+                                id={`product-charger-`+ product.id}
+                                className="hidden peer"
+                                name="product_charger"
+                                checked={productItems.includes('charger')}
+                                onChange={(e) => {
+                                    if (e.target.checked) {
+                                        setProductItems([...productItems, 'charger']);
+                                    } else {
+                                        setProductItems(productItems.filter(item => item !== 'charger'));
+                                    }
+                                }}
+                            />
+
+                            <InputLabel
+                                htmlFor={`product-charger-`+ product.id}
+                                className={`w-full bg-violet-50 dark:bg-violet-800/20 peer-checked:bg-violet-200 peer-checked:dark:bg-violet-900 cursor-pointer border ${error ? 'border-red-200 dark:border-red-800' : 'border-violet-200 dark:border-violet-700'} border-2 rounded-lg peer-checked:border-violet-400`}
+                            >
+                                <div className="p-2">
+                                    <img src={product.image_url} loading="lazy" alt={product.id} className="rounded-lg h-full w-full object-cover"/>
+                                    <hr className="my-2 border-violet-200 dark:border-violet-700"/>
+                                    <p className="text-center text-xs font-bold">
+                                        {product.charger_price.toLocaleString()} ریال
+                                    </p>
+                                    <hr className="my-2 border-violet-200 dark:border-violet-700"/>
+                                    <p className="text-center">
+                                        شارژر سمعک {product.name}
+                                    </p>
+                                </div>
+                            </InputLabel>
+                        </SwiperSlide>
+                    )}
 
                 </div>
             ))}

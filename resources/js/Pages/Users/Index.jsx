@@ -43,6 +43,7 @@ export default function Index({ users }) {
                         className="!py-2 !px-4"
                         autoComplete="name"
                         onChange={(e) => setSearch(e.target.value)}
+                        isFocused={!! search}
                     />
                 </form>
             }

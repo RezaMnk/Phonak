@@ -124,7 +124,7 @@ export default function Record({ accessory }) {
                             <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                    تلفن همراه کارشناس جهت ارسال صورتحساب
+                                    تلفن همراه شنوایی شناس جهت ارسال صورتحساب
                                 </p>
                                 <p className="mt-2">
                                     {accessory.shipping.expert_phone}

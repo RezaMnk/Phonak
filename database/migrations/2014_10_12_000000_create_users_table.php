@@ -29,6 +29,7 @@ return new class extends Migration
             $table->unsignedInteger('group')->default(0);
             $table->enum('status', ['approved', 'unapproved', 'waiting'])->default('waiting');
             $table->text('disapprove')->nullable();
+            $table->boolean('creditor')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

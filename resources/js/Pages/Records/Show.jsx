@@ -432,7 +432,7 @@ export default function Show({ record, user }) {
                         </div>
                         <div className="break-inside-avoid">
                             <div>
-                                <h5>
+                                <h5 className="print:text-xs">
                                     اطلاعات کاربر
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
@@ -524,8 +524,8 @@ export default function Show({ record, user }) {
                             </div>
 
                             <div className="break-inside-avoid">
-                                <div className="mt-12 print:mt-5">
-                                    <h5>
+                                <div className="mt-12 print:mt-2">
+                                    <h5 className="print:text-xs">
                                         محصول مورد سفارش
                                     </h5>
                                     <hr className="dark:border-slate-600"/>
@@ -569,7 +569,7 @@ export default function Show({ record, user }) {
                                     </div>
                                 </div>
                                 <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                                    <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             تعداد مورد سفارش
@@ -578,7 +578,7 @@ export default function Show({ record, user }) {
                                             {record.ear === 'both' ? 'دو عدد' : 'یک عدد'}
                                         </p>
                                     </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                                    <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             سفارش پکیج دارد؟
@@ -587,7 +587,7 @@ export default function Show({ record, user }) {
                                             {record.has_package ? 'بله' : 'خیر'}
                                         </p>
                                     </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                                    <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             سفارش قالب دارد؟
@@ -596,7 +596,16 @@ export default function Show({ record, user }) {
                                             {record.has_mold ? 'بله' : 'خیر'}
                                         </p>
                                     </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                    <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                                        <p className="text-xs flex items-center">
+                                            <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                            سفارش شارژر دارد؟
+                                        </p>
+                                        <p className="mt-2 print:mt-1 print:text-xs">
+                                            {record.has_charger ? 'بله' : 'خیر'}
+                                        </p>
+                                    </div>
+                                    <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             جمع فاکتور سفارش
@@ -609,8 +618,8 @@ export default function Show({ record, user }) {
 
                                 {record.record_aid.left && (
                                     <>
-                                        <div className="mt-12 print:mt-5">
-                                            <h5>
+                                        <div className="mt-12 print:mt-2">
+                                            <h5 className="print:text-xs">
                                                 مشخصات سمعک گوش چپ
                                             </h5>
                                             <hr className="dark:border-slate-600"/>
@@ -622,8 +631,8 @@ export default function Show({ record, user }) {
 
                                 {record.record_aid.right && (
                                     <>
-                                        <div className="mt-12 print:mt-5">
-                                            <h5>
+                                        <div className="mt-12 print:mt-2">
+                                            <h5 className="print:text-xs">
                                                 مشخصات سمعک گوش راست
                                             </h5>
                                             <hr className="dark:border-slate-600"/>
@@ -637,39 +646,40 @@ export default function Show({ record, user }) {
 
                         {record.record_aid.left && (
                             <div className="break-inside-avoid">
-                                <div className="mt-12 print:mt-5">
-                                    <h5>
+                                <div className="mt-12 print:mt-2">
+                                    <h5 className="print:text-xs">
                                         ادیوگرام گوش چپ
                                     </h5>
                                     <hr className="dark:border-slate-600"/>
                                 </div>
-                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-10 xl:space-x-10 mt-5 xl:mt-8 print:mt-1 break-inside-avoid">
+
+                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 print:space-y-1 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-2 xl:space-x-10 mt-5 xl:mt-8 print:mt-1 break-inside-avoid">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
-                                                <span className="block text-sm cursor-pointer font-semibold bg-sky-200 dark:bg-sky-700 rounded-lg py-1 px-3 text-center">
+                                                <span className="block text-sm print:text-xs cursor-pointer font-semibold bg-sky-200 dark:bg-sky-700 rounded-lg py-1 px-3 text-center">
                                                     {item}Hz
                                                 </span>
-                                                <div className="mt-2 block text-sm cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg print:py-1 py-3 text-center">
+                                                <div className="mt-2 block text-sm print:text-xs cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg py-3 print:py-1 text-center">
                                                     {record.audiogram.left["ac_" + item]}
                                                 </div>
-                                                <div className="mt-2 block text-sm cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg print:py-1 py-3 text-center">
+                                                <div className="mt-2 block text-sm print:text-xs cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg py-3 print:py-1 text-center">
                                                     {record.audiogram.left["bc_" + item] ? record.audiogram.left["bc_" + item] : 'ثبت نشده'}
                                                 </div>
                                             </div>
-                                            <div className="flex xl:hidden">
+                                            <div className="flex xl:hidden print:hidden">
                                                 <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
-                                                    <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
-                                                    <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg print:py-2 py-[.65rem] px-2 mt-2">AC</div>
-                                                    <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg print:py-2 py-[.65rem] px-2 mt-2">BC</div>
+                                                    <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Freq</div>
+                                                    <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
+                                                    <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden xl:block w-1/12 text-gray-800 dark:text-slate-200">
-                                        <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
-                                        <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg print:py-2 py-[.65rem] px-2 mt-2">AC</div>
-                                        <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg print:py-2 py-[.65rem] px-2 mt-2">BC</div>
+                                    <div className="hidden xl:block print:block w-1/12 text-gray-800 dark:text-slate-200">
+                                        <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Freq</div>
+                                        <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] print:py-1 px-2 mt-2">AC</div>
+                                        <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] print:py-1 px-2 mt-2">BC</div>
                                     </div>
                                 </div>
                             </div>
@@ -677,48 +687,48 @@ export default function Show({ record, user }) {
 
                         {record.record_aid.right && (
                             <div className="break-inside-avoid">
-                                <div className="mt-12 print:mt-5">
-                                    <h5>
+                                <div className="mt-12 print:mt-2">
+                                    <h5 className="print:text-xs">
                                         ادیوگرام گوش راست
                                     </h5>
                                     <hr className="dark:border-slate-600"/>
                                 </div>
 
-                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-10 xl:space-x-10 mt-5 xl:mt-8 print:mt-1 break-inside-avoid">
+                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 print:space-y-1 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-2 xl:space-x-10 mt-5 xl:mt-8 print:mt-1 break-inside-avoid">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
-                                                <span className="block text-sm cursor-pointer font-semibold bg-red-200 dark:bg-red-700 rounded-lg py-1 px-3 text-center">
+                                                <span className="block text-sm print:text-xs cursor-pointer font-semibold bg-red-200 dark:bg-red-700 rounded-lg py-1 px-3 text-center">
                                                     {item}Hz
                                                 </span>
-                                                <div className="mt-2 block text-sm cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg py-3 text-center">
+                                                <div className="mt-2 block text-sm print:text-xs cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg py-3 print:py-1 text-center">
                                                     {record.audiogram.right["ac_" + item]}
                                                 </div>
-                                                <div className="mt-2 block text-sm cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg py-3 text-center">
+                                                <div className="mt-2 block text-sm print:text-xs cursor-pointer font-semibold bg-gray-100 dark:bg-slate-700 rounded-lg py-3 print:py-1 text-center">
                                                     {record.audiogram.right["bc_" + item] ? record.audiogram.right["bc_" + item] : 'ثبت نشده'}
                                                 </div>
                                             </div>
-                                            <div className="flex xl:hidden">
+                                            <div className="flex xl:hidden print:hidden">
                                                 <div className="w-full mr-5 text-gray-800 dark:text-slate-200">
-                                                    <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
+                                                    <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Freq</div>
                                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
                                                     <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden xl:block w-1/12 text-gray-800 dark:text-slate-200">
-                                        <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Frequency</div>
-                                        <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">AC</div>
-                                        <div className="text-center font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] px-2 mt-2">BC</div>
+                                    <div className="hidden xl:block print:block w-1/12 text-gray-800 dark:text-slate-200">
+                                        <div className="text-center text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-1 px-2">Freq</div>
+                                        <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] print:py-1 px-2 mt-2">AC</div>
+                                        <div className="text-center print:text-xs font-semibold bg-gray-200 dark:bg-slate-900 rounded-lg py-[.65rem] print:py-1 px-2 mt-2">BC</div>
                                     </div>
                                 </div>
                             </div>
                         )}
 
                         <div className="break-inside-avoid">
-                            <div className="mt-12 print:mt-5">
-                                <h5>
+                            <div className="mt-12 print:mt-2">
+                                <h5 className="print:text-xs">
                                     نحوه ارسال
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
@@ -727,7 +737,7 @@ export default function Show({ record, user }) {
                                 <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                        تلفن همراه کارشناس جهت ارسال صورتحساب
+                                        تلفن همراه شنوایی شناس جهت ارسال صورتحساب
                                     </p>
                                     <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.shipping.expert_phone}
@@ -812,18 +822,24 @@ export default function Show({ record, user }) {
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-2">
+                                <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
+                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
                                             <span className="inline-block">
                                                 {record.shipping.address.address}
                                             </span>
-                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.post_code}
                                             </span>
-                                    {record.shipping.address.phone && (<span
-                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        {record.shipping.address.phone && (<span
+                                            className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.phone}
                                             </span>)}
-                                </p>
+                                    </p>
+                                    <span className="hidden print:block text-xs mt-2">
+                                        شنوایی شناس: {record.user.name}
+                                    </span>
+                                </div>
+
                             </div>
                         </div>
                         {record.shipping.description && (
@@ -841,13 +857,13 @@ export default function Show({ record, user }) {
                         )}
 
                         <div className="break-inside-avoid print:hidden">
-                            <div className="mt-12 print:mt-5">
-                                <h5>
+                            <div className="mt-12 print:mt-2">
+                                <h5 className="print:text-xs">
                                     مدارک
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
                             </div>
-                            <div className="flex flex-col xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-3">
+                            <div className="flex flex-col xl:flex-row space-y-5 print:space-y-0 xl:space-y-0 mt-3">
                                 <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>

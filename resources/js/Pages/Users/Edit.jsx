@@ -10,6 +10,8 @@ import WarningButton from "@/Components/WarningButton.jsx";
 import {useEffect, useState} from "react";
 import Modal from "@/Components/Modal.jsx";
 import {toast as toastify} from "react-toastify";
+import CheckboxInput from "@/Components/CheckboxInput.jsx";
+import InputLabel from "@/Components/InputLabel.jsx";
 
 
 export default function Edit({ user }) {
@@ -19,6 +21,7 @@ export default function Edit({ user }) {
         confirm_password: '',
         group: user.group,
         status: user.status,
+        creditor: user.creditor,
     });
 
     const [submitVerify, setSubmitVerify] = useState(false);
@@ -515,6 +518,22 @@ export default function Edit({ user }) {
                                 />
 
                                 <InputError message={errors.confirm_password} className="mt-2"/>
+                            </div>
+                        </div>
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
+                            <div className="w-full xl:w-3/12 !mt-8 xl:!mt-0 flex items-center">
+                                <CheckboxInput
+                                    id="creditor"
+                                    name="creditor"
+                                    checked={data.creditor}
+                                    onChange={(e) => setData('creditor', e.target.checked)}
+                                />
+
+                                <InputLabel
+                                    htmlFor="creditor"
+                                    value="وضعیت بستانکار"
+                                    className="mr-2"
+                                />
                             </div>
                         </div>
 

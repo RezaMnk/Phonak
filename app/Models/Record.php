@@ -30,6 +30,7 @@ class Record extends Model
         'ear',
         'has_mold',
         'has_package',
+        'has_charger',
         'id_card_image',
         'prescription_image',
         'audiogram_image',
