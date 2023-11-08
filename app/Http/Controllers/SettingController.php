@@ -50,8 +50,8 @@ class SettingController extends Controller
             return redirect()->route('records.create');
 
         return Inertia::render('Settings/OutOfSchedule', [
-            'start_time' => Auth::user()->setting->start_time_readable,
-            'end_time' => Auth::user()->setting->end_time_readable
+            'start_time' => Auth::user()->setting ? Auth::user()->setting->start_time_readable : false,
+            'end_time' => Auth::user()->setting ? Auth::user()->setting->end_time_readable : true
         ]);
     }
 

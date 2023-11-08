@@ -407,12 +407,12 @@ export default function Show({ record, user }) {
             <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg" id="info">
                     <div className="w-full text-gray-700 dark:text-slate-200 break-inside-avoid">
-                        <div className="hidden print:flex gap-2 items-center text-lg font-semibold mb-5">
+                        <div className="hidden print:flex gap-2 items-center font-semibold mb-5">
                             <p>
-                                سفارش سمعک شماره <span>{record.id}</span>
+                                #<span>{record.id}</span>
                             </p>
                             <span className="text-lg xl:mr-3">
-                                 - شنوایی شناس: {record.user.name}
+                                  {record.user.name}
                             </span>
                             {record.status === 'completed' && (
                                 <span>
@@ -421,12 +421,12 @@ export default function Show({ record, user }) {
                             )}
                             {record.status === 'paid' && (
                                 <span>
-                                    (پرداخت شده)
+                                    (پرداخت شده - {record.payment.transaction_id.replace(/^([A0]*)+/, '')})
                                 </span>
                             )}
                             {record.status === 'approved' && (
                                 <span>
-                                    (تایید شده)
+                                    (تایید شده - {record.payment.transaction_id.replace(/^([A0]*)+/, '')})
                                 </span>
                             )}
                         </div>
@@ -864,7 +864,7 @@ export default function Show({ record, user }) {
                                 <hr className="dark:border-slate-600"/>
                             </div>
                             <div className="flex flex-col xl:flex-row space-y-5 print:space-y-0 xl:space-y-0 mt-3">
-                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
+                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         ادیوگرام
@@ -875,7 +875,7 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
+                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         مدرک شناسایی کاربر
@@ -886,7 +886,7 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         نسخه پزشک گوش و حلق و بینی
@@ -894,6 +894,17 @@ export default function Show({ record, user }) {
                                     <a href={route('records.download', {record: record.id, name: 'prescription'})} target="_blank" className="mt-2">
                                         <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
                                             <img src={record.prescription_image_url} alt="تصویر نسخه پزشک گوش و حلق و بینی"/>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
+                                    <p className="text-xs flex items-center">
+                                        <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                        تاییدیه کد ملی
+                                    </p>
+                                    <a href={route('records.download', {record: record.id, name: 'national_code_confirm'})} target="_blank" className="mt-2">
+                                        <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                            <img src={record.national_code_confirm_image_url} alt="تصویر تاییدیه کد ملی"/>
                                         </div>
                                     </a>
                                 </div>

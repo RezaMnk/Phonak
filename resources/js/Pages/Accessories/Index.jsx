@@ -114,7 +114,7 @@ export default function Index({ accessories }) {
                                         </a>
                                     )}
 
-                                    {accessory.status === 'paid' ? (
+                                    {['paid', 'approved'].includes(accessory.status) ? (
                                         <Link href={route('accessories.show', [accessory.id])}
                                               className="inline-flex px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
                                         >

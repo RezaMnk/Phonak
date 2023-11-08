@@ -41,6 +41,7 @@ export default function AudiogramStep() {
         'audiogram_image': record.audiogram_image || '',
         'id_card_image': record.id_card_image || '',
         'prescription_image': record.prescription_image || '',
+        'national_code_confirm_image': record.national_code_confirm_image || '',
     });
 
     const submit = (e) => {
@@ -166,10 +167,10 @@ export default function AudiogramStep() {
                             </span>
                             <hr className="mt-1 dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
-                            <div className="w-full xl:w-1/3 ml-5">
+                        <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
+                            <div className="w-full xl:w-1/2">
                                 <FileInput
-                                    name="left.audiogram_image"
+                                    name="audiogram_image"
                                     fileName={data.audiogram_image}
                                     viewLink={record.audiogram_image && record.audiogram_image_url}
                                     label="تصویر ادیوگرام"
@@ -178,9 +179,9 @@ export default function AudiogramStep() {
                                     error={errors.audiogram_image}
                                 />
                             </div>
-                            <div className="w-full xl:w-1/3 ml-5">
+                            <div className="w-full xl:w-1/2">
                                 <FileInput
-                                    name="left.id_card_image"
+                                    name="id_card_image"
                                     fileName={data.id_card_image}
                                     viewLink={record.id_card_image && record.id_card_image_url}
                                     label="تصویر مدرک شناسایی (کارت ملی یا صفحه اول شناسنامه حاوی کد ملی)"
@@ -189,7 +190,9 @@ export default function AudiogramStep() {
                                     error={errors.id_card_image}
                                 />
                             </div>
-                            <div className="w-full xl:w-1/3">
+                        </div>
+                        <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
+                            <div className="w-full xl:w-1/2">
                                 <FileInput
                                     name="prescription_image"
                                     fileName={data.prescription_image}
@@ -200,9 +203,21 @@ export default function AudiogramStep() {
                                     error={errors.prescription_image}
                                 />
                             </div>
+                            <div className="w-full xl:w-1/2">
+                                <FileInput
+                                    name="national_code_confirm"
+                                    fileName={data.national_code_confirm_image}
+                                    viewLink={record.national_code_confirm_image && record.national_code_confirm_image_url}
+                                    label="تصویر تاییدیه کد ملی"
+                                    accept=".jpg, .jpeg"
+                                    setData={(e) => setData('national_code_confirm_image', e.target.files[0])}
+                                    error={errors.national_code_confirm_image}
+                                />
+                            </div>
                         </div>
                         <div className="flex text-sm font-semibold mt-5 text-gray-700 dark:text-slate-200">
-                            توجه: مسئولیت صحت مدارک با کارشناس بوده و در صورت عدم تطبیق، سفارش حذف خواهد شد!
+                            <span className="animate-pulse ml-1">توجه: </span>
+                            مسئولیت صحت مدارک با کارشناس بوده و در صورت عدم تطبیق، سفارش حذف خواهد شد!
                         </div>
                     </div>
                 </AidContext.Provider>

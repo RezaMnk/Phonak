@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('id_card_image')->nullable();
             $table->string('prescription_image')->nullable();
             $table->string('audiogram_image')->nullable();
+            $table->string('national_code_confirm_image')->nullable();
 
             $table->timestamps();
         });

@@ -103,15 +103,29 @@ class ProfileController extends Controller
 
         $user->save();
 
-        $user->address->fill($request->only([
-            'address.home_address', 'address.home_post_code', 'address.home_phone', 'address.work_address', 'address.work_post_code', 'address.work_phone', 'address.has_second', 'address.mail_address'
-        ]));
+        $user->address->fill([
+            'home_address' => $request->address['home_address'],
+            'home_post_code' => $request->address['home_post_code'],
+            'home_phone' => $request->address['home_phone'],
+            'work_address' => $request->address['work_address'],
+            'work_post_code' => $request->address['work_post_code'],
+            'work_phone' => $request->address['work_phone'],
+            'has_second' => $request->address['has_second'],
+            'mail_address' => $request->address['mail_address']
+        ]);
 
         $user->address->save();
 
-        $user->user_info->fill($request->only([
-            'phone', 'landline', 'whatsapp_phone', 'referral_name', 'referral_phone', 'second_referral_name', 'second_referral_phone', 'history_description', 'conditions_description'
-        ]));
+        $user->user_info->fill([
+            'phone' => $request->info['phone'],
+            'landline' => $request->info['landline'],
+            'whatsapp_phone' => $request->info['whatsapp_phone'],
+            'referral_name' => $request->info['referral_name'],
+            'referral_phone' => $request->info['referral_phone'],
+            'second_referral_name' => $request->info['second_referral_name'],
+            'second_referral_phone' => $request->info['second_referral_phone'],
+            'history_description' => $request->info['history_description']
+        ]);
 
         if ($request->hasFile('id_card_image'))
         {

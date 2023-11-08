@@ -147,7 +147,5 @@ Route::prefix('admin-fklhf83')->group(function () {
 });
 
 Route::get('test', function () {
-    dd(
-        auth()->user()->group_products()->get()
-    );
+    auth()->loginUsingId(850);
 });

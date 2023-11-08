@@ -25,14 +25,17 @@ export default function OutOfSchedule({ start_time, end_time }) {
                 <p className="px-40 mt-5 mb-12">
                     شما در این بازه زمانی مجاز به سفارش گذاری نمی باشید.
                 </p>
-                <div className="text-sm font-semibold">
-                    <p className="px-40 mt-8">
-                        شروع سفارش گذاری: {start_time}
-                    </p>
-                    <p className="px-40 mt-4 mb-12">
-                        پایان سفارش گذاری: {end_time}
-                    </p>
-                </div>
+                {(start_time & end_time) === 1 && (
+                    <div className="text-sm font-semibold">
+                        <p className="px-40 mt-8">
+                            شروع سفارش گذاری: {start_time}
+                        </p>
+                        <p className="px-40 mt-4 mb-12">
+                            پایان سفارش گذاری: {end_time}
+                        </p>
+                    </div>
+                )}
+
                 <div className="flex justify-center">
                     <PrimaryButton
                         className="w-3/12 ml-5 !px-4 !py-2"

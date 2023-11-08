@@ -30,10 +30,10 @@ export default function Show({ accessory, user }) {
             header={(
                 <div className="flex items-center gap-2">
                     <p>
-                        نمایش سفارش لوازم جانبی شماره <span>{accessory.id}</span>
+                        #<span>{accessory.id}</span>
                     </p>
                     <span className="text-lg xl:mr-3">
-                        شنوایی شناس: {accessory.user.name}
+                         {accessory.user.name}
                     </span>
                     {accessory.status === 'completed' && (
                         <span className="text-lg text-yellow-600 dark:text-yellow-400">
@@ -42,12 +42,12 @@ export default function Show({ accessory, user }) {
                     )}
                     {accessory.status === 'paid' && (
                         <span className="text-lg text-sky-600 dark:text-sky-400">
-                            (پرداخت شده)
+                                (پرداخت شده - {accessory.payment.transaction_id.replace(/^([A0]*)+/, '')})
                         </span>
                     )}
                     {accessory.status === 'approved' && (
                         <span className="text-lg text-green-600 dark:text-green-400">
-                            (تایید شده)
+                                (تایید شده - {accessory.payment.transaction_id.replace(/^([A0]*)+/, '')})
                         </span>
                     )}
                 </div>

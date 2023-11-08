@@ -23,6 +23,7 @@ class RecordController extends Controller
             'only' => [
                 'create',
                 'store',
+                'edit',
             ]
         ]);
     }
@@ -205,6 +206,7 @@ class RecordController extends Controller
             'id_card_image' => ['required'],
             'prescription_image' => ['required'],
             'audiogram_image' => ['required'],
+            'national_code_confirm_image' => ['required'],
         ];
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
@@ -234,12 +236,15 @@ class RecordController extends Controller
         if ($request->hasFile('audiogram_image'))
             $to_validate['audiogram_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
 
+        if ($request->hasFile('national_code_confirm_image'))
+            $to_validate['national_code_confirm_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
         $request->validate($to_validate);
 
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
             {
-                $only = ['ac_250', 'ac_500', 'ac_1000', 'ac_2000', 'ac_4000', 'bc_250', 'bc_500', 'bc_1000', 'bc_2000', 'bc_4000', 'audiogram_image', 'id_card_image'];
+                $only = ['ac_250', 'ac_500', 'ac_1000', 'ac_2000', 'ac_4000', 'bc_250', 'bc_500', 'bc_1000', 'bc_2000', 'bc_4000'];
                 $data = $request[$ear];
                 foreach ($data as $key => $value) {
                     if (!in_array($key, $only)) {
@@ -276,6 +281,14 @@ class RecordController extends Controller
                 Storage::disk('records')->putFileAs($record->id, $image, $file_name);
 
                 $record->audiogram_image = $file_name;
+            }
+
+            if ($request->hasFile('national_code_confirm_image')) {
+                $image = $request->file('national_code_confirm_image');
+                $file_name = 'national_code_confirm_image.jpg';
+                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+                $record->national_code_confirm_image = $file_name;
             }
 
             $record->touch();
@@ -406,6 +419,7 @@ class RecordController extends Controller
             'user' => Auth::user(),
             'record' => $record,
             'record.user' => $record->user,
+            'record.payment' => $record->payment,
             'record.patient' => $record->patient,
             'record.product' => $record->product,
             'record.shipping' => $record->shipping,
@@ -482,18 +496,13 @@ class RecordController extends Controller
         return redirect()->route('records.index')->with('toast', ['success' => 'سفارش حذف گردید']);
     }
 
-
-    public function audiogram_uploads(Request $request)
-    {
-        $request->validate([]);
-    }
-
     public function download(Record $record, String $name, bool $archive = false)
     {
         $files = [
             'id' => ['name' => $record->patient->name .'-'. $record->user->name .'-id.jpg', 'file' => "id_card_image.jpg"],
             'audiogram' => ['name' => $record->patient->name .'-'. $record->user->name .'-audiogram.jpg', 'file' => "audiogram_image.jpg"],
             'prescription' => ['name' => $record->patient->name .'-'. $record->user->name .'-prescription.jpg', 'file' => "prescription_image.jpg"],
+            'national_code_confirm' => ['name' => $record->patient->name .'-'. $record->user->name .'-national_code_confirmation.jpg', 'file' => "national_code_confirm_image.jpg"],
             'all' => [],
         ];
         if (! in_array($name, array_keys($files)))
@@ -523,6 +532,7 @@ class RecordController extends Controller
             $record->patient->name .'-'. $record->user->name .'-audiogram.jpg' => "audiogram_image.jpg",
             $record->patient->name .'-'. $record->user->name .'-prescription.jpg' => "prescription_image.jpg",
             $record->patient->name .'-'. $record->user->name .'-id.jpg' => "id_card_image.jpg",
+            $record->patient->name .'-'. $record->user->name .'-national_code.jpg' => "national_code_confirm_image.jpg",
         ];
 
         foreach ($files as $name => $file)

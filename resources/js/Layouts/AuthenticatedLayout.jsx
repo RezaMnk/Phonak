@@ -15,7 +15,6 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
     const [hamburgerMenu, setHamburgerMenu] = useState(false)
 
     const { toast, auth } = usePage().props;
-    const all_props = usePage().props;
 
     useEffect(() => {
         if (dark) {
@@ -26,7 +25,6 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
     }, [dark])
 
     useEffect(() => {
-        console.log(all_props)
         if (toast) {
             const type = Object.keys(toast)[0];
             const message = toast[type];

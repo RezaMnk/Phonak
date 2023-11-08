@@ -34,6 +34,7 @@ class Record extends Model
         'id_card_image',
         'prescription_image',
         'audiogram_image',
+        'national_code_confirm_image',
     ];
 
 
@@ -46,6 +47,7 @@ class Record extends Model
         'id_card_image_url',
         'prescription_image_url',
         'audiogram_image_url',
+        'national_code_confirm_image_url',
     ];
 
 
@@ -143,13 +145,6 @@ class Record extends Model
             $product->inventory = $product->inventory - $count;
             $product->touch();
 
-            if ($this->user->group)
-            {
-                $group_product = $this->user->group_products()->firstWhere('product_id', $product->id);
-                $group_product->count = $group_product->count - $count;
-                $group_product->touch();
-            }
-
             return true;
         }
         else
@@ -174,6 +169,13 @@ class Record extends Model
     {
         return new Attribute(
             get: fn () => Storage::disk('records')->url($this->id.'/'.$this->audiogram_image),
+        );
+    }
+
+    protected function nationalCodeConfirmImageUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Storage::disk('records')->url($this->id.'/'.$this->national_code_confirm_image),
         );
     }
 }

@@ -201,7 +201,7 @@ class User extends Authenticatable
             $end_time = $setting->end_time;
         }
         else
-            return false;
+            return true;
 
         return ! ($start_time->isPast() && $end_time->isFuture());
     }
@@ -291,7 +291,7 @@ class User extends Authenticatable
 
     public function can_buy($product_id, $count, $type = 'record', $editing = false): bool
     {
-        if ($this->group == 0) return true;
+        if ($this->group == 0) return false;
 
         $total_ordered = $count;
         $product = $this->products()->firstWhere('id', $product_id);

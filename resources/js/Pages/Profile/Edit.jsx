@@ -285,7 +285,13 @@ export default function Edit({ user }) {
                                     </g>
                                 )}
                                 autoComplete="address.home_post_code"
-                                onChange={(e) => setData('address.home_post_code', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    address: {
+                                        ...prevData['address'],
+                                        home_post_code: e.target.value
+                                    },
+                                }))}
                                 error={errors.address?.home_post_code}
                             />
 
@@ -301,7 +307,13 @@ export default function Edit({ user }) {
                                 svgIcon={<path
                                     d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
                                     strokeLinecap="round" strokeLinejoin="round"/>}
-                                onChange={(e) => setData('address.home_phone', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    address: {
+                                        ...prevData['address'],
+                                        home_phone: e.target.value
+                                    },
+                                }))}
                                 error={errors.address?.home_phone}
                             />
 
@@ -316,7 +328,13 @@ export default function Edit({ user }) {
                                 svgIcon={<path
                                     d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
                                     strokeLinecap="round" strokeLinejoin="round"/>}
-                                onChange={(e) => setData('address.home_address', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    address: {
+                                        ...prevData['address'],
+                                        home_address: e.target.value
+                                    },
+                                }))}
                                 error={errors.address?.home_address}
                             />
 
@@ -339,7 +357,13 @@ export default function Edit({ user }) {
                                     </g>
                                 )}
                                 autoComplete="address.work_post_code"
-                                onChange={(e) => setData('address.work_post_code', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    address: {
+                                        ...prevData['address'],
+                                        work_post_code: e.target.value
+                                    },
+                                }))}
                                 error={errors.address?.work_post_code}
                                 required
                             />
@@ -356,7 +380,13 @@ export default function Edit({ user }) {
                                 svgIcon={<path
                                     d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
                                     strokeLinecap="round" strokeLinejoin="round"/>}
-                                onChange={(e) => setData('address.work_phone', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    address: {
+                                        ...prevData['address'],
+                                        work_phone: e.target.value
+                                    },
+                                }))}
                                 error={errors.address?.work_phone}
                                 required
                             />
@@ -372,7 +402,13 @@ export default function Edit({ user }) {
                                 svgIcon={<path
                                     d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
                                     strokeLinecap="round" strokeLinejoin="round"/>}
-                                onChange={(e) => setData('address.work_address', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    address: {
+                                        ...prevData['address'],
+                                        work_address: e.target.value
+                                    },
+                                }))}
                                 error={errors.address?.work_address}
                                 required
                             />
@@ -397,7 +433,13 @@ export default function Edit({ user }) {
                                         </g>
                                     )}
                                     autoComplete="address.second_work_post_code"
-                                    onChange={(e) => setData('address.second_work_post_code', e.target.value)}
+                                    onChange={(e) => setData((prevData) => ({
+                                        ...prevData,
+                                        address: {
+                                            ...prevData['address'],
+                                            second_work_post_code: e.target.value
+                                        },
+                                    }))}
                                     error={errors.address?.second_work_post_code}
                                     required
                                 />
@@ -414,7 +456,13 @@ export default function Edit({ user }) {
                                     svgIcon={<path
                                         d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
                                         strokeLinecap="round" strokeLinejoin="round"/>}
-                                    onChange={(e) => setData('address.second_work_phone', e.target.value)}
+                                    onChange={(e) => setData((prevData) => ({
+                                        ...prevData,
+                                        address: {
+                                            ...prevData['address'],
+                                            second_work_phone: e.target.value
+                                        },
+                                    }))}
                                     error={errors.address?.second_work_phone}
                                     required
                                 />
@@ -430,7 +478,13 @@ export default function Edit({ user }) {
                                     svgIcon={<path
                                         d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
                                         strokeLinecap="round" strokeLinejoin="round"/>}
-                                    onChange={(e) => setData('address.second_work_address', e.target.value)}
+                                    onChange={(e) => setData((prevData) => ({
+                                        ...prevData,
+                                        address: {
+                                            ...prevData['address'],
+                                            second_work_address: e.target.value
+                                        },
+                                    }))}
                                     error={errors.address?.second_work_address}
                                     required
                                 />

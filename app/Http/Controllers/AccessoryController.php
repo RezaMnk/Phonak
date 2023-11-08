@@ -157,6 +157,7 @@ class AccessoryController extends Controller
             'user' => Auth::user(),
             'accessory' => $accessory,
             'accessory.user' => $accessory->user,
+            'accessory.payment' => $accessory->payment,
             'accessory.patient' => $accessory->patient,
             'accessory.product' => $accessory->product,
             'accessory.shipping' => $accessory->shipping,
