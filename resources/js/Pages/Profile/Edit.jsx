@@ -14,7 +14,7 @@ import RadioInput from "@/Components/RadioInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 
 export default function Edit({ user }) {
-    const {data, setData, reset, patch, processing, errors} = useForm({
+    const {data, setData, reset, post, processing, errors} = useForm({
         password: '',
         new_password: '',
         confirm_password: '',
@@ -97,9 +97,10 @@ export default function Edit({ user }) {
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route('profile.update'), {
+        console.log(data)
+        post(route('profile.update'), {
             onSuccess: () => reset('password', 'confirm_password')
-        });
+        })
     };
 
     const render = () => (

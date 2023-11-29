@@ -19,7 +19,8 @@ class GroupSetting extends Model
      */
     protected $fillable = [
         'group',
-        'max_order',
+        'max_record_order',
+        'max_accessory_order',
         'start_time',
         'end_time',
     ];

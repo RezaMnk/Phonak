@@ -20,7 +20,7 @@ class AdminController extends Controller
         ]);
 
         return Inertia::render('Admin/Records', [
-            'records' => Record::with('patient')->with('user')
+            'records' => Record::with(['patient', 'user', 'payment'])
                 ->where(function ($query) use ($request) {
                     if ($request->has('search'))
                         $query->whereHas('user', function ($query) use ($request) {

@@ -11,6 +11,17 @@ use Inertia\Inertia;
 
 class AccessoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('accessory_group_check', [
+            'only' => [
+                'create',
+                'store',
+                'edit',
+            ]
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */

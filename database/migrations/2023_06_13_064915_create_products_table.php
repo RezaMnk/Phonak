@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('expire_date')->nullable();
             $table->unsignedBigInteger('price');
             $table->string('etc_brand')->nullable();
-            $table->string('irc');
+            $table->string('irc')->nullable();
             $table->unsignedInteger('inventory');
             $table->boolean('has_count')->default(false);
             $table->boolean('has_mold')->default(false);

@@ -125,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(ProfileController::class)->name('profile')->prefix('profile')->group(function () {
         Route::get('/', 'index')->name('.index');
         Route::get('/edit', 'edit')->name('.edit');
-        Route::patch('/', 'update')->name('.update');
+        Route::post('/', 'update')->name('.update');
     });
 });
 
@@ -135,10 +135,10 @@ require __DIR__.'/auth.php';
 
 
 Route::prefix('admin-fklhf83')->group(function () {
-    Route::get('/import', function () {
-        \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ImportUser,
-            \Illuminate\Support\Facades\Storage::path('public/excel.xlsx'));
-    });
+//    Route::get('/import', function () {
+//        \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ImportUser,
+//            \Illuminate\Support\Facades\Storage::path('public/excel.xlsx'));
+//    });
 
 
     Route::get('storage-link', function () {
@@ -147,5 +147,5 @@ Route::prefix('admin-fklhf83')->group(function () {
 });
 
 Route::get('test', function () {
-    auth()->loginUsingId(850);
+    auth()->loginUsingId(185);
 });

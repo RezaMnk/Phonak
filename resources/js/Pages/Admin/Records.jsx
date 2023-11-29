@@ -74,6 +74,12 @@ export default function Index({ records }) {
                                 وضعیت
                             </th>
                             <th scope="col" className="px-6 py-3">
+                                شناسه پرداخت
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                تاریخ پرداخت
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 عملیات
                             </th>
                         </tr>
@@ -117,6 +123,12 @@ export default function Index({ records }) {
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
+                                    {record.status !== 'completed' ? record.payment?.transaction_id ? record.payment?.transaction_id : 'بدون پرداخت' : '-'}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {record.status !== 'completed' ? record.payment?.transaction_id ? record.payment?.created_date : 'بدون پرداخت' : '-'}
+                                </td>
+                                <td className="px-6 py-4">
                                     {/*{record.status === 'paid' && (*/}
                                         <Link href={route('records.show', [record.id])}
                                               className="inline-flex px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
@@ -130,7 +142,7 @@ export default function Index({ records }) {
                     }) : (
                         <tr className="bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900">
                             <th scope="row"
-                                colSpan="7"
+                                colSpan="9"
                                 className="text-lg px-6 py-6">
                                 هیچ سفارشی یافت نشد!
                             </th>

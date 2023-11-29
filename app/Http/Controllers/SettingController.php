@@ -37,7 +37,7 @@ class SettingController extends Controller
             return redirect()->route('records.create');
 
         return Inertia::render('Settings/OffLimits', [
-            'limit' => Auth::user()->setting->max_order
+            'limit' => Auth::user()->setting->max_record_order
         ]);
     }
 
@@ -62,7 +62,8 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'group' => ['required', 'numeric', 'min:1'],
-            'max_order' => ['required', 'min:0'],
+            'max_record_order' => ['required', 'min:0'],
+            'max_accessory_order' => ['required', 'min:0'],
             'start_time' => ['required', 'date_format:Y-m-d\TH:i'],
             'end_time' => ['required', 'date_format:Y-m-d\TH:i', 'after:start_time'],
         ]);
@@ -96,7 +97,8 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'group' => ['required', 'numeric', 'min:1'],
-            'max_order' => ['required', 'min:0'],
+            'max_record_order' => ['required', 'min:0'],
+            'max_accessory_order' => ['required', 'min:0'],
             'start_time' => ['required', 'date_format:Y-m-d\TH:i'],
             'end_time' => ['required', 'date_format:Y-m-d\TH:i', 'after:start_time'],
         ]);

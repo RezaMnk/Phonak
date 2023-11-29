@@ -94,13 +94,19 @@ export default function Index({ users }) {
                                     {user.group === 0 ? 'گروه بندی نشده' : user.group}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {user.status === 'approved' ? (
+                                    {user.status === 'approved' && (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
                                             تایید شده
                                         </span>
-                                    ) : (
+                                    )}
+                                    {user.status === 'waiting' && (
                                         <span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
                                             در انتظار تایید
+                                        </span>
+                                    )}
+                                    {user.status === 'unapproved' && (
+                                        <span className="inline-flex items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
+                                            رد شده
                                         </span>
                                     )}
                                 </td>

@@ -208,7 +208,7 @@ export default function AudiogramStep() {
                                     name="national_code_confirm"
                                     fileName={data.national_code_confirm_image}
                                     viewLink={record.national_code_confirm_image && record.national_code_confirm_image_url}
-                                    label="تصویر تاییدیه کد ملی"
+                                    label="تصویر تعهد عدم اعلام کدملی تکراری با متن ارسالی کارشناسان فروش"
                                     accept=".jpg, .jpeg"
                                     setData={(e) => setData('national_code_confirm_image', e.target.files[0])}
                                     error={errors.national_code_confirm_image}

@@ -9,7 +9,8 @@ import DangerButton from "@/Components/DangerButton.jsx";
 export default function CreateOrEdit({ setting }) {
     const {data, setData, patch, post, processing, errors} = useForm({
         group: setting?.group || '',
-        max_order: setting?.max_order || '',
+        max_record_order: setting?.max_record_order || '',
+        max_accessory_order: setting?.max_accessory_order || '',
         start_time: setting?.start_time_formatted || '',
         end_time: setting?.end_time_formatted || '',
     });
@@ -54,7 +55,7 @@ export default function CreateOrEdit({ setting }) {
                         </div>
                         <div className="flex flex-col space-y-5 mt-6 mb-5">
                             <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
-                                <div className="w-full xl:w-1/4">
+                                <div className="w-full xl:w-1/5">
                                     <TextInput
                                         id="group"
                                         name="group"
@@ -70,23 +71,7 @@ export default function CreateOrEdit({ setting }) {
 
                                     <InputError message={errors.group} className="mt-2"/>
                                 </div>
-                                <div className="w-full xl:w-1/4">
-                                    <TextInput
-                                        id="max_order"
-                                        name="max_order"
-                                        type="number"
-                                        value={data.max_order}
-                                        label="حداکثر سفارش گذاری"
-                                        svgIcon={
-                                            <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                        }
-                                        onChange={(e) => setData('max_order', e.target.value)}
-                                        error={errors.max_order}
-                                    />
-
-                                    <InputError message={errors.max_order} className="mt-2"/>
-                                </div>
-                                <div className="w-full xl:w-1/4">
+                                <div className="w-full xl:w-2/5">
                                     <TextInput
                                         id="start_time"
                                         name="start_time"
@@ -99,7 +84,7 @@ export default function CreateOrEdit({ setting }) {
 
                                     <InputError message={errors.start_time} className="mt-2"/>
                                 </div>
-                                <div className="w-full xl:w-1/4">
+                                <div className="w-full xl:w-2/5">
                                     <TextInput
                                         id="end_time"
                                         name="end_time"
@@ -111,6 +96,40 @@ export default function CreateOrEdit({ setting }) {
                                     />
 
                                     <InputError message={errors.end_time} className="mt-2"/>
+                                </div>
+                            </div>
+                            <div className="w-full flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5 xl:space-x-reverse">
+                                <div className="w-full xl:w-1/4">
+                                    <TextInput
+                                        id="max_record_order"
+                                        name="max_record_order"
+                                        type="number"
+                                        value={data.max_record_order}
+                                        label="حداکثر سفارش سمعک"
+                                        svgIcon={
+                                            <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                        }
+                                        onChange={(e) => setData('max_record_order', e.target.value)}
+                                        error={errors.max_record_order}
+                                    />
+
+                                    <InputError message={errors.max_record_order} className="mt-2"/>
+                                </div>
+                                <div className="w-full xl:w-1/4">
+                                    <TextInput
+                                        id="max_accessory_order"
+                                        name="max_accessory_order"
+                                        type="number"
+                                        value={data.max_accessory_order}
+                                        label="حداکثر سفارش لوازم جانبی"
+                                        svgIcon={
+                                            <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                        }
+                                        onChange={(e) => setData('max_accessory_order', e.target.value)}
+                                        error={errors.max_accessory_order}
+                                    />
+
+                                    <InputError message={errors.max_accessory_order} className="mt-2"/>
                                 </div>
                             </div>
                         </div>

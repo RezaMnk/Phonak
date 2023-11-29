@@ -109,7 +109,7 @@ export default function Record({ accessory }) {
                                     کد IRC
                                 </p>
                                 <p className="mt-2">
-                                    {accessory.product.irc}
+                                    {accessory.product.irc ? accessory.product.irc : '-'}
                                 </p>
                             </div>
                         </div>

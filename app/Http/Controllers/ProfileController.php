@@ -46,7 +46,6 @@ class ProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-//        dd($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'national_code' => ['required', 'numeric', 'digits:10', Rule::unique('users')->ignore($request->user()->id, 'id')],
@@ -87,15 +86,24 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        if ($request->password && ! Hash::check($request->password, $user->password))
+        if ($request->password && (! Hash::check($request->password, $user->password)))
         {
             return back()->withErrors(['password' => trans('auth.failed')]);
         }
 
-        $user->fill([
-            ...$request->only(['name', 'national_code', 'grad_year', 'med_number', 'grade', 'state', 'city', 'university']),
-            'password' => $request->new_password
-        ]);
+        elseif (! $request->password && $request->new_password)
+        {
+            return back()->withErrors(['password' => trans('validation.required')]);
+        }
+
+        $fill = [
+            ...$request->only(['name', 'national_code', 'grad_year', 'med_number', 'grade', 'state', 'city', 'university'])
+        ];
+
+        if ($request->password)
+            $fill['password'] = $request->new_password;
+
+        $user->fill($fill);
 
         if (! $user->isDirty('password'))
             if ($user->role != 'admin')

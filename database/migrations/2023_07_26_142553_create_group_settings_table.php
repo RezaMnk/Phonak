@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('group_settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('group');
-            $table->unsignedBigInteger('max_order');
+            $table->unsignedBigInteger('max_record_order');
+            $table->unsignedBigInteger('max_accessory_order');
             $table->timestamp('start_time')->nullable()->default(null);
             $table->timestamp('end_time')->nullable()->default(null);
             $table->timestamps();

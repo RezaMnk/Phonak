@@ -78,7 +78,7 @@ export default function Create({ record, setting, setting_time_orders }) {
                         </span>
                         از
                         <span className="mr-1 font-semibold underline">
-                            {setting.max_order}
+                            {setting.max_record_order}
                         </span>
                     </span>
                 </div>

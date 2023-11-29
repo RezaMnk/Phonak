@@ -60,7 +60,10 @@ export default function Index({ settings }) {
                                 گروه مورد تنظیم
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                تعداد سفارش
+                                تعداد سفارش سمعک
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                تعداد سفارش لوازم جانبی
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 زمانبندی سفارش
@@ -81,7 +84,12 @@ export default function Index({ settings }) {
                                 </th>
                                 <td className="px-6 py-4">
                                     <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
-                                        {setting.max_order}
+                                        {setting.max_record_order}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                        {setting.max_accessory_order}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -107,7 +115,7 @@ export default function Index({ settings }) {
                     }) : (
                         <tr className="bg-white text-gray-700 dark:text-slate-300 dark:bg-slate-900">
                             <th scope="row"
-                                colSpan="4"
+                                colSpan="5"
                                 className="text-lg px-6 py-6">
                                 هیچ تنظیماتی یافت نشد!
                                 <Link href={route('settings.create')}

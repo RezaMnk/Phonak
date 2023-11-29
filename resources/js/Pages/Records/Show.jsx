@@ -421,12 +421,12 @@ export default function Show({ record, user }) {
                             )}
                             {record.status === 'paid' && (
                                 <span>
-                                    (پرداخت شده - {record.payment.transaction_id.replace(/^([A0]*)+/, '')})
+                                    (پرداخت شده - {record.payment.transaction_id})
                                 </span>
                             )}
                             {record.status === 'approved' && (
                                 <span>
-                                    (تایید شده - {record.payment.transaction_id.replace(/^([A0]*)+/, '')})
+                                    (تایید شده - {record.payment.transaction_id})
                                 </span>
                             )}
                         </div>
@@ -836,10 +836,9 @@ export default function Show({ record, user }) {
                                             </span>)}
                                     </p>
                                     <span className="hidden print:block text-xs mt-2">
-                                        شنوایی شناس: {record.user.name}
+                                        شنوایی شناس: {record.user.name} - {record.shipping.expert_phone}
                                     </span>
                                 </div>
-
                             </div>
                         </div>
                         {record.shipping.description && (
@@ -900,13 +899,19 @@ export default function Show({ record, user }) {
                                 <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                        تاییدیه کد ملی
+                                        با متن ارسالی کارشناسان فروش
                                     </p>
-                                    <a href={route('records.download', {record: record.id, name: 'national_code_confirm'})} target="_blank" className="mt-2">
-                                        <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
-                                            <img src={record.national_code_confirm_image_url} alt="تصویر تاییدیه کد ملی"/>
-                                        </div>
-                                    </a>
+                                    {record.national_code_confirm_image ? (
+                                        <a href={route('records.download', {record: record.id, name: 'national_code_confirm'})} target="_blank" className="mt-2">
+                                            <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                                <img src={record.national_code_confirm_image_url} alt="تعهد عدم اعلام کدملی تکراری"/>
+                                            </div>
+                                        </a>
+                                    ) : (
+                                        <p className="mt-5 font-semibold">
+                                            تصویر ثبت نشده!
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </div>

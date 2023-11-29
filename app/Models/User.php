@@ -163,33 +163,56 @@ class User extends Authenticatable
     }
 
 
-    public function reached_limit($this_count = 0, $editing_model = null): bool
+    public function reached_limit($model = 'record', $this_count = 0, $editing_model = null): bool
     {
         if ($setting = $this->setting)
-            $max_order = $setting->max_order;
+        {
+            $max_record_order = $setting->max_record_order;
+            $max_accessory_order = $setting->max_accessory_order;
+        }
         else
             return false;
 
-        $today_order = $this->records()->whereIn('status', ['completed', 'paid', 'approved'])
-                ->where(function ($query) use ($editing_model) {
-                    if ($editing_model)
-                        $query->whereHas('product', function ($query) use ($editing_model) {
-                            $query->whereNot('id', $editing_model->id);
-                        });
-                })
-                ->whereDate('created_at', '>=', $setting->start_time)
-                ->whereDate('created_at', '<=', $setting->end_time)->get()
-                ->sum(function ($record) {
-                    if ($record->ear == 'both')
-                        return 2;
-                    return 1;
-                }) + $this_count;
+        if ($model == 'record')
+        {
+            $today_order = $this->records()->whereIn('status', ['completed', 'paid', 'approved'])
+                    ->where(function ($query) use ($editing_model) {
+                        if ($editing_model)
+                            $query->whereHas('product', function ($query) use ($editing_model) {
+                                $query->whereNot('id', $editing_model->id);
+                            });
+                    })
+                    ->whereDate('created_at', '>=', $setting->start_time)
+                    ->whereDate('created_at', '<=', $setting->end_time)->get()
+                    ->sum(function ($record) {
+                        if ($record->ear == 'both')
+                            return 2;
+                        return 1;
+                    }) + $this_count;
 
         if ($this_count || $editing_model)
-            return $today_order > $max_order;
+            return $today_order > $max_record_order;
         else
-            return $today_order >= $max_order;
+            return $today_order >= $max_record_order;
+        }
+        else
+        {
+            $today_order = $this->accessories()->whereIn('status', ['completed', 'paid', 'approved'])
+                    ->where(function ($query) use ($editing_model) {
+                        if ($editing_model)
+                            $query->whereHas('product', function ($query) use ($editing_model) {
+                                $query->whereNot('id', $editing_model->id);
+                            });
+                    })
+                    ->whereDate('created_at', '>=', $setting->start_time)
+                    ->whereDate('created_at', '<=', $setting->end_time)->get()
+                    ->count() + $this_count;
 
+            if ($this_count || $editing_model)
+                return $today_order > $max_accessory_order;
+            else
+                return $today_order >= $max_accessory_order;
+        }
     }
 
 

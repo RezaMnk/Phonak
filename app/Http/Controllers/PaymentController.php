@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Record;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -17,15 +18,16 @@ class PaymentController extends Controller
         elseif ($type == 'accessory')
             $route = 'accessories.index';
 
+
         if ($request->Status == 'OK')
             $payment = Toman::transactionId($model->payment->transaction_id)
                 ->amount($model->total_price)
                 ->verify();
-
         else
             return redirect()->route($route)->with('toast', ['error' => 'خطا در انجام تراکنش! سفارش شما پرداخت نشد.']);
 
         if ($payment->successful() || $payment->alreadyVerified()) {
+            Log::info(json_encode($payment));
             $referenceId = $payment->referenceId();
             $model->payment->reference_id = $referenceId;
             $model->status = 'paid';

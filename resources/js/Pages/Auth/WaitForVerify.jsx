@@ -21,23 +21,23 @@ export default function Address({ user }) {
                 <h4 className="font-bold text-lg">
                     {user.status === 'waiting' ?  'در حال بررسی اطلاعات' : 'اطلاعات شما تایید نشد!'}
                 </h4>
-                <p className="px-40 mt-5 mb-12">
+                <p className="px-12 md:px-40 mt-5 mb-12">
                     {user.status === 'waiting'
                         ? 'اطلاعات شما در حال بررسی می باشد، ظرف 48 ساعت کاری اینده اطلاعات شما بررسی میگردد و پس از تایید، به گروه واتساپی خانواده آشنا خواهید پیوست.'
                         : user.disapprove ? 'پیام مدیرییت: ' + user.disapprove : 'اطلاعات شما مورد تایید واقع نشدند. لطفا مجددا اطلاعات خود را بررسی بفرمایید.'
                     }
                 </p>
                 <hr className="my-2 border-gray-300 border-slate-600" />
-                <div className="flex">
+                <div className="flex flex-col xl:flex-row gap-5">
                     <PrimaryButton
-                        className="w-9/12 ml-5 !px-4 !py-2"
+                        className="w-full xl:w-9/12 !px-4 !py-2"
                         link={true}
                         href={route('profile.edit')}
                     >
                         ویرایش اطلاعات ثبت شده
                     </PrimaryButton>
                     <DangerButton
-                        className="w-3/12 !px-4 !py-2"
+                        className="w-full xl:w-3/12 !px-4 !py-2"
                         link={true}
                         method="POST"
                         href={route('logout')}

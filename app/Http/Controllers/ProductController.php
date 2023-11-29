@@ -37,10 +37,10 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
             'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
-            'inventory' => ['required', 'numeric', 'max:1000'],
+            'inventory' => ['required', 'numeric', 'max:100000'],
             'expire_date' => ['nullable', 'date'],
             'price' => ['required', 'numeric', 'max:100000000'],
-            'irc' => ['required', 'numeric'],
+            'irc' => ['nullable', 'numeric'],
             'etc_brand' => ['required_if:brand,etc', 'nullable', 'string', 'max:255'],
             'has_count' => ['boolean'],
             'has_package' => ['boolean'],
@@ -135,10 +135,10 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
             'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
-            'inventory' => ['required', 'numeric', 'max:1000'],
+            'inventory' => ['required', 'numeric', 'max:100000'],
             'expire_date' => ['nullable', 'date'],
             'price' => ['required', 'numeric', 'max:100000000'],
-            'irc' => ['required', 'numeric'],
+            'irc' => ['nullable', 'numeric'],
             'etc_brand' => ['nullable', 'required_if:brand,etc', 'string', 'max:255'],
             'has_count' => ['boolean'],
             'has_package' => ['boolean'],
@@ -227,7 +227,7 @@ class ProductController extends Controller
     public function update_inventory(Request $request, Product $product)
     {
         $request->validate([
-            'inventory' => ['required', 'numeric', 'gte:0']
+            'inventory' => ['required', 'numeric', 'gte:0', 'max:100000']
         ]);
 
         $product->inventory = $request->inventory;

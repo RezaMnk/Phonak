@@ -18,8 +18,7 @@ class RecordController extends Controller
 {
     public function __construct()
     {
-        // Middleware only applied to these methods
-        $this->middleware('group_check', [
+        $this->middleware('record_group_check', [
             'only' => [
                 'create',
                 'store',
@@ -131,7 +130,7 @@ class RecordController extends Controller
                 return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
             }
 
-        $limit_reached = $record->user->reached_limit($count, $record->product);
+        $limit_reached = $record->user->reached_limit('record', $count, $record->product);
 
         if ($limit_reached) {
             return back()->withErrors(['product' => 'تعداد ظرفیت سفارش بیش از حد مجاز می باشد']);

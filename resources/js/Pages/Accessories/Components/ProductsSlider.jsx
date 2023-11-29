@@ -67,11 +67,15 @@ export default ({ products, product: selected_product, setProduct, error }) => {
                                 {product.brand === 'etc' && (product.etc_brand + ' - ')}
                                 {product.name}
                             </p>
-                            <hr className="my-2 border-gray-200 dark:border-slate-500"/>
-                            <p className="text-center text-xs">
-                                <bdi className="ml-1">کد IRC:</bdi>
-                                {product.irc}
-                            </p>
+                            {product.irc && (
+                                <>
+                                    <hr className="my-2 border-gray-200 dark:border-slate-500"/>
+                                    <p className="text-center text-xs">
+                                        <bdi className="ml-1">کد IRC:</bdi>
+                                        {product.irc}
+                                    </p>
+                                </>
+                            )}
                         </div>
                     </InputLabel>
                 </SwiperSlide>

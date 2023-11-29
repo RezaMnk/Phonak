@@ -153,7 +153,7 @@ export default function Index({ products }) {
                                 </td>
                                 <td className="px-6 py-4 hidden xl:table-cell">
                                     <TextInput
-                                        className="!w-12 !p-1 text-center"
+                                        className="!w-20 !p-1 text-center"
                                         size="1"
                                         type="number"
                                         value={productInventories[product.id]}

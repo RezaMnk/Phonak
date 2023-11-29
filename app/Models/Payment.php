@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,17 @@ class Payment extends Model
 
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'created_ago',
+        'created_date'
+    ];
+
+
+    /**
      * Has one record
      *
      * @return HasOne
@@ -42,5 +54,26 @@ class Payment extends Model
     public function accessory(): HasOne
     {
         return $this->hasOne(Accessory::class);
+    }
+
+    protected function transactionId(): Attribute
+    {
+        return new Attribute(
+            get: fn () => preg_replace('/^([A0]*)+/', '', $this->attributes['transaction_id'])
+        );
+    }
+
+    protected function createdAgo(): Attribute
+    {
+        return new Attribute(
+            get: fn () => jdate($this->attributes['created_at'])->ago()
+        );
+    }
+
+    protected function createdDate(): Attribute
+    {
+        return new Attribute(
+            get: fn () => jdate($this->attributes['created_at'])->toFormattedDateString()
+        );
     }
 }
