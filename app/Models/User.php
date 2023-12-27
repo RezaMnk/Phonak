@@ -144,6 +144,9 @@ class User extends Authenticatable
             foreach ($this->group_products as $group_product)
                 $products[] = $group_product->product;
 
+            foreach (Product::query()->where('category', 'accessories')->doesntHave('group_products')->get() as $product)
+                $products[] = $product;
+
             return collect($products);
         }
 
@@ -318,7 +321,8 @@ class User extends Authenticatable
 
         $total_ordered = $count;
         $product = $this->products()->firstWhere('id', $product_id);
-        $count_can_buy = $this->group_products->firstWhere('product_id', $product_id)->count;
+        $group_product = $this->group_products->firstWhere('product_id', $product_id);
+        $count_can_buy = $group_product ? $group_product->count() : INF;
 
         if ($type == 'record')
             $user_all_records = $this->records()->whereIn('status', ['completed', 'paid'])

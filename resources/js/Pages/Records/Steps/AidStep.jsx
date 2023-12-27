@@ -25,7 +25,6 @@ export default function AidStep() {
             vent_size: record.aid?.left?.vent_size || '',
             wax_guard: record.aid?.left?.wax_guard || '',
             receiver: record.aid?.left?.receiver || '',
-            has_mold: record.aid?.left?.has_mold || false,
             mold_material: record.aid?.left?.mold_material || 'hard',
             mold_size: record.aid?.left?.mold_size || '',
             has_vent: record.aid?.left?.has_vent || false,
@@ -41,7 +40,6 @@ export default function AidStep() {
             vent_size: record.aid?.right?.vent_size || '',
             wax_guard: record.aid?.right?.wax_guard || '',
             receiver: record.aid?.right?.receiver || '',
-            has_mold: record.aid?.right?.has_mold || false,
             mold_material: record.aid?.right?.mold_material || 'hard',
             mold_size: record.aid?.right?.mold_size || '',
             has_vent: record.aid?.right?.has_vent || false,
@@ -86,10 +84,7 @@ export default function AidStep() {
             )}
             {record.type === 'BTE mold' && (
                 <>
-                    <div className="w-full">
-                        <HasMold ear={ear} />
-                    </div>
-                    {data[ear].has_mold && (
+                    {record.has_mold && (
                         <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
                             <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full xl:w-3/12' : 'w-full xl:w-3/12'} ml-5 flex items-center`}>
                                 <MoldMaterial ear={ear} />
@@ -115,10 +110,7 @@ export default function AidStep() {
             )}
             {record.type === 'BTE tube' && (
                 <>
-                    <div className="w-full">
-                        <HasMold ear={ear} />
-                    </div>
-                    {data[ear].has_mold ? (
+                    {record.has_mold ? (
                         <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
                             <div className="w-full xl:w-1/3 flex items-center">
                                 <HasVent ear={ear} />
@@ -151,11 +143,8 @@ export default function AidStep() {
             )}
             {record.type === 'RIC' && (
                 <>
-                    <div className="w-full">
-                        <HasMold ear={ear} />
-                    </div>
                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
-                        {data[ear].has_mold ? (
+                        {record.has_mold ? (
                             <>
                                 <div className="w-full xl:-1/4 ml-5">
                                     <ReceiverType ear={ear} type="RIC - mold" />

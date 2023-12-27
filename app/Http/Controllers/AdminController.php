@@ -46,15 +46,14 @@ class AdminController extends Controller
         ]);
 
         return Inertia::render('Admin/Accessories', [
-            'accessories' => Accessory::with('user')->whereIn('status', ['completed', 'paid', 'approved'])
+            'accessories' => Accessory::with(['user', 'payment'])->whereIn('status', ['completed', 'paid', 'approved'])
                 ->where(function ($query) use ($request) {
                     if ($request->has('search'))
                         $query->whereHas('user', function ($query) use ($request) {
                             $query->where('name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
                         });
-                })
-                ->paginate(),
+                })->latest()->paginate(),
         ]);
     }
 

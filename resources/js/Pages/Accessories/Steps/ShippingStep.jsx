@@ -7,7 +7,6 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import {useContext} from "react";
 import {StepContext} from "@/Pages/Accessories/Create.jsx";
-import CheckboxInput from "@/Components/CheckboxInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import RadioInput from "@/Components/RadioInput.jsx";
@@ -21,11 +20,6 @@ export default function ShippingStep() {
         expert_phone: accessory.shipping?.expert_phone || '',
         type: accessory.shipping?.type || '',
         etc_delivery: accessory.shipping?.etc_delivery || '',
-        has_health_insurance: accessory.shipping?.has_health_insurance || false,
-        phone: accessory.shipping?.phone || '',
-        audiologist_med_number: accessory.shipping?.audiologist_med_number || '',
-        otolaryngologist_med_number: accessory.shipping?.otolaryngologist_med_number || '',
-        supplementary_insurance: accessory.shipping?.supplementary_insurance || '',
         description: accessory.shipping?.description || '',
         mail_address: accessory.shipping?.mail_address || accessory.shipping?.address.mail_address,
     });
@@ -229,83 +223,6 @@ export default function ShippingStep() {
                          </div>
                      </div>
                  </div>
-                 <div className="mt-5 text-gray-700 dark:text-slate-200">
-                     <h5>
-                         بیمه سلامت
-                     </h5>
-                     <hr className="dark:border-slate-600"/>
-                 </div>
-                 <div className="flex mt-5 mb-5">
-                     <div className="w-full">
-                         <CheckboxInput
-                             id="has_health_insurance"
-                             name="has_health_insurance"
-                             checked={data.has_health_insurance}
-                             onChange={(e) => setData('has_health_insurance', e.target.checked)}
-                         />
-
-                         <InputLabel
-                             htmlFor="has_health_insurance"
-                             value="تمایل به دریافت برگه بیمه سلامت"
-                             className="mr-2"
-                         />
-                     </div>
-                 </div>
-                {data.has_health_insurance && (
-                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
-                         <div className="w-full xl:w-1/4 ml-5">
-                             <TextInput
-                                 id="phone"
-                                 name="phone"
-                                 type="number"
-                                 value={data.phone}
-                                 label="تلفن همراه کاربر"
-                                 onChange={(e) => setData('phone', e.target.value)}
-                                 error={errors.phone}
-                             />
-
-                             <InputError message={errors.phone} className="mt-2"/>
-                         </div>
-                         <div className="w-full xl:w-1/4 ml-5">
-                             <TextInput
-                                 id="audiologist_med_number"
-                                 name="audiologist_med_number"
-                                 type="number"
-                                 value={data.audiologist_med_number}
-                                 label="شماره نظام پزشکی شنوایی شناس"
-                                 onChange={(e) => setData('audiologist_med_number', e.target.value)}
-                                 error={errors.audiologist_med_number}
-                             />
-
-                             <InputError message={errors.audiologist_med_number} className="mt-2"/>
-                         </div>
-                         <div className="w-full xl:w-1/4 ml-5">
-                             <TextInput
-                                 id="otolaryngologist_med_number"
-                                 name="otolaryngologist_med_number"
-                                 type="number"
-                                 value={data.otolaryngologist_med_number}
-                                 label="شماره نظام پزشکی پزشک گوش و حلق و بینی"
-                                 onChange={(e) => setData('otolaryngologist_med_number', e.target.value)}
-                                 error={errors.otolaryngologist_med_number}
-                             />
-
-                             <InputError message={errors.otolaryngologist_med_number} className="mt-2"/>
-                         </div>
-                         <div className="w-full xl:w-1/4">
-                             <TextInput
-                                 id="supplementary_insurance"
-                                 name="supplementary_insurance"
-                                 value={data.supplementary_insurance}
-                                 label="نوع بیمه تکمیلی"
-                                 onChange={(e) => setData('supplementary_insurance', e.target.value)}
-                                 error={errors.supplementary_insurance}
-                             />
-
-                             <InputError message={errors.supplementary_insurance} className="mt-2"/>
-                         </div>
-                     </div>
-                )}
 
                  <div className="flex mt-16">
                      <TextAreaInput

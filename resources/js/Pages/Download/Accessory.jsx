@@ -151,57 +151,6 @@ export default function Record({ accessory }) {
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
-                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                                <p className="text-xs flex items-center">
-                                    <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                    بیمه سلامت دارد؟
-                                </p>
-                                <p className="mt-2">
-                                    {accessory.shipping.has_health_insurance ? 'بله' : 'خیر'}
-                                </p>
-                            </div>
-                            {accessory.shipping.has_health_insurance === 1 && (
-                                <>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            تلفن همراه کاربر
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.phone}
-                                        </p>
-                                    </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            شماره نظام پزشکی شنوایی شناس
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.audiologist_med_number}
-                                        </p>
-                                    </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            شماره نظام پزشکی پزشک گوش و حلق و بینی
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.otolaryngologist_med_number}
-                                        </p>
-                                    </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            نوع بیمه تکمیلی
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.supplementary_insurance}
-                                        </p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
                         <div className="flex mt-6">
                             <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                                 <p className="text-xs flex items-center">

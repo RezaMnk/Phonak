@@ -97,21 +97,27 @@ export default function Show({ accessory, user }) {
             <div className="flex flex-col sm:justify-center items-center">
                 <div className="w-full print:h-screen px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
                     <div className="w-full text-gray-700 dark:text-slate-200">
-                        <div className="hidden print:flex gap-2 items-center text-lg font-semibold mb-12">
+                        <div className="hidden print:flex gap-2 items-center font-semibold mb-5">
                             <p>
-                                سفارش لوازم جانبی شماره <span>{accessory.id}</span>
+                                #<span>{accessory.id}</span>
                             </p>
                             <span className="text-lg xl:mr-3">
-                                 - شنوایی شناس: {accessory.user.name}
+                                  {accessory.user.name}
                             </span>
-                            {accessory.status === 'completed' ? (
+                            {accessory.status === 'completed' && (
                                 <span>
-                                (پرداخت نشده)
-                            </span>
-                            ) : (
+                                    (پرداخت نشده)
+                                </span>
+                            )}
+                            {accessory.status === 'paid' && (
                                 <span>
-                                (پرداخت شده)
-                            </span>
+                                    (پرداخت شده - {accessory.payment.transaction_id})
+                                </span>
+                            )}
+                            {accessory.status === 'approved' && (
+                                <span>
+                                    (تایید شده - {accessory.payment.transaction_id})
+                                </span>
                             )}
                         </div>
                         <div>
@@ -120,8 +126,8 @@ export default function Show({ accessory, user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
-                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 gap-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     برند
@@ -131,7 +137,7 @@ export default function Show({ accessory, user }) {
                                     {accessory.product.brand === 'etc' && (' - ' + accessory.product.etc_brand)}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     نام محصول
@@ -140,7 +146,7 @@ export default function Show({ accessory, user }) {
                                     {accessory.product.name}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     کد IRC
@@ -149,6 +155,28 @@ export default function Show({ accessory, user }) {
                                     {accessory.product.irc}
                                 </p>
                             </div>
+                            {accessory.count && (
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                                    <p className="text-xs flex items-center">
+                                        <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                        تعداد
+                                    </p>
+                                    <p className="mt-2">
+                                        {accessory.count} عدد
+                                    </p>
+                                </div>
+                            )}
+                            {accessory.total_price && (<div
+                                className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                <p className="text-xs flex items-center">
+                                    <span
+                                        className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    جمع فاکتور سفارش
+                                </p>
+                                <p className="mt-2 print:mt-1 print:text-xs">
+                                    {accessory.total_price.toLocaleString('fa-IR')} ریال
+                                </p>
+                            </div>)}
                         </div>
 
                         <div className="mt-12">
@@ -157,8 +185,8 @@ export default function Show({ accessory, user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
-                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6 gap-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     تلفن همراه شنوایی شناس جهت ارسال صورتحساب
@@ -167,7 +195,7 @@ export default function Show({ accessory, user }) {
                                     {accessory.shipping.expert_phone}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
+                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     شیوه ارسال
@@ -188,57 +216,6 @@ export default function Show({ accessory, user }) {
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-6">
-                            <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
-                                <p className="text-xs flex items-center">
-                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                    بیمه سلامت دارد؟
-                                </p>
-                                <p className="mt-2">
-                                    {accessory.shipping.has_health_insurance ? 'بله' : 'خیر'}
-                                </p>
-                            </div>
-                            {accessory.shipping.has_health_insurance === 1 && (
-                                <>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            تلفن همراه کاربر
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.phone}
-                                        </p>
-                                    </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            شماره نظام پزشکی شنوایی شناس
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.audiologist_med_number}
-                                        </p>
-                                    </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3 ml-5">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            شماره نظام پزشکی پزشک گوش و حلق و بینی
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.otolaryngologist_med_number}
-                                        </p>
-                                    </div>
-                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
-                                        <p className="text-xs flex items-center">
-                                            <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                            نوع بیمه تکمیلی
-                                        </p>
-                                        <p className="mt-2">
-                                            {accessory.shipping.supplementary_insurance}
-                                        </p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
                         <div className="flex mt-6">
                             <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                 <p className="text-xs flex items-center">
@@ -246,7 +223,7 @@ export default function Show({ accessory, user }) {
                                     آدرس ارسال محصول
                                 </p>
                                 <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
-                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
+                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 gap-5">
                                             <span className="inline-block">
                                                 {accessory.shipping.address.address}
                                             </span>
@@ -259,7 +236,7 @@ export default function Show({ accessory, user }) {
                                             </span>)}
                                     </p>
                                     <span className="hidden print:block text-xs mt-2">
-                                        شنوایی شناس: {accessory.user.name}
+                                        شنوایی شناس: {accessory.user.name} - {accessory.shipping.expert_phone}
                                     </span>
                                 </div>
                             </div>

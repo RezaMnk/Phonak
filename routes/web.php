@@ -96,6 +96,7 @@ Route::middleware(['auth', 'auth.is_admin'])->group(function () {
 
     Route::controller(UserController::class)->name('users')->prefix('users')->group(function () {
         Route::get('/not-verified', 'not_verified')->name('.not_verified');
+        Route::get('/not-completed', 'not_completed')->name('.not_completed');
         Route::get('/download/{user}/{name}', 'download')->name('.download');
         Route::post('/disapprove/{user}', 'disapprove')->name('.disapprove');
 

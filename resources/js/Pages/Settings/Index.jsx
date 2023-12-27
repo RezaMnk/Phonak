@@ -18,7 +18,7 @@ export default function Index({ settings }) {
         processing,
     } = useForm();
 
-    const deletePatient = (e) => {
+    const deleteSetting = (e) => {
         e.preventDefault();
 
         destroy(route('settings.destroy', modalProduct), {
@@ -133,7 +133,7 @@ export default function Index({ settings }) {
             <Pagination data={settings}/>
 
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
-                <form onSubmit={deletePatient} className="p-6">
+                <form onSubmit={deleteSetting} className="p-6">
                     <h2 className="text-lg font-semibold text-gray-700 dark:text-slate-200">
                         آیا از حذف تنظیم مطمئن هستید؟
                     </h2>

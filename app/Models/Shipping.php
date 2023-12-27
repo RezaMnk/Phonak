@@ -26,6 +26,7 @@ class Shipping extends Model
         'otolaryngologist_med_number',
         'supplementary_insurance',
         'description',
+        'mail_address',
     ];
 
 

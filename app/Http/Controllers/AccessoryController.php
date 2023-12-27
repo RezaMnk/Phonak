@@ -104,12 +104,13 @@ class AccessoryController extends Controller
         $request->validate([
             'expert_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
-            'has_health_insurance' => ['boolean'],
             'description' => ['nullable', 'string'],
             'mail_address' => ['required', 'in:home,work,second_work'],
         ]);
 
-        $data = $request->only(['expert_phone','type','description','mail_address','etc_delivery','has_health_insurance','phone','audiologist_med_number','otolaryngologist_med_number','supplementary_insurance']);
+        $data = $request->only(['expert_phone','type','description','mail_address','etc_delivery']);
+
+        $data['has_health_insurance'] = false;
 
         if ($request->type == 'etc')
             $request->validate([
@@ -118,19 +119,6 @@ class AccessoryController extends Controller
         else
             $data['etc_delivery'] = null;
 
-        if ($request->has_health_insurance)
-            $request->validate([
-                'phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
-                'audiologist_med_number' => ['required', 'numeric', 'max_digits:15'],
-                'otolaryngologist_med_number' => ['required', 'numeric', 'max_digits:15'],
-                'supplementary_insurance' => ['required', 'string', 'max:255'],
-            ]);
-        else {
-            $data['phone'] = null;
-            $data['audiologist_med_number'] = null;
-            $data['otolaryngologist_med_number'] = null;
-            $data['supplementary_insurance'] = null;
-        }
 
         $accessory->shipping()->updateOrCreate([], $data);
 
@@ -254,7 +242,8 @@ class AccessoryController extends Controller
             $transactionId = $request->transactionId();
 
             $payment = $accessory->payment()->create([
-                'transaction_id' => $transactionId
+                'transaction_id' => $transactionId,
+                'type' => 'accessory'
             ]);
 
             $accessory->payment_id = $payment->id;

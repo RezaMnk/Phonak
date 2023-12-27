@@ -50,6 +50,16 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function not_completed(): \Inertia\Response
+    {
+        return Inertia::render('Users/NotCompleted', [
+            'users' => User::query()->doesntHave('user_info')->orDoesntHave('address')->with(['user_info', 'address'])->where('role', 'user')->latest()->paginate()
+        ]);
+    }
+
     public function search(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
@@ -172,10 +182,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
-//        $user->delete();
-//
-//        return back()->with('toast', ['success' => 'همکار با موفقیت حذف گردید']);
+        $user->delete();
+
+        return back()->with('toast', ['success' => 'همکار با موفقیت حذف گردید']);
     }
 }
