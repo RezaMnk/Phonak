@@ -120,13 +120,29 @@ export default function Admin({ users, records, data }) {
                                             {record.brand}
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            {record.status === 'paid' ? (
-                                                <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
-                                                    پرداخت شده
-                                                </span>
-                                            ) : (
+                                            {record.status === 'completed' && (
                                                 <span className="inline-flex whitespace-nowrap items-center rounded-md bg-yellow-50 dark:bg-yellow-500/30 px-2 py-1 text-sm font-medium text-yellow-800 dark:text-yellow-300/70 ring-1 ring-inset ring-yellow-600/20">
                                                     در انتظار پرداخت
+                                                </span>
+                                            )}
+                                            {record.status === 'paid' && (
+                                                <span className="inline-flex whitespace-nowrap items-center rounded-md bg-sky-50 dark:bg-sky-500/30 px-2 py-1 text-sm font-medium text-sky-800 dark:text-sky-300/70 ring-1 ring-inset ring-sky-600/20">
+                                                    پرداخت شده
+                                                </span>
+                                            )}
+                                            {record.status === 'approved' && (
+                                                <span className="inline-flex whitespace-nowrap items-center rounded-md bg-green-50 dark:bg-green-500/30 px-2 py-1 text-sm font-medium text-green-800 dark:text-green-300/70 ring-1 ring-inset ring-green-600/20">
+                                                    تایید شده
+                                                </span>
+                                            )}
+                                            {record.status === 'canceled' && (
+                                                <span className="inline-flex whitespace-nowrap items-center rounded-md bg-stone-50 dark:bg-stone-500/30 px-2 py-1 text-sm font-medium text-stone-800 dark:text-stone-300/70 ring-1 ring-inset ring-stone-600/20">
+                                                    لغو شده
+                                                </span>
+                                            )}
+                                            {! ['completed', 'canceled', 'paid', 'approved'].includes(record.status) && (
+                                                <span className="inline-flex whitespace-nowrap items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
+                                                    در انتظار تکمیل
                                                 </span>
                                             )}
                                         </td>

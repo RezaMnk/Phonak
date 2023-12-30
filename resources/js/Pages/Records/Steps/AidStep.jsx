@@ -67,16 +67,16 @@ export default function AidStep() {
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
-                        <div className="w-full xl:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <AidSize ear={ear} is_cic={record.type === 'CIC'} />
                         </div>
-                        <div className="w-full xl:w-1/4 ml-5">
+                        <div className="w-full xl:w-1/3 ml-5">
                             <VentSize ear={ear} />
                         </div>
-                        <div className="w-full xl:w-1/4 ml-5">
-                            <WaxGuard ear={ear} />
-                        </div>
-                        <div className="w-full xl:w-1/4">
+                        {/*<div className="w-full xl:w-1/4 ml-5">*/}
+                        {/*    <WaxGuard ear={ear} />*/}
+                        {/*</div>*/}
+                        <div className="w-full xl:w-1/3">
                             <ReceiverType ear={ear} type={record.type} />
                         </div>
                     </div>

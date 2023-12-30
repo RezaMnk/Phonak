@@ -114,7 +114,12 @@ export default function Index({ records }) {
                                             تایید شده
                                         </span>
                                     )}
-                                    {! ['completed', 'paid', 'approved'].includes(record.status) && (
+                                    {record.status === 'canceled' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-stone-50 dark:bg-stone-500/30 px-2 py-1 text-sm font-medium text-stone-800 dark:text-stone-300/70 ring-1 ring-inset ring-stone-600/20">
+                                            لغو شده
+                                        </span>
+                                    )}
+                                    {! ['completed', 'canceled', 'paid', 'approved'].includes(record.status) && (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
                                             در انتظار تکمیل
                                         </span>
@@ -129,7 +134,7 @@ export default function Index({ records }) {
                                             پرداخت سفارش
                                         </a>
                                     )}
-                                    {['paid', 'approved'].includes(record.status) ? (
+                                    {['paid', 'approved', 'canceled'].includes(record.status) ? (
                                         <Link href={route('records.show', [record.id])}
                                               className="inline-flex px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
                                         >

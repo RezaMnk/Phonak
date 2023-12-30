@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->unsignedInteger('count')->nullable();
             $table->enum('brand', ['phonak' ,'hansaton' ,'unitron' ,'rayovac' ,'detax' ,'etc']);
-            $table->enum('status', [1, 'completed', 'paid', 'approved'])->default(1);
+            $table->enum('status', [1, 'completed', 'paid', 'approved', 'canceled'])->default(1);
 
             $table->unsignedBigInteger('total_price')->nullable();
 

@@ -33,7 +33,7 @@ return new class extends Migration
             $table->boolean('has_package')->default(false);
             $table->boolean('has_charger')->default(false);
 
-            $table->enum('status', [1,2,3,4,5, 'completed', 'paid', 'approved'])->default(1);
+            $table->enum('status', [1,2,3,4,5, 'completed', 'paid', 'approved', 'canceled'])->default(1);
 
             $table->unsignedBigInteger('total_price')->nullable();
 

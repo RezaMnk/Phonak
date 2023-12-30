@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\Product;
 use App\Models\Record;
 use App\Models\User;
+use Carbon\Carbon;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -544,6 +545,13 @@ class RecordController extends Controller
 
     public function pay(Record $record)
     {
+        if ($record->created_at < Carbon::now()->subHours(2)->toDateTimeString())
+        {
+            $record->status = 'canceled';
+            $record->save();
+            return redirect()->route('records.index')->with('toast', ['error' => 'مهلت پرداخت سفارش به اتمام رسیده است']);
+        }
+
         $price = $record->product->price;
 
         $count = $record->ear == 'both' ? 2 : 1;
@@ -676,7 +684,7 @@ class RecordController extends Controller
                         ...$to_validate,
                         $ear. '.hearing_aid_size' => ['required', 'in:CIC,Canal'],
                         $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
-                        $ear. '.wax_guard' => ['required', 'in:normal,rotating'],
+//                        $ear. '.wax_guard' => ['required', 'in:normal,rotating'],     Removed
                         $ear. '.receiver' => ['required', 'in:standard,power,super power'],
                     ];
                     break;
@@ -686,7 +694,7 @@ class RecordController extends Controller
                         ...$to_validate,
                         $ear. '.hearing_aid_size' => ['required', 'in:Canal,Full shell'],
                         $ear. '.vent_size' => ['required', 'in:2-3 mm,1.5 mm,1 mm,groove,none'],
-                        $ear. '.wax_guard' => ['required', 'in:normal,rotating'],
+//                        $ear. '.wax_guard' => ['required', 'in:normal,rotating],      Removed
                         $ear. '.receiver' => ['required', 'in:standard,power,super power,ultra power'],
                     ];
                     break;

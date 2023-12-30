@@ -98,7 +98,12 @@ export default function Index({ accessories }) {
                                             تایید شده
                                         </span>
                                     )}
-                                    {! ['completed', 'paid', 'approved'].includes(accessory.status) && (
+                                    {accessory.status === 'canceled' && (
+                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-stone-50 dark:bg-stone-500/30 px-2 py-1 text-sm font-medium text-stone-800 dark:text-stone-300/70 ring-1 ring-inset ring-stone-600/20">
+                                            لغو شده
+                                        </span>
+                                    )}
+                                    {! ['completed', 'paid', 'canceled', 'approved'].includes(accessory.status) && (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
                                             در انتظار تکمیل
                                         </span>
@@ -114,7 +119,7 @@ export default function Index({ accessories }) {
                                         </a>
                                     )}
 
-                                    {['paid', 'approved'].includes(accessory.status) ? (
+                                    {['paid', 'approved', 'canceled'].includes(accessory.status) ? (
                                         <Link href={route('accessories.show', [accessory.id])}
                                               className="inline-flex px-2 py-1 text-xs text-center text-sky-900 dark:text-sky-200 transition-colors duration-300 bg-sky-100 dark:bg-sky-600/50 border border-sky-200 dark:border-sky-800 rounded-lg hover:bg-sky-200 dark:hover:bg-sky-600 focus:outline-none focus:ring-0 focus:border-sky-500"
                                         >

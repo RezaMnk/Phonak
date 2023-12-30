@@ -108,7 +108,7 @@ export default function Record({ record }) {
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه سمعک
@@ -117,7 +117,7 @@ export default function Record({ record }) {
                                 {record.record_aid[ear].hearing_aid_size}
                             </p>
                         </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه ونت
@@ -126,16 +126,16 @@ export default function Record({ record }) {
                                 {vent_sizes[record.record_aid[ear].vent_size]}
                             </p>
                         </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                مدل وکسگارد
-                            </p>
-                            <p className="mt-2">
-                                {record.record_aid[ear].wax_guard}
-                            </p>
-                        </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                        {/*<div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">*/}
+                        {/*    <p className="text-xs flex items-center">*/}
+                        {/*        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>*/}
+                        {/*        مدل وکسگارد*/}
+                        {/*    </p>*/}
+                        {/*    <p className="mt-2">*/}
+                        {/*        {record.record_aid[ear].wax_guard}*/}
+                        {/*    </p>*/}
+                        {/*</div>*/}
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 نوع رسیور

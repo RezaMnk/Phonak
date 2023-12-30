@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accessory;
 use App\Models\Product;
+use Carbon\Carbon;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -228,6 +229,12 @@ class AccessoryController extends Controller
 
     public function pay(Accessory $accessory)
     {
+        if ($accessory->created_at < Carbon::now()->subHours(2)->toDateTimeString())
+        {
+            $accessory->status = 'canceled';
+            $accessory->save();
+            return redirect()->route('accessories.index')->with('toast', ['error' => 'مهلت پرداخت سفارش به اتمام رسیده است']);
+        }
         $price = $accessory->product->price;
 
         if ($accessory->count)

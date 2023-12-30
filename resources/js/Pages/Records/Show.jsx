@@ -48,7 +48,7 @@ export default function Show({ record, user }) {
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
                     <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه سمعک
@@ -57,7 +57,7 @@ export default function Show({ record, user }) {
                                 {record.record_aid[ear].hearing_aid_size}
                             </p>
                         </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه ونت
@@ -66,16 +66,16 @@ export default function Show({ record, user }) {
                                 {vent_sizes[record.record_aid[ear].vent_size]}
                             </p>
                         </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                مدل وکسگارد
-                            </p>
-                            <p className="mt-2 print:mt-1 print:text-xs">
-                                {record.record_aid[ear].wax_guard}
-                            </p>
-                        </div>
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                        {/*<div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">*/}
+                        {/*    <p className="text-xs flex items-center">*/}
+                        {/*        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>*/}
+                        {/*        مدل وکسگارد*/}
+                        {/*    </p>*/}
+                        {/*    <p className="mt-2 print:mt-1 print:text-xs">*/}
+                        {/*        {record.record_aid[ear].wax_guard}*/}
+                        {/*    </p>*/}
+                        {/*</div>*/}
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 نوع رسیور
