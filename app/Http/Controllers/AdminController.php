@@ -29,6 +29,8 @@ class AdminController extends Controller
                         })->orWhereHas('patient', function ($query) use ($request) {
                             $query->where('name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('national_code' , 'LIKE', '%'. $request->search .'%');
+                        })->orWhereHas('payment', function ($query) use ($request) {
+                            $query->where('transaction_id', 'LIKE', '%'. $request->search .'%');
                         });
 
                 })
@@ -52,6 +54,8 @@ class AdminController extends Controller
                         $query->whereHas('user', function ($query) use ($request) {
                             $query->where('name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+                        })->orWhereHas('payment', function ($query) use ($request) {
+                            $query->where('transaction_id', 'LIKE', '%'. $request->search .'%');
                         });
                 })->latest()->paginate(),
         ]);

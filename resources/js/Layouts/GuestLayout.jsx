@@ -15,7 +15,7 @@ export default function Guest({ children, name = '', className = '' }) {
     }, [dark])
 
     return (
-        <div className="min-h-screen flex flex-col p-5 justify-center items-center xl:py-12 sm:py-0 bg-gray-100/50 dark:bg-slate-700/80">
+        <div className="min-h-screen flex flex-col p-5 justify-center items-center xl:py-12 sm:py-0 bg-gray-100/50 dark:bg-slate-700/95">
             <div>
                 <Link href="/">
                     <ApplicationLogo className="h-28" dark={dark} />

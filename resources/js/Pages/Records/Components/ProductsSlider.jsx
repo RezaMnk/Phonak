@@ -83,18 +83,18 @@ export default ({ products, product: selected_product, setProduct, setProductIte
                                 className="hidden peer"
                                 name="product_package"
                                 checked={productItems.includes('package')}
-                                onChange={(e) => {
+                                /*onChange={(e) => {
                                     if (e.target.checked) {
                                         setProductItems([...productItems, 'package']);
                                     } else {
                                         setProductItems(productItems.filter(item => item !== 'package'));
                                     }
-                                }}
+                                }}*/
                             />
 
                             <InputLabel
-                                htmlFor={`product-package-`+ product.id}
-                                className={`w-full relative bg-yellow-50 dark:bg-yellow-800/20 peer-checked:bg-yellow-200 peer-checked:dark:bg-yellow-900 cursor-pointer border ${error ? 'border-red-200 dark:border-red-800' : 'border-yellow-200 dark:border-yellow-700'} border-2 rounded-lg peer-checked:border-yellow-400`}
+                                // htmlFor={`product-package-`+ product.id}
+                                className={`w-full relative bg-yellow-50 dark:bg-yellow-800/20 peer-checked:bg-yellow-200 peer-checked:dark:bg-yellow-900 cursor-pointer border ${error ? 'border-red-200 dark:border-red-800' : 'border-yellow-200 dark:border-yellow-700'} border-2 rounded-lg peer-checked:border-yellow-400 !cursor-default`}
                             >
                                 {productItems.includes('package') && (<div className="absolute top-0 right-0">
                                     <Icon viewBox="0 0 24 24" type="fill" className="fill-yellow-400 dark:fill-yellow-400">

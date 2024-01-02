@@ -84,7 +84,7 @@ export default function AidStep() {
             )}
             {record.type === 'BTE mold' && (
                 <>
-                    {record.has_mold && (
+                    {record.has_mold === 1 && (
                         <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
                             <div className={`${data[ear].has_vent && data[ear].mold_material !== 'soft' ? 'w-full xl:w-3/12' : 'w-full xl:w-3/12'} ml-5 flex items-center`}>
                                 <MoldMaterial ear={ear} />
@@ -110,7 +110,7 @@ export default function AidStep() {
             )}
             {record.type === 'BTE tube' && (
                 <>
-                    {record.has_mold ? (
+                    {record.has_mold === 1 ? (
                         <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
                             <div className="w-full xl:w-1/3 flex items-center">
                                 <HasVent ear={ear} />
@@ -144,7 +144,7 @@ export default function AidStep() {
             {record.type === 'RIC' && (
                 <>
                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6">
-                        {record.has_mold ? (
+                        {record.has_mold === 1 ? (
                             <>
                                 <div className="w-full xl:-1/4 ml-5">
                                     <ReceiverType ear={ear} type="RIC - mold" />

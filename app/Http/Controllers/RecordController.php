@@ -621,8 +621,7 @@ class RecordController extends Controller
                 return $only;
 
             case 'BTE mold':
-                $only[] = 'has_mold';
-                if ($data['has_mold'])
+                if ($record->has_mold)
                 {
                     $only[] = 'mold_material';
                     $only[] = 'mold_size';
@@ -638,8 +637,7 @@ class RecordController extends Controller
 
             case 'BTE tube':
                 $only[] = 'tube_size';
-                $only[] = 'has_mold';
-                if ($data['has_mold'])
+                if ($record->has_mold)
                 {
                     $only[] = 'has_vent';
                     if ($data['has_vent'])
@@ -652,8 +650,7 @@ class RecordController extends Controller
 
             case 'RIC':
                 $only[] = 'receiver';
-                $only[] = 'has_mold';
-                if ($data['has_mold'])
+                if ($record->has_mold)
                 {
                     $only[] = 'shell_type';
                     $only[] = 'external_receiver_size';
@@ -704,7 +701,7 @@ class RecordController extends Controller
                         ...$to_validate,
                         $ear. '.has_mold' => ['boolean'],
                     ];
-                    if ($request[$ear]['has_mold'])
+                    if ($record->has_mold)
                     {
                         $to_validate = [
                             ...$to_validate,
@@ -731,7 +728,7 @@ class RecordController extends Controller
                         ...$to_validate,
                         $ear. '.has_mold' => ['boolean'],
                     ];
-                    if ($request[$ear]['has_mold'])
+                    if ($record->has_mold)
                     {
                         $to_validate = [
                             ...$to_validate,
@@ -758,7 +755,7 @@ class RecordController extends Controller
                         ...$to_validate,
                         $ear. '.has_mold' => ['boolean'],
                     ];
-                    if ($request[$ear]['has_mold'])
+                    if ($record->has_mold)
                     {
                         $to_validate = [
                             ...$to_validate,
