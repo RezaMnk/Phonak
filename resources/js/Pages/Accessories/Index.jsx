@@ -51,6 +51,9 @@ export default function Index({ accessories }) {
         >
             <Head title="سفارشات لوازم جانبی" />
 
+            <div className="mb-8 p-4 text-sm font-semibold bg-teal-200 dark:bg-teal-700 text-teal-700 dark:text-teal-100 rounded-lg">
+                لطفا پس از پرداخت منتظر هدایت شدن به وبسایت بمانید.
+            </div>
 
             <div className="relative overflow-x-auto rounded-lg">
                 <table className="w-full text-right text-gray-500 dark:text-slate-400">

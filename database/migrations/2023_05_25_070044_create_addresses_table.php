@@ -15,13 +15,22 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('home_address');
+            $table->string('home_state')->nullable();
+            $table->string('home_city')->nullable();
             $table->unsignedBigInteger('home_post_code');
+
             $table->string('home_phone')->nullable();
             $table->string('work_address');
+            $table->string('work_state')->nullable();
+            $table->string('work_city')->nullable();
             $table->unsignedBigInteger('work_post_code');
+
             $table->string('work_phone')->nullable();
             $table->string('second_work_address')->nullable();
+            $table->string('second_work_state')->nullable();
+            $table->string('second_work_city')->nullable();
             $table->unsignedBigInteger('second_work_post_code')->nullable();
+
             $table->string('second_work_phone')->nullable();
             $table->enum('mail_address', ['work', 'second_work', 'home']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

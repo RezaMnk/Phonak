@@ -30,6 +30,8 @@ return new class extends Migration
             $table->enum('status', ['approved', 'unapproved', 'waiting'])->default('waiting');
             $table->text('disapprove')->nullable();
             $table->boolean('creditor')->default(false);
+            $table->boolean('creditor_image')->default(false);
+            $table->boolean('excel_user')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

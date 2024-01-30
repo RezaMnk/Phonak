@@ -13,10 +13,18 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Inertia\Response
+    public function index(Request $request): \Inertia\Response
     {
+        $request->validate([
+            'search' => ['nullable', 'string']
+        ]);
+
         return Inertia::render('Products/Index', [
-            'products' => Product::with('group_products')->latest()->paginate()
+            'products' => Product::with('group_products')->where(function ($query) use ($request) {
+                if ($request->has('search'))
+                    $query->where('name', 'LIKE', '%'. $request->search .'%')
+                        ->orWhere('brand' , 'LIKE', '%'. $request->search .'%');
+            })->latest()->paginate()
         ]);
     }
 

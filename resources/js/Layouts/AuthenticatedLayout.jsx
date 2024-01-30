@@ -28,7 +28,6 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
         if (toast) {
             const type = Object.keys(toast)[0];
             const message = toast[type];
-            console.log(type,message)
             toastify(message, {
                 type: type
             });
@@ -83,7 +82,7 @@ export default function Authenticated({ header, breadcrumbs, headerExtra, childr
                     {header && (
                         <header className={`bg-white dark:bg-slate-900 transition-all print:hidden`}>
                             <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                                <div className="flex flex-col xl:flex-row flex-col-reverse gap-y-5 justify-between">
+                                <div className="flex gap-y-5 justify-between">
                                     <h1 className="font-semibold text-xl text-gray-800 dark:text-slate-200 align-middle py-2">{header}</h1>
                                     <div className="flex">
                                         <button className="flex mr-auto bg-gray-100 dark:bg-slate-800 rounded-full w-10 h-10 ml-4 xl:ml-0 items-center justify-center" onClick={toggleDarkMode}>

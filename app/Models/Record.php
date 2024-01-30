@@ -35,6 +35,7 @@ class Record extends Model
         'prescription_image',
         'audiogram_image',
         'national_code_confirm_image',
+        'creditor_image',
     ];
 
 
@@ -48,6 +49,7 @@ class Record extends Model
         'prescription_image_url',
         'audiogram_image_url',
         'national_code_confirm_image_url',
+        'creditor_image_url',
     ];
 
 
@@ -176,6 +178,13 @@ class Record extends Model
     {
         return new Attribute(
             get: fn () => Storage::disk('records')->url($this->id.'/'.$this->national_code_confirm_image),
+        );
+    }
+
+    protected function creditorImageUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Storage::disk('records')->url($this->id.'/'.$this->creditor_image),
         );
     }
 }

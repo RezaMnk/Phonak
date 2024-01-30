@@ -42,6 +42,7 @@ export default function AudiogramStep() {
         'id_card_image': record.id_card_image || '',
         'prescription_image': record.prescription_image || '',
         'national_code_confirm_image': record.national_code_confirm_image || '',
+        'creditor_image': record.creditor_image || '',
     });
 
     const submit = (e) => {
@@ -213,6 +214,33 @@ export default function AudiogramStep() {
                                     setData={(e) => setData('national_code_confirm_image', e.target.files[0])}
                                     error={errors.national_code_confirm_image}
                                 />
+                            </div>
+                        </div>
+                        <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
+                            <div className="w-full xl:w-2/4">
+                                <FileInput
+                                    name="creditor_image"
+                                    fileName={data.creditor_image}
+                                    viewLink={record.creditor_image && record.creditor_image_url}
+                                    label="نامه تاییدیه بستانکاری"
+                                    accept=".jpg, .jpeg"
+                                    setData={(e) => setData('creditor_image', e.target.files[0])}
+                                    error={errors.creditor_image}
+                                />
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col gap-2 md:gap-8 justify-end">
+                                <p className="text-sm text-center md:text-right font-semibold text-gray-700 dark:text-slate-200">
+                                    میتوانید از نمونه نامه تاییدیه بستانکاری پیوست شده، استفاده نمایید.
+                                </p>
+
+                                <PrimaryButton
+                                    link={true}
+                                    target="_blank"
+                                    download
+                                    href="/storage/creditor-example.pdf"
+                                >
+                                    دانلود فایل نمونه
+                                </PrimaryButton>
                             </div>
                         </div>
                         <div className="flex text-sm font-semibold mt-5 text-gray-700 dark:text-slate-200">

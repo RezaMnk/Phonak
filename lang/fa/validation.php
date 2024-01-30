@@ -196,6 +196,8 @@ return [
         'etc_delivery' => 'توضیحات سایر شیوه ارسال',
         'confirm_password' => 'تایید کلمه عبور',
         'start_time' => 'تاریخ شروع',
+        'referral_phone' => 'شماره تلفن معرف اول',
+        'referral_name' => 'نام معرف اول'
     ],
 
 ];

@@ -223,10 +223,24 @@ export default function Show({ accessory, user }) {
                                     آدرس ارسال محصول
                                 </p>
                                 <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
-                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 gap-5">
-                                            <span className="inline-block">
-                                                {accessory.shipping.address.address}
+                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
+                                        <p className="inline-flex gap-1">
+                                           <span className="print:hidden">
+                                               استان:
+                                           </span>
+                                            <span>
+                                                {accessory.shipping.address.state} -
                                             </span>
+                                            <span className="print:hidden">
+                                                شهر:
+                                            </span>
+                                            <span>
+                                                {accessory.shipping.address.city}
+                                            </span>
+                                        </p>
+                                        <span className="inline-block xl:mr-5 print:mr-5">
+                                             {accessory.shipping.address.address}
+                                         </span>
                                         <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.post_code}
                                             </span>

@@ -3,14 +3,19 @@ import {Head, Link, router, useForm} from '@inertiajs/react';
 import SecondaryButton from "@/Components/SecondaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import Modal from "@/Components/Modal.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Pagination from "@/Components/Pagination.jsx";
 import TextInput from "@/Components/TextInput.jsx";
+import {useFirstRender} from "@/Hooks/useFirstRender.js";
 
 export default function Index({ products }) {
     const [deleteModalShow, setDeleteModalShow] = useState(false);
     const [modalProduct, setModalProduct] = useState({});
+
+    const [search, setSearch] = useState((new URLSearchParams(window.location.search).get('search')) || '')
+
+    const firstRender = useFirstRender();
 
     const data_products = products.data
 
@@ -22,6 +27,19 @@ export default function Index({ products }) {
         delete: destroy,
         processing,
     } = useForm();
+
+    useEffect(() => {
+        if (! firstRender)
+        {
+            const delayDebounceFn = setTimeout( () => {
+                router.get(route('products.index'), {
+                    search: search
+                })
+            }, 1500)
+
+            return () => clearTimeout(delayDebounceFn)
+        }
+    }, [search])
 
     const deletePatient = (e) => {
         e.preventDefault();
@@ -64,13 +82,27 @@ export default function Index({ products }) {
                 }
             }
             headerExtra={
-                <PrimaryButton
-                    link={true}
-                    href={route('products.create')}
-                    className="!px-4 !py-2 text-xs"
-                >
-                    افزون محصول
-                </PrimaryButton>
+                <div className="flex flex-col flex-col-reverse md:flex-row gap-2">
+                    <form id="search">
+                        <TextInput
+                            id="search-input"
+                            name="search"
+                            value={search}
+                            label="جستوجو..."
+                            className="!py-2 !px-4"
+                            autoComplete="name"
+                            onChange={(e) => setSearch(e.target.value)}
+                            isFocused={!! search}
+                        />
+                    </form>
+                    <PrimaryButton
+                        link={true}
+                        href={route('products.create')}
+                        className="!px-4 !py-2 text-xs"
+                    >
+                        افزون محصول
+                    </PrimaryButton>
+                </div>
             }
         >
             <Head title="محصولات" />
@@ -207,7 +239,7 @@ export default function Index({ products }) {
                 </table>
             </div>
 
-            <Pagination data={products}/>
+            <Pagination data={products} search={search}/>
 
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
                 <form onSubmit={deletePatient} className="p-6">

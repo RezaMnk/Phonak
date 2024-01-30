@@ -13,10 +13,17 @@ class SettingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Inertia\Response
+    public function index(Request $request): \Inertia\Response
     {
+        $request->validate([
+            'search' => ['nullable', 'string']
+        ]);
+
         return Inertia::render('Settings/Index', [
-            'settings' => GroupSetting::query()->latest()->paginate()
+            'settings' => GroupSetting::query()->where(function ($query) use ($request) {
+                if ($request->has('search') && $request->search)
+                    $query->where('group', $request->search);
+            })->orderBy('group')->paginate()
         ]);
     }
 

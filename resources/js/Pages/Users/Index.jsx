@@ -4,26 +4,31 @@ import Pagination from "@/Components/Pagination.jsx";
 import {useEffect, useState} from "react";
 import TextInput from "@/Components/TextInput.jsx";
 import {useFirstRender} from "@/Hooks/useFirstRender.js";
+import SelectInput from "@/Components/SelectInput.jsx";
 
-export default function Index({ users }) {
+export default function Index({ users, groups }) {
 
-    const [search, setSearch] = useState((new URLSearchParams(window.location.search).get('search')) || '')
+    const [search, setSearch] = useState(new URLSearchParams(window.location.search).get('search') || '')
+    const [groupNumber, setGroupNumber] = useState(new URLSearchParams(window.location.search).get('group') || 'all')
 
     const firstRender = useFirstRender();
 
 
-    useEffect(() => {
+    useEffect((value) => {
+        console.log(value)
         if (! firstRender)
         {
             const delayDebounceFn = setTimeout( () => {
-                router.get(route(users.status === 'unapproved' ? 'users.not_verified' : 'users.index'), {
-                    search: search
-                })
+                let data = {};
+                if (search)
+                    data.search = search;
+                data.group = groupNumber;
+                router.get(route(users.status === 'unapproved' ? 'users.not_verified' : 'users.index'), data)
             }, 1500)
 
             return () => clearTimeout(delayDebounceFn)
         }
-    }, [search])
+    }, [search, groupNumber])
 
     return (
         <AuthenticatedLayout
@@ -34,18 +39,35 @@ export default function Index({ users }) {
                 }
             }
             headerExtra={
-                <form id="search">
-                    <TextInput
-                        id="search-input"
-                        name="search"
-                        value={search}
-                        label="جستوجو..."
-                        className="!py-2 !px-4"
-                        autoComplete="name"
-                        onChange={(e) => setSearch(e.target.value)}
-                        isFocused={!! search}
-                    />
-                </form>
+                <div className="flex flex-col md:flex-row flex-col-reverse gap-2">
+                    <form id="search">
+                        <TextInput
+                            id="search-input"
+                            name="search"
+                            value={search}
+                            label="جستوجو..."
+                            className="!py-2 !px-4"
+                            autoComplete="name"
+                            onChange={(e) => setSearch(e.target.value)}
+                            isFocused={!! search}
+                        />
+                    </form>
+                    <SelectInput
+                        id="grade"
+                        name="grade"
+                        autoComplete="grade"
+                        value={groupNumber}
+                        label="شماره گروه"
+                        className="!py-2"
+                        onChange={(e) => setGroupNumber(e.target.value)}
+                    >
+                        <option value="all">نمایش همه</option>
+                        <option value="0">بدون گروه ها</option>
+                        {groups.map((group) => (
+                            <option value={group} key={group}>{group}</option>
+                        ))}
+                    </SelectInput>
+                </div>
             }
         >
             <Head title="همکاران" />

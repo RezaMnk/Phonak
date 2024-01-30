@@ -28,6 +28,10 @@ class HasVerified
             return redirect()->route('wait_for_verify');
         }
 
+        elseif (is_null(Auth::user()->address->home_state)) {
+            return redirect()->route('profile.edit')->with('warning_message', 'لطفا اطلاعات استان و شهر خود را بروزرسانی نمایید.');
+        }
+
         return $next($request);
     }
 }

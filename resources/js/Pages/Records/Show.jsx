@@ -66,15 +66,6 @@ export default function Show({ record, user }) {
                                 {vent_sizes[record.record_aid[ear].vent_size]}
                             </p>
                         </div>
-                        {/*<div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">*/}
-                        {/*    <p className="text-xs flex items-center">*/}
-                        {/*        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>*/}
-                        {/*        مدل وکسگارد*/}
-                        {/*    </p>*/}
-                        {/*    <p className="mt-2 print:mt-1 print:text-xs">*/}
-                        {/*        {record.record_aid[ear].wax_guard}*/}
-                        {/*    </p>*/}
-                        {/*</div>*/}
                         <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                             <p className="text-xs flex items-center">
                                 <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
@@ -90,16 +81,7 @@ export default function Show({ record, user }) {
             {record.type === 'BTE mold' && (
                 <>
                     <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                قالب دارد؟
-                            </p>
-                            <p className="mt-2 print:mt-1 print:text-xs">
-                                {record.record_aid[ear].has_mold ? 'بله' : 'خیر'}
-                            </p>
-                        </div>
-                        {record.record_aid[ear].has_mold === 1 && (
+                        {!! record.has_mold && (
                             <>
                                 <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
@@ -149,16 +131,7 @@ export default function Show({ record, user }) {
             {record.type === 'BTE tube' && (
                 <>
                     <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                قالب دارد؟
-                            </p>
-                            <p className="mt-2 print:mt-1 print:text-xs">
-                                {record.record_aid[ear].has_mold ? 'بله' : 'خیر'}
-                            </p>
-                        </div>
-                        {record.record_aid[ear].has_mold ? (
+                        {!! record.has_mold ? (
                             <>
                                 <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
@@ -228,16 +201,7 @@ export default function Show({ record, user }) {
             {record.type === 'RIC' && (
                 <>
                     <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                قالب دارد؟
-                            </p>
-                            <p className="mt-2 print:mt-1 print:text-xs">
-                                {record.record_aid[ear].has_mold ? 'بله' : 'خیر'}
-                            </p>
-                        </div>
-                        {record.record_aid[ear].has_mold ? (
+                        {!! record.has_mold ? (
                             <>
                                 <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
@@ -824,9 +788,23 @@ export default function Show({ record, user }) {
                                 </p>
                                 <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
                                     <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
-                                            <span className="inline-block">
-                                                {record.shipping.address.address}
+                                        <p className="inline-flex gap-1">
+                                           <span className="print:hidden">
+                                               استان:
+                                           </span>
+                                            <span>
+                                                {record.shipping.address.state} -
                                             </span>
+                                            <span className="print:hidden">
+                                                شهر:
+                                            </span>
+                                            <span>
+                                                {record.shipping.address.city}
+                                            </span>
+                                        </p>
+                                        <span className="inline-block xl:mr-5 print:mr-5">
+                                             {record.shipping.address.address}
+                                         </span>
                                         <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.post_code}
                                             </span>
@@ -862,8 +840,8 @@ export default function Show({ record, user }) {
                                 </h5>
                                 <hr className="dark:border-slate-600"/>
                             </div>
-                            <div className="flex flex-col xl:flex-row space-y-5 print:space-y-0 xl:space-y-0 mt-3">
-                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
+                            <div className="flex flex-col xl:flex-row gap-x-12 space-y-5 print:space-y-0 xl:space-y-0 mt-3">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         ادیوگرام
@@ -874,7 +852,7 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         مدرک شناسایی کاربر
@@ -885,7 +863,7 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-0 xl:ml-12 break-inside-avoid">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                         نسخه پزشک گوش و حلق و بینی
@@ -896,10 +874,12 @@ export default function Show({ record, user }) {
                                         </div>
                                     </a>
                                 </div>
-                                <div className="w-full print:w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
+                            </div>
+                            <div className="flex flex-col xl:flex-row gap-x-12 space-y-5 print:space-y-0 xl:space-y-0 mt-3">
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
                                     <p className="text-xs flex items-center">
                                         <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
-                                        با متن ارسالی کارشناسان فروش
+                                        تعهد عدم اعلام کدملی تکراری
                                     </p>
                                     {record.national_code_confirm_image ? (
                                         <a href={route('records.download', {record: record.id, name: 'national_code_confirm'})} target="_blank" className="mt-2">
@@ -913,6 +893,27 @@ export default function Show({ record, user }) {
                                         </p>
                                     )}
                                 </div>
+                                {!! record.user.creditor_image && (
+                                    <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
+                                        <p className="text-xs flex items-center">
+                                            <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                            نامه تاییدیه بستانکاری
+                                        </p>
+                                        {record.national_code_confirm_image ? (
+                                            <a href={route('records.download', {record: record.id, name: 'creditor'})} target="_blank" className="mt-2">
+                                                <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                                    <img src={record.creditor_image_url} alt="نامه تاییدیه بستانکاری"/>
+                                                </div>
+                                            </a>
+                                        ) : (
+                                            <p className="mt-5 font-semibold">
+                                                تصویر ثبت نشده!
+                                            </p>
+                                        )}
+
+                                    </div>
+                                )}
+                                <div className="hidden xl:block w-1/3"></div>
                             </div>
                         </div>
                     </div>

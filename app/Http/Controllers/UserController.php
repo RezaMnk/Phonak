@@ -16,17 +16,26 @@ class UserController extends Controller
     public function index(Request $request): \Inertia\Response
     {
         $request->validate([
-            'search' => ['nullable', 'string']
+            'search' => ['nullable', 'string'],
+            'group' => ['nullable']
         ]);
 
+        if ($request->group !== 'all')
+            $request->validate([
+                'group' => ['numeric']
+            ]);
 
         return Inertia::render('Users/Index', [
             'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->where(function ($query) use ($request) {
             if ($request->has('search'))
                 $query->where('name', 'LIKE', '%'. $request->search .'%')
                     ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+        })->where(function ($query) use ($request) {
+            if ($request->has('group') && $request->group != 'all')
+                $query->where('group', $request->group);
         })->whereHas('user_info')->latest()->paginate()->onEachSide(0),
-            'users.status' => 'all'
+            'users.status' => 'all',
+            'groups' => User::allGroups()
         ]);
     }
 
@@ -36,8 +45,14 @@ class UserController extends Controller
     public function not_verified(Request $request): \Inertia\Response
     {
         $request->validate([
-            'search' => ['nullable', 'string']
+            'search' => ['nullable', 'string'],
+            'group' => ['nullable']
         ]);
+
+        if ($request->group !== 'all')
+            $request->validate([
+                'group' => ['numeric']
+            ]);
 
 
         return Inertia::render('Users/Index', [
@@ -45,18 +60,33 @@ class UserController extends Controller
             if ($request->has('search'))
                 $query->where('name', 'LIKE', '%'. $request->search .'%')
                     ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+        })->where(function ($query) use ($request) {
+            if ($request->has('group') && $request->group != 'all')
+                $query->where('group', $request->group);
         })->whereNot('status', 'approved')->latest()->paginate(),
-            'users.status' => 'unapproved'
+            'users.status' => 'unapproved',
+            'groups' => User::allGroups()
         ]);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function not_completed(): \Inertia\Response
+    public function not_completed(Request $request): \Inertia\Response
     {
+        $request->validate([
+            'search' => ['nullable', 'string']
+        ]);
+
         return Inertia::render('Users/NotCompleted', [
-            'users' => User::query()->doesntHave('user_info')->orDoesntHave('address')->with(['user_info', 'address'])->where('role', 'user')->latest()->paginate()
+            'users' => User::query()->with(['user_info', 'address'])
+                ->where('role', 'user')->where(function ($query) use ($request) {
+                    if ($request->has('search'))
+                        $query->where('name', 'LIKE', '%'. $request->search .'%')
+                            ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
+                })->where(function ($query) use ($request) {
+                    $query->doesntHave('user_info')->orDoesntHave('address');
+                })->latest()->paginate()
         ]);
     }
 
@@ -146,13 +176,18 @@ class UserController extends Controller
             'password' => ['nullable', 'string', 'max:255'],
             'confirm_password' => ['required_with:password', 'same:password'],
             'creditor' => ['boolean'],
+            'creditor_image' => ['boolean'],
         ]);
+
+        if (! $request->creditor)
+            $request->creditor_image = false;
 
         $data = [
             'role' => $request->role,
             'status' => $request->status,
             'group' => $request->group,
             'creditor' => $request->creditor,
+            'creditor_image' => $request->creditor_image,
         ];
 
         if ($request->password)

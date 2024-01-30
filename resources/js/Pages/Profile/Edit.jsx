@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.jsx';
 import GuestLayout from '@/Layouts/GuestLayout.jsx';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, useForm, usePage} from '@inertiajs/react';
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
@@ -12,6 +12,7 @@ import FileInput from "@/Components/FileInput.jsx";
 import {useState} from "react";
 import RadioInput from "@/Components/RadioInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
+import Icon from "@/Components/Icon.jsx";
 
 export default function Edit({ user }) {
     const {data, setData, reset, post, processing, errors} = useForm({
@@ -22,10 +23,10 @@ export default function Edit({ user }) {
         national_code: user.national_code,
         grad_year: user.grad_year,
         med_number: user.med_number,
-        grade: user.grade,
+        grade: user.grade || 'کارشناسی',
         university: user.university,
-        state: user.state,
-        city: user.city,
+        state: user.state || 'تهران',
+        city: user.city || 'تهران',
         info: {
             phone: user.info.phone,
             landline: user.info.landline,
@@ -44,16 +45,25 @@ export default function Edit({ user }) {
             home_post_code: user.address.home_post_code,
             home_phone: user.address.home_phone,
             home_address: user.address.home_address,
+            home_state: user.state || 'تهران',
+            home_city: user.city || 'تهران',
             work_post_code: user.address.work_post_code,
             work_phone: user.address.work_phone,
             work_address: user.address.work_address,
+            work_state: user.address.work_state || 'تهران',
+            work_city: user.address.work_city || 'تهران',
             second_work_post_code: user.address.second_work_post_code,
             second_work_phone: user.address.second_work_phone,
             second_work_address: user.address.second_work_address,
+            second_work_state: user.address.second_work_state || 'تهران',
+            second_work_city: user.address.second_work_city || 'تهران',
             mail_address: user.address.mail_address,
             has_second: !!user.address.second_work_address,
         },
     });
+
+    console.log(data)
+    const { warning_message } = usePage().props;
 
     const [ hasSecondAddress, setHasSecondAddress ] = useState(!!user.address.second_work_address)
     const [ showAddAddressBtn, setShowAddAddressBtn ] = useState(!user.address.second_work_address)
@@ -97,7 +107,6 @@ export default function Edit({ user }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data)
         post(route('profile.update'), {
             onSuccess: () => reset('password', 'confirm_password')
         })
@@ -106,6 +115,15 @@ export default function Edit({ user }) {
     const render = () => (
         <div className="flex flex-col sm:justify-center items-center">
             <div className="w-full px-6 py-4 bg-white dark:bg-slate-800 border border-white dark:border-slate-600 sm:rounded-lg">
+                {warning_message && (
+                    <p className="w-full px-6 py-3 rounded-lg font-semibold bg-amber-200 dark:bg-amber-800 mb-8 text-gray-800 dark:text-gray-200">
+                        <Icon viewBox="0 0 24 24" type="fill" className="inline ml-2 fill-amber-800 dark:fill-amber-200">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M5.31171 10.7615C8.23007 5.58716 9.68925 3 12 3C14.3107 3 15.7699 5.58716 18.6883 10.7615L19.0519 11.4063C21.4771 15.7061 22.6897 17.856 21.5937 19.428C20.4978 21 17.7864 21 12.3637 21H11.6363C6.21356 21 3.50217 21 2.40626 19.428C1.31034 17.856 2.52291 15.7061 4.94805 11.4063L5.31171 10.7615ZM12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V13C12.75 13.4142 12.4142 13.75 12 13.75C11.5858 13.75 11.25 13.4142 11.25 13V8C11.25 7.58579 11.5858 7.25 12 7.25ZM12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z"/>
+                        </Icon>
+
+                        {warning_message}
+                    </p>
+                )}
                 <form className="w-full" onSubmit={submit}>
                     <div className="text-gray-700 dark:text-slate-200">
                         <h5>
@@ -210,7 +228,6 @@ export default function Edit({ user }) {
                                         <path d="M14 16L15 16"/>
                                     </g>
                                 )}
-                                autoComplete="university"
                                 onChange={(e) => setData('university', e.target.value)}
                                 error={errors.university}
                             />
@@ -223,7 +240,11 @@ export default function Edit({ user }) {
                                 name="state"
                                 value={data.state}
                                 label="استان اقامت"
-                                onChange={(e) => setData('state', e.target.value)}
+                                onChange={(e) => setData((prevData) => ({
+                                    ...prevData,
+                                    state: e.target.value,
+                                    city: ""
+                                }))}
                                 error={errors.state}
                             >
                                 <IranStatesOptions />
@@ -271,7 +292,7 @@ export default function Edit({ user }) {
                         <hr className="dark:border-slate-600"/>
                     </div>
                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
-                        <div className="w-full xl:w-2/12 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="home_post_code"
                                 name="address.home_post_code"
@@ -285,7 +306,6 @@ export default function Edit({ user }) {
                                         <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
                                     </g>
                                 )}
-                                autoComplete="address.home_post_code"
                                 onChange={(e) => setData((prevData) => ({
                                     ...prevData,
                                     address: {
@@ -298,7 +318,7 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.home_post_code} className="mt-2"/>
                         </div>
-                        <div className="w-full xl:w-2/12 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="home_phone"
                                 type="number"
@@ -320,30 +340,71 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.address?.home_phone} className="mt-2"/>
                         </div>
-                        <div className="w-full xl:w-8/12">
-                            <TextInput
-                                id="home_address"
-                                name="address.home_address"
-                                value={data.address.home_address}
-                                label="آدرس منزل"
-                                svgIcon={<path
-                                    d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                                    strokeLinecap="round" strokeLinejoin="round"/>}
+                        <div className="w-full xl:w-1/4 ml-5">
+                            <SelectInput
+                                id="home_state"
+                                name="home_state"
+                                value={data.address.home_state}
+                                label="استان منزل"
                                 onChange={(e) => setData((prevData) => ({
-                                    ...prevData,
-                                    address: {
-                                        ...prevData['address'],
-                                        home_address: e.target.value
-                                    },
-                                }))}
-                                error={errors.address?.home_address}
-                            />
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                home_state: e.target.value,
+                                                home_city: "",
+                                            },
+                                        }))}
+                                error={errors.address?.home_state}
+                            >
+                                <IranStatesOptions/>
+                            </SelectInput>
 
-                            <InputError message={errors.address?.home_address} className="mt-2"/>
+                            <InputError message={errors.address?.home_state} className="mt-2"/>
+                        </div>
+                        <div className="w-full xl:w-1/4">
+                            <SelectInput
+                                id="home_city"
+                                name="name"
+                                value={data.address.home_city}
+                                label="شهر منزل"
+                                onChange={(e) => setData((prevData) => ({
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                home_city: e.target.value
+                                            },
+                                        }))}
+                                error={errors.address?.home_city}
+                            >
+                                <Cities state={data.address.home_state}/>
+                            </SelectInput>
+
+                            <InputError message={errors.address?.home_city} className="mt-2"/>
                         </div>
                     </div>
-                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
-                        <div className="w-full xl:w-2/12 ml-5">
+                    <div className="mt-6 mb-5">
+                        <TextInput
+                            id="home_address"
+                            name="address.home_address"
+                            value={data.address.home_address}
+                            label="آدرس منزل"
+                            svgIcon={<path
+                                d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
+                                strokeLinecap="round" strokeLinejoin="round"/>}
+                            onChange={(e) => setData((prevData) => ({
+                                ...prevData,
+                                address: {
+                                    ...prevData['address'],
+                                    home_address: e.target.value
+                                },
+                            }))}
+                            error={errors.address?.home_address}
+                        />
+
+                        <InputError message={errors.address?.home_address} className="mt-2"/>
+                    </div>
+                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-12 mb-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="work_post_code"
                                 name="address.work_post_code"
@@ -357,7 +418,6 @@ export default function Edit({ user }) {
                                         <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
                                     </g>
                                 )}
-                                autoComplete="address.work_post_code"
                                 onChange={(e) => setData((prevData) => ({
                                     ...prevData,
                                     address: {
@@ -366,17 +426,16 @@ export default function Edit({ user }) {
                                     },
                                 }))}
                                 error={errors.address?.work_post_code}
-                                required
                             />
 
                             <InputError message={errors.address?.work_post_code} className="mt-2"/>
                         </div>
-                        <div className="w-full xl:w-2/12 ml-5">
+                        <div className="w-full xl:w-1/4 ml-5">
                             <TextInput
                                 id="work_phone"
                                 type="number"
                                 name="address.work_phone"
-                                label="تلفن محل کار"
+                                label="تلفن محل کار (با کد شهر)"
                                 value={data.address.work_phone}
                                 svgIcon={<path
                                     d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
@@ -389,88 +448,167 @@ export default function Edit({ user }) {
                                     },
                                 }))}
                                 error={errors.address?.work_phone}
-                                required
                             />
 
                             <InputError message={errors.address?.work_phone} className="mt-2"/>
                         </div>
-                        <div className="w-full xl:w-8/12">
-                            <TextInput
-                                id="work_address"
-                                name="address.work_address"
-                                value={data.address.work_address}
-                                label="آدرس محل کار"
-                                svgIcon={<path
-                                    d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
-                                    strokeLinecap="round" strokeLinejoin="round"/>}
+                        <div className="w-full xl:w-1/4 ml-5">
+                            <SelectInput
+                                id="work_state"
+                                name="work_state"
+                                value={data.address.work_state}
+                                label="استان محل کار"
                                 onChange={(e) => setData((prevData) => ({
-                                    ...prevData,
-                                    address: {
-                                        ...prevData['address'],
-                                        work_address: e.target.value
-                                    },
-                                }))}
-                                error={errors.address?.work_address}
-                                required
-                            />
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                work_state: e.target.value,
+                                                work_city: "",
+                                            },
+                                        }))}
+                                error={errors.address?.work_state}
+                            >
+                                <IranStatesOptions/>
+                            </SelectInput>
 
-                            <InputError message={errors.address?.work_address} className="mt-2"/>
+                            <InputError message={errors.address?.work_state} className="mt-2"/>
+                        </div>
+                        <div className="w-full xl:w-1/4">
+                            <SelectInput
+                                id="work_city"
+                                name="name"
+                                value={data.address.work_city}
+                                label="شهر محل کار"
+                                onChange={(e) => setData((prevData) => ({
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                work_city: e.target.value
+                                            },
+                                        }))}
+                                error={errors.address?.work_city}
+                            >
+                                <Cities state={data.address.work_state}/>
+                            </SelectInput>
+
+                            <InputError message={errors.address?.work_city} className="mt-2"/>
                         </div>
                     </div>
+                    <div className="mt-6 mb-5">
+                        <TextInput
+                            id="work_address"
+                            name="address.work_address"
+                            value={data.address.work_address}
+                            label="آدرس محل کار"
+                            svgIcon={<path
+                                d="M3.99999 10L12 3L20 10L20 20H15V16C15 15.2044 14.6839 14.4413 14.1213 13.8787C13.5587 13.3161 12.7956 13 12 13C11.2043 13 10.4413 13.3161 9.87868 13.8787C9.31607 14.4413 9 15.2043 9 16V20H4L3.99999 10Z"
+                                strokeLinecap="round" strokeLinejoin="round"/>}
+                            onChange={(e) => setData((prevData) => ({
+                                ...prevData,
+                                address: {
+                                    ...prevData['address'],
+                                    work_address: e.target.value
+                                },
+                            }))}
+                            error={errors.address?.work_address}
+                        />
+
+                        <InputError message={errors.address?.work_address} className="mt-2"/>
+                    </div>
                     {hasSecondAddress && (
-                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
-                            <div className="w-full xl:w-2/12 ml-5">
-                                <TextInput
-                                    id="second_work_post_code"
-                                    name="address.second_work_post_code"
-                                    value={data.address.second_work_post_code}
-                                    label="کد پستی محل کار دوم"
-                                    svgIcon={(
-                                        <g>
-                                            <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
-                                            <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
-                                            <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
-                                            <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
-                                        </g>
-                                    )}
-                                    autoComplete="address.second_work_post_code"
-                                    onChange={(e) => setData((prevData) => ({
-                                        ...prevData,
-                                        address: {
-                                            ...prevData['address'],
-                                            second_work_post_code: e.target.value
-                                        },
-                                    }))}
-                                    error={errors.address?.second_work_post_code}
-                                    required
-                                />
+                        <>
+                            <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-12 mb-5">
+                                <div className="w-full xl:w-1/4 ml-5">
+                                    <TextInput
+                                        id="second_work_post_code"
+                                        name="address.second_work_post_code"
+                                        value={data.address.second_work_post_code}
+                                        label="کد پستی محل کار دوم"
+                                        svgIcon={(
+                                            <g>
+                                                <path xmlns="http://www.w3.org/2000/svg" d="M10 3L8 21"/>
+                                                <path xmlns="http://www.w3.org/2000/svg" d="M16 3L14 21"/>
+                                                <path xmlns="http://www.w3.org/2000/svg" d="M3.5 9H21.5"/>
+                                                <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
+                                            </g>
+                                        )}
+                                        onChange={(e) => setData((prevData) => ({
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                second_work_post_code: e.target.value
+                                            },
+                                        }))}
+                                        error={errors.address?.second_work_post_code}
+                                    />
 
-                                <InputError message={errors.address?.second_work_post_code} className="mt-2"/>
-                            </div>
-                            <div className="w-full xl:w-2/12 ml-5">
-                                <TextInput
-                                    id="second_work_phone"
-                                    type="number"
-                                    name="address.second_work_phone"
-                                    label="تلفن محل کار دوم"
-                                    value={data.address.second_work_phone}
-                                    svgIcon={<path
-                                        d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
-                                        strokeLinecap="round" strokeLinejoin="round"/>}
-                                    onChange={(e) => setData((prevData) => ({
-                                        ...prevData,
-                                        address: {
-                                            ...prevData['address'],
-                                            second_work_phone: e.target.value
-                                        },
-                                    }))}
-                                    error={errors.address?.second_work_phone}
-                                    required
-                                />
+                                    <InputError message={errors.address?.second_work_post_code} className="mt-2"/>
+                                </div>
+                                <div className="w-full xl:w-1/4 ml-5">
+                                    <TextInput
+                                        id="second_work_phone"
+                                        type="number"
+                                        name="address.second_work_phone"
+                                        label="تلفن محل کار دوم (با کد شهر)"
+                                        value={data.address.second_work_phone}
+                                        svgIcon={<path
+                                            d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
+                                            strokeLinecap="round" strokeLinejoin="round"/>}
+                                        onChange={(e) => setData((prevData) => ({
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                second_work_phone: e.target.value
+                                            },
+                                        }))}
+                                        error={errors.address?.second_work_phone}
+                                    />
 
-                                <InputError message={errors.address?.second_work_phone} className="mt-2"/>
+                                    <InputError message={errors.address?.second_work_phone} className="mt-2"/>
+                                </div>
+                                <div className="w-full xl:w-1/4 ml-5">
+                                    <SelectInput
+                                        id="second_work_state"
+                                        name="second_work_state"
+                                        value={data.address.second_work_state}
+                                        label="استان محل کار دوم"
+                                        onChange={(e) => setData((prevData) => ({
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                second_work_state: e.target.value,
+                                                second_work_city: ""
+                                            },
+                                        }))}
+                                        error={errors.address?.second_work_state}
+                                    >
+                                        <IranStatesOptions/>
+                                    </SelectInput>
+
+                                    <InputError message={errors.address?.second_work_state} className="mt-2"/>
+                                </div>
+                                <div className="w-full xl:w-1/4">
+                                    <SelectInput
+                                        id="second_work_city"
+                                        name="name"
+                                        value={data.address.second_work_city}
+                                        label="شهر محل کار دوم"
+                                        onChange={(e) => setData((prevData) => ({
+                                            ...prevData,
+                                            address: {
+                                                ...prevData['address'],
+                                                second_work_city: e.target.value
+                                            },
+                                        }))}
+                                        error={errors.address?.second_work_city}
+                                    >
+                                        <Cities state={data.address.second_work_state}/>
+                                    </SelectInput>
+
+                                    <InputError message={errors.address?.second_work_city} className="mt-2"/>
+                                </div>
                             </div>
-                            <div className="w-full xl:w-8/12">
+                            <div className="mt-6 mb-5">
                                 <TextInput
                                     id="second_work_address"
                                     name="address.second_work_address"
@@ -487,12 +625,11 @@ export default function Edit({ user }) {
                                         },
                                     }))}
                                     error={errors.address?.second_work_address}
-                                    required
                                 />
 
                                 <InputError message={errors.address?.second_work_address} className="mt-2"/>
                             </div>
-                        </div>
+                        </>
                     )}
                     <div className="flex mt-5">
                         <div className="w-full ml-5 text-gray-700 dark:text-slate-200">
@@ -618,7 +755,6 @@ export default function Edit({ user }) {
                                 label="نام معرف اول"
                                 svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
-                                autoComplete="info.referral_name"
                                 onChange={(e) => update_data('info', 'referral_name', e)}
                                 error={errors.info?.referral_name}
                             />
@@ -633,7 +769,6 @@ export default function Edit({ user }) {
                                 value={data.info.referral_phone}
                                 label="شماره تلفن معرف اول"
                                 svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
-                                autoComplete="info.referral_phone"
                                 onChange={(e) => update_data('info', 'referral_phone', e)}
                                 error={errors.info?.referral_phone}
                             />
@@ -648,7 +783,6 @@ export default function Edit({ user }) {
                                 label="نام معرف دوم"
                                 svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                    d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
-                                autoComplete="info.second_referral_name"
                                 onChange={(e) => update_data('info', 'second_referral_name', e)}
                                 error={errors.info?.second_referral_name}
                             />
@@ -663,7 +797,6 @@ export default function Edit({ user }) {
                                 value={data.info.second_referral_phone}
                                 label="شماره تلفن معرف دوم"
                                 svgIcon={<path d="M21 5.5C21 14.0604 14.0604 21 5.5 21C5.11378 21 4.73086 20.9859 4.35172 20.9581C3.91662 20.9262 3.69906 20.9103 3.50103 20.7963C3.33701 20.7019 3.18146 20.5345 3.09925 20.364C3 20.1582 3 19.9181 3 19.438V16.6207C3 16.2169 3 16.015 3.06645 15.842C3.12515 15.6891 3.22049 15.553 3.3441 15.4456C3.48403 15.324 3.67376 15.255 4.05321 15.117L7.26005 13.9509C7.70153 13.7904 7.92227 13.7101 8.1317 13.7237C8.31637 13.7357 8.49408 13.7988 8.64506 13.9058C8.81628 14.0271 8.93713 14.2285 9.17882 14.6314L10 16C12.6499 14.7999 14.7981 12.6489 16 10L14.6314 9.17882C14.2285 8.93713 14.0271 8.81628 13.9058 8.64506C13.7988 8.49408 13.7357 8.31637 13.7237 8.1317C13.7101 7.92227 13.7904 7.70153 13.9509 7.26005L13.9509 7.26005L15.117 4.05321C15.255 3.67376 15.324 3.48403 15.4456 3.3441C15.553 3.22049 15.6891 3.12515 15.842 3.06645C16.015 3 16.2169 3 16.6207 3H19.438C19.9181 3 20.1582 3 20.364 3.09925C20.5345 3.18146 20.7019 3.33701 20.7963 3.50103C20.9103 3.69907 20.9262 3.91662 20.9581 4.35173C20.9859 4.73086 21 5.11378 21 5.5Z"/>}
-                                autoComplete="info.second_referral_phone"
                                 onChange={(e) => update_data('info', 'second_referral_phone', e)}
                                 error={errors.info?.second_referral_phone}
                             />
@@ -738,6 +871,7 @@ export default function Edit({ user }) {
                                         <path d="M22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C21.4816 5.82475 21.7706 6.69989 21.8985 8"/>
                                     </>
                                 )}
+                                autoComplete="new-password"
                                 onChange={(e) => setData('password', e.target.value)}
                                 error={errors.password}
                             />
@@ -759,7 +893,7 @@ export default function Edit({ user }) {
                                         <path d="M22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C21.4816 5.82475 21.7706 6.69989 21.8985 8"/>
                                     </>
                                 )}
-                                autoComplete="new-new_password"
+                                autoComplete="new-password"
                                 onChange={(e) => setData('new_password', e.target.value)}
                                 error={errors.new_password}
                             />
@@ -781,6 +915,7 @@ export default function Edit({ user }) {
                                         <path xmlns="http://www.w3.org/2000/svg" d="M2.5 15H20.5"/>
                                     </g>
                                 )}
+                                autoComplete="new-password"
                                 onChange={(e) => setData('confirm_password', e.target.value)}
                                 error={errors.confirm_password}
                             />
@@ -791,7 +926,7 @@ export default function Edit({ user }) {
 
                     <div className="mt-12 text-gray-700 dark:text-slate-200">
                         <h5>
-                            مدارک
+                            مدارک {user.excel_user === 1 && " (اختیاری)"}
                         </h5>
                         <hr className="dark:border-slate-600"/>
                     </div>

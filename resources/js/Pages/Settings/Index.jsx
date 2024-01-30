@@ -1,15 +1,21 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, Link, useForm} from '@inertiajs/react';
+import {Head, Link, router, useForm} from '@inertiajs/react';
 import SecondaryButton from "@/Components/SecondaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import Modal from "@/Components/Modal.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Pagination from "@/Components/Pagination.jsx";
+import TextInput from "@/Components/TextInput.jsx";
+import {useFirstRender} from "@/Hooks/useFirstRender.js";
 
 export default function Index({ settings }) {
     const [deleteModalShow, setDeleteModalShow] = useState(false);
     const [modalProduct, setModalProduct] = useState({});
+
+    const [search, setSearch] = useState((new URLSearchParams(window.location.search).get('search')) || '')
+
+    const firstRender = useFirstRender();
 
     const data_settings = settings.data
 
@@ -17,6 +23,19 @@ export default function Index({ settings }) {
         delete: destroy,
         processing,
     } = useForm();
+
+    useEffect(() => {
+        if (! firstRender)
+        {
+            const delayDebounceFn = setTimeout( () => {
+                router.get(route('settings.index'), {
+                    search: search
+                })
+            }, 1500)
+
+            return () => clearTimeout(delayDebounceFn)
+        }
+    }, [search])
 
     const deleteSetting = (e) => {
         e.preventDefault();
@@ -40,13 +59,27 @@ export default function Index({ settings }) {
                 }
             }
             headerExtra={
-                <PrimaryButton
-                    link={true}
-                    href={route('settings.create')}
-                    className="!px-4 !py-2 text-xs"
-                >
-                    تنظیم گروه بندی جدید
-                </PrimaryButton>
+                <div className="flex flex-col flex-col-reverse md:flex-row gap-2">
+                    <form id="search">
+                        <TextInput
+                            id="search-input"
+                            name="search"
+                            value={search}
+                            label="شماره گروه..."
+                            className="!py-2 !px-4"
+                            autoComplete="name"
+                            onChange={(e) => setSearch(e.target.value)}
+                            isFocused={!! search}
+                        />
+                    </form>
+                    <PrimaryButton
+                        link={true}
+                        href={route('settings.create')}
+                        className="!px-4 !py-2 text-xs"
+                    >
+                        تنظیم گروه بندی جدید
+                    </PrimaryButton>
+                </div>
             }
         >
             <Head title="تنظیمات" />
@@ -130,7 +163,7 @@ export default function Index({ settings }) {
                 </table>
             </div>
 
-            <Pagination data={settings}/>
+            <Pagination data={settings} search={search}/>
 
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
                 <form onSubmit={deleteSetting} className="p-6">

@@ -152,23 +152,42 @@ export default function Record({ accessory }) {
                             )}
                         </div>
                         <div className="flex mt-6">
-                            <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                 <p className="text-xs flex items-center">
-                                    <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
-                                            <span className="inline-block">
-                                                {accessory.shipping.address.address}
+                                <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
+                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
+                                        <p className="inline-flex gap-1">
+                                           <span className="print:hidden">
+                                               استان:
+                                           </span>
+                                            <span>
+                                                {accessory.shipping.address.state} -
                                             </span>
-                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                            <span className="print:hidden">
+                                                شهر:
+                                            </span>
+                                            <span>
+                                                {accessory.shipping.address.city}
+                                            </span>
+                                        </p>
+                                        <span className="inline-block xl:mr-5 print:mr-5">
+                                             {accessory.shipping.address.address}
+                                         </span>
+                                        <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.post_code}
                                             </span>
-                                    {accessory.shipping.address.phone && (<span
-                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                        {accessory.shipping.address.phone && (<span
+                                            className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {accessory.shipping.address.phone}
                                             </span>)}
-                                </p>
+                                    </p>
+                                    <span className="hidden print:block text-xs mt-2">
+                                        شنوایی شناس: {accessory.user.name} - {accessory.shipping.expert_phone}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         {accessory.shipping.description && (

@@ -22,6 +22,7 @@ export default function Edit({ user }) {
         group: user.group,
         status: user.status,
         creditor: user.creditor,
+        creditor_image: user.creditor_image,
     });
 
     const [submitVerify, setSubmitVerify] = useState(false);
@@ -535,6 +536,20 @@ export default function Edit({ user }) {
                                     className="mr-2"
                                 />
                             </div>
+                            {!!data.creditor && (<div className="w-full xl:w-3/12 !mt-8 xl:!mt-0 flex items-center">
+                                <CheckboxInput
+                                    id="creditor_image"
+                                    name="creditor_image"
+                                    checked={data.creditor_image}
+                                    onChange={(e) => setData('creditor_image', e.target.checked)}
+                                />
+
+                                <InputLabel
+                                    htmlFor="creditor_image"
+                                    value="نامه تاییدیه بستانکاری"
+                                    className="mr-2"
+                                />
+                            </div>)}
                         </div>
 
                         <div className="mt-12 text-gray-700 dark:text-slate-200">
@@ -543,74 +558,75 @@ export default function Edit({ user }) {
                             </h5>
                             <hr className="dark:border-slate-600"/>
                         </div>
-                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-3">
-                            <div className="relative w-full xl:w-1/3 ml-5">
-                                <a
-                                    href={user.info.id_card_image ? user.info.id_card_image_url : 'javascript:void(0)'}
-                                    target={user.info.id_card_image && "_blank"}
-                                    onClick={! user.info.id_card_image && (() => {
-                                        toastify('مدرک برای همکار ثبت نشده است', {
-                                            type: 'error'
-                                        });
-                                    })}
-                                    className="inline-flex justify-center rounded-lg w-full font-semibold px-12 py-6 transition-colors duration-300 text-gray-900 dark:text-slate-200 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 hover:dark:bg-sky-900 border-2 border-sky-500 dark:border-sky-700 border-dashed"
-                                >
-                                    مشاهده تصویر کارت ملی جدید
-                                </a>
-                                {user.info.id_card_image && (
-                                    <a
-                                    className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
-                                    href={route('users.download', {user: user.id, name: 'id'})}
-                                    target="_blank"
-                                >
-                                    دانلود
-                                </a>
+                        <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 gap-5 mt-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <p className="text-xs flex items-center">
+                                    تصویر کارت ملی جدید
+                                </p>
+                                {user.info.id_card_image ? (
+                                    <a href={user.info.id_card_image ? user.info.id_card_image_url : 'javascript:void(0)'}
+                                       target={user.info.id_card_image && "_blank"}
+                                       onClick={! user.info.id_card_image && (() => {
+                                           toastify('مدرک برای همکار ثبت نشده است', {
+                                               type: 'error'
+                                           });
+                                       })}
+                                       className="mt-2">
+                                        <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                            <img src={user.info.id_card_image_url} alt="تصویر کارت ملی جدید"/>
+                                        </div>
+                                    </a>
+                                ) : (
+                                    <p className="mt-5 font-semibold">
+                                        تصویر ثبت نشده!
+                                    </p>
                                 )}
                             </div>
-                            <div className="relative w-full xl:w-1/3 ml-5">
-                                <a
-                                    href={user.info.med_card_image ? user.info.med_card_image_url : 'javascript:void(0)'}
-                                    target={user.info.med_card_image && "_blank"}
-                                    onClick={! user.info.med_card_image && (() => {
-                                        toastify('مدرک برای همکار ثبت نشده است', {
-                                            type: 'error'
-                                        });
-                                    })}
-                                    className="inline-flex justify-center rounded-lg w-full font-semibold px-12 py-6 transition-colors duration-300 text-gray-900 dark:text-slate-200 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 hover:dark:bg-sky-900 border-2 border-sky-500 dark:border-sky-700 border-dashed"
-                                >
-                                    مشاهده تصویر کارت نظام پزشکی
-                                </a>
-                                {user.info.med_card_image && (
-                                    <a
-                                    className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
-                                    href={route('users.download', {user: user.id, name: 'med_card'})}
-                                    target="_blank"
-                                >
-                                    دانلود
-                                </a>
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <p className="text-xs flex items-center">
+                                    تصویر کارت نظام پزشکی
+                                </p>
+                                {user.info.med_card_image ? (
+                                    <a href={user.info.med_card_image ? user.info.med_card_image_url : 'javascript:void(0)'}
+                                       target={user.info.med_card_image && "_blank"}
+                                       onClick={! user.info.med_card_image && (() => {
+                                           toastify('مدرک برای همکار ثبت نشده است', {
+                                               type: 'error'
+                                           });
+                                       })}
+                                       className="mt-2">
+                                        <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                            <img src={user.info.med_card_image_url} alt="تصویر کارت نظام پزشکی"/>
+                                        </div>
+                                    </a>
+                                ) : (
+                                    <p className="mt-5 font-semibold">
+                                        تصویر ثبت نشده!
+                                    </p>
                                 )}
                             </div>
-                            <div className="relative w-full xl:w-1/3">
-                                <a
-                                    href={user.info.license_image ? user.info.license_image_url : 'javascript:void(0)'}
-                                    target={user.info.license_image && "_blank"}
-                                    onClick={! user.info.license_image && (() => {
-                                        toastify('مدرک برای همکار ثبت نشده است', {
-                                            type: 'error'
-                                        });
-                                    })}
-                                    className="inline-flex justify-center rounded-lg w-full font-semibold px-12 py-6 transition-colors duration-300 text-gray-900 dark:text-slate-200 bg-sky-100 dark:bg-sky-950 hover:bg-sky-200 hover:dark:bg-sky-900 border-2 border-sky-500 dark:border-sky-700 border-dashed"
-                                >
-                                    مشاهده تصویر مجوز فعالیت
-                                </a>
-                                {user.info.license_image && (
-                                    <a
-                                    className="absolute top-0 right-0 text-sm font-semibold px-2 py-1 text-white bg-green-600 hover:bg-green-500 rounded-lg rounded-tl-none rounded-br-none"
-                                    href={route('users.download', {user: user.id, name: 'license'})}
-                                    target="_blank"
-                                >
-                                    دانلود
-                                </a>
+
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <p className="text-xs flex items-center">
+                                    تصویر مجوز فعالیت
+                                </p>
+                                {user.info.license_image ? (
+                                    <a href={user.info.license_image ? user.info.license_image_url : 'javascript:void(0)'}
+                                       target={user.info.license_image && "_blank"}
+                                       onClick={! user.info.license_image && (() => {
+                                           toastify('مدرک برای همکار ثبت نشده است', {
+                                               type: 'error'
+                                           });
+                                       })}
+                                       className="mt-2">
+                                        <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                            <img src={user.info.license_image_url} alt="تصویر کارت ملی جدید"/>
+                                        </div>
+                                    </a>
+                                ) : (
+                                    <p className="mt-5 font-semibold">
+                                        تصویر ثبت نشده!
+                                    </p>
                                 )}
                             </div>
                         </div>

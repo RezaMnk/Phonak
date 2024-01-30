@@ -34,6 +34,14 @@ class ProfileController extends Controller
      */
     public function edit(): \Inertia\Response
     {
+        $user = Auth::user();
+        if (is_null($user->state) || is_null($user->university))
+        {
+            $user->excel_user = true;
+            $is_excel = true;
+            $user->save();
+        }
+
         return Inertia::render('Profile/Edit', [
             'user' => Auth::user(),
             'user.info' => Auth::user()->user_info,
@@ -61,9 +69,13 @@ class ProfileController extends Controller
 
             /* Address */
             'address.home_address' => ['required', 'string', 'max:255'],
+            'address.home_state' => ['required', 'string', 'max:255'],
+            'address.home_city' => ['required', 'string', 'max:255'],
             'address.home_post_code' => ['required', 'numeric', 'digits:10'],
             'address.home_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'address.work_address' => ['required', 'string', 'max:255'],
+            'address.work_state' => ['required', 'string', 'max:255'],
+            'address.work_city' => ['required', 'string', 'max:255'],
             'address.work_post_code' => ['required', 'numeric', 'digits:10'],
             'address.work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'address.has_second' => ['boolean'],
@@ -79,12 +91,50 @@ class ProfileController extends Controller
             'info.second_referral_phone' => ['nullable', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'info.history_description' => ['nullable', 'string'],
             'info.conditions_description' => ['nullable', 'string'],
-            'info.id_card_image' => ['required'],
-            'info.med_card_image' => ['required'],
-            'info.license_image' => ['required'],
         ]);
 
+        $addressOnly = [
+            'home_address' => $request->address['home_address'],
+            'home_state' => $request->address['home_state'],
+            'home_city' => $request->address['home_city'],
+            'home_post_code' => $request->address['home_post_code'],
+            'home_phone' => $request->address['home_phone'],
+            'work_address' => $request->address['work_address'],
+            'work_state' => $request->address['work_state'],
+            'work_city' => $request->address['work_city'],
+            'work_post_code' => $request->address['work_post_code'],
+            'work_phone' => $request->address['work_phone'],
+            'has_second' => $request->address['has_second'],
+            'mail_address' => $request->address['mail_address']
+        ];
+
+        if ($request->address['has_second']) {
+            $request->validate([
+                'address.second_work_address' => ['required', 'string', 'max:255'],
+                'address.second_work_state' => ['required', 'string', 'max:255'],
+                'address.second_work_city' => ['required', 'string', 'max:255'],
+                'address.second_work_post_code' => ['required', 'numeric', 'digits:10'],
+                'address.second_work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            ]);
+
+            $addressOnly = [
+                ...$addressOnly,
+                'second_work_address' => $request->address['second_work_address'],
+                'second_work_state' => $request->address['second_work_state'],
+                'second_work_city' => $request->address['second_work_city'],
+                'second_work_post_code' => $request->address['second_work_post_code'],
+                'second_work_phone' => $request->address['second_work_phone'],
+            ];
+        }
+
         $user = $request->user();
+
+        if (! $user->excel_user)
+            $request->validate([
+                'info.id_card_image' => ['required'],
+                'info.med_card_image' => ['required'],
+                'info.license_image' => ['required'],
+            ]);
 
         if ($request->password && (! Hash::check($request->password, $user->password)))
         {
@@ -105,24 +155,7 @@ class ProfileController extends Controller
 
         $user->fill($fill);
 
-        if (! $user->isDirty('password'))
-            if ($user->role != 'admin')
-                $user->status = 'waiting';
-
-        $user->save();
-
-        $user->address->fill([
-            'home_address' => $request->address['home_address'],
-            'home_post_code' => $request->address['home_post_code'],
-            'home_phone' => $request->address['home_phone'],
-            'work_address' => $request->address['work_address'],
-            'work_post_code' => $request->address['work_post_code'],
-            'work_phone' => $request->address['work_phone'],
-            'has_second' => $request->address['has_second'],
-            'mail_address' => $request->address['mail_address']
-        ]);
-
-        $user->address->save();
+        $user->address->fill($addressOnly);
 
         $user->user_info->fill([
             'phone' => $request->info['phone'],
@@ -134,6 +167,14 @@ class ProfileController extends Controller
             'second_referral_phone' => $request->info['second_referral_phone'],
             'history_description' => $request->info['history_description']
         ]);
+
+//        if (! $user->isClean(['name', 'national_code', 'med_number']))
+//            if ($user->role != 'admin')
+//                $user->status = 'waiting';
+
+        $user->save();
+
+        $user->address->save();
 
         if ($request->hasFile('id_card_image'))
         {

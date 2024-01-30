@@ -138,7 +138,7 @@ export default function ShippingStep() {
                                  />
 
                                  <InputLabel
-                                     className="block p-4 rounded-lg bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 peer-checked:border-sky-400"
+                                     className="!block md:!inline-block p-4 rounded-lg bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 peer-checked:border-sky-400"
                                      htmlFor="mail_address_work"
                                  >
                                      <div>
@@ -146,12 +146,15 @@ export default function ShippingStep() {
                                              محل کار
                                          </h6>
                                          <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
-                                            <span className="inline-block">
-                                                {record.shipping.address.work_address}
-                                            </span>
-                                                     <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
-                                            کدپستی: {record.shipping.address.work_post_code}
-                                            </span>
+                                             <span className="inline-block">
+                                                استان: {record.shipping.address.work_state} - شهر: {record.shipping.address.work_city}
+                                             </span>
+                                             <span className="inline-block xl:mr-5">
+                                                 آدرس: {record.shipping.address.work_address}
+                                             </span>
+                                             <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                                کدپستی: {record.shipping.address.work_post_code}
+                                             </span>
                                              {record.shipping.address.work_phone && (<span
                                                  className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.work_phone}
@@ -171,7 +174,7 @@ export default function ShippingStep() {
                                      />
 
                                      <InputLabel
-                                         className="block p-4 rounded-lg bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 peer-checked:border-sky-400"
+                                         className="!block md:!inline-block p-4 rounded-lg bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 peer-checked:border-sky-400"
                                          htmlFor="second_mail_address_work"
                                      >
                                          <div>
@@ -179,22 +182,25 @@ export default function ShippingStep() {
                                                  محل کار دوم
                                              </h6>
                                              <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
-                                                <span className="inline-block">
-                                                    {record.shipping.address.second_work_address}
-                                                </span>
-                                                         <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                             <span className="inline-block">
+                                                استان: {record.shipping.address.second_work_state} - شهر: {record.shipping.address.second_work_city}
+                                             </span>
+                                                 <span className="inline-block xl:mr-5">
+                                                 آدرس: {record.shipping.address.second_work_address}
+                                             </span>
+                                                 <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                                 کدپستی: {record.shipping.address.second_work_post_code}
-                                                </span>
-                                                         {record.shipping.address.second_work_phone && (<span
-                                                             className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
-                                                تلفن: {record.shipping.address.second_work_phone}
-                                                </span>)}
+                                             </span>
+                                                 {record.shipping.address.second_work_phone && (<span
+                                                     className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                            تلفن: {record.shipping.address.second_work_phone}
+                                            </span>)}
                                              </p>
                                          </div>
                                      </InputLabel>
                                  </div>
                              )}
-                             <div className="inline-block">
+                             <div>
                                  <RadioInput
                                      className="hidden peer"
                                      id="mail_address_home"
@@ -204,7 +210,7 @@ export default function ShippingStep() {
                                  />
 
                                  <InputLabel
-                                     className="block p-4 rounded-lg bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 peer-checked:border-sky-400"
+                                     className="!block md:!inline-block p-4 rounded-lg bg-gray-100 dark:bg-slate-700 peer-checked:bg-sky-100 peer-checked:dark:bg-sky-900 border border-gray-200 dark:border-slate-500 peer-checked:border-sky-400"
                                      htmlFor="mail_address_home"
                                  >
                                      <div>
@@ -212,12 +218,15 @@ export default function ShippingStep() {
                                              محل سکونت
                                          </h6>
                                          <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
-                                            <span className="inline-block">
-                                                {record.shipping.address.home_address}
-                                            </span>
-                                                     <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
-                                            کدپستی: {record.shipping.address.home_post_code}
-                                            </span>
+                                             <span className="inline-block">
+                                                استان: {record.shipping.address.home_state} - شهر: {record.shipping.address.home_city}
+                                             </span>
+                                             <span className="inline-block xl:mr-5">
+                                                 آدرس: {record.shipping.address.home_address}
+                                             </span>
+                                             <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                                کدپستی: {record.shipping.address.home_post_code}
+                                             </span>
                                              {record.shipping.address.home_phone && (<span
                                                  className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.home_phone}

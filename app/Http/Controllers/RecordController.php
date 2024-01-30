@@ -126,8 +126,8 @@ class RecordController extends Controller
             return back()->withErrors(['product' => 'موجودی محصول به اتمام رسیده است']);
         }
 
-        if (! $record->product)
-            if (! $record->user->can_buy($request->product, $count)) {
+//        if (! $record->product)
+            if (! $record->user->can_buy($request->product, $count, 'record', $record->id)) {
                 return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
             }
 
@@ -208,6 +208,10 @@ class RecordController extends Controller
             'audiogram_image' => ['required'],
             'national_code_confirm_image' => ['required'],
         ];
+
+        if ($record->user->creditor_image)
+            $to_validate['national_code_confirm_image'] = ['required'];
+
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
             {
@@ -238,6 +242,9 @@ class RecordController extends Controller
 
         if ($request->hasFile('national_code_confirm_image'))
             $to_validate['national_code_confirm_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
+        if ($request->hasFile('creditor_image'))
+            $to_validate['creditor_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
 
         $request->validate($to_validate);
 
@@ -289,6 +296,14 @@ class RecordController extends Controller
                 Storage::disk('records')->putFileAs($record->id, $image, $file_name);
 
                 $record->national_code_confirm_image = $file_name;
+            }
+
+            if ($request->hasFile('creditor_image')) {
+                $image = $request->file('creditor_image');
+                $file_name = 'creditor_image.jpg';
+                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+                $record->creditor_image = $file_name;
             }
 
             $record->touch();
@@ -399,18 +414,24 @@ class RecordController extends Controller
         if ($record->shipping->mail_address == 'home')
             $record_address = [
                 'address' => $record->user->address->home_address,
+                'state' => $record->user->address->home_state,
+                'city' => $record->user->address->home_city,
                 'post_code' => $record->user->address->home_post_code,
                 'phone' => $record->user->address->home_phone
             ];
         elseif ($record->shipping->mail_address == 'work')
             $record_address = [
                 'address' => $record->user->address->work_address,
+                'state' => $record->user->address->work_state,
+                'city' => $record->user->address->work_city,
                 'post_code' => $record->user->address->work_post_code,
                 'phone' => $record->user->address->work_phone
             ];
         elseif ($record->shipping->mail_address == 'second_work')
             $record_address = [
                 'address' => $record->user->address->second_work_address,
+                'state' => $record->user->address->second_work_state,
+                'city' => $record->user->address->second_work_city,
                 'post_code' => $record->user->address->second_work_post_code,
                 'phone' => $record->user->address->second_work_phone
             ];
@@ -503,6 +524,7 @@ class RecordController extends Controller
             'audiogram' => ['name' => $record->patient->name .'-'. $record->user->name .'-audiogram.jpg', 'file' => "audiogram_image.jpg"],
             'prescription' => ['name' => $record->patient->name .'-'. $record->user->name .'-prescription.jpg', 'file' => "prescription_image.jpg"],
             'national_code_confirm' => ['name' => $record->patient->name .'-'. $record->user->name .'-national_code_confirmation.jpg', 'file' => "national_code_confirm_image.jpg"],
+            'creditor' => ['name' => $record->patient->name .'-'. $record->user->name .'-creditor.jpg', 'file' => "creditor_image.jpg"],
             'all' => [],
         ];
         if (! in_array($name, array_keys($files)))
@@ -534,6 +556,10 @@ class RecordController extends Controller
             $record->patient->name .'-'. $record->user->name .'-id.jpg' => "id_card_image.jpg",
             $record->patient->name .'-'. $record->user->name .'-national_code.jpg' => "national_code_confirm_image.jpg",
         ];
+
+        if ($record->user->creditor_image) {
+            $files[$record->patient->name .'-'. $record->user->name .'-creditor.jpg'] = "creditor_image.jpg";
+        }
 
         foreach ($files as $name => $file)
             $zip->addFile(Storage::disk('records')->path($record->id.'/'.$file), $name);

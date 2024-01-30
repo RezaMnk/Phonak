@@ -1,19 +1,38 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, router, useForm} from '@inertiajs/react';
 import Pagination from "@/Components/Pagination.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SecondaryButton from "@/Components/SecondaryButton.jsx";
 import DangerButton from "@/Components/DangerButton.jsx";
 import Modal from "@/Components/Modal.jsx";
+import TextInput from "@/Components/TextInput.jsx";
+import {useFirstRender} from "@/Hooks/useFirstRender.js";
 
 export default function NotCompleted({ users }) {
     const [deleteModalShow, setDeleteModalShow] = useState(false);
     const [modalUser, setModalUser] = useState({});
 
+    const [search, setSearch] = useState((new URLSearchParams(window.location.search).get('search')) || '')
+
+    const firstRender = useFirstRender();
+
     const {
         delete: destroy,
         processing,
     } = useForm();
+
+    useEffect(() => {
+        if (! firstRender)
+        {
+            const delayDebounceFn = setTimeout( () => {
+                router.get(route('users.not_completed'), {
+                    search: search
+                })
+            }, 1500)
+
+            return () => clearTimeout(delayDebounceFn)
+        }
+    }, [search])
 
     const deleteUser = (e) => {
         e.preventDefault();
@@ -35,6 +54,20 @@ export default function NotCompleted({ users }) {
                 {
                     'همکاران': route('users.index')
                 }
+            }
+            headerExtra={
+                <form id="search">
+                    <TextInput
+                        id="search-input"
+                        name="search"
+                        value={search}
+                        label="جستوجو..."
+                        className="!py-2 !px-4"
+                        autoComplete="name"
+                        onChange={(e) => setSearch(e.target.value)}
+                        isFocused={!! search}
+                    />
+                </form>
             }
         >
             <Head title="همکاران" />
@@ -112,7 +145,7 @@ export default function NotCompleted({ users }) {
                 </table>
             </div>
 
-            <Pagination data={users}/>
+            <Pagination data={users} search={search}/>
 
             <Modal show={deleteModalShow} onClose={closeModal} maxWidth="sm">
                 <form onSubmit={deleteUser} className="p-6">

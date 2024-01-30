@@ -137,18 +137,24 @@ class AccessoryController extends Controller
         if ($accessory->shipping->mail_address == 'home')
             $accessory_address = [
                 'address' => $accessory->user->address->home_address,
+                'state' => $accessory->user->address->home_state,
+                'city' => $accessory->user->address->home_city,
                 'post_code' => $accessory->user->address->home_post_code,
                 'phone' => $accessory->user->address->home_phone
             ];
         elseif ($accessory->shipping->mail_address == 'work')
             $accessory_address = [
                 'address' => $accessory->user->address->work_address,
+                'state' => $accessory->user->address->work_state,
+                'city' => $accessory->user->address->work_city,
                 'post_code' => $accessory->user->address->work_post_code,
                 'phone' => $accessory->user->address->work_phone
             ];
         elseif ($accessory->shipping->mail_address == 'second_work')
             $accessory_address = [
                 'address' => $accessory->user->address->second_work_address,
+                'state' => $accessory->user->address->second_work_state,
+                'city' => $accessory->user->address->second_work_city,
                 'post_code' => $accessory->user->address->second_work_post_code,
                 'phone' => $accessory->user->address->second_work_phone
             ];
@@ -209,7 +215,7 @@ class AccessoryController extends Controller
             ...$request->only(['count', 'brand'])
         ];
 
-        if (!$accessory->user->can_buy($request->product, $request->count, 'accessory')) {
+        if (!$accessory->user->can_buy($request->product, $request->count, 'accessory', $accessory->id)) {
             return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
         }
 

@@ -13,8 +13,11 @@ export default function Record({ record }) {
             [record.audiogram_image_url]: record.patient.name +'-'+ record.user.name +'-audiogram.jpg',
             [record.id_card_image_url]: record.patient.name +'-'+ record.user.name +'-id.jpg',
             [record.prescription_image_url]: record.patient.name +'-'+ record.user.name +'-prescription.jpg',
-            [record.national_code_confirm_image_url]: record.patient.name +'-'+ record.user.name +'-national_cde.jpg'
+            [record.national_code_confirm_image_url]: record.patient.name +'-'+ record.user.name +'-national_code.jpg'
         };
+
+        if (record.user.creditor_image)
+            images[record.creditor_image_url] = record.patient.name +'-'+ record.user.name +'-creditor.jpg'
 
         const zip = new JSZip();
 
@@ -107,40 +110,31 @@ export default function Record({ record }) {
         <>
             {(record.type === 'CIC' || record.type === 'ITC') && (
                 <>
-                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
-                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                             <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه سمعک
                             </p>
-                            <p className="mt-2">
+                            <p className="mt-2 print:mt-1 print:text-xs">
                                 {record.record_aid[ear].hearing_aid_size}
                             </p>
                         </div>
-                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                             <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 اندازه ونت
                             </p>
-                            <p className="mt-2">
+                            <p className="mt-2 print:mt-1 print:text-xs">
                                 {vent_sizes[record.record_aid[ear].vent_size]}
                             </p>
                         </div>
-                        {/*<div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">*/}
-                        {/*    <p className="text-xs flex items-center">*/}
-                        {/*        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>*/}
-                        {/*        مدل وکسگارد*/}
-                        {/*    </p>*/}
-                        {/*    <p className="mt-2">*/}
-                        {/*        {record.record_aid[ear].wax_guard}*/}
-                        {/*    </p>*/}
-                        {/*</div>*/}
-                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                        <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                             <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                 نوع رسیور
                             </p>
-                            <p className="mt-2">
+                            <p className="mt-2 print:mt-1 print:text-xs">
                                 {record.record_aid[ear].receiver}
                             </p>
                         </div>
@@ -149,36 +143,49 @@ export default function Record({ record }) {
             )}
             {record.type === 'BTE mold' && (
                 <>
-                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                قالب دارد؟
-                            </p>
-                            <p className="mt-2">
-                                {record.record_aid[ear].has_mold ? 'بله' : 'خیر'}
-                            </p>
-                        </div>
-                        {record.record_aid[ear].has_mold === 1 && (
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
+                        {!! record.has_mold && (
                             <>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         جنس قالب
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].mold_material === 'hard' ? 'سخت' : 'نرم'}
                                     </p>
                                 </div>
-                                <div className={`w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ` + record.record_aid[ear].has_vent ? 'ml-5' : ''}>
+                                {record.record_aid[ear].mold_material !== 'soft' && (
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
+                                        <p className="text-xs flex items-center">
+                                            <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                            ونت دارد؟
+                                        </p>
+                                        <p className="mt-2 print:mt-1 print:text-xs">
+                                            {record.record_aid[ear].has_vent ? 'بله' : 'خیر'}
+                                        </p>
+                                    </div>
+                                )}
+                                <div className={`w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ` + record.record_aid[ear].has_vent ? 'ml-5' : ''}>
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه قالب
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].mold_size}
                                     </p>
                                 </div>
+                                {record.record_aid[ear].has_vent && (
+                                    <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                                        <p className="text-xs flex items-center">
+                                            <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                            اندازه ونت
+                                        </p>
+                                        <p className="mt-2 print:mt-1 print:text-xs">
+                                            {vent_sizes[record.record_aid[ear].vent_size]}
+                                        </p>
+                                    </div>
+                                )}
                             </>
                         )}
                     </div>
@@ -186,43 +193,34 @@ export default function Record({ record }) {
             )}
             {record.type === 'BTE tube' && (
                 <>
-                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                قالب دارد؟
-                            </p>
-                            <p className="mt-2">
-                                {record.record_aid[ear].has_mold ? 'بله' : 'خیر'}
-                            </p>
-                        </div>
-                        {record.record_aid[ear].has_mold ? (
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
+                        {!! record.has_mold ? (
                             <>
-                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         ونت دارد؟
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].has_vent ? 'بله' : 'خیر'}
                                     </p>
                                 </div>
-                                <div className={`w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5`}>
+                                <div className={`w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2`}>
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه اسلیم تیوب
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         سایز {record.record_aid[ear].tube_size}
                                     </p>
                                 </div>
                                 {record.record_aid[ear].has_vent && (
-                                    <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                    <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                         <p className="text-xs flex items-center">
-                                            <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                            <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                             اندازه ونت
                                         </p>
-                                        <p className="mt-2">
+                                        <p className="mt-2 print:mt-1 print:text-xs">
                                             {vent_sizes[record.record_aid[ear].vent_size]}
                                         </p>
                                     </div>
@@ -230,30 +228,30 @@ export default function Record({ record }) {
                             </>
                         ) : (
                             <>
-                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه اسلیم تیوب
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         سایز {record.record_aid[ear].tube_size}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع Dome
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].dome_type}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه Dome
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {dome_sizes[record.record_aid[ear].dome_size]}
                                     </p>
                                 </div>
@@ -265,90 +263,81 @@ export default function Record({ record }) {
             )}
             {record.type === 'RIC' && (
                 <>
-                    <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-8">
-                        <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
-                            <p className="text-xs flex items-center">
-                                <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
-                                قالب دارد؟
-                            </p>
-                            <p className="mt-2">
-                                {record.record_aid[ear].has_mold ? 'بله' : 'خیر'}
-                            </p>
-                        </div>
-                        {record.record_aid[ear].has_mold ? (
+                    <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8 print:mt-2">
+                        {!! record.has_mold ? (
                             <>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع رسیور
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].receiver}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع پوسته
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].shell_type}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه رسیور خارجی
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         سایز {record.record_aid[ear].external_receiver_size}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه ونت
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {vent_sizes[record.record_aid[ear].vent_size]}
                                     </p>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع رسیور
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].receiver}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/4 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه رسیور خارجی
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         سایز {record.record_aid[ear].external_receiver_size}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 ml-5">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 xl:ml-5 print:ml-2">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         نوع Dome
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {record.record_aid[ear].dome_type}
                                     </p>
                                 </div>
-                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                                <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                     <p className="text-xs flex items-center">
-                                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                                         اندازه Dome
                                     </p>
-                                    <p className="mt-2">
+                                    <p className="mt-2 print:mt-1 print:text-xs">
                                         {dome_sizes[record.record_aid[ear].dome_size]}
                                     </p>
                                 </div>
@@ -358,19 +347,17 @@ export default function Record({ record }) {
                 </>
             )}
             {record.record_aid[ear].description && (
-                <div className="w-full mt-5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                <div className="w-full mt-5 print:mt-1 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                     <p className="text-xs flex items-center">
-                        <span className={`inline-block min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
+                        <span className={`inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full ${ear === 'left' ? 'bg-sky-400 dark:bg-sky-600' : 'bg-red-400 dark:bg-red-600'}`}></span>
                         توضیحات
                     </p>
-                    <p className="mt-2">
+                    <p className="mt-2 print:mt-1 print:text-xs">
                         {record.record_aid[ear].description}
                     </p>
                 </div>
             )}
-
         </>
-
     )
 
     return (
@@ -782,24 +769,43 @@ export default function Record({ record }) {
                                 </>
                             )}
                         </div>
-                        <div className="flex mt-6">
-                            <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                        <div className="flex mt-6 print:mt-1 break-inside-avoid">
+                            <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                 <p className="text-xs flex items-center">
-                                    <span className="inline-block min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <p className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5 xl:mt-2">
-                                            <span className="inline-block">
-                                                {record.shipping.address.address}
+                                <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
+                                    <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
+                                        <p className="inline-flex gap-1">
+                                           <span className="print:hidden">
+                                               استان:
+                                           </span>
+                                            <span>
+                                                {record.shipping.address.state} -
                                             </span>
-                                    <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                            <span className="print:hidden">
+                                                شهر:
+                                            </span>
+                                            <span>
+                                                {record.shipping.address.city}
+                                            </span>
+                                        </p>
+                                        <span className="inline-block xl:mr-5 print:mr-5">
+                                             {record.shipping.address.address}
+                                         </span>
+                                        <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {record.shipping.address.post_code}
                                             </span>
-                                    {record.shipping.address.phone && (<span
-                                        className="inline-block xl:mr-5 xl:pr-5 xl:border-r border-gray-300 dark:border-slate-600">
+                                        {record.shipping.address.phone && (<span
+                                            className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             تلفن: {record.shipping.address.phone}
                                             </span>)}
-                                </p>
+                                    </p>
+                                    <span className="hidden print:block text-xs mt-2">
+                                        شنوایی شناس: {record.user.name} - {record.shipping.expert_phone}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         {record.shipping.description && (

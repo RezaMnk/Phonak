@@ -39,9 +39,9 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'email', 'unique:users'],
             'grad_year' => ['required', 'integer', 'digits:4', 'between:1300,'. jdate()->getYear()],
             'med_number' => ['required', 'numeric', 'max_digits:6', 'unique:users'],
-            'grade' => ['required', 'string'],
-            'state' => ['required', 'string'],
-            'city' => ['required', 'string'],
+            'grade' => ['required', 'string', 'max:255'],
+            'state' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
             'university' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:6', 'max:255'],
             'confirm_password' => ['required', 'same:password'],
@@ -66,8 +66,8 @@ class RegisteredUserController extends Controller
         if (Auth::user()->has_address())
             return redirect()->route('dashboard');
 
-        elseif (Auth::user()->has_info())
-            return redirect()->route('dashboard');
+//        elseif (Auth::user()->has_info())
+//            return redirect()->route('dashboard');
 
         return Inertia::render('Auth/Address');
     }
@@ -108,9 +108,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'home_address' => ['required', 'string', 'max:255'],
+            'home_state' => ['required', 'string', 'max:255'],
+            'home_city' => ['required', 'string', 'max:255'],
             'home_post_code' => ['required', 'numeric', 'digits:10'],
             'home_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'work_address' => ['required', 'string', 'max:255'],
+            'work_state' => ['required', 'string', 'max:255'],
+            'work_city' => ['required', 'string', 'max:255'],
             'work_post_code' => ['required', 'numeric', 'digits:10'],
             'work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'has_second' => ['boolean'],
@@ -119,9 +123,13 @@ class RegisteredUserController extends Controller
 
         $only = $request->only([
             'home_address',
+            'home_state',
+            'home_city',
             'home_post_code',
             'home_phone',
             'work_address',
+            'work_state',
+            'work_city',
             'work_post_code',
             'work_phone',
             'mail_address',
@@ -130,11 +138,13 @@ class RegisteredUserController extends Controller
         if ($request->has_second) {
             $request->validate([
                 'second_work_address' => ['required', 'string', 'max:255'],
+                'second_work_state' => ['required', 'string', 'max:255'],
+                'second_work_city' => ['required', 'string', 'max:255'],
                 'second_work_post_code' => ['required', 'numeric', 'digits:10'],
                 'second_work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             ]);
 
-            $only = [...$only, ...$request->only(['second_work_address', 'second_work_post_code', 'second_work_phone'])];
+            $only = [...$only, ...$request->only(['second_work_address', 'second_work_state', 'second_work_city', 'second_work_post_code', 'second_work_phone'])];
         }
 
         Auth::user()->address()->create($only);

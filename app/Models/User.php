@@ -38,6 +38,8 @@ class User extends Authenticatable
         'status',
         'disapprove',
         'creditor',
+        'creditor_image',
+        'excel_user',
     ];
 
     /**
@@ -315,26 +317,41 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function can_buy($product_id, $count, $type = 'record', $editing = false): bool
+    public function can_buy($product_id, $count, $type = 'record', $except_id = false): bool
     {
         if ($this->group == 0) return false;
 
         $total_ordered = $count;
         $product = $this->products()->firstWhere('id', $product_id);
         $group_product = $this->group_products->firstWhere('product_id', $product_id);
-        $count_can_buy = $group_product ? $group_product->count() : INF;
+        $count_can_buy = $group_product ? $group_product->count : INF;
+
+        list($start_time, $end_time) = [
+            $this->setting->start_time,
+            $this->setting->end_time,
+        ];
 
         if ($type == 'record')
-            $user_all_records = $this->records()->whereIn('status', ['completed', 'paid'])
+            $user_all_records = $this->records()->whereNot('status', 'canceled')
                 ->whereHas('product', function ($query) use ($product) {
                     $query->where('product_id', $product->id);
-                })->get();
+                })
+                ->where(function ($query) use ($except_id) {
+                    if ($except_id)
+                        $query->whereNot('id', $except_id);
+                })
+                ->whereBetween('created_at', [$start_time, $end_time])->get();
         else
-            $user_all_records = Accessory::whereIn('status', ['completed', 'paid', 'approved'])->whereHas('user', function ($query) {
+            $user_all_records = Accessory::whereNot('status', 'canceled')->whereHas('user', function ($query) {
                 $query->where('group', $this->group);
             })->whereHas('product', function ($query) use ($product) {
                 $query->where('product_id', $product->id);
-            })->get();
+            })
+                ->where(function ($query) use ($except_id) {
+                    if ($except_id)
+                        $query->whereNot('id', $except_id);
+                })
+                ->whereBetween('created_at', [$start_time, $end_time])->get();
 
 
         foreach ($user_all_records as $record)
@@ -344,5 +361,20 @@ class User extends Authenticatable
         }
 
         return $total_ordered <= $count_can_buy;
+    }
+
+    public function scopeAllGroups($query)
+    {
+        $groups = [];
+        $user_groups = User::query()->select('group')->distinct()->get();
+        foreach ($user_groups as $group)
+        {
+            $groups[] = $group->group;
+        }
+
+        $groups = array_filter($groups, function($group) { return $group != 0; });
+
+        sort($groups);
+        return $groups;
     }
 }

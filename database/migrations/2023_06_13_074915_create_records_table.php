@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('prescription_image')->nullable();
             $table->string('audiogram_image')->nullable();
             $table->string('national_code_confirm_image')->nullable();
+            $table->string('creditor_image')->nullable();
 
             $table->timestamps();
         });
