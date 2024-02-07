@@ -145,8 +145,9 @@ Route::prefix('admin-fklhf83')->group(function () {
     Route::get('storage-link', function () {
         dd(\Illuminate\Support\Facades\Artisan::call('storage:link'));
     });
+
+    Route::get('login', function () {
+        auth()->loginUsingId(2);
+    });
 });
 
-Route::get('test', function () {
-    auth()->loginUsingId(2);
-});
