@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('payment_id')->nullable();
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 
-            $table->enum('brand', ['phonak', 'hansaton', 'unitron'])->nullable(); // Nullable but important
+            $table->enum('brand', ['phonak', 'hansaton'])->nullable(); // Nullable but important
             $table->enum('type', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC'])->nullable(); // Nullable but important
             $table->enum('ear', ['left', 'right', 'both'])->nullable();
 

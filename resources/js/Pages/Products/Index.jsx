@@ -159,11 +159,6 @@ export default function Index({ products }) {
                                             {product.brand}
                                         </span>
                                     )}
-                                    {product.brand === 'unitron' && (
-                                        <span className="inline-flex whitespace-nowrap items-center rounded-md bg-blue-50 dark:bg-blue-500/30 px-2 py-1 text-sm font-medium text-blue-800 dark:text-blue-300/70 ring-1 ring-inset ring-blue-600/20">
-                                            {product.brand}
-                                        </span>
-                                    )}
                                     {product.brand === 'rayovac' && (
                                         <span className="inline-flex whitespace-nowrap items-center rounded-md bg-red-50 dark:bg-red-500/30 px-2 py-1 text-sm font-medium text-red-800 dark:text-red-300/70 ring-1 ring-inset ring-red-600/20">
                                             {product.brand}

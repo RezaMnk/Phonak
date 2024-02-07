@@ -31,7 +31,8 @@ class Payment extends Model
      */
     protected $appends = [
         'created_ago',
-        'created_date'
+        'created_date',
+        'transaction_id_short',
     ];
 
 
@@ -56,7 +57,7 @@ class Payment extends Model
         return $this->hasOne(Accessory::class);
     }
 
-    protected function transactionId(): Attribute
+    protected function transactionIdShort(): Attribute
     {
         return new Attribute(
             get: fn () => preg_replace('/^([A0]*)+/', '', $this->attributes['transaction_id'])

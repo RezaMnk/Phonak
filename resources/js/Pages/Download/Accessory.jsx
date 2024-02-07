@@ -61,7 +61,6 @@ export default function Record({ accessory }) {
     const brands = {
         'phonak': 'فوناک',
         'hansaton': 'هنزاتون',
-        'unitron': 'یونیترون',
         'rayovac': 'ریوواک',
         'detax': 'دیتاکس',
         'etc': 'سایر',

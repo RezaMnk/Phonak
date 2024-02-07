@@ -216,33 +216,35 @@ export default function AudiogramStep() {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
-                            <div className="w-full xl:w-2/4">
-                                <FileInput
-                                    name="creditor_image"
-                                    fileName={data.creditor_image}
-                                    viewLink={record.creditor_image && record.creditor_image_url}
-                                    label="نامه تاییدیه بستانکاری"
-                                    accept=".jpg, .jpeg"
-                                    setData={(e) => setData('creditor_image', e.target.files[0])}
-                                    error={errors.creditor_image}
-                                />
-                            </div>
-                            <div className="w-full xl:w-1/4 flex flex-col gap-2 md:gap-8 justify-end">
-                                <p className="text-sm text-center md:text-right font-semibold text-gray-700 dark:text-slate-200">
-                                    میتوانید از نمونه نامه تاییدیه بستانکاری پیوست شده، استفاده نمایید.
-                                </p>
+                        {!! record.user.creditor_image && (
+                            <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
+                                <div className="w-full xl:w-2/4">
+                                    <FileInput
+                                        name="creditor_image"
+                                        fileName={data.creditor_image}
+                                        viewLink={record.creditor_image && record.creditor_image_url}
+                                        label="نامه تاییدیه بستانکاری"
+                                        accept=".jpg, .jpeg"
+                                        setData={(e) => setData('creditor_image', e.target.files[0])}
+                                        error={errors.creditor_image}
+                                    />
+                                </div>
+                                <div className="w-full xl:w-1/4 flex flex-col gap-2 md:gap-8 justify-end">
+                                    <p className="text-sm text-center md:text-right font-semibold text-gray-700 dark:text-slate-200">
+                                        میتوانید از نمونه نامه تاییدیه بستانکاری پیوست شده، استفاده نمایید.
+                                    </p>
 
-                                <PrimaryButton
-                                    link={true}
-                                    target="_blank"
-                                    download
-                                    href="/storage/creditor-example.pdf"
-                                >
-                                    دانلود فایل نمونه
-                                </PrimaryButton>
+                                    <PrimaryButton
+                                        link={true}
+                                        target="_blank"
+                                        download
+                                        href="/storage/creditor-example.pdf"
+                                    >
+                                        دانلود فایل نمونه
+                                    </PrimaryButton>
+                                </div>
                             </div>
-                        </div>
+                        )}
                         <div className="flex text-sm font-semibold mt-5 text-gray-700 dark:text-slate-200">
                             <span className="animate-pulse ml-1">توجه: </span>
                             مسئولیت صحت مدارک با کارشناس بوده و در صورت عدم تطبیق، سفارش حذف خواهد شد!

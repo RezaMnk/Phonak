@@ -19,7 +19,6 @@ export default function Show({ accessory, user }) {
     const brands = {
         'phonak': 'فوناک',
         'hansaton': 'هنزاتون',
-        'unitron': 'یونیترون',
         'rayovac': 'ریوواک',
         'detax': 'دیتاکس',
         'etc': 'سایر',
@@ -42,12 +41,12 @@ export default function Show({ accessory, user }) {
                     )}
                     {accessory.status === 'paid' && (
                         <span className="text-lg text-sky-600 dark:text-sky-400">
-                                (پرداخت شده - {accessory.payment.transaction_id})
+                                (پرداخت شده - {accessory.payment.transaction_id_short})
                         </span>
                     )}
                     {accessory.status === 'approved' && (
                         <span className="text-lg text-green-600 dark:text-green-400">
-                                (تایید شده - {accessory.payment.transaction_id})
+                                (تایید شده - {accessory.payment.transaction_id_short})
                         </span>
                     )}
                 </div>
@@ -111,12 +110,12 @@ export default function Show({ accessory, user }) {
                             )}
                             {accessory.status === 'paid' && (
                                 <span>
-                                    (پرداخت شده - {accessory.payment.transaction_id})
+                                    (پرداخت شده - {accessory.payment.transaction_id_short})
                                 </span>
                             )}
                             {accessory.status === 'approved' && (
                                 <span>
-                                    (تایید شده - {accessory.payment.transaction_id})
+                                    (تایید شده - {accessory.payment.transaction_id_short})
                                 </span>
                             )}
                         </div>

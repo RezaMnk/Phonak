@@ -117,10 +117,10 @@ export default function Index({ accessories }) {
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {accessory.status !== 'completed' ? accessory.payment?.transaction_id ? accessory.payment?.transaction_id : 'بدون پرداخت' : '-'}
+                                    {accessory.status !== 'completed' ? accessory.payment?.transaction_id_short ? accessory.payment?.transaction_id_short : 'بدون پرداخت' : '-'}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {accessory.status !== 'completed' ? accessory.payment?.transaction_id ? accessory.payment?.created_date : 'بدون پرداخت' : '-'}
+                                    {accessory.status !== 'completed' ? accessory.payment?.transaction_id_short ? accessory.payment?.created_date : 'بدون پرداخت' : '-'}
                                 </td>
                                 <td className="px-6 py-4">
                                     {/*{accessory.status === 'paid' && (*/}

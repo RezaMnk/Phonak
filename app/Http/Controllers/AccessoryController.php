@@ -39,7 +39,7 @@ class AccessoryController extends Controller
     public function get_products(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+            'brand' => ['required', 'in:phonak,hansaton,rayovac,detax,etc'],
         ]);
 
         if ($request->user()->group == 0)
@@ -65,7 +65,7 @@ class AccessoryController extends Controller
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
             'count' => ['nullable', 'numeric'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+            'brand' => ['required', 'in:phonak,hansaton,rayovac,detax,etc'],
         ]);
 
         $product = Product::find($request->product);
@@ -192,7 +192,7 @@ class AccessoryController extends Controller
         $request->validate([
             'product' => ['required', 'numeric', 'exists:products,id'],
             'count' => ['nullable', 'numeric'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+            'brand' => ['required', 'in:phonak,hansaton,rayovac,detax,etc'],
         ]);
 
         $product = Product::find($request->product);

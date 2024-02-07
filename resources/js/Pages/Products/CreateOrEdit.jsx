@@ -143,7 +143,6 @@ export default function CreateOrEdit({ product }) {
                                         <option value="" disabled="disabled">انتخاب کنید</option>
                                         <option value="phonak">فوناک</option>
                                         <option value="hansaton">هنزاتون</option>
-                                        <option value="unitron">یونیترون</option>
                                         <option value="rayovac">ریوواک</option>
                                         <option value="detax">دیتاکس</option>
                                         <option value="etc">سایر</option>

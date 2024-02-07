@@ -385,12 +385,12 @@ export default function Show({ record, user }) {
                             )}
                             {record.status === 'paid' && (
                                 <span>
-                                    (پرداخت شده - {record.payment.transaction_id})
+                                    (پرداخت شده - {record.payment.transaction_id_short})
                                 </span>
                             )}
                             {record.status === 'approved' && (
                                 <span>
-                                    (تایید شده - {record.payment.transaction_id})
+                                    (تایید شده - {record.payment.transaction_id_short})
                                 </span>
                             )}
                         </div>

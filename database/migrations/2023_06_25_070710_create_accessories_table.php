@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 
             $table->unsignedInteger('count')->nullable();
-            $table->enum('brand', ['phonak' ,'hansaton' ,'unitron' ,'rayovac' ,'detax' ,'etc']);
+            $table->enum('brand', ['phonak' ,'hansaton' ,'rayovac' ,'detax' ,'etc']);
             $table->enum('status', [1, 'completed', 'paid', 'approved', 'canceled'])->default(1);
 
             $table->unsignedBigInteger('total_price')->nullable();

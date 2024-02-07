@@ -71,9 +71,7 @@ export default function Welcome() {
                             <span className="text-green-500 mx-1">‌فوناك سوئیس‌</span>
                             و به دلیل کسب موفقیت هاي بسیار، در آذر ماه 1401 مسئولیت برند
                             <span className="text-red-500 mx-1">‌هنزاتون آلمان‌</span>
-                            و در خرداد ماه 1402 نیز نمایندگی محصولات
-                            <span className="text-sky-500 mx-1">‌یونیترون کانادا‌</span>
-                            (هر سه از برترین برندهاي جهان از مجموعه سونووا) نیز به این شرکت سپرده شد. این شرکت،
+                            (هر دو از برترین برندهاي جهان از مجموعه سونووا) نیز به این شرکت سپرده شد. این شرکت،
                             کلیه این محصولات را در سراسر ایران توزیع و همچنین گارانتی و خدمات آنها را تضمین می نماید. شرکت ندا سمعک آشنا در طول دوره فعالیت خود چندین بار در لیست بهترین
                             و فعال ترین نمایندگان سراسر دنیا قرار گرفته است. این شرکت همواره متعهد بوده است تا کلیه محصولات ارایه شده در کمپانی مادر را به سرعت و همزمان با ارایه آنها در دنیا، در
                             ایران نیز عرضه نماید تا امکان استفاده از تکنولوژي روز دنیا براي هم وطنان عزیز فراهم شود.
@@ -107,8 +105,8 @@ export default function Welcome() {
                         </video>
                     </div>
                     <div className="max-w-7xl mx-8 xl:mx-auto mt-24 relative">
-                        <div className="flex flex-col xl:flex-row gap-24">
-                            <a href="https://phonak.ir" className="w-full xl:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
+                        <div className="flex flex-col xl:flex-row gap-48">
+                            <a href="https://phonak.ir" className="w-full xl:w-1/2 bg-gray-50 p-5 rounded-lg transition-all">
                                 <img src="/storage/media/phonak.jpg" alt="phonak" className="rounded-lg transition-all" />
                                 <div className="mt-5 flex items-center font-semibold text-lg">
                                     <div className="flex-grow h-px bg-gray-300"></div>
@@ -118,7 +116,7 @@ export default function Welcome() {
                                     <div className="flex-grow h-px bg-gray-300"></div>
                                 </div>
                             </a>
-                            <a href="https://iranhansaton.ir" className="w-full xl:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
+                            <a href="https://iranhansaton.ir" className="w-full xl:w-1/2 bg-gray-50 p-5 rounded-lg transition-all">
                                 <img src="/storage/media/hansaton.jpg" alt="hansaton" className="rounded-lg transition-all" />
                                 <div className="mt-5 flex items-center font-semibold text-lg">
                                     <div className="flex-grow h-px bg-gray-300"></div>
@@ -128,16 +126,6 @@ export default function Welcome() {
                                     <div className="flex-grow h-px bg-gray-300"></div>
                                 </div>
                             </a>
-                            <div className="w-full xl:w-1/3 bg-gray-50 p-5 rounded-lg transition-all">
-                                <img src="/storage/media/unitron.jpg" alt="unitron" className="rounded-lg transition-all" />
-                                <div className="mt-5 flex items-center font-semibold text-lg select-none">
-                                    <div className="flex-grow h-px bg-gray-300"></div>
-                                    <h3 className="px-5 text-center bg-gray-100 border border-gray-300 rounded text-gray-500">
-                                        بزودی
-                                    </h3>
-                                    <div className="flex-grow h-px bg-gray-300"></div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <footer className="bg-gray-100">

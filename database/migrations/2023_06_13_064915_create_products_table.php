@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('brand', ['phonak', 'hansaton', 'unitron', 'rayovac', 'detax', 'etc']);
+            $table->enum('brand', ['phonak', 'hansaton', 'rayovac', 'detax', 'etc']);
             $table->enum('category', ['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories']);
             $table->string('expire_date')->nullable();
             $table->unsignedBigInteger('price');

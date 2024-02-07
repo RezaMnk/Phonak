@@ -44,7 +44,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+            'brand' => ['required', 'in:phonak,hansaton,rayovac,detax,etc'],
             'inventory' => ['required', 'numeric', 'max:100000'],
             'expire_date' => ['nullable', 'date'],
             'price' => ['required', 'numeric', 'max:100000000'],
@@ -142,7 +142,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category' => ['required', 'in:CIC,ITC,BTE mold,BTE tube,RIC,accessories'],
-            'brand' => ['required', 'in:phonak,hansaton,unitron,rayovac,detax,etc'],
+            'brand' => ['required', 'in:phonak,hansaton,rayovac,detax,etc'],
             'inventory' => ['required', 'numeric', 'max:100000'],
             'expire_date' => ['nullable', 'date'],
             'price' => ['required', 'numeric', 'max:100000000'],

@@ -20,7 +20,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->word(),
             'category' => fake()->randomElement(['CIC', 'ITC', 'BTE mold', 'BTE tube', 'RIC', 'accessories']),
-            'brand' => fake()->randomElement(['phonak', 'hansaton', 'unitron']),
+            'brand' => fake()->randomElement(['phonak', 'hansaton']),
             'price' => fake()->randomNumber(7),
             'IRC' => fake()->randomNumber(4),
             'expire_date' => null,

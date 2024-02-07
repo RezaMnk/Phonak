@@ -123,10 +123,10 @@ export default function Index({ records }) {
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {record.status !== 'completed' ? record.payment?.transaction_id ? record.payment?.transaction_id : 'بدون پرداخت' : '-'}
+                                    {record.status !== 'completed' ? record.payment?.transaction_id_short ? record.payment?.transaction_id_short : 'بدون پرداخت' : '-'}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {record.status !== 'completed' ? record.payment?.transaction_id ? record.payment?.created_date : 'بدون پرداخت' : '-'}
+                                    {record.status !== 'completed' ? record.payment?.transaction_id_short ? record.payment?.created_date : 'بدون پرداخت' : '-'}
                                 </td>
                                 <td className="px-6 py-4">
                                     {/*{record.status === 'paid' && (*/}

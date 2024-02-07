@@ -160,28 +160,6 @@ export default function AidTypeStep() {
                                      </div>
                                  </InputLabel>
                              </div>
-                             <div className="inline-block">
-                                 <RadioInput
-                                     id="brand_unitron"
-                                     className="hidden peer"
-                                     name="brand"
-                                     checked={data.brand === 'unitron'}
-                                     onChange={() => setData('brand', 'unitron')}
-                                 />
-
-                                 <InputLabel
-                                     htmlFor="brand_unitron"
-                                     className="bg-sky-500/30 dark:bg-sky-400/40 peer-checked:bg-sky-500/50 peer-checked:dark:bg-sky-400/50 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-sky-400"
-                                 >
-                                     <div className="p-2">
-                                         <img src="/storage/brands/unitron.png" alt="" className="w-24 h-24 object-contain"/>
-                                         <hr className="my-4 border-gray-200 dark:border-slate-500"/>
-                                         <p className="text-center">
-                                             یونیترون
-                                         </p>
-                                     </div>
-                                 </InputLabel>
-                             </div>
                          </div>
                      </div>
                      <div className="w-full xl:w-2/3 flex flex-col space-y-5 xl:space-y-0">
