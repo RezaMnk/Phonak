@@ -60,7 +60,7 @@ class Payment extends Model
     protected function transactionIdShort(): Attribute
     {
         return new Attribute(
-            get: fn () => preg_replace('/^([A0]*)+/', '', $this->attributes['transaction_id'])
+            get: fn () => $this->attributes['reference_id'] ?: ($this->attributes['transaction_id'] ? preg_replace('/^([A0]*)+/', '', $this->attributes['transaction_id']) : '')
         );
     }
 

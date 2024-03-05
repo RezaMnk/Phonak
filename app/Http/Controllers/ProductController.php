@@ -130,7 +130,7 @@ class ProductController extends Controller
     {
         return Inertia::render('Products/CreateOrEdit', [
             'product' => $product,
-            'product.groups' => $product->group_products()->get(['group AS number', 'count']),
+            'product.groups' => $product->group_products()->get(['id', 'group AS number', 'count', 'updated_at']),
         ]);
     }
 
@@ -204,16 +204,26 @@ class ProductController extends Controller
 
         foreach ($product->group_products as $group)
         {
-            if (! in_array($group->number, $groups))
+            if (! in_array($group->group, $groups))
                 $group->delete();
         }
 
         foreach ($request->groups as $group)
         {
-            $product->group_products()->updateOrCreate(['group' => $group['number']], [
-                'group' => $group['number'],
-                'count' => $group['count'],
-            ]);
+            $group_product = $product->group_products()->firstWhere('group', $group['number']);
+
+            if ($group_product)
+            {
+                if ($group_product->count != $group['count'])
+                    $group_product->update(['count' => $group['count']]);
+            }
+            else
+            {
+                $product->group_products()->create([
+                    'group' => $group['number'],
+                    'count' => $group['count'],
+                ]);
+            }
         }
 
         return redirect()->route('products.index')->with('toast', ['success' => 'محصول با موفقیت ویرایش شد']);
@@ -242,5 +252,22 @@ class ProductController extends Controller
         $product->touch();
 
 //        return response()->json('success');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function update_group(Request $request, GroupProduct $group_product)
+    {
+        $group_product->touch();
+
+        $data = [
+            'id' => $group_product->id,
+            'number' => $group_product->group,
+            'count' =>  $group_product->count,
+            'updated_ago' => $group_product->updated_ago,
+        ];
+
+        return response()->json($data);
     }
 }

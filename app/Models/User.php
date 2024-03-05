@@ -327,7 +327,7 @@ class User extends Authenticatable
         $count_can_buy = $group_product ? $group_product->count : INF;
 
         list($start_time, $end_time) = [
-            $this->setting->start_time,
+            max($this->setting->start_time, $group_product->updated_at),
             $this->setting->end_time,
         ];
 
@@ -360,6 +360,7 @@ class User extends Authenticatable
             else $total_ordered++;
         }
 
+        dd($total_ordered);
         return $total_ordered <= $count_can_buy;
     }
 

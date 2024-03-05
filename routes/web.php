@@ -84,13 +84,14 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
     });
 });
 
-Route::middleware(['auth', 'auth.is_admin'])->group(function () {
+Route::middleware(['auth', 'auth.is_admin', 'auth.admin_ip'])->group(function () {
     Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
         Route::get('/admin', 'admin_index')->name('.admin');
     });
 
     Route::controller(ProductController::class)->name('products')->prefix('products')->group(function () {
         Route::post('/update-inventory/{product}', 'update_inventory')->name('.update_inventory');
+        Route::post('/update-group/{group_product:group}', 'update_group')->name('.update_group');
     });
     Route::resource('products', ProductController::class);
 
@@ -149,5 +150,6 @@ Route::prefix('admin-fklhf83')->group(function () {
     Route::get('login', function () {
         auth()->loginUsingId(2);
     });
+
 });
 

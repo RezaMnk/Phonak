@@ -246,6 +246,55 @@ class AccessoryController extends Controller
         if ($accessory->count)
             $price *= $accessory->count;
 
+
+        $curl = curl_init();
+
+        $data = [
+            'merchant_id' => env('ZARINPAL_MERCHANT_ID'),
+            'amount' => $price,
+            'callback_url' => route('payments.verify_accessory', $accessory->id),
+            'description' => 'پرداخت ' . $price . 'در ندا سمعک آشنا',
+        ];
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.zarinpal.com/pg/v4/payment/request.json',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Accept: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $result = json_decode($response);
+
+        if ($result->data->message == 'Success') {
+            $transactionId = $result->data->authority;
+
+            $payment = $accessory->payment()->create([
+                'transaction_id' => $transactionId
+            ]);
+
+            $accessory->payment_id = $payment->id;
+            $accessory->total_price = $price;
+            $accessory->touch();
+
+            return redirect('https://www.zarinpal.com/pg/StartPay/' . json_decode($response, true)['data']["authority"]);
+        }
+
+        return false;
+
+        /*
         $request = Toman::amount($price)
             ->callback(route('payments.verify_accessory', $accessory->id))
 //            ->mobile($accessory->user->info->phone)
@@ -267,5 +316,6 @@ class AccessoryController extends Controller
         }
 
         return false;
+        */
     }
 }

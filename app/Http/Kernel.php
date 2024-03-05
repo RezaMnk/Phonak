@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'auth.verified' => \App\Http\Middleware\HasVerified::class,
         'auth.is_admin' => \App\Http\Middleware\IsAdmin::class,
+        'auth.admin_ip' => \App\Http\Middleware\IpMiddleware::class,
         'record_group_check' => \App\Http\Middleware\RecordGroupCheck::class,
         'accessory_group_check' => \App\Http\Middleware\AccessoryGroupCheck::class,
     ];

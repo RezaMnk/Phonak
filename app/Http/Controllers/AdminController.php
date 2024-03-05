@@ -30,7 +30,8 @@ class AdminController extends Controller
                             $query->where('name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('national_code' , 'LIKE', '%'. $request->search .'%');
                         })->orWhereHas('payment', function ($query) use ($request) {
-                            $query->where('transaction_id', 'LIKE', '%'. $request->search .'%');
+                            $query->where('transaction_id', 'LIKE', '%'. $request->search .'%')
+                                ->orWhere('reference_id', 'LIKE', '%'. $request->search .'%');
                         });
 
                 })
@@ -55,7 +56,8 @@ class AdminController extends Controller
                             $query->where('name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
                         })->orWhereHas('payment', function ($query) use ($request) {
-                            $query->where('transaction_id', 'LIKE', '%'. $request->search .'%');
+                            $query->where('transaction_id', 'LIKE', '%'. $request->search .'%')
+                                ->orWhere('reference_id', 'LIKE', '%'. $request->search .'%');
                         });
                 })->latest()->paginate(),
         ]);

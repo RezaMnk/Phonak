@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Audiogram;
-use App\Models\Patient;
 use App\Models\Product;
 use App\Models\Record;
-use App\Models\User;
 use Carbon\Carbon;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
@@ -610,6 +607,54 @@ class RecordController extends Controller
             return redirect()->route('records.index')->with('toast', ['success' => 'سفارش با موفقیت ثبت شد']);
         } else {
 
+            $curl = curl_init();
+
+            $data = [
+                'merchant_id' => env('ZARINPAL_MERCHANT_ID'),
+                'amount' => $price,
+                'callback_url' => route('payments.verify_record', $record->id),
+                'description' => 'پرداخت ' . $price . 'در ندا سمعک آشنا',
+            ];
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.zarinpal.com/pg/v4/payment/request.json',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($data),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'Accept: application/json'
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $result = json_decode($response);
+
+            if ($result->data->message == 'Success') {
+                $transactionId = $result->data->authority;
+
+                $payment = $record->payment()->create([
+                    'transaction_id' => $transactionId
+                ]);
+
+                $record->payment_id = $payment->id;
+                $record->total_price = $price;
+                $record->touch();
+
+                return redirect('https://www.zarinpal.com/pg/StartPay/' . json_decode($response, true)['data']["authority"]);
+            }
+
+            return false;
+
+            /*
             $request = Toman::amount($price)
                 ->callback(route('payments.verify_record', $record->id))
 //            ->mobile($record->user->info->phone)
@@ -630,6 +675,7 @@ class RecordController extends Controller
             }
 
             return false;
+            */
 
         }
     }

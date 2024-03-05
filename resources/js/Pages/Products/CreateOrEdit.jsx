@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, router, useForm} from '@inertiajs/react';
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
@@ -8,6 +8,7 @@ import DangerButton from "@/Components/DangerButton.jsx";
 import Icon from "@/Components/Icon.jsx";
 import CheckboxInput from "@/Components/CheckboxInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
+import {useState} from "react";
 
 export default function CreateOrEdit({ product }) {
     const {data, setData, patch, post, processing, errors} = useForm({
@@ -43,6 +44,9 @@ export default function CreateOrEdit({ product }) {
         }))
     }
 
+    const [updating, setUpdating] = useState(false);
+    const [updatingIndex, setUpdatingIndex] = useState(-1);
+
     const remGroup = (index) => {
         let new_groups = data.groups
 
@@ -51,6 +55,30 @@ export default function CreateOrEdit({ product }) {
             ...data,
             groups: new_groups
         }))
+    }
+
+    const updateGroup = (index) => {
+        // router.post(route('products.update_group', data.groups[index].number),{},{
+        //     preserveScroll: true,
+        //     onStart: visit => setUpdating(true),
+        //     onFinish: visit => setUpdating(false),
+        //     onSuccess: ddd => console.log(ddd)
+        // })
+        setUpdating(true)
+        setUpdatingIndex(index)
+        axios.post(route('products.update_group', data.groups[index].number))
+            .then(res => {
+                setUpdating(false)
+                setUpdatingIndex(-1)
+
+                let new_groups = data.groups
+                new_groups[index] = res.data
+
+                setData((data) => ({
+                    ...data,
+                    groups: new_groups
+                }))
+            })
     }
 
     const update_number = (e, index) => {
@@ -470,9 +498,9 @@ export default function CreateOrEdit({ product }) {
                             {Object.values(data.groups).map((group, index) => {
                                 const is_last = data.groups[Object.keys(data.groups).length-1] === group;
                                 return (
-                                    <div className="w-full flex flex-col xl:flex-row xl:space-x-5 xl:space-x-reverse"
+                                    <div className="w-full flex flex-col xl:flex-row gap-5"
                                          key={index}>
-                                        <div className="w-full xl:w-5/12">
+                                        <div className="w-full xl:w-full">
                                             <TextInput
                                                 id={`group-number-` + index}
                                                 name={`group-number-` + index}
@@ -487,8 +515,8 @@ export default function CreateOrEdit({ product }) {
                                             )}
 
                                         </div>
-                                        <div className="w-full xl:w-7/12 mt-5 xl:mt-0 flex">
-                                            <div className="w-full ml-5">
+                                        <div className="w-full xl:w-full">
+                                            <div className="w-full">
                                                 <TextInput
                                                     id={`group-count-` + index}
                                                     name={`group-count-` + index}
@@ -504,6 +532,36 @@ export default function CreateOrEdit({ product }) {
                                                                 className="mt-2"/>
                                                 )}
                                             </div>
+                                        </div>
+                                        <div className="w-full xl:w-fit flex gap-5 whitespace-nowrap">
+                                            {(product && data.groups[index].id) && (
+                                                <div className="w-full flex">
+                                                    <PrimaryButton
+                                                        disabled={updating}
+                                                        className="gap-2 w-full h-full items-center !px-2 xl:!px-4"
+                                                        onClick={() => updateGroup(index)}
+                                                        type="button"
+                                                    >
+                                                        <Icon viewBox="0 0 24 24" type="stroke" width={2}
+                                                              className={`text-white ${updatingIndex === index ? 'animate-spin' : ''}`}>
+                                                            <path d="M5.07,8A8,8,0,0,1,20,12" strokeLinecap="round"
+                                                                  strokeLinejoin="round"/>
+                                                            <path data-name="primary" d="M18.93,16A8,8,0,0,1,4,12"
+                                                                  strokeLinecap="round" strokeLinejoin="round"/>
+                                                            <polyline data-name="primary" points="5 3 5 8 10 8"
+                                                                      strokeLinecap="round" strokeLinejoin="round"/>
+                                                            <polyline data-name="primary" points="19 21 19 16 14 16"
+                                                                      strokeLinecap="round" strokeLinejoin="round"/>
+                                                        </Icon>
+                                                        <span>
+                                                            بروزرسانی
+                                                        </span>
+                                                        <span className="text-xs hidden sm:block">
+                                                        (آخرین بروزرسانی: {data.groups[index].updated_ago})
+                                                    </span>
+                                                    </PrimaryButton>
+                                                </div>
+                                            )}
                                             <div className="w-fit flex">
                                                 <DangerButton
                                                     className="w-full h-full items-center !px-2 xl:!px-4"
@@ -519,7 +577,7 @@ export default function CreateOrEdit({ product }) {
                                                 </DangerButton>
                                             </div>
                                         </div>
-                                        {! is_last && (
+                                        {!is_last && (
                                             <hr className="block xl:hidden mt-5 border-gray-200 dark:border-slate-500"/>
                                         )}
                                     </div>
