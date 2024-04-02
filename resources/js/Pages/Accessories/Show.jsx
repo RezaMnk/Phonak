@@ -221,7 +221,8 @@ export default function Show({ accessory, user }) {
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     آدرس ارسال محصول
                                 </p>
-                                <div className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
+                                <div
+                                    className="print:border print:border-gray-900 print:p-3 print:text-xs print:w-fit mt-5 xl:mt-2">
                                     <p className="inline-flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0">
                                         <p className="inline-flex gap-1">
                                            <span className="print:hidden">
@@ -240,7 +241,8 @@ export default function Show({ accessory, user }) {
                                         <span className="inline-block xl:mr-5 print:mr-5">
                                              {accessory.shipping.address.address}
                                          </span>
-                                        <span className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
+                                        <span
+                                            className="inline-block xl:mr-5 xl:pr-5 xl:border-r print:mr-5 print:pr-5 print:border-r border-gray-300 dark:border-slate-600">
                                             کدپستی: {accessory.shipping.address.post_code}
                                             </span>
                                         {accessory.shipping.address.phone && (<span
@@ -248,17 +250,24 @@ export default function Show({ accessory, user }) {
                                             تلفن: {accessory.shipping.address.phone}
                                             </span>)}
                                     </p>
-                                    <span className="hidden print:block text-xs mt-2">
-                                        شنوایی شناس: {accessory.user.name} - {accessory.shipping.expert_phone}
-                                    </span>
+                                    <div className="hidden print:flex justify-between text-xs mt-2">
+                                        <span>
+                                            شنوایی شناس: {record.user.name} - {record.shipping.expert_phone}
+                                        </span>
+                                        <span>
+                                            شیوه ارسال: {shipping_types[record.shipping.type]}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         {accessory.shipping.description && (
                             <div className="flex mt-6">
-                                <div className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
+                                <div
+                                    className="w-full flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg print:px-2 print:py-1 p-3">
                                     <p className="text-xs flex items-center">
-                                        <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
+                                        <span
+                                            className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-sky-400 dark:bg-sky-600"></span>
                                         توضیحات
                                     </p>
                                     <p className="mt-2">
