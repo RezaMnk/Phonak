@@ -24,7 +24,7 @@ class AdminController extends Controller
                 ->where(function ($query) use ($request) {
                     if ($request->has('search'))
                         $query->whereHas('user', function ($query) use ($request) {
-                            $query->where('name', 'LIKE', '%'. $request->search .'%')
+                            $query->where('last_name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
                         })->orWhereHas('patient', function ($query) use ($request) {
                             $query->where('name', 'LIKE', '%'. $request->search .'%')
@@ -53,7 +53,7 @@ class AdminController extends Controller
                 ->where(function ($query) use ($request) {
                     if ($request->has('search'))
                         $query->whereHas('user', function ($query) use ($request) {
-                            $query->where('name', 'LIKE', '%'. $request->search .'%')
+                            $query->where('last_name', 'LIKE', '%'. $request->search .'%')
                                 ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
                         })->orWhereHas('payment', function ($query) use ($request) {
                             $query->where('transaction_id', 'LIKE', '%'. $request->search .'%')

@@ -32,6 +32,10 @@ class HasVerified
             return redirect()->route('profile.edit')->with('warning_message', 'لطفا اطلاعات استان و شهر خود را بروزرسانی نمایید.');
         }
 
+        elseif (is_null(Auth::user()->last_name)) {
+            return redirect()->route('profile.edit')->with('warning_message', 'لطفا اطلاعات نام و نام خانوادگی خود را بروزرسانی نمایید.');
+        }
+
         return $next($request);
     }
 }

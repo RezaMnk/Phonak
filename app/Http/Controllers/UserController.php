@@ -28,7 +28,7 @@ class UserController extends Controller
         return Inertia::render('Users/Index', [
             'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->where(function ($query) use ($request) {
             if ($request->has('search'))
-                $query->where('name', 'LIKE', '%'. $request->search .'%')
+                $query->where('last_name', 'LIKE', '%'. $request->search .'%')
                     ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
         })->where(function ($query) use ($request) {
             if ($request->has('group') && $request->group != 'all')
@@ -58,7 +58,7 @@ class UserController extends Controller
         return Inertia::render('Users/Index', [
             'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->where(function ($query) use ($request) {
             if ($request->has('search'))
-                $query->where('name', 'LIKE', '%'. $request->search .'%')
+                $query->where('last_name', 'LIKE', '%'. $request->search .'%')
                     ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
         })->where(function ($query) use ($request) {
             if ($request->has('group') && $request->group != 'all')
@@ -82,7 +82,7 @@ class UserController extends Controller
             'users' => User::query()->with(['user_info', 'address'])
                 ->where('role', 'user')->where(function ($query) use ($request) {
                     if ($request->has('search'))
-                        $query->where('name', 'LIKE', '%'. $request->search .'%')
+                        $query->where('last_name', 'LIKE', '%'. $request->search .'%')
                             ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
                 })->where(function ($query) use ($request) {
                     $query->doesntHave('user_info')->orDoesntHave('address');
@@ -100,7 +100,7 @@ class UserController extends Controller
         $users = User::query()->where('role', 'user')->where(function ($query) use ($request) {
             if ($request->status == 'unapproved')
                 $query->whereNot('status', 'approved');
-        })->where('name', 'LIKE', '%'. $request->search .'%')->whereHas('user_info')->latest()->paginate()->onEachSide(0);
+        })->where('last_name', 'LIKE', '%'. $request->search .'%')->whereHas('user_info')->latest()->paginate()->onEachSide(0);
 
         return response()->json(['users' => $users]);
     }

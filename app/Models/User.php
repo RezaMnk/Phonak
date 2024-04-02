@@ -24,7 +24,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'national_code',
         'email',
         'grad_year',
@@ -68,6 +69,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
+        'name',
         'is_admin',
         'is_owner',
         'setting_time_orders',
@@ -288,6 +290,13 @@ class User extends Authenticatable
         return $this->status == 'approved';
     }
 
+    public function name(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->first_name . ' ' . $this->last_name
+        );
+    }
+
     /**
      * Determine if the user is an administrator.
      */
@@ -360,7 +369,6 @@ class User extends Authenticatable
             else $total_ordered++;
         }
 
-        dd($total_ordered);
         return $total_ordered <= $count_can_buy;
     }
 

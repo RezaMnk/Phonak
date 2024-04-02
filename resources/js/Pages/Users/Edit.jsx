@@ -559,7 +559,7 @@ export default function Edit({ user }) {
                             <hr className="dark:border-slate-600"/>
                         </div>
                         <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 gap-5 mt-3">
-                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 text-gray-700 dark:text-slate-200 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     تصویر کارت ملی جدید
                                 </p>
@@ -582,7 +582,7 @@ export default function Edit({ user }) {
                                     </p>
                                 )}
                             </div>
-                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 text-gray-700 dark:text-slate-200 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     تصویر کارت نظام پزشکی
                                 </p>
@@ -606,7 +606,7 @@ export default function Edit({ user }) {
                                 )}
                             </div>
 
-                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3">
+                            <div className="w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 text-gray-700 dark:text-slate-200 rounded-lg p-3">
                                 <p className="text-xs flex items-center">
                                     تصویر مجوز فعالیت
                                 </p>

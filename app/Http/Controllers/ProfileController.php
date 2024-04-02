@@ -55,7 +55,8 @@ class ProfileController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'national_code' => ['required', 'numeric', 'digits:10', Rule::unique('users')->ignore($request->user()->id, 'id')],
             'grad_year' => ['required', 'integer', 'digits:4', 'between:1300,'. jdate()->getYear()],
             'med_number' => ['required', 'numeric', 'max_digits:6', Rule::unique('users')->ignore($request->user()->id, 'id')],
@@ -147,7 +148,7 @@ class ProfileController extends Controller
         }
 
         $fill = [
-            ...$request->only(['name', 'national_code', 'grad_year', 'med_number', 'grade', 'state', 'city', 'university'])
+            ...$request->only(['first_name', 'last_name', 'national_code', 'grad_year', 'med_number', 'grade', 'state', 'city', 'university'])
         ];
 
         if ($request->password)

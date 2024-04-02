@@ -617,7 +617,7 @@ export default function Show({ record, user }) {
                                     <hr className="dark:border-slate-600"/>
                                 </div>
 
-                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 print:space-y-1 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-2 xl:space-x-10 mt-5 xl:mt-8 print:mt-1 break-inside-avoid">
+                                <div className="flex flex-col-reverse print:flex-row xl:flex-row space-y-5 space-y-reverse print:space-y-0 xl:space-y-0 print:space-x-reverse xl:space-x-reverse print:space-x-2 xl:space-x-10 mt-5 xl:mt-8 print:mt-1 break-inside-avoid">
                                     {[...tests_list].reverse().map((item, index) => (
                                         <div key={index} className="w-full flex text-gray-800 dark:text-slate-200">
                                             <div className="w-full flex flex-col">
@@ -813,9 +813,14 @@ export default function Show({ record, user }) {
                                             تلفن: {record.shipping.address.phone}
                                             </span>)}
                                     </p>
-                                    <span className="hidden print:block text-xs mt-2">
-                                        شنوایی شناس: {record.user.name} - {record.shipping.expert_phone}
-                                    </span>
+                                    <div className="hidden print:flex justify-between text-xs mt-2">
+                                        <span>
+                                            شنوایی شناس: {record.user.name} - {record.shipping.expert_phone}
+                                        </span>
+                                        <span>
+                                            شیوه ارسال: {shipping_types[record.shipping.type]}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

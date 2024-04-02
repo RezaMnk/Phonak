@@ -19,7 +19,8 @@ export default function Edit({ user }) {
         password: '',
         new_password: '',
         confirm_password: '',
-        name: user.name,
+        first_name: user.first_name,
+        last_name: user.last_name || '',
         national_code: user.national_code,
         grad_year: user.grad_year,
         med_number: user.med_number,
@@ -62,7 +63,6 @@ export default function Edit({ user }) {
         },
     });
 
-    console.log(data)
     const { warning_message } = usePage().props;
 
     const [ hasSecondAddress, setHasSecondAddress ] = useState(!!user.address.second_work_address)
@@ -132,21 +132,35 @@ export default function Edit({ user }) {
                         <hr className="dark:border-slate-600"/>
                     </div>
                     <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-6 mb-5">
-                        <div className="w-full xl:w-4/12 ml-5">
+                        <div className="w-full xl:w-3/12 ml-5">
                             <TextInput
-                                id="name"
-                                name="name"
-                                value={data.name}
-                                label="نام و نام خانوادگی"
+                                id="first_name"
+                                name="first_name"
+                                value={data.first_name}
+                                label="نام"
                                 svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                                d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
-                                onChange={(e) => setData('name', e.target.value)}
-                                error={errors.name}
+                                onChange={(e) => setData('first_name', e.target.value)}
+                                error={errors.first_name}
                             />
 
-                            <InputError message={errors.name} className="mt-2"/>
+                            <InputError message={errors.first_name} className="mt-2"/>
                         </div>
                         <div className="w-full xl:w-3/12 ml-5">
+                            <TextInput
+                                id="last_name"
+                                name="last_name"
+                                value={data.last_name}
+                                label="نام خانوادگی"
+                                svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
+                                               d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
+                                onChange={(e) => setData('last_name', e.target.value)}
+                                error={errors.last_name}
+                            />
+
+                            <InputError message={errors.last_name} className="mt-2"/>
+                        </div>
+                        <div className="w-full xl:w-2/12 ml-5">
                             <TextInput
                                 id="national_code"
                                 type="number"
@@ -177,14 +191,15 @@ export default function Edit({ user }) {
 
                             <InputError message={errors.grad_year} className="mt-2"/>
                         </div>
-                        <div className="w-full xl:w-3/12">
+                        <div className="w-full xl:w-2/12">
                             <TextInput
                                 id="med_number"
                                 type="number"
                                 name="med_number"
                                 label="شماره نظام پزشکی"
                                 value={data.med_number}
-                                svgIcon={<path d="M12 8V16M8 12H16M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"/>}
+                                svgIcon={<path
+                                    d="M12 8V16M8 12H16M7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21Z"/>}
                                 onChange={(e) => setData('med_number', e.target.value)}
                                 error={errors.med_number}
                             />
