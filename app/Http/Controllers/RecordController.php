@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
 
 class RecordController extends Controller
 {
@@ -124,9 +126,9 @@ class RecordController extends Controller
         }
 
 //        if (! $record->product)
-            if (! $record->user->can_buy($request->product, $count, 'record', $record->id)) {
-                return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
-            }
+        if (! $record->user->can_buy($request->product, $count, 'record', $record->id)) {
+            return back()->withErrors(['product' => 'شما امکان سفارش این محصول را ندارید']);
+        }
 
         $limit_reached = $record->user->reached_limit('record', $count, $record->product);
 
@@ -566,7 +568,7 @@ class RecordController extends Controller
     }
 
 
-    public function pay(Record $record)
+    public function pay(Record $record, Request $request)
     {
         if ($record->created_at < Carbon::now()->subHours(2)->toDateTimeString())
         {
@@ -574,6 +576,10 @@ class RecordController extends Controller
             $record->save();
             return redirect()->route('records.index')->with('toast', ['error' => 'مهلت پرداخت سفارش به اتمام رسیده است']);
         }
+
+        $request->validate([
+            'gateway' => ['required', 'in:zarinpal,parsian']
+        ]);
 
         $price = $record->product->price;
 
@@ -593,7 +599,8 @@ class RecordController extends Controller
         if ($record->user->creditor)
         {
             $payment = $record->payment()->create([
-                'transaction_id' => 0
+                'transaction_id' => 0,
+                'gateway' => 'creditor'
             ]);
 
             $record->total_price = $price;
@@ -606,77 +613,21 @@ class RecordController extends Controller
 
             return redirect()->route('records.index')->with('toast', ['success' => 'سفارش با موفقیت ثبت شد']);
         } else {
-
-            $curl = curl_init();
-
-            $data = [
-                'merchant_id' => env('ZARINPAL_MERCHANT_ID'),
-                'amount' => $price,
-                'callback_url' => route('payments.verify_record', $record->id),
-                'description' => 'پرداخت ' . $price . 'در ندا سمعک آشنا',
-            ];
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.zarinpal.com/pg/v4/payment/request.json',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($data),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json',
-                    'Accept: application/json'
-                ),
-            ));
-
-            $response = curl_exec($curl);
-
-            curl_close($curl);
-
-            $result = json_decode($response);
-
-            if ($result->data->message == 'Success') {
-                $transactionId = $result->data->authority;
-
-                $payment = $record->payment()->create([
-                    'transaction_id' => $transactionId
-                ]);
-
-                $record->payment_id = $payment->id;
-                $record->total_price = $price;
-                $record->touch();
-
-                return redirect('https://www.zarinpal.com/pg/StartPay/' . json_decode($response, true)['data']["authority"]);
-            }
-
-            return false;
-
-            /*
-            $request = Toman::amount($price)
-                ->callback(route('payments.verify_record', $record->id))
-//            ->mobile($record->user->info->phone)
-                ->request();
-
-            if ($request->successful()) {
-                $transactionId = $request->transactionId();
-
-                $payment = $record->payment()->create([
-                    'transaction_id' => $transactionId
-                ]);
-
-                $record->payment_id = $payment->id;
-                $record->total_price = $price;
-                $record->touch();
-
-                return $request->pay();
-            }
-
-            return false;
-            */
-
+            return Payment::via($request->gateway)
+                ->detail('description', 'پرداخت ' . $price . 'در ندا سمعک آشنا')
+                ->callbackUrl(route('payments.verify_record', $record->id))
+                ->purchase(
+                    (new Invoice)->amount($price),
+                    function($driver, $transactionId) use ($request, $record, $price) {
+                        $payment = $record->payment()->create([
+                            'transaction_id' => $transactionId,
+                            'gateway' => $request->gateway
+                        ]);
+                        $record->payment_id = $payment->id;
+                        $record->total_price = $price;
+                        $record->touch();
+                    }
+                )->pay()->render();
         }
     }
 

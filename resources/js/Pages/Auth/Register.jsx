@@ -36,24 +36,41 @@ export default function Register() {
             </div>
             <form onSubmit={submit}>
                 <div className="flex flex-col xl:flex-row space-y-5 xl:space-y-0 mt-5">
-                    <div className="w-full xl:w-1/2 ml-5">
+                    <div className="w-full xl:w-1/3 ml-5">
                         <TextInput
-                            id="name"
-                            name="name"
-                            value={data.name}
-                            label="نام و نام خانوادگی"
+                            id="first_name"
+                            name="first_name"
+                            value={data.first_name}
+                            label="نام"
                             svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
                                            d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
                             autoComplete="name"
                             isFocused={true}
-                            onChange={(e) => setData('name', e.target.value)}
-                            error={errors.name}
+                            onChange={(e) => setData('first_name', e.target.value)}
+                            error={errors.first_name}
                         />
 
-                        <InputError message={errors.name} className="mt-2"/>
+                        <InputError message={errors.first_name} className="mt-2"/>
                     </div>
 
-                    <div className="w-full xl:w-1/2">
+                    <div className="w-full xl:w-1/3 ml-5">
+                        <TextInput
+                            id="last_name"
+                            name="last_name"
+                            value={data.last_name}
+                            label="نام خانوادگی"
+                            svgIcon={<path strokeLinecap="round" strokeLinejoin="round"
+                                           d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z"/>}
+                            autoComplete="name"
+                            isFocused={true}
+                            onChange={(e) => setData('last_name', e.target.value)}
+                            error={errors.last_name}
+                        />
+
+                        <InputError message={errors.last_name} className="mt-2"/>
+                    </div>
+
+                    <div className="w-full xl:w-1/3">
                         <TextInput
                             id="national_code"
                             type="number"

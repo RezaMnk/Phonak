@@ -9,6 +9,8 @@ use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
 
 class AccessoryController extends Controller
 {
@@ -233,7 +235,7 @@ class AccessoryController extends Controller
         return redirect()->route('accessories.index')->with('toast', ['success' => 'سفارش حذف گردید']);
     }
 
-    public function pay(Accessory $accessory)
+    public function pay(Accessory $accessory, Request $request)
     {
         if ($accessory->created_at < Carbon::now()->subHours(2)->toDateTimeString())
         {
@@ -241,81 +243,31 @@ class AccessoryController extends Controller
             $accessory->save();
             return redirect()->route('accessories.index')->with('toast', ['error' => 'مهلت پرداخت سفارش به اتمام رسیده است']);
         }
+
+        $request->validate([
+            'gateway' => ['required', 'in:zarinpal,parsian']
+        ]);
+
         $price = $accessory->product->price;
 
         if ($accessory->count)
             $price *= $accessory->count;
 
 
-        $curl = curl_init();
+        return Payment::via($request->gateway)
+            ->detail('description', 'پرداخت ' . $price . 'در ندا سمعک آشنا')
+            ->callbackUrl(route('payments.verify_accessory', $accessory->id))
+            ->purchase(
+                (new Invoice)->amount($price),
+                function($driver, $transactionId) use ($accessory, $price) {
+                    $payment = $accessory->payment()->create([
+                        'transaction_id' => $transactionId
+                    ]);
+                    $accessory->payment_id = $payment->id;
+                    $accessory->total_price = $price;
+                    $accessory->touch();
+                }
+            )->pay()->render();
 
-        $data = [
-            'merchant_id' => env('ZARINPAL_MERCHANT_ID'),
-            'amount' => $price,
-            'callback_url' => route('payments.verify_accessory', $accessory->id),
-            'description' => 'پرداخت ' . $price . 'در ندا سمعک آشنا',
-        ];
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.zarinpal.com/pg/v4/payment/request.json',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Accept: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $result = json_decode($response);
-
-        if ($result->data->message == 'Success') {
-            $transactionId = $result->data->authority;
-
-            $payment = $accessory->payment()->create([
-                'transaction_id' => $transactionId
-            ]);
-
-            $accessory->payment_id = $payment->id;
-            $accessory->total_price = $price;
-            $accessory->touch();
-
-            return redirect('https://www.zarinpal.com/pg/StartPay/' . json_decode($response, true)['data']["authority"]);
-        }
-
-        return false;
-
-        /*
-        $request = Toman::amount($price)
-            ->callback(route('payments.verify_accessory', $accessory->id))
-//            ->mobile($accessory->user->info->phone)
-            ->request();
-
-        if ($request->successful()) {
-            $transactionId = $request->transactionId();
-
-            $payment = $accessory->payment()->create([
-                'transaction_id' => $transactionId,
-                'type' => 'accessory'
-            ]);
-
-            $accessory->payment_id = $payment->id;
-            $accessory->total_price = $price;
-            $accessory->touch();
-
-            return $request->pay();
-        }
-
-        return false;
-        */
     }
 }

@@ -29,6 +29,7 @@ class UserController extends Controller
             'users' => User::query()->whereHas('user_info')->whereHas('address')->where('role', 'user')->where(function ($query) use ($request) {
             if ($request->has('search'))
                 $query->where('last_name', 'LIKE', '%'. $request->search .'%')
+                    ->orWhere('first_name' , 'LIKE', '%'. $request->search .'%')
                     ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
         })->where(function ($query) use ($request) {
             if ($request->has('group') && $request->group != 'all')

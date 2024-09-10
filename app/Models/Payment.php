@@ -20,6 +20,7 @@ class Payment extends Model
     protected $fillable = [
         'transaction_id',
         'reference_id',
+        'gateway',
         'type',
     ];
 
@@ -30,6 +31,7 @@ class Payment extends Model
      * @var array
      */
     protected $appends = [
+        'gateway_name',
         'created_ago',
         'created_date',
         'transaction_id_short',
@@ -75,6 +77,17 @@ class Payment extends Model
     {
         return new Attribute(
             get: fn () => jdate($this->attributes['created_at'])->toFormattedDateString()
+        );
+    }
+
+    protected function gatewayName(): Attribute
+    {
+        $gateways = [
+            'zarinpal' => 'زرین پال',
+            'parsian' => 'پارسیان',
+        ];
+        return new Attribute(
+            get: fn () => $gateways[$this->attributes['gateway']]
         );
     }
 }

@@ -41,12 +41,12 @@ export default function Show({ accessory, user }) {
                     )}
                     {accessory.status === 'paid' && (
                         <span className="text-lg text-sky-600 dark:text-sky-400">
-                                (پرداخت شده - {accessory.payment.transaction_id_short})
+                                (پرداخت شده - {accessory.payment.transaction_id_short} {accessory.payment.gateway_name})
                         </span>
                     )}
                     {accessory.status === 'approved' && (
                         <span className="text-lg text-green-600 dark:text-green-400">
-                                (تایید شده - {accessory.payment.transaction_id_short})
+                                (تایید شده - {accessory.payment.transaction_id_short} {accessory.payment.gateway_name})
                         </span>
                     )}
                 </div>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('transaction_id');
             $table->string('reference_id')->nullable();
             $table->enum('type', ['record', 'accessory']);
+            $table->enum('gateway', ['zarinpal', 'parsian', 'creditor'])->default('zarinpal');
             $table->timestamps();
         });
     }

@@ -10,7 +10,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -79,8 +78,8 @@ Route::middleware(['auth', 'auth.verified'])->group(function () {
     });
 
     Route::controller(PaymentController::class)->name('payments')->prefix('payments')->group(function () {
-        Route::get('verify-record/{record}', 'verify_record')->name('.verify_record');
-        Route::get('verify-accessory/{accessory}', 'verify_accessory')->name('.verify_accessory');
+        Route::any('verify-record/{record}', 'verify_record')->name('.verify_record')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);;
+        Route::any('verify-accessory/{accessory}', 'verify_accessory')->name('.verify_accessory')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);;
     });
 });
 
@@ -153,3 +152,31 @@ Route::prefix('admin-fklhf83')->group(function () {
 
 });
 
+
+
+Route::get('test', function () {
+
+    $invoice = (new \Shetabit\Multipay\Invoice)->amount(10000);
+
+    Shetabit\Payment\Facade\Payment::via('zarinpal')->purchase(
+        $invoice,
+        function($driver, $transactionId) {
+            dd($transactionId);
+        }
+    );
+
+    try {
+        $receipt = Shetabit\Payment\Facade\Payment::via('parsian')->amount(10000)->transactionId('A000000000000000000000000000m12r8rjp')->verify();
+
+        // You can show payment referenceId to the user.
+        echo $receipt->getReferenceId();
+
+    } catch (Shetabit\Multipay\Exceptions\InvalidPaymentException $exception) {
+        /**
+        when payment is not verified, it will throw an exception.
+        We can catch the exception to handle invalid payments.
+        getMessage method, returns a suitable message that can be used in user interface.
+         **/
+        dd($exception);
+    }
+});
