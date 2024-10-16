@@ -120,6 +120,14 @@ class RecordController extends Controller
                 ])
             ];
 
+        if ($product->has_other_services)
+            $data = [
+                ...$data,
+                ...$request->validate([
+                    'has_other_services' => ['boolean']
+                ])
+            ];
+
         $count = $request->ear == 'both' ? 2 : 1;
         if ($product->inventory < $count) {
             return back()->withErrors(['product' => 'موجودی محصول به اتمام رسیده است']);
@@ -367,6 +375,9 @@ class RecordController extends Controller
         if ($record->has_charger)
             $price += $record->product->charger_price;
 
+        if ($record->has_other_services)
+            $price += $record->product->other_services_price;
+
 
         $record->total_price = $price;
         $record->touch();
@@ -595,6 +606,9 @@ class RecordController extends Controller
 
         if ($record->has_charger)
             $price += $record->product->charger_price;
+
+        if ($record->has_other_services)
+            $price += $record->product->other_services_price;
 
         if ($record->user->creditor)
         {

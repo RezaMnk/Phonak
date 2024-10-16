@@ -31,9 +31,11 @@ class Product extends Model
         'has_package',
         'has_mold',
         'has_charger',
+        'has_other_services',
         'package_price',
         'mold_price',
         'charger_price',
+        'other_services_price',
         'min_count',
         'max_count',
     ];

@@ -34,7 +34,7 @@ export default function AidTypeStep() {
 
     useEffect(() => {
         setData('product', product)
-        const items = firstRender ? [record.has_package && 'package', record.has_mold && 'mold', record.has_charger && 'charger'] : ['package', 'charger'];
+        const items = firstRender ? [record.has_package && 'package', record.has_mold && 'mold', record.has_charger && 'charger', record.has_other_services && 'other_services'] : ['package', 'charger', 'other_services'];
         setProductItems(items);
         clearErrors('product')
     }, [product])
@@ -45,6 +45,7 @@ export default function AidTypeStep() {
             has_package: productItems.includes('package'),
             has_mold: productItems.includes('mold'),
             has_charger: productItems.includes('charger'),
+            has_other_services: productItems.includes('other_services'),
         }))
     }, [productItems])
 

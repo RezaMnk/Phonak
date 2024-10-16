@@ -28,6 +28,8 @@ return new class extends Migration
             $table->unsignedBigInteger('package_price')->nullable();
             $table->boolean('has_charger')->default(false);
             $table->unsignedBigInteger('charger_price')->nullable();
+            $table->boolean('has_other_services')->default(false);
+            $table->unsignedBigInteger('other_services_price')->nullable();
             $table->unsignedInteger('min_count')->nullable();
             $table->unsignedInteger('max_count')->nullable();
             $table->timestamps();

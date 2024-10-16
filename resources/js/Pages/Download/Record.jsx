@@ -1,4 +1,4 @@
-import {Head, router} from '@inertiajs/react';
+import {Head} from '@inertiajs/react';
 import {useEffect, useState} from "react";
 import manifest from '../../../../public/build/manifest.json';
 import JSZip from "jszip";
@@ -526,7 +526,7 @@ export default function Record({ record }) {
                             </div>
                         </div>
                         <div className="flex flex-col print:flex-row xl:flex-row space-y-5 items-center print:space-y-0 xl:space-y-0 mt-5 xl:mt-8">
-                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="w-full xl:w-1/6 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     تعداد مورد سفارش
@@ -535,7 +535,7 @@ export default function Record({ record }) {
                                     {record.ear === 'both' ? 'دو عدد' : 'یک عدد'}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="w-full xl:w-1/6 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     سفارش پکیج دارد؟
@@ -544,7 +544,7 @@ export default function Record({ record }) {
                                     {record.has_package ? 'بله' : 'خیر'}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="w-full xl:w-1/6 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     سفارش قالب دارد؟
@@ -553,7 +553,7 @@ export default function Record({ record }) {
                                     {record.has_mold ? 'بله' : 'خیر'}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                            <div className="w-full xl:w-1/6 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     سفارش شارژر دارد؟
@@ -562,7 +562,16 @@ export default function Record({ record }) {
                                     {record.has_charger ? 'بله' : 'خیر'}
                                 </p>
                             </div>
-                            <div className="w-full xl:w-1/5 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
+                            <div className="w-full xl:w-1/6 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 ml-5">
+                                <p className="text-xs flex items-center">
+                                    <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                    سفارش خدمات اضافی دارد؟
+                                </p>
+                                <p className="mt-2">
+                                    {record.has_other_services ? 'بله' : 'خیر'}
+                                </p>
+                            </div>
+                            <div className="w-full xl:w-1/6 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1">
                                 <p className="text-xs flex items-center">
                                     <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                     جمع فاکتور سفارش
