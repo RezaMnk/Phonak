@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Payment extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +45,6 @@ class Payment extends Model
     {
         return $this->hasOne(Record::class);
     }
-
 
     /**
      * Has one accessory

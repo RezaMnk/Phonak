@@ -156,27 +156,14 @@ Route::prefix('admin-fklhf83')->group(function () {
 
 Route::get('test', function () {
 
-    $invoice = (new \Shetabit\Multipay\Invoice)->amount(10000);
-
-    Shetabit\Payment\Facade\Payment::via('zarinpal')->purchase(
-        $invoice,
-        function($driver, $transactionId) {
-            dd($transactionId);
-        }
-    );
-
     try {
-        $receipt = Shetabit\Payment\Facade\Payment::via('parsian')->amount(10000)->transactionId('A000000000000000000000000000m12r8rjp')->verify();
+        $model = \App\Models\Record::find(10174);
+        $receipt = \Shetabit\Payment\Facade\Payment::via($model->payment->gateway)->amount($model->total_price)->transactionId($model->payment->transaction_id)->verify();
 
-        // You can show payment referenceId to the user.
-        echo $receipt->getReferenceId();
+        dd($receipt);
 
-    } catch (Shetabit\Multipay\Exceptions\InvalidPaymentException $exception) {
-        /**
-        when payment is not verified, it will throw an exception.
-        We can catch the exception to handle invalid payments.
-        getMessage method, returns a suitable message that can be used in user interface.
-         **/
-        dd($exception);
+    } catch (\Shetabit\Multipay\Exceptions\InvalidPaymentException $exception) {
+
+        dd($exception->getMessage());
     }
 });

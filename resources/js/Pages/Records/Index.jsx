@@ -253,29 +253,29 @@ export default function Index({ records }) {
                                 </div>
                             </InputLabel>
                         </div>
-                        <div className="inline-block">
-                            <RadioInput
-                                id="parsian"
-                                className="hidden peer"
-                                name="gateway"
-                                checked={data.gateway === 'parsian'}
-                                onChange={() => setData('gateway', 'parsian')}
-                            />
+                        {/*<div className="inline-block">*/}
+                        {/*    <RadioInput*/}
+                        {/*        id="parsian"*/}
+                        {/*        className="hidden peer"*/}
+                        {/*        name="gateway"*/}
+                        {/*        checked={data.gateway === 'parsian'}*/}
+                        {/*        onChange={() => setData('gateway', 'parsian')}*/}
+                        {/*    />*/}
 
-                            <InputLabel
-                                htmlFor="parsian"
-                                className="bg-gray-100 dark:bg-slate-700 peer-checked:bg-red-50 peer-checked:dark:bg-red-700/10 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-red-400"
-                            >
-                                <div className="p-2">
-                                    <img src="/storage/gateways/parsian.png" alt="درگاه پرداخت پارسیان"
-                                         className="w-24 h-24 object-contain"/>
-                                    <hr className="my-4 border-gray-200 dark:border-slate-500"/>
-                                    <p className="text-center">
-                                        پارسیان
-                                    </p>
-                                </div>
-                            </InputLabel>
-                        </div>
+                        {/*    <InputLabel*/}
+                        {/*        htmlFor="parsian"*/}
+                        {/*        className="bg-gray-100 dark:bg-slate-700 peer-checked:bg-red-50 peer-checked:dark:bg-red-700/10 border border-gray-200 dark:border-slate-500 rounded-lg peer-checked:border-red-400"*/}
+                        {/*    >*/}
+                        {/*        <div className="p-2">*/}
+                        {/*            <img src="/storage/gateways/parsian.png" alt="درگاه پرداخت پارسیان"*/}
+                        {/*                 className="w-24 h-24 object-contain"/>*/}
+                        {/*            <hr className="my-4 border-gray-200 dark:border-slate-500"/>*/}
+                        {/*            <p className="text-center">*/}
+                        {/*                پارسیان*/}
+                        {/*            </p>*/}
+                        {/*        </div>*/}
+                        {/*    </InputLabel>*/}
+                        {/*</div>*/}
                     </div>
                     <div className="mt-6 flex justify-between">
                         <SecondaryButton className="!px-4 !py-2 text-xs" type="button" onClick={(closePaymentModal)}>
