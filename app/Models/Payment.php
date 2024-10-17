@@ -82,6 +82,7 @@ class Payment extends Model
         $gateways = [
             'zarinpal' => 'زرین پال',
             'parsian' => 'پارسیان',
+            'creditor' => '-',
         ];
         return new Attribute(
             get: fn () => $gateways[$this->attributes['gateway']]

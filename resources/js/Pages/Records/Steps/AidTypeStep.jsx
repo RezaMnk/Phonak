@@ -40,12 +40,14 @@ export default function AidTypeStep() {
     }, [product])
 
     useEffect(() => {
+        const hasOtherServices = productItems.includes('package') ? false : productItems.includes('other_services');
+
         setData((data) => ({
             ...data,
             has_package: productItems.includes('package'),
             has_mold: productItems.includes('mold'),
             has_charger: productItems.includes('charger'),
-            has_other_services: productItems.includes('other_services'),
+            has_other_services: hasOtherServices,
         }))
     }, [productItems])
 
