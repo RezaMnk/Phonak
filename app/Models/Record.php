@@ -31,6 +31,7 @@ class Record extends Model
         'has_mold',
         'has_package',
         'has_charger',
+        'has_other_services',
         'id_card_image',
         'prescription_image',
         'audiogram_image',

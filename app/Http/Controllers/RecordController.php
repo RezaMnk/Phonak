@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Record;
 use Carbon\Carbon;
-use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -94,6 +93,7 @@ class RecordController extends Controller
             ...$request->only(['brand', 'type', 'ear'])
         ];
 
+
         $product = Product::find($request->product);
 
         if ($product->has_mold)
@@ -154,6 +154,7 @@ class RecordController extends Controller
                     'wax_guard' => null,
                     'receiver' => null,
                     'has_mold' => null,
+                    'has_other_services' => null,
                     'mold_material' => null,
                     'mold_size' => null,
                     'has_vent' => null,
@@ -370,13 +371,13 @@ class RecordController extends Controller
         if ($record->has_package)
             $price += $record->product->package_price;
 
+        if ($record->has_other_services)
+            $price += $record->product->other_services_price;
+
         $price *= $count;
 
         if ($record->has_charger)
             $price += $record->product->charger_price;
-
-        if ($record->has_other_services)
-            $price += $record->product->other_services_price;
 
 
         $record->total_price = $price;
@@ -602,13 +603,14 @@ class RecordController extends Controller
         if ($record->has_package)
             $price += $record->product->package_price;
 
+        if ($record->has_other_services)
+            $price += $record->product->other_services_price;
+
         $price *= $count;
 
         if ($record->has_charger)
             $price += $record->product->charger_price;
 
-        if ($record->has_other_services)
-            $price += $record->product->other_services_price;
 
         if ($record->user->creditor)
         {

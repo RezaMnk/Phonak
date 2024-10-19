@@ -122,9 +122,9 @@ export default ({ products, product: selected_product, setProduct, setProductIte
                                 checked={productItems.includes('mold')}
                                 onChange={(e) => {
                                     if (e.target.checked) {
-                                        setProductItems([...productItems, 'mold']);
+                                        setProductItems([...productItems.filter(item => item !== 'other_services'), 'mold']);
                                     } else {
-                                        setProductItems(productItems.filter(item => item !== 'mold'));
+                                        setProductItems([...productItems.filter(item => item !== 'mold'), 'other_services']);
                                     }
                                 }}
                             />
