@@ -183,6 +183,7 @@ return [
         'name' => 'نام',
         'username' => 'نام کاربری',
         'email' => 'ایمیل',
+        'grade' => 'مقطع تحصیلی',
         'first_name' => 'نام',
         'last_name' => 'نام خانوادگی',
         'password' => 'کلمه عبور',

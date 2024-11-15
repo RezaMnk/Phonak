@@ -48,7 +48,6 @@ export default function Index({ records }) {
         e.preventDefault();
 
         record = record || paymentModalRecord;
-        console.log(route('records.pay', {record: record, ...data}))
         window.open(route('records.pay', {record: record, ...data}), '_blank').focus();
         // get(route('records.pay', record), {
         //     preserveScroll: true,

@@ -4185,22 +4185,23 @@
         },
         {
             "name": "shetabit/multipay",
-            "version": "v1.45.01",
+            "version": "v1.56.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shetabit/multipay.git",
-                "reference": "eec20d8c24c1d8a1ebde3c01ce9943f2ea695e37"
+                "reference": "083612563e899a2adb0f36d7c3e6dd71cf4d3f8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shetabit/multipay/zipball/eec20d8c24c1d8a1ebde3c01ce9943f2ea695e37",
-                "reference": "eec20d8c24c1d8a1ebde3c01ce9943f2ea695e37",
+                "url": "https://api.github.com/repos/shetabit/multipay/zipball/083612563e899a2adb0f36d7c3e6dd71cf4d3f8b",
+                "reference": "083612563e899a2adb0f36d7c3e6dd71cf4d3f8b",
                 "shasum": ""
             },
             "require": {
                 "chillerlan/php-cache": "^4.1|^5.0",
+                "ext-json": "*",
                 "guzzlehttp/guzzle": ">=6.2",
-                "nesbot/carbon": "^1.39|^2.0",
+                "nesbot/carbon": "^1.39|^2.0|^3.0",
                 "php": ">=7.2",
                 "ramsey/uuid": "^3.7|^3.8|^3.9|^4.0"
             },
@@ -4232,6 +4233,7 @@
                 "Bank",
                 "Meli",
                 "Payline",
+                "asan pardakht",
                 "gateway",
                 "iranKish payment gateway",
                 "irankish",
@@ -4254,6 +4256,7 @@
                 "payment gateway",
                 "paypal",
                 "paypal payment gateway",
+                "php asan pardakht",
                 "php iranKish",
                 "php iranKish package",
                 "php jahanPay",
@@ -4301,9 +4304,9 @@
             ],
             "support": {
                 "issues": "https://github.com/shetabit/multipay/issues",
-                "source": "https://github.com/shetabit/multipay/tree/v1.45.01"
+                "source": "https://github.com/shetabit/multipay/tree/v1.56.1"
             },
-            "time": "2024-03-28T10:20:04+00:00"
+            "time": "2024-10-06T15:08:13+00:00"
         },
         {
             "name": "shetabit/payment",

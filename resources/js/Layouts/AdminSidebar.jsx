@@ -119,6 +119,25 @@ export default function AdminSidebar({ minimize, changeMinimize, hamburgerMenu, 
 
                         <div className="space-y-3">
                             <div className={`flex items-center ${minimize ? 'my-5' : ''}`}>
+                                <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : ''}`}>وبینار</span>
+                                <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
+                            </div>
+                            <NavLink
+                                href={route('webinars.index')}
+                                active={route().current('webinars.index')}
+                                icon={
+                                    <Icon viewBox="0 0 24 24" type="fill">
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                              d="M4,2C2.9,2,2,2.9,2,4v13c0,1.1,0.9,2,2,2h6v1H6v2h12v-2h-4v-1h6c1.1,0,2-0.9,2-2V4c0-1.1-0.9-2-2-2H4z M4,4h16v13H4V4z   M12,5c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S13.1,5,12,5z M10,10c-1.1,0-2,0.9-2,2v1h8v-1c0-1.1-0.9-2-2-2H10z M5,14v2h4v-2H5z   M10,14v2h4v-2H10z M15,14v2h4v-2H15z"/>
+                                    </Icon>
+                                }
+                                name="لیست ثبت نامی ها"
+                                minimize={minimize}
+                            />
+                        </div>
+
+                        <div className="space-y-3">
+                            <div className={`flex items-center ${minimize ? 'my-5' : ''}`}>
                                 <span className={`px-3 text-xs text-gray-500 dark:text-slate-200 ${minimize ? 'hidden' : ''}`}>تنظیمات</span>
                                 <div className="flex-grow h-px bg-gray-300 dark:bg-gray-500"></div>
                             </div>

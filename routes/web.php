@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\WebinarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PaymentController;
@@ -32,6 +33,13 @@ Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
 
+Route::controller(\App\Http\Controllers\WebinarRegisterController::class)->name('webinar')->prefix('webinar')->group(function () {
+    Route::get('/', 'create')->name('.create');
+    Route::post('/', 'store');
+    Route::get('/pay/{webinarRegister}', 'pay')->name('.pay');
+    Route::get('/verify/{webinarRegister}', 'verify')->name('.verify');
+    Route::get('/success/{webinarRegister}', 'success')->name('.success');
+});
 Route::middleware(['auth', 'auth.verified'])->group(function () {
 
     Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
@@ -108,6 +116,8 @@ Route::middleware(['auth', 'auth.is_admin', 'auth.admin_ip'])->group(function ()
 //        Route::get('/', 'index')->name('.index');
 //    });
     Route::resource('settings', SettingController::class);
+
+    Route::resource('webinars', WebinarController::class)->only(['index']);
 
 
     Route::controller(AdminController::class)->name('admin')->prefix('admin')->group(function () {
