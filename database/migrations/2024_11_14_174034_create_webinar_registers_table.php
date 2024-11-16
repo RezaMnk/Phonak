@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('transaction_id')->nullable();
             $table->string('reference_id')->nullable();
+            $table->boolean('success')->default(false);
             $table->timestamps();
         });
     }

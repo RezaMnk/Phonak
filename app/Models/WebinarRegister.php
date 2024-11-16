@@ -25,6 +25,7 @@ class WebinarRegister extends Model
         'price',
         'transaction_id',
         'reference_id',
+        'success',
     ];
 
     /**

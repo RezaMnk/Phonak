@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\WebinarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PaymentController;
@@ -11,8 +10,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebinarController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
+use Shetabit\Payment\Facade\Payment;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,16 +166,16 @@ Route::prefix('admin-fklhf83')->group(function () {
 
 
 
-Route::get('test', function () {
+Route::get('test/{webinarRegister}', function (\App\Models\WebinarRegister $webinarRegister) {
 
     try {
-        $model = \App\Models\Record::find(10174);
-        $receipt = \Shetabit\Payment\Facade\Payment::via($model->payment->gateway)->amount($model->total_price)->transactionId($model->payment->transaction_id)->verify();
+        $receipt = \Shetabit\Payment\Facade\Payment::via('zarinpal')->amount($webinarRegister->price)->transactionId($webinarRegister->transaction_id)->verify();
 
         dd($receipt);
 
-    } catch (\Shetabit\Multipay\Exceptions\InvalidPaymentException $exception) {
+    } catch (Exception $exception) {
 
-        dd($exception->getMessage());
+        dd($exception);
     }
+
 });

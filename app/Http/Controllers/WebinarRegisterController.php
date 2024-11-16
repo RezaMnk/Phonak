@@ -74,12 +74,19 @@ class WebinarRegisterController extends Controller
         if ($request->Status == 'OK' || $request->Status == 0)
         {
 
-            $receipt = Payment::via('zarinpal')->amount($webinarRegister->price)->transactionId($webinarRegister->transaction_id)->verify();
+            try {
+                $receipt = Payment::via('zarinpal')->amount($webinarRegister->price)->transactionId($webinarRegister->transaction_id)->verify();
 
-            $webinarRegister->reference_id = $receipt->getReferenceId();
-            $webinarRegister->touch();
+                $webinarRegister->reference_id = $receipt->getReferenceId();
+                $webinarRegister->success = true;
+                $webinarRegister->touch();
 
-            return redirect()->route('webinar.success', $webinarRegister);
+                return redirect()->route('webinar.success', $webinarRegister);
+
+            } catch (InvalidPaymentException $exception) {
+
+                return 'تراکنش ناموفق';
+            }
         }
 
         else
