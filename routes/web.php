@@ -165,15 +165,16 @@ Route::prefix('admin-fklhf83')->group(function () {
 
 
 Route::get('test', function () {
+    $http = \Illuminate\Support\Facades\Http::withHeaders([
+                'Content-Type'=>'application/xml',
+                'SOAPAction'=>'balance'
+            ])->post('http://93.118.148.72:7319/API/V2/Sale/OrderService');
 
-    try {
-        $model = \App\Models\Record::find(10174);
-        $receipt = \Shetabit\Payment\Facade\Payment::via($model->payment->gateway)->amount($model->total_price)->transactionId($model->payment->transaction_id)->verify();
 
-        dd($receipt);
 
-    } catch (\Shetabit\Multipay\Exceptions\InvalidPaymentException $exception) {
-
-        dd($exception->getMessage());
-    }
+    return response($http->body())
+        ->withHeaders([
+            'Content-Type' => 'text/xml'
+        ]);
 });
+
