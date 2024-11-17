@@ -58,7 +58,7 @@ export default function Index({ webinarRegisters }) {
                                     className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-slate-300">
                                     {webinarRegister.id}
                                 </th>
-                                <td className="px-6 py-4 whitespace-nowrap">
+                                <td className="px-6 py-4">
                                     {webinarRegister.first_name +' '+ webinarRegister.last_name}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
