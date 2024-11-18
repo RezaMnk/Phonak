@@ -112,12 +112,12 @@ class RegisteredUserController extends Controller
             'home_state' => ['required', 'string', 'max:255'],
             'home_city' => ['required', 'string', 'max:255'],
             'home_post_code' => ['required', 'numeric', 'digits:10'],
-            'home_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'home_phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'work_address' => ['required', 'string', 'max:255'],
             'work_state' => ['required', 'string', 'max:255'],
             'work_city' => ['required', 'string', 'max:255'],
             'work_post_code' => ['required', 'numeric', 'digits:10'],
-            'work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'has_second' => ['boolean'],
             'mail_address' => ['required', 'in:home,work,second_work'],
         ]);
@@ -142,7 +142,7 @@ class RegisteredUserController extends Controller
                 'second_work_state' => ['required', 'string', 'max:255'],
                 'second_work_city' => ['required', 'string', 'max:255'],
                 'second_work_post_code' => ['required', 'numeric', 'digits:10'],
-                'second_work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+                'second_work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             ]);
 
             $only = [...$only, ...$request->only(['second_work_address', 'second_work_state', 'second_work_city', 'second_work_post_code', 'second_work_phone'])];
@@ -162,7 +162,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
-            'landline' => ['required', 'numeric', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'landline' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'whatsapp_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'referral_name' => ['required', 'string', 'max:255'],
             'referral_phone' => ['required', 'required_with:referral_name', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],

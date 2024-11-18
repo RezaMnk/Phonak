@@ -21,9 +21,9 @@ class IpMiddleware
 
         $ip = $request->ip();
 
-        if (in_array($ip, ['93.118.148.72', '217.114.46.130', '195.201.122.95'])) {
+//        if (in_array($ip, ['93.118.148.72', '217.114.46.130', '195.201.122.95'])) {
             return $next($request);
-        }
+//        }
 
         Auth::logout();
 

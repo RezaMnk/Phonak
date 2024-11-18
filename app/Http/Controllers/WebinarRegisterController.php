@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\WebinarRegister;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 use Shetabit\Multipay\Exceptions\InvoiceNotFoundException;
@@ -31,7 +32,7 @@ class WebinarRegisterController extends Controller
             'national_code' => ['required', 'numeric', 'digits:10'],
             'grade' => ['required', 'string', 'max:255'],
             'education_year' => ['nullable', 'required_if:grade,دانشجوی کارشناسی شنوایی شناسی', 'string', 'max:255'],
-            'phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'state' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
         ]);
@@ -77,15 +78,15 @@ class WebinarRegisterController extends Controller
             try {
                 $receipt = Payment::via('zarinpal')->amount($webinarRegister->price)->transactionId($webinarRegister->transaction_id)->verify();
 
-                $webinarRegister->reference_id = $receipt->getReferenceId();
-                $webinarRegister->success = true;
-                $webinarRegister->touch();
+                $webinarRegister->update([
+                    'reference_id' => $receipt->getReferenceId(),
+                    'success' => true,
+                ]);
 
                 return redirect()->route('webinar.success', $webinarRegister);
 
-            } catch (InvalidPaymentException $exception) {
-
-                return 'تراکنش ناموفق';
+            } catch (\Exception $exception) {
+                Log::info($webinarRegister->id.' : '. $exception->getMessage());
             }
         }
 

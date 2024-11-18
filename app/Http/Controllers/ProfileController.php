@@ -73,18 +73,18 @@ class ProfileController extends Controller
             'address.home_state' => ['required', 'string', 'max:255'],
             'address.home_city' => ['required', 'string', 'max:255'],
             'address.home_post_code' => ['required', 'numeric', 'digits:10'],
-            'address.home_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'address.home_phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'address.work_address' => ['required', 'string', 'max:255'],
             'address.work_state' => ['required', 'string', 'max:255'],
             'address.work_city' => ['required', 'string', 'max:255'],
             'address.work_post_code' => ['required', 'numeric', 'digits:10'],
-            'address.work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'address.work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             'address.has_second' => ['boolean'],
             'address.mail_address' => ['required', 'in:home,work,second_work'],
 
             /* User Info */
             'info.phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
-            'info.landline' => ['required', 'numeric', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+            'info.landline' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'info.whatsapp_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'info.referral_name' => ['nullable', 'string', 'max:255'],
             'info.referral_phone' => ['nullable', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],
@@ -115,7 +115,7 @@ class ProfileController extends Controller
                 'address.second_work_state' => ['required', 'string', 'max:255'],
                 'address.second_work_city' => ['required', 'string', 'max:255'],
                 'address.second_work_post_code' => ['required', 'numeric', 'digits:10'],
-                'address.second_work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
+                'address.second_work_phone' => ['required', 'numeric', 'digits:11', 'regex:/(09)[0-9]{9}/'],
             ]);
 
             $addressOnly = [
