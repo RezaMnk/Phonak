@@ -1,7 +1,6 @@
 import { Head } from '@inertiajs/react';
 import Icon from "@/Components/Icon.jsx";
 import {useRef, useState} from "react";
-import {Link} from "@inertiajs/inertia-react";
 import Header from "@/Layouts/Components/Header.jsx";
 import Footer from "@/Layouts/Components/Footer.jsx";
 

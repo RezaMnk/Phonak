@@ -35,11 +35,12 @@ Route::get('/terms', function () {
 
 Route::controller(\App\Http\Controllers\WebinarRegisterController::class)->name('webinar')->prefix('webinar')->group(function () {
     Route::get('/', 'create')->name('.create');
-    Route::post('/', 'store');
-    Route::get('/pay/{webinarRegister}', 'pay')->name('.pay');
-    Route::get('/verify/{webinarRegister}', 'verify')->name('.verify');
-    Route::get('/success/{webinarRegister}', 'success')->name('.success');
+//    Route::post('/', 'store');
+//    Route::get('/pay/{webinarRegister}', 'pay')->name('.pay');
+//    Route::get('/verify/{webinarRegister}', 'verify')->name('.verify');
+//    Route::get('/success/{webinarRegister}', 'success')->name('.success');
 });
+
 Route::middleware(['auth', 'auth.verified'])->group(function () {
 
     Route::controller(DashboardController::class)->name('dashboard')->prefix('dashboard')->group(function () {
@@ -160,28 +161,4 @@ Route::prefix('admin-fklhf83')->group(function () {
         auth()->loginUsingId(922);
     });
 
-});
-
-
-
-Route::get('test', function () {
-
-    $list = [];
-
-    foreach (\App\Models\WebinarRegister::all() as $webinarRegister)
-    {
-        try {
-            $receipt = \Shetabit\Payment\Facade\Payment::via('zarinpal')->amount($webinarRegister->price)->transactionId($webinarRegister->transaction_id)->verify();
-
-            $webinarRegister->update([
-                'success' => true
-            ]);
-
-            $list[$webinarRegister->id] = true;
-
-        } catch (Exception $exception) {
-            $list[$webinarRegister->id] = $exception->getMessage();
-        }
-    }
-    dd($list);
 });
