@@ -162,7 +162,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
-            'landline' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
+            'landline' => ['required', 'numeric', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'whatsapp_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
             'referral_name' => ['required', 'string', 'max:255'],
             'referral_phone' => ['required', 'required_with:referral_name', 'string', 'digits:11', 'regex:/(09)[0-9]{9}/'],

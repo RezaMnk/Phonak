@@ -105,7 +105,7 @@ class AccessoryController extends Controller
     public function store_shipping(Request $request, Accessory $accessory): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
-            'expert_phone' => ['required', 'numeric', 'regex:/(09)[0-9]{9}/'],
+            'expert_phone' => ['required', 'numeric', 'regex:/(0)[1-9]{2}[0-9]{8}/'],
             'type' => ['required', 'in:terminal,air,tipax,post,co-worker delivery,company delivery,etc'],
             'description' => ['nullable', 'string'],
             'mail_address' => ['required', 'in:home,work,second_work'],
