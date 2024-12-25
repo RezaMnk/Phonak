@@ -13,7 +13,8 @@ export default function Record({ record }) {
             [record.audiogram_image_url]: record.patient.name +'-'+ record.user.name +'-audiogram.jpg',
             [record.id_card_image_url]: record.patient.name +'-'+ record.user.name +'-id.jpg',
             [record.prescription_image_url]: record.patient.name +'-'+ record.user.name +'-prescription.jpg',
-            [record.national_code_confirm_image_url]: record.patient.name +'-'+ record.user.name +'-national_code.jpg'
+            [record.national_code_confirm_image_url]: record.patient.name +'-'+ record.user.name +'-national_code.jpg',
+            [record.commit_price_image_url]: record.patient.name +'-'+ record.user.name +'-commit_price.jpg'
         };
 
         if (record.user.creditor_image)

@@ -42,6 +42,7 @@ export default function AudiogramStep() {
         'id_card_image': record.id_card_image || '',
         'prescription_image': record.prescription_image || '',
         'national_code_confirm_image': record.national_code_confirm_image || '',
+        'commit_price_image': record.commit_price_image || '',
         'creditor_image': record.creditor_image || '',
     });
 
@@ -216,7 +217,34 @@ export default function AudiogramStep() {
                                 />
                             </div>
                         </div>
-                        {!! record.user.creditor_image && (
+                        <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
+                            <div className="w-full xl:w-2/4">
+                                <FileInput
+                                    name="commit_price_image"
+                                    fileName={data.commit_price_image}
+                                    viewLink={record.commit_price_image && record.commit_price_image_url}
+                                    label="تصویر تعهدنامه فروش به قیمت مصوب"
+                                    accept=".jpg, .jpeg"
+                                    setData={(e) => setData('commit_price_image', e.target.files[0])}
+                                    error={errors.commit_price_image}
+                                />
+                            </div>
+                            <div className="w-full xl:w-1/4 flex flex-col gap-2 md:gap-4 justify-end">
+                                <p className="text-sm text-center md:text-right font-semibold text-gray-700 dark:text-slate-200">
+                                     از نمونه فایل تعهدنامه فروش به قیمت مصوب پیوست شده، استفاده نمایید.
+                                </p>
+
+                                <PrimaryButton
+                                    link={true}
+                                    target="_blank"
+                                    download
+                                    href="/storage/commit_price.pdf"
+                                >
+                                    دانلود فایل تعهدنامه
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                        {!!record.user.creditor_image && (
                             <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
                                 <div className="w-full xl:w-2/4">
                                     <FileInput
@@ -251,7 +279,7 @@ export default function AudiogramStep() {
                         </div>
                     </div>
                 </AidContext.Provider>
-                <div className="flex justify-between mt-8">
+                 <div className="flex justify-between mt-8">
                      <DangerButton
                          className="!px-4 !py-2"
                          type="button"
@@ -260,14 +288,14 @@ export default function AudiogramStep() {
                          مرحله قبل
                      </DangerButton>
                      <PrimaryButton
-                        className="!px-4 !py-2"
-                        disabled={processing}
-                        type="submit"
-                    >
-                        مرحله بعد
-                    </PrimaryButton>
-                </div>
-            </form>
+                         className="!px-4 !py-2"
+                         disabled={processing}
+                         type="submit"
+                     >
+                         مرحله بعد
+                     </PrimaryButton>
+                 </div>
+             </form>
         </>
     );
 }

@@ -37,6 +37,7 @@ class Record extends Model
         'audiogram_image',
         'national_code_confirm_image',
         'creditor_image',
+        'commit_price_image',
     ];
 
 
@@ -51,6 +52,7 @@ class Record extends Model
         'audiogram_image_url',
         'national_code_confirm_image_url',
         'creditor_image_url',
+        'commit_price_image_url',
     ];
 
 
@@ -186,6 +188,13 @@ class Record extends Model
     {
         return new Attribute(
             get: fn () => Storage::disk('records')->url($this->id.'/'.$this->creditor_image),
+        );
+    }
+
+    protected function commitPriceImageUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Storage::disk('records')->url($this->id.'/'.$this->commit_price_image),
         );
     }
 }

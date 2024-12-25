@@ -215,10 +215,11 @@ class RecordController extends Controller
             'prescription_image' => ['required'],
             'audiogram_image' => ['required'],
             'national_code_confirm_image' => ['required'],
+            'commit_price_image' => ['required'],
         ];
 
         if ($record->user->creditor_image)
-            $to_validate['national_code_confirm_image'] = ['required'];
+            $to_validate['creditor_image'] = ['required'];
 
         foreach (['left', 'right'] as $ear) {
             if ($record->ear == $ear || $record->ear == 'both')
@@ -253,6 +254,9 @@ class RecordController extends Controller
 
         if ($request->hasFile('creditor_image'))
             $to_validate['creditor_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
+        if ($request->hasFile('commit_price_image'))
+            $to_validate['commit_price_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
 
         $request->validate($to_validate);
 
@@ -312,6 +316,14 @@ class RecordController extends Controller
                 Storage::disk('records')->putFileAs($record->id, $image, $file_name);
 
                 $record->creditor_image = $file_name;
+            }
+
+            if ($request->hasFile('commit_price_image')) {
+                $image = $request->file('commit_price_image');
+                $file_name = 'commit_price_image.jpg';
+                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+                $record->commit_price_image = $file_name;
             }
 
             $record->touch();
@@ -536,6 +548,7 @@ class RecordController extends Controller
             'prescription' => ['name' => $record->patient->name .'-'. $record->user->name .'-prescription.jpg', 'file' => "prescription_image.jpg"],
             'national_code_confirm' => ['name' => $record->patient->name .'-'. $record->user->name .'-national_code_confirmation.jpg', 'file' => "national_code_confirm_image.jpg"],
             'creditor' => ['name' => $record->patient->name .'-'. $record->user->name .'-creditor.jpg', 'file' => "creditor_image.jpg"],
+            'commit_price' => ['name' => $record->patient->name .'-'. $record->user->name .'-commit_price.jpg', 'file' => "commit_price_image.jpg"],
             'all' => [],
         ];
         if (! in_array($name, array_keys($files)))
@@ -566,6 +579,7 @@ class RecordController extends Controller
             $record->patient->name .'-'. $record->user->name .'-prescription.jpg' => "prescription_image.jpg",
             $record->patient->name .'-'. $record->user->name .'-id.jpg' => "id_card_image.jpg",
             $record->patient->name .'-'. $record->user->name .'-national_code.jpg' => "national_code_confirm_image.jpg",
+            $record->patient->name .'-'. $record->user->name .'-commit_price.jpg' => "commit_price_image.jpg",
         ];
 
         if ($record->user->creditor_image) {

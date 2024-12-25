@@ -898,13 +898,30 @@ export default function Show({ record, user }) {
                                         </p>
                                     )}
                                 </div>
+                                <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
+                                    <p className="text-xs flex items-center">
+                                        <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
+                                        تعهدنامه فروش به قیمت مصوب
+                                    </p>
+                                    {record.commit_price_image ? (
+                                        <a href={route('records.download', {record: record.id, name: 'commit_price'})} target="_blank" className="mt-2">
+                                            <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
+                                                <img src={record.commit_price_image_url} alt="تعهد عدم اعلام کدملی تکراری"/>
+                                            </div>
+                                        </a>
+                                    ) : (
+                                        <p className="mt-5 font-semibold">
+                                            تصویر ثبت نشده!
+                                        </p>
+                                    )}
+                                </div>
                                 {!! record.user.creditor_image && (
                                     <div className="w-full print:w-full xl:w-1/3 flex flex-col bg-gray-50 dark:bg-slate-700/30 rounded-lg p-3 print:px-2 print:py-1 break-inside-avoid">
                                         <p className="text-xs flex items-center">
                                             <span className="inline-block print:hidden min-h-[10px] ml-2 w-[2px] h-full bg-slate-400 dark:bg-slate-600"></span>
                                             نامه تاییدیه بستانکاری
                                         </p>
-                                        {record.national_code_confirm_image ? (
+                                        {record.creditor_image ? (
                                             <a href={route('records.download', {record: record.id, name: 'creditor'})} target="_blank" className="mt-2">
                                                 <div className="w-full p-2 rounded-lg bg-gray-100 dark:bg-slate-700">
                                                     <img src={record.creditor_image_url} alt="نامه تاییدیه بستانکاری"/>
