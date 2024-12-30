@@ -211,8 +211,7 @@ class User extends Authenticatable
                                 $query->whereNot('id', $editing_model->id);
                             });
                     })
-                    ->whereDate('created_at', '>=', $setting->start_time)
-                    ->whereDate('created_at', '<=', $setting->end_time)->get()
+                    ->whereBetween('created_at', [$setting->start_time, $setting->end_time])->get()
                     ->count() + $this_count;
 
             if ($this_count || $editing_model)
