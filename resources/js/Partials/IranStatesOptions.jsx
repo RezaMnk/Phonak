@@ -48,7 +48,6 @@ export function Cities({ state }) {
     if(state === 'تهران')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('احمدآبادمستوفي', 'احمدآبادمستوفي');
         options[2] = new Option('ادران', 'ادران');
         options[3] = new Option('اسلام آباد', 'اسلام آباد');
@@ -69,7 +68,7 @@ export function Cities({ state }) {
         options[18] = new Option('پرند', 'پرند');
         options[19] = new Option('پس قلعه', 'پس قلعه');
         options[20] = new Option('پيشوا', 'پيشوا');
-        options[21] = new Option('تجزيه مبادلات لشكر  ', 'تجزيه مبادلات لشكر  ');
+        options[21] = new Option('تجزيه مبادلات لشكر', 'تجزيه مبادلات لشكر  ');
         options[22] = new Option('تهران', 'تهران', true);
         options[23] = new Option('جاجرود', 'جاجرود');
         options[24] = new Option('چرمسازي سالاريه', 'چرمسازي سالاريه');
@@ -125,7 +124,6 @@ export function Cities({ state }) {
     if(state === 'گیلان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('احمد سرگوراب', 'احمد سرگوراب');
         options[2] = new Option('اسالم', 'اسالم');
         options[3] = new Option('اسكلك', 'اسكلك');
@@ -196,7 +194,6 @@ export function Cities({ state }) {
     if(state === 'آذربایجان شرقی')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابشاحمد', 'ابشاحمد');
         options[2] = new Option('اذغان', 'اذغان');
         options[3] = new Option('اسب فروشان', 'اسب فروشان');
@@ -253,7 +250,6 @@ export function Cities({ state }) {
     if(state === 'خوزستان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اروندكنار', 'اروندكنار');
         options[2] = new Option('اميديه', 'اميديه');
         options[3] = new Option('انديمشك', 'انديمشك');
@@ -299,7 +295,6 @@ export function Cities({ state }) {
     if(state === 'فارس')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option(' بيضا', ' بيضا');
         options[2] = new Option('اردكان ـ سپيدان', 'اردكان ـ سپيدان');
         options[3] = new Option('ارسنجان', 'ارسنجان');
@@ -377,7 +372,6 @@ export function Cities({ state }) {
     if(state === 'اصفهان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابريشم', 'ابريشم');
         options[2] = new Option('ابوزيدآباد', 'ابوزيدآباد');
         options[3] = new Option('اردستان', 'اردستان');
@@ -472,7 +466,6 @@ export function Cities({ state }) {
     if(state === 'خراسان رضوی')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابدال آباد', 'ابدال آباد');
         options[2] = new Option('ازادوار', 'ازادوار');
         options[3] = new Option('باجگيران', 'باجگيران');
@@ -531,7 +524,6 @@ export function Cities({ state }) {
     if(state === 'قزوین')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('َآوج', 'َآوج');
         options[2] = new Option('ارداق', 'ارداق');
         options[3] = new Option('اسفرورين', 'اسفرورين');
@@ -561,7 +553,6 @@ export function Cities({ state }) {
     if(state === 'سمنان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ارادان', 'ارادان');
         options[2] = new Option('اميريه', 'اميريه');
         options[3] = new Option('ايوانكي', 'ايوانكي');
@@ -583,7 +574,6 @@ export function Cities({ state }) {
     if(state === 'قم')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('دستجرد', 'دستجرد');
         options[2] = new Option('سلفچگان', 'سلفچگان');
         options[3] = new Option('شهر جعفریه', 'شهر جعفریه');
@@ -594,7 +584,6 @@ export function Cities({ state }) {
     if(state === 'مرکزی')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اراك', 'اراك');
         options[2] = new Option('آستانه', 'آستانه');
         options[3] = new Option('آشتيان', 'آشتيان');
@@ -622,7 +611,6 @@ export function Cities({ state }) {
     if(state === 'زنجان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option(' آب بر ـ طارم', ' آب بر ـ طارم');
         options[2] = new Option('ابهر', 'ابهر');
         options[3] = new Option('اسفجين', 'اسفجين');
@@ -646,7 +634,6 @@ export function Cities({ state }) {
     if(state === 'مازندران')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اسلام آباد', 'اسلام آباد');
         options[2] = new Option('اميركلا', 'اميركلا');
         options[3] = new Option('ايزدشهر', 'ايزدشهر');
@@ -700,7 +687,6 @@ export function Cities({ state }) {
     if(state === 'گلستان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('انبار آلوم', 'انبار آلوم');
         options[2] = new Option('اينچه برون', 'اينچه برون');
         options[3] = new Option('آزادشهر', 'آزادشهر');
@@ -725,7 +711,6 @@ export function Cities({ state }) {
     if(state === 'اردبیل')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابي بيگلو', 'ابي بيگلو');
         options[2] = new Option('اردبيل', 'اردبيل');
         options[3] = new Option('اصلاندوز', 'اصلاندوز');
@@ -749,7 +734,6 @@ export function Cities({ state }) {
     if(state === 'آذربایجان غربی')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اروميه', 'اروميه');
         options[2] = new Option('اشنويه', 'اشنويه');
         options[3] = new Option('ايواوغلي', 'ايواوغلي');
@@ -789,7 +773,6 @@ export function Cities({ state }) {
     if(state === 'همدان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ازندريان', 'ازندريان');
         options[2] = new Option('اسدآباد', 'اسدآباد');
         options[3] = new Option('اسلام آباد', 'اسلام آباد');
@@ -815,7 +798,6 @@ export function Cities({ state }) {
     if(state === 'کردستان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اورامانتخت', 'اورامانتخت');
         options[2] = new Option('بانه', 'بانه');
         options[3] = new Option('بلبان آباد', 'بلبان آباد');
@@ -835,7 +817,6 @@ export function Cities({ state }) {
     if(state === 'کرمانشاه')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اسلام آباد غرب', 'اسلام آباد غرب');
         options[2] = new Option('باينگان', 'باينگان');
         options[3] = new Option('بيستون', 'بيستون');
@@ -861,7 +842,6 @@ export function Cities({ state }) {
     if(state === 'لرستان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ازنا', 'ازنا');
         options[2] = new Option('الشتر ـ سلسله', 'الشتر ـ سلسله');
         options[3] = new Option('اليگودرز', 'اليگودرز');
@@ -885,7 +865,6 @@ export function Cities({ state }) {
     if(state === 'بوشهر')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابدان', 'ابدان');
         options[2] = new Option('اهرم ـ تنگستان', 'اهرم ـ تنگستان');
         options[3] = new Option('آباد', 'آباد');
@@ -920,7 +899,6 @@ export function Cities({ state }) {
     if(state === 'کرمان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اختيارآباد', 'اختيارآباد');
         options[2] = new Option('ارزوئیه', 'ارزوئیه');
         options[3] = new Option('امين شهر', 'امين شهر');
@@ -972,7 +950,6 @@ export function Cities({ state }) {
     if(state === 'هرمزگان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابوموسي', 'ابوموسي');
         options[2] = new Option('ايسين', 'ايسين');
         options[3] = new Option('بستك', 'بستك');
@@ -1010,7 +987,6 @@ export function Cities({ state }) {
     if(state === 'چهارمحال و بختیاری')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اردل', 'اردل');
         options[2] = new Option('آلوني', 'آلوني');
         options[3] = new Option('باباحيدر', 'باباحيدر');
@@ -1044,7 +1020,6 @@ export function Cities({ state }) {
     if(state === 'یزد')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ابركوه', 'ابركوه');
         options[2] = new Option('احمدآباد', 'احمدآباد');
         options[3] = new Option('اردكان', 'اردكان');
@@ -1069,7 +1044,6 @@ export function Cities({ state }) {
     if(state === 'سیستان و بلوچستان')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اسپكه', 'اسپكه');
         options[2] = new Option('ايرانشهر', 'ايرانشهر');
         options[3] = new Option('بزمان', 'بزمان');
@@ -1109,7 +1083,6 @@ export function Cities({ state }) {
     if(state === 'ایلام')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اركواز', 'اركواز');
         options[2] = new Option('ارمو', 'ارمو');
         options[3] = new Option('ايلام', 'ايلام');
@@ -1133,7 +1106,6 @@ export function Cities({ state }) {
     if(state === 'کهگلویه و بویراحمد')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('باشت', 'باشت');
         options[2] = new Option('پاتاوه', 'پاتاوه');
         options[3] = new Option('چرام', 'چرام');
@@ -1152,7 +1124,6 @@ export function Cities({ state }) {
     if(state === 'خراسان شمالی')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اسفراين', 'اسفراين');
         options[2] = new Option('ايور', 'ايور');
         options[3] = new Option('آشخانه ـ مانه و سلمقان', 'آشخانه ـ مانه و سلمقان');
@@ -1168,7 +1139,6 @@ export function Cities({ state }) {
     if(state === 'خراسان جنوبی')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('ارسك', 'ارسك');
         options[2] = new Option('اسديه ـ درميان', 'اسديه ـ درميان');
         options[3] = new Option('آرين شهر', 'آرين شهر');
@@ -1192,7 +1162,6 @@ export function Cities({ state }) {
     if(state === 'البرز')
     {
 
-        options[0] = new Option('لطفا شهر را انتخاب نمایید' , '');
         options[1] = new Option('اشتهارد', 'اشتهارد');
         options[2] = new Option('آسارا', 'آسارا');
         options[3] = new Option('چهارباغ', 'چهارباغ');

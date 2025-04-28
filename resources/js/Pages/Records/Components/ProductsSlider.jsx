@@ -166,13 +166,6 @@ export default ({ products, product: selected_product, setProduct, setProductIte
                                 className="hidden peer"
                                 name="product_charger"
                                 checked={productItems.includes('charger')}
-                                onChange={(e) => {
-                                    if (e.target.checked) {
-                                        setProductItems([...productItems, 'charger']);
-                                    } else {
-                                        setProductItems(productItems.filter(item => item !== 'charger'));
-                                    }
-                                }}
                             />
 
                             <InputLabel

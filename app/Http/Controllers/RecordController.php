@@ -603,13 +603,22 @@ class RecordController extends Controller
             return redirect()->route('records.index')->with('toast', ['error' => 'مهلت پرداخت سفارش به اتمام رسیده است']);
         }
 
+        $count = $record->ear == 'both' ? 2 : 1;
+
+        if ($record->product->inventory < $count)
+        {
+            $record->status = 'canceled';
+            $record->save();
+            return redirect()->route('records.index')->with('toast', ['error' => 'موجودی محصول به اتمام رسیده است']);
+        }
+
         $request->validate([
             'gateway' => ['required', 'in:zarinpal,parsian']
         ]);
 
         $price = $record->product->price;
 
-        $count = $record->ear == 'both' ? 2 : 1;
+
 
         if ($record->has_mold)
             $price += $record->product->mold_price;

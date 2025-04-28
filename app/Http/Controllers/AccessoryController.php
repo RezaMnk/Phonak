@@ -237,11 +237,17 @@ class AccessoryController extends Controller
 
     public function pay(Accessory $accessory, Request $request)
     {
-        if ($accessory->created_at < Carbon::now()->subHours(2)->toDateTimeString())
-        {
+        if ($accessory->created_at < Carbon::now()->subHours(2)->toDateTimeString()) {
             $accessory->status = 'canceled';
             $accessory->save();
             return redirect()->route('accessories.index')->with('toast', ['error' => 'مهلت پرداخت سفارش به اتمام رسیده است']);
+        }
+
+        if ($accessory->product->inventory < $accessory->count)
+        {
+            $accessory->status = 'canceled';
+            $accessory->save();
+            return redirect()->route('records.index')->with('toast', ['error' => 'موجودی محصول به اتمام رسیده است']);
         }
 
         $request->validate([
