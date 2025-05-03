@@ -41,8 +41,8 @@ export default function AudiogramStep() {
         'audiogram_image': record.audiogram_image || '',
         'id_card_image': record.id_card_image || '',
         'prescription_image': record.prescription_image || '',
-        'national_code_confirm_image': record.national_code_confirm_image || '',
-        'commit_price_image': record.commit_price_image || '',
+        // 'national_code_confirm_image': record.national_code_confirm_image || '',
+        // 'commit_price_image': record.commit_price_image || '',
         'creditor_image': record.creditor_image || '',
     });
 
@@ -205,7 +205,7 @@ export default function AudiogramStep() {
                                     error={errors.prescription_image}
                                 />
                             </div>
-                            <div className="w-full xl:w-1/2">
+                            {/* <div className="w-full xl:w-1/2">
                                 <FileInput
                                     name="national_code_confirm"
                                     fileName={data.national_code_confirm_image}
@@ -215,9 +215,9 @@ export default function AudiogramStep() {
                                     setData={(e) => setData('national_code_confirm_image', e.target.files[0])}
                                     error={errors.national_code_confirm_image}
                                 />
-                            </div>
+                            </div> */}
                         </div>
-                        <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
+                        {/* <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
                             <div className="w-full xl:w-2/4">
                                 <FileInput
                                     name="commit_price_image"
@@ -243,7 +243,7 @@ export default function AudiogramStep() {
                                     دانلود فایل تعهدنامه
                                 </PrimaryButton>
                             </div>
-                        </div>
+                        </div> */}
                         {!!record.user.creditor_image && (
                             <div className="flex flex-col xl:flex-row gap-x-0 xl:gap-x-5 gap-y-5 xl:gap-y-0 mt-5">
                                 <div className="w-full xl:w-2/4">

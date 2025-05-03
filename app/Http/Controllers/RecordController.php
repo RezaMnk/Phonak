@@ -214,8 +214,8 @@ class RecordController extends Controller
             'id_card_image' => ['required'],
             'prescription_image' => ['required'],
             'audiogram_image' => ['required'],
-            'national_code_confirm_image' => ['required'],
-            'commit_price_image' => ['required'],
+            // 'national_code_confirm_image' => ['required'],
+            // 'commit_price_image' => ['required'],
         ];
 
         if ($record->user->creditor_image)
@@ -249,14 +249,14 @@ class RecordController extends Controller
         if ($request->hasFile('audiogram_image'))
             $to_validate['audiogram_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
 
-        if ($request->hasFile('national_code_confirm_image'))
-            $to_validate['national_code_confirm_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
-
         if ($request->hasFile('creditor_image'))
             $to_validate['creditor_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
 
-        if ($request->hasFile('commit_price_image'))
-            $to_validate['commit_price_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+        // if ($request->hasFile('national_code_confirm_image'))
+        //     $to_validate['national_code_confirm_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
+
+        // if ($request->hasFile('commit_price_image'))
+        //     $to_validate['commit_price_image'] = ['mimes:jpeg,jpg', 'max:'. env('MAX_IMAGE_SIZE', 512)];
 
         $request->validate($to_validate);
 
@@ -302,14 +302,6 @@ class RecordController extends Controller
                 $record->audiogram_image = $file_name;
             }
 
-            if ($request->hasFile('national_code_confirm_image')) {
-                $image = $request->file('national_code_confirm_image');
-                $file_name = 'national_code_confirm_image.jpg';
-                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
-
-                $record->national_code_confirm_image = $file_name;
-            }
-
             if ($request->hasFile('creditor_image')) {
                 $image = $request->file('creditor_image');
                 $file_name = 'creditor_image.jpg';
@@ -318,13 +310,21 @@ class RecordController extends Controller
                 $record->creditor_image = $file_name;
             }
 
-            if ($request->hasFile('commit_price_image')) {
-                $image = $request->file('commit_price_image');
-                $file_name = 'commit_price_image.jpg';
-                Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+            // if ($request->hasFile('national_code_confirm_image')) {
+            //     $image = $request->file('national_code_confirm_image');
+            //     $file_name = 'national_code_confirm_image.jpg';
+            //     Storage::disk('records')->putFileAs($record->id, $image, $file_name);
 
-                $record->commit_price_image = $file_name;
-            }
+            //     $record->national_code_confirm_image = $file_name;
+            // }
+
+            // if ($request->hasFile('commit_price_image')) {
+            //     $image = $request->file('commit_price_image');
+            //     $file_name = 'commit_price_image.jpg';
+            //     Storage::disk('records')->putFileAs($record->id, $image, $file_name);
+
+            //     $record->commit_price_image = $file_name;
+            // }
 
             $record->touch();
         }
