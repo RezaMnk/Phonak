@@ -33,7 +33,8 @@ class UserController extends Controller
                     ->orWhere('med_number' , 'LIKE', '%'. $request->search .'%');
         })->where(function ($query) use ($request) {
             if ($request->has('group') && $request->group != 'all')
-                $query->where('group', $request->group);
+                if (User::firstWhere('group', $request->group))
+                    $query->where('group', $request->group);
         })->whereHas('user_info')->latest()->paginate()->onEachSide(0),
             'users.status' => 'all',
             'groups' => User::allGroups()

