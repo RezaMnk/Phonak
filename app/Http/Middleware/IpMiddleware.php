@@ -27,6 +27,8 @@ class IpMiddleware
 
         Auth::logout();
 
-        return redirect(route('login'))->withErrors(['med_number' => 'دسترسی مجاز نیست!']);
+        abort(404);
+
+        // return redirect(route('login'))->withErrors(['med_number' => 'دسترسی مجاز نیست!']);
     }
 }
